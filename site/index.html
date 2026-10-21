@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>eng_navi 10問チャレンジ</title>
+<meta name="description" content="TOEICでよく出る英文法を10問。タップで答え合わせ、音声つき。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdfdfd;
+    --bar: #adc8d1;
+    --hl: #dee9ed;
+    --accent: #acc7d1;
+    --accent-ink: #5f8a99;
+    --ink: #1e1e1e;
+    --sub: #6b6b6b;
+    --line: #e6ecee;
+    --ok: #5f8a99;
+    --ng: #c97a7a;
+    --ng-bg: #fbeeee;
+    --serif: "EB Garamond", "Times New Roman", serif;
+    --sans: "Noto Sans JP", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); }
+  body { font-family: var(--sans); -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  .app {
+    position: relative;
+    max-width: 480px;
+    min-height: 100dvh;
+    margin: 0 auto;
+    padding: 20px 20px calc(32px + env(safe-area-inset-bottom)) calc(min(8vw, 38px) + 22px);
+    display: flex;
+    flex-direction: column;
+  }
+  .app::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: min(8vw, 38px);
+    background: var(--bar);
+  }
+
+  /* ヘッダー */
+  .top { display: flex; align-items: center; justify-content: space-between; min-height: 40px; }
+  .progress { display: flex; gap: 5px; }
+  .progress i { width: 14px; height: 4px; border-radius: 2px; background: var(--line); transition: background .3s; }
+  .progress i.done { background: var(--accent); }
+  .progress i.now { background: var(--accent-ink); }
+  .sound { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent-ink); padding: 8px 0 8px 8px; }
+  .sound svg { width: 20px; height: 20px; }
+  .sound[aria-pressed="false"] { color: #b9b9b9; }
+  .toggles { display: flex; gap: 6px; }
+
+  .num { font-family: var(--serif); font-style: italic; font-size: 34px; color: var(--accent); margin-top: 18px; line-height: 1; }
+  .title { font-size: 26px; font-weight: 500; letter-spacing: .08em; color: var(--accent); margin-top: 22px; line-height: 1.3; }
+
+  /* 問題文:リールと同じく左から伸びるハイライト */
+  .q {
+    font-family: var(--serif);
+    font-size: 25px;
+    line-height: 1.55;
+    margin-top: 26px;
+  }
+  .q .mark {
+    background: linear-gradient(var(--hl), var(--hl)) no-repeat 0 0 / 0% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding: 1px 4px;
+    margin-left: -4px;
+    animation: wipe .5s .25s ease-in-out forwards;
+  }
+  @keyframes wipe { to { background-size: 100% 100%; } }
+  .nw { white-space: nowrap; }
+  .blank { display: inline-block; min-width: 3.2em; text-align: center; }
+  .blank.filled { color: var(--accent-ink); font-weight: 500; animation: pop .35s ease-out; }
+  @keyframes pop { from { opacity: 0; transform: translateY(4px); } }
+  .listen {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
+    font-size: 12px; color: var(--accent-ink);
+    padding: 6px 12px 6px 10px; border: 1px solid var(--hl); border-radius: 999px;
+  }
+  .listen svg { width: 16px; height: 16px; }
+
+  /* 選択肢 */
+  .opts { margin-top: 30px; display: grid; gap: 12px; }
+  .opt {
+    display: flex; align-items: center; gap: 18px; width: 100%; text-align: left;
+    padding: 10px 12px; margin-left: -12px; border-radius: 12px;
+    opacity: 0; transform: translateX(-16px);
+    animation: slide .35s ease-in-out forwards;
+    transition: background .2s;
+  }
+  .opt:nth-child(2) { animation-delay: .2s; }
+  .opt:nth-child(3) { animation-delay: .4s; }
+  @keyframes slide { to { opacity: 1; transform: none; } }
+  .opt .c {
+    flex: none; width: 46px; height: 46px; border: 2.5px solid var(--ink); border-radius: 50%;
+    display: grid; place-items: center; font-size: 22px; font-weight: 500; line-height: 1;
+    transition: all .2s;
+  }
+  .opt .w { font-family: var(--serif); font-size: 30px; line-height: 1.2; }
+  .opt:not(:disabled):active { background: var(--hl); }
+  .opt:disabled { cursor: default; }
+  .opt.correct { background: var(--hl); }
+  .opt.correct .c { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .opt.wrong { background: var(--ng-bg); }
+  .opt.wrong .c { border-color: var(--ng); color: var(--ng); }
+  .opt.dim { opacity: .45 !important; }
+
+  /* 答え合わせ */
+  .reveal { margin-top: 26px; animation: pop .35s ease-out; }
+  .verdict { font-size: 22px; font-weight: 700; letter-spacing: .06em; }
+  .verdict.ok { color: var(--ok); }
+  .verdict.ng { color: var(--ng); }
+  .ja { margin-top: 10px; font-size: 15px; line-height: 1.8; color: var(--sub); }
+  details { margin-top: 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  summary {
+    list-style: none; cursor: pointer; padding: 14px 0; font-size: 15px; font-weight: 500;
+    display: flex; justify-content: space-between; align-items: center; color: var(--accent-ink);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "＋"; font-weight: 400; transition: transform .2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  .exp { padding: 0 0 18px; font-size: 15px; line-height: 1.9; white-space: pre-line; }
+  .tag { display: inline-block; font-size: 11px; color: var(--accent-ink); background: var(--hl); padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; }
+
+  .primary {
+    display: block; width: 100%; margin-top: 24px; padding: 16px; border-radius: 14px;
+    background: var(--ink); color: #fff; font-size: 16px; font-weight: 500; letter-spacing: .06em; text-align: center;
+    text-decoration: none;
+  }
+  .primary:active { opacity: .85; }
+  .ghost {
+    display: block; width: 100%; margin-top: 12px; padding: 14px; border-radius: 14px;
+    border: 1px solid var(--line); font-size: 14px; text-align: center; color: var(--sub); text-decoration: none;
+  }
+  .ghost.strong { color: var(--accent-ink); border-color: var(--hl); font-weight: 500; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 999px;
+    background: var(--hl); font-size: 14px; color: var(--ink);
+  }
+  .chip small { font-size: 11px; color: var(--accent-ink); }
+  .chip:active { background: var(--accent); }
+  .spacer { flex: 1; min-height: 24px; }
+
+  /* スタート */
+  .lead { margin-top: 26px; font-size: 15px; line-height: 1.9; color: var(--sub); }
+  .lead b { color: var(--ink); font-weight: 500; }
+  .sample { margin-top: 30px; font-family: var(--serif); font-size: 22px; line-height: 1.55; color: #9a9a9a; }
+
+  /* 結果 */
+  .score { font-family: var(--serif); font-size: 84px; line-height: 1; margin-top: 18px; }
+  .score small { font-size: 34px; color: var(--sub); }
+  .msg { margin-top: 12px; font-size: 16px; line-height: 1.8; }
+  .h { margin-top: 34px; font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--accent-ink); }
+  .miss { margin-top: 10px; border-top: 1px solid var(--line); }
+  .miss details { margin: 0; border-top: 0; }
+  .miss summary { color: var(--ink); font-weight: 400; font-family: var(--serif); font-size: 18px; line-height: 1.5; gap: 12px; align-items: flex-start; }
+  .miss summary span { flex: 1; }
+  .miss .ans { color: var(--accent-ink); font-weight: 500; }
+  .rec { margin-top: 12px; border: 1px solid var(--line); border-radius: 16px; padding: 18px; position: relative; }
+  .rec .pr { position: absolute; top: 12px; right: 14px; font-size: 10px; color: #9a9a9a; letter-spacing: .1em; }
+  .rec h3 { font-size: 16px; font-weight: 700; line-height: 1.5; padding-right: 30px; }
+  .rec a { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--hl); text-decoration: none; color: var(--ink); }
+  .rec a b { display: block; font-size: 14px; font-weight: 500; }
+  .rec a small { display: block; font-size: 12px; color: var(--sub); margin-top: 2px; }
+  .rec a::after { content: "›"; font-size: 22px; color: var(--accent-ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main class="app" id="app"></main>
+
+<script src="data.js"></script>
+<script src="recommend.js"></script>
+<script>
+(() => {
+  const QUIZZES = window.QUIZZES || [];
+  const REC = window.RECOMMEND || {};
+  const LINKS = window.LINKS || {};
+  const app = document.getElementById("app");
+  const CIRCLED = ["①", "②", "③", "④"];
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const BLANK_RE = /\(\s*\)/;
+
+  // ---- 音声:ElevenLabs で作った mp3 があればそれを、なければブラウザ標準の読み上げ ----
+  const hasTTS = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+  const canSpeak = hasTTS || QUIZZES.some((q) => q.audio);
+  let soundOn = canSpeak;
+  try { if (localStorage.getItem("sound") === "off") soundOn = false; } catch (e) {}
+  let voice = null;
+  let player = null;
+  const pickVoice = () => {
+    const vs = speechSynthesis.getVoices().filter((v) => /^en[-_]US/i.test(v.lang));
+    voice = vs.find((v) => /Samantha|Google US English|Aria|Jenny/i.test(v.name)) || vs[0] || null;
+  };
+  if (hasTTS) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+  // ---- BGM:site/bgm.mp3 があるときだけボタンを出す。読み上げ中は音量を下げる ----
+  const BGM_VOL = 0.18;
+  const BGM_DUCK = 0.05;
+  const bgm = new Audio("bgm.mp3");
+  bgm.loop = true;
+  bgm.preload = "metadata";
+  let bgmOk = true;
+  let bgmOn = false;
+  try { bgmOn = localStorage.getItem("bgm") === "on"; } catch (e) {}
+  let gain = null;
+  bgm.addEventListener("error", () => {
+    bgmOk = false;
+    const b = document.getElementById("bgm");
+    if (b) b.remove();
+  });
+  // iOS は audio.volume が効かないので Web Audio で音量を制御する(file:// では無音になるため通常の volume を使う)
+  function setBgmVolume(v) {
+    if (gain) gain.gain.value = v;
+    else bgm.volume = v;
+  }
+  function bgmPlay() {
+    if (!bgmOk || !bgmOn) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!gain && AC && location.protocol !== "file:") {
+      const ctx = new AC();
+      gain = ctx.createGain();
+      ctx.createMediaElementSource(bgm).connect(gain).connect(ctx.destination);
+    }
+    if (gain) gain.context.resume();
+    setBgmVolume(BGM_VOL);
+    bgm.play().catch(() => {});
+  }
+  const duck = (on) => setBgmVolume(on ? BGM_DUCK : BGM_VOL);
+
+  function stopVoice() {
+    if (player) { player.pause(); player = null; }
+    if (hasTTS) speechSynthesis.cancel();
+    duck(false);
+  }
+  function speak(q) {
+    stopVoice();
+    duck(true);
+    if (q.audio) {
+      player = new Audio(q.audio);
+      player.onended = () => duck(false);
+      player.play().catch(() => duck(false));
+      return;
+    }
+    if (!hasTTS) return duck(false);
+    const u = new SpeechSynthesisUtterance(completed(q));
+    u.lang = "en-US";
+    u.rate = 0.92;
+    if (voice) u.voice = voice;
+    u.onend = () => duck(false);
+    speechSynthesis.speak(u);
+  }
+  const musicSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+  const speakerSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+  const mutedSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m22 9-6 6M16 9l6 6"/></svg>';
+
+  const completed = (q) => q.question.replace(BLANK_RE, q.options[q.answer - 1]);
+
+  // ---- 状態 ----
+  let set = [];
+  let idx = 0;
+  let results = [];
+
+  // 間違えた問題の番号を端末に記録(ログイン不要の復習用)
+  const loadMissed = () => { try { return JSON.parse(localStorage.getItem("missed") || "[]"); } catch (e) { return []; } };
+  function recordResult(no, ok) {
+    const missed = new Set(loadMissed());
+    ok ? missed.delete(no) : missed.add(no);
+    try { localStorage.setItem("missed", JSON.stringify([...missed])); } catch (e) {}
+  }
+
+  const shuffle = (a) => a.map((v) => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map((x) => x[1]);
+  const sorted = [...QUIZZES].sort((a, b) => a.no - b.no);
+
+  function begin(quizzes) {
+    if (!quizzes.length) return;
+    set = quizzes.slice(0, 10);
+    idx = 0;
+    results = [];
+    bgmPlay();
+    renderQuestion();
+  }
+
+  function header() {
+    const dots = set.map((_, i) => `<i class="${i < idx ? "done" : i === idx ? "now" : ""}"></i>`).join("");
+    const sound = canSpeak
+      ? `<button class="sound" id="sound" aria-pressed="${soundOn}" aria-label="音声">${soundOn ? speakerSvg : mutedSvg}${soundOn ? "音声ON" : "音声OFF"}</button>`
+      : "";
+    const music = bgmOk
+      ? `<button class="sound" id="bgm" aria-pressed="${bgmOn}" aria-label="BGM">${musicSvg}${bgmOn ? "BGM ON" : "BGM OFF"}</button>`
+      : "";
+    return `<div class="top"><div class="progress" aria-label="${idx + 1} / ${set.length}問目">${dots}</div><div class="toggles">${music}${sound}</div></div>`;
+  }
+  function bindSound() {
+    const m = document.getElementById("bgm");
+    if (m) m.onclick = () => {
+      bgmOn = !bgmOn;
+      try { localStorage.setItem("bgm", bgmOn ? "on" : "off"); } catch (e) {}
+      bgmOn ? bgmPlay() : bgm.pause();
+      m.setAttribute("aria-pressed", bgmOn);
+      m.innerHTML = musicSvg + (bgmOn ? "BGM ON" : "BGM OFF");
+    };
+    const b = document.getElementById("sound");
+    if (!b) return;
+    b.onclick = () => {
+      soundOn = !soundOn;
+      try { localStorage.setItem("sound", soundOn ? "on" : "off"); } catch (e) {}
+      if (!soundOn) stopVoice();
+      b.setAttribute("aria-pressed", soundOn);
+      b.innerHTML = (soundOn ? speakerSvg : mutedSvg) + (soundOn ? "音声ON" : "音声OFF");
+    };
+  }
+
+  // ---- スタート画面 ----
+  function renderStart() {
+    stopVoice();
+    // 番号順に10問ずつ区切る
+    const ranges = [];
+    for (let i = 0; i < sorted.length; i += 10) ranges.push(sorted.slice(i, i + 10));
+    // 分野ごとの問題
+    const cats = {};
+    sorted.forEach((q) => { if (q.category) (cats[q.category] = cats[q.category] || []).push(q); });
+    const missedNos = new Set(loadMissed());
+    const missed = sorted.filter((q) => missedNos.has(q.no));
+
+    app.innerHTML = `
+      <div class="top"></div>
+      <p class="num">${sorted.length}</p>
+      <h1 class="title">TOEICでよく出る<br>文法クイズ</h1>
+      <p class="lead">リールで出している文法クイズの<b>続き</b>です。<br>タップで答え合わせ、<b>音声つき</b>で解説も読めます。</p>
+      <button class="primary" id="latest">最新の10問をとく</button>
+      ${missed.length ? `<button class="ghost strong" id="missed">前に間違えた問題をとき直す(${missed.length}問)</button>` : ""}
+      <p class="h">分野からえらぶ</p>
+      <div class="chips">
+        ${Object.keys(cats).map((c) => `<button class="chip" data-cat="${esc(c)}">${esc(c)}<small>${cats[c].length}</small></button>`).join("")}
+        <button class="chip" id="random">ランダム10問</button>
+      </div>
+      <p class="h">番号からえらぶ</p>
+      <div class="chips">
+        ${ranges.map((r, i) => `<button class="chip" data-range="${i}">No.${r[0].no}〜${r[r.length - 1].no}</button>`).join("")}
+      </div>
+      <div class="spacer"></div>
+      <p class="lead" style="font-size:12px;text-align:center">1回10問・約3分・登録不要</p>`;
+
+    document.getElementById("latest").onclick = () => begin(sorted.slice(-10));
+    document.getElementById("random").onclick = () => begin(shuffle(sorted));
+    const m = document.getElementById("missed");
+    if (m) m.onclick = () => begin(shuffle(missed));
+    app.querySelectorAll("[data-cat]").forEach((b) => (b.onclick = () => begin(shuffle(cats[b.dataset.cat]))));
+    app.querySelectorAll("[data-range]").forEach((b) => (b.onclick = () => begin(ranges[b.dataset.range])));
+  }
+
+
+  // ---- 問題画面 ----
+  function renderQuestion() {
+    const q = set[idx];
+    const parts = q.question.split(BLANK_RE);
+    const sentence = `<span class="mark">${esc(parts[0])}<span class="nw">(<span class="blank" id="blank">   </span>)</span>${esc(parts[1] || "")}</span>`;
+    app.innerHTML = `
+      ${header()}
+      <p class="num">${esc(q.no)}</p>
+      <h2 class="title">TOEICでよく出る</h2>
+      <p class="q">${sentence}</p>
+      <div class="opts" id="opts">
+        ${q.options.map((o, i) => `<button class="opt" data-i="${i + 1}"><span class="c">${i + 1}</span><span class="w">${esc(o)}</span></button>`).join("")}
+      </div>
+      <div id="after"></div>`;
+    bindSound();
+    window.scrollTo({ top: 0 });
+    app.querySelectorAll(".opt").forEach((b) => (b.onclick = () => answer(q, Number(b.dataset.i))));
+  }
+
+  function answer(q, choice) {
+    const ok = choice === q.answer;
+    results[idx] = { q, choice, ok };
+    recordResult(q.no, ok);
+    app.querySelectorAll(".opt").forEach((b) => {
+      const i = Number(b.dataset.i);
+      b.disabled = true;
+      if (i === q.answer) b.classList.add("correct");
+      else if (i === choice) b.classList.add("wrong");
+      else b.classList.add("dim");
+      if (i === choice && !ok) b.querySelector(".c").textContent = "×";
+    });
+    const blank = document.getElementById("blank");
+    blank.textContent = q.options[q.answer - 1];
+    blank.classList.add("filled");
+
+    const last = idx === set.length - 1;
+    const after = document.getElementById("after");
+    after.innerHTML = `
+      <div class="reveal">
+        <p class="verdict ${ok ? "ok" : "ng"}">${ok ? "正解！" : `不正解… 正解は ${CIRCLED[q.answer - 1]}`}</p>
+        <p class="ja">${esc(q.translation || "")}</p>
+        ${canSpeak ? `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>` : ""}
+        <details ${ok ? "" : "open"}>
+          <summary>解説を見る</summary>
+          <div class="exp">${q.category ? `<span class="tag">${esc(q.category)}</span>\n` : ""}${esc(q.explanation || "")}</div>
+        </details>
+        <button class="primary" id="next">${last ? "結果を見る" : "次の問題へ"}</button>
+      </div>`;
+    const listen = document.getElementById("listen");
+    if (listen) listen.onclick = () => speak(q);
+    if (soundOn) speak(q);
+    document.getElementById("next").onclick = () => {
+      stopVoice();
+      idx++;
+      last ? renderResult() : renderQuestion();
+    };
+    after.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  // ---- 結果画面 ----
+  function renderResult() {
+    const total = results.length;
+    const score = results.filter((r) => r.ok).length;
+    const missed = results.filter((r) => !r.ok);
+    const msg =
+      score === total ? "全問正解！ 文法の基礎はしっかり固まっています。" :
+      score >= total * 0.7 ? "あと少し！ 間違えた問題だけ見直せば完璧です。" :
+      score >= total * 0.4 ? "伸びしろたっぷり。苦手な分野を1つずつ潰していきましょう。" :
+      "まずは頻出ポイントの確認から。下の解説を読むだけでも効果があります。";
+
+    // 一番多く間違えたカテゴリのおすすめを出す
+    const counts = {};
+    missed.forEach((r) => { if (r.q.category) counts[r.q.category] = (counts[r.q.category] || 0) + 1; });
+    const worst = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
+    const rec = (worst && REC[worst]) || REC.default;
+
+    app.innerHTML = `
+      <div class="top"></div>
+      <h2 class="title">結果</h2>
+      <p class="score">${score}<small> / ${total}</small></p>
+      <p class="msg">${msg}</p>
+      ${missed.length ? `
+        <p class="h">間違えた問題</p>
+        <div class="miss">
+          ${missed.map((r) => `
+            <details>
+              <summary><span>${esc(r.q.question).replace(BLANK_RE, `(<span class="ans">${esc(r.q.options[r.q.answer - 1])}</span>)`)}</span></summary>
+              <div class="exp">${r.q.category ? `<span class="tag">${esc(r.q.category)}</span>\n` : ""}${esc(r.q.explanation || "")}</div>
+            </details>`).join("")}
+        </div>` : ""}
+      ${rec ? `
+        <p class="h">${missed.length ? "あなたへのおすすめ" : "さらに上を目指すなら"}</p>
+        <div class="rec">
+          <span class="pr">PR</span>
+          <h3>${esc(rec.title)}</h3>
+          ${rec.items.map((it) => `<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored"><span><b>${esc(it.name)}</b><small>${esc(it.note || "")}</small></span></a>`).join("")}
+        </div>` : ""}
+      <div class="spacer"></div>
+      <button class="primary" id="retry">同じ問題にもう一度チャレンジ</button>
+      <button class="ghost strong" id="menu">ほかの問題をえらぶ</button>
+      ${LINKS.instagram ? `<a class="ghost" href="${esc(LINKS.instagram)}" target="_blank" rel="noopener">Instagramで毎日1問 @eng_navi</a>` : ""}`;
+    window.scrollTo({ top: 0 });
+    document.getElementById("retry").onclick = () => begin(set);
+    document.getElementById("menu").onclick = renderStart;
+  }
+
+  QUIZZES.length ? renderStart() : (app.innerHTML = "<p>問題がありません</p>");
+})();
+</script>
+</body>
+</html>

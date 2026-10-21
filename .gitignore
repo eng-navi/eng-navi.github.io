@@ -1,0 +1,8 @@
+# 秘密情報
+.env
+# 本のスクショ(著作物なので公開しない)
+source/
+# 書き出した動画・元動画のBGM
+out/
+assets/
+.DS_Store
