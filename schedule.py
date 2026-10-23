@@ -50,7 +50,7 @@ def push(paths, message):
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode == 0:
         return
     post.git("commit", "-q", "-m", message)
-    post.git("pull", "-q", "--rebase")
+    post.git("pull", "-q", "--rebase", "--autostash")
     post.git("push", "-q")
 
 
