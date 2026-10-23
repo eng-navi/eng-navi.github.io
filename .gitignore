@@ -6,3 +6,5 @@ source/
 out/
 assets/
 .DS_Store
+# BGM:配布条件の確認が取れるまで公開しない
+docs/bgm/

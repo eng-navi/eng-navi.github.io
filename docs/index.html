@@ -79,6 +79,16 @@
   .sound { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--accent-ink); padding: 8px 0 8px 6px; white-space: nowrap; }
   .sound svg { width: 18px; height: 18px; }
   .sound[aria-pressed="false"] { color: #b9b9b9; }
+  .bgm-wrap { position: relative; }
+  .bgm-menu {
+    position: absolute; right: 0; top: calc(100% + 4px); z-index: 10; min-width: 200px; padding: 8px;
+    background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    animation: pop .2s ease-out;
+  }
+  .bgm-menu p { font-size: 11px; color: #9a9a9a; letter-spacing: .1em; padding: 4px 10px 6px; }
+  .bgm-menu button { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 10px; border-radius: 10px; font-size: 14px; text-align: left; color: var(--ink); }
+  .bgm-menu button small { font-size: 11px; color: #9a9a9a; }
+  .bgm-menu button[aria-checked="true"] { background: var(--hl); color: var(--accent-ink); font-weight: 500; }
 
   .num { font-family: var(--num); font-style: italic; font-size: 36px; color: var(--accent); margin-top: 18px; line-height: 1; letter-spacing: .04em; }
   .title { font-size: 26px; font-weight: 500; letter-spacing: .06em; color: var(--accent); margin-top: 22px; line-height: 1.35; }
@@ -245,7 +255,6 @@
   const LINKS = window.LINKS || {};
   const app = document.getElementById("app");
   const CIRCLED = ["①", "②", "③", "④"];
-  const BGM_SRC = "bgm.mp3";
 
   // 番号から色(シリーズ)を決める。リールと同じ 緑 → ピンク → 青
   const SERIES = {
@@ -274,25 +283,32 @@
   };
   if (hasTTS) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
 
-  // ---- BGM:Web Audio でつなぎ目なくループ。読み上げ中は音量を下げる ----
-  const BGM_VOL = 0.2;
-  const BGM_DUCK = 0.05;
+  // ---- BGM:気分で選べる。Web Audio でつなぎ目なくループし、ゆっくりフェードイン ----
+  const TRACKS = [
+    { id: "lefty", name: "Lefty", mood: "Lo-fi" },
+    { id: "the-waves", name: "The Waves", mood: "Lo-fi" },
+    { id: "tokyo-spring", name: "Tokyo Spring", mood: "Lo-fi" },
+    { id: "just-flow", name: "Just Flow", mood: "Chill" },
+    { id: "darkside", name: "Darkside", mood: "Hip-hop" },
+    { id: "to-the-moon", name: "To The Moon", mood: "Hip-hop" },
+    { id: "funk-formula", name: "Funk Formula", mood: "Funk" },
+  ];
+  const srcOf = (id) => `bgm/${id}.mp3`;
+  const BGM_VOL = 0.16;
+  const BGM_DUCK = 0.04;
+  const FADE_IN = 1.4;  // 秒(時定数)。ガツンと鳴らないよう、数秒かけて上げる
   const AC = window.AudioContext || window.webkitAudioContext;
   const useWebAudio = !!AC && location.protocol !== "file:";
   let bgmOk = false;
-  let bgmOn = false;
-  try { bgmOn = localStorage.getItem("bgm") === "on"; } catch (e) {}
-  let ctx = null, gain = null, buffer = null, source = null, el = null;
+  let track = null;  // 選んだ曲の id。null はオフ
+  try { track = localStorage.getItem("bgmTrack"); } catch (e) {}
+  if (!TRACKS.some((t) => t.id === track)) track = null;
+  let ctx = null, master = null, current = null, el = null;
+  const buffers = {};
 
-  if (useWebAudio) {
-    fetch(BGM_SRC, { method: "HEAD" }).then((r) => { bgmOk = r.ok; refreshToggles(); }).catch(() => {});
-  } else {
-    // ローカル確認用(file://)。こちらは曲の切れ目にわずかな間ができる
-    el = new Audio(BGM_SRC);
-    el.loop = true;
-    el.preload = "auto";
-    el.addEventListener("canplaythrough", () => { bgmOk = true; refreshToggles(); }, { once: true });
-  }
+  fetch(srcOf(TRACKS[0].id), { method: "HEAD" }).then((r) => { bgmOk = r.ok; refreshToggles(); }).catch(() => {
+    bgmOk = location.protocol === "file:"; refreshToggles();
+  });
 
   // mp3 の頭と最後に入る無音を飛ばして、曲の終わりと始まりを直接つなぐ
   function trimLoop(buf) {
@@ -302,45 +318,58 @@
     while (b > a && Math.abs(d[b]) < 0.0005) b--;
     return [a / buf.sampleRate, (b + 1) / buf.sampleRate];
   }
+  async function load(id) {
+    if (!buffers[id]) {
+      const data = await (await fetch(srcOf(id))).arrayBuffer();
+      buffers[id] = await new Promise((ok, ng) => ctx.decodeAudioData(data, ok, ng));
+    }
+    return buffers[id];
+  }
+  function fadeOut(node, sec) {
+    node.gain.gain.cancelScheduledValues(ctx.currentTime);
+    node.gain.gain.setTargetAtTime(0, ctx.currentTime, sec / 4);
+    node.src.stop(ctx.currentTime + sec);
+  }
   async function bgmPlay() {
-    if (!bgmOk || !bgmOn) return;
-    if (!useWebAudio) { el.volume = BGM_VOL; el.play().catch(() => {}); return; }
+    if (!bgmOk || !track) return;
+    if (!useWebAudio) {
+      // ローカル確認用(file://)。曲の切れ目にわずかな間ができる
+      if (!el || !el.src.endsWith(srcOf(track))) { if (el) el.pause(); el = new Audio(srcOf(track)); el.loop = true; }
+      el.volume = BGM_VOL; el.play().catch(() => {});
+      return;
+    }
     if (!ctx) {
       ctx = new AC();
-      gain = ctx.createGain();
-      gain.gain.value = 0;
-      gain.connect(ctx.destination);
+      master = ctx.createGain();
+      master.connect(ctx.destination);
     }
     ctx.resume();
-    if (source) return;
-    if (!buffer) {
-      const data = await (await fetch(BGM_SRC)).arrayBuffer();
-      buffer = await new Promise((ok, ng) => ctx.decodeAudioData(data, ok, ng));
-    }
-    if (!bgmOn || source) return;
-    const [start, end] = trimLoop(buffer);
-    source = ctx.createBufferSource();
-    source.buffer = buffer;
-    source.loop = true;
-    source.loopStart = start;
-    source.loopEnd = end;
-    source.connect(gain);
-    source.start(0, start);
-    gain.gain.cancelScheduledValues(ctx.currentTime);
-    gain.gain.setTargetAtTime(BGM_VOL, ctx.currentTime, 0.6); // ふわっと入る
+    if (current && current.id === track) return;
+    const id = track;
+    const buf = await load(id);
+    if (track !== id) return;
+    if (current) fadeOut(current, 1.5);  // 曲を変えたときは前の曲を下げながら切り替える
+    const [start, end] = trimLoop(buf);
+    const src = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    src.buffer = buf;
+    src.loop = true;
+    src.loopStart = start;
+    src.loopEnd = end;
+    gain.gain.value = 0;
+    src.connect(gain).connect(master);
+    src.start(0, start);
+    gain.gain.setTargetAtTime(BGM_VOL, ctx.currentTime, FADE_IN);
+    current = { id, src, gain };
   }
   function bgmStop() {
-    if (!useWebAudio) { if (el) el.pause(); return; }
-    if (!source) return;
-    const s = source;
-    source = null;
-    gain.gain.setTargetAtTime(0, ctx.currentTime, 0.25);
-    s.stop(ctx.currentTime + 1.2);
+    if (el) el.pause();
+    if (current) { fadeOut(current, 1.2); current = null; }
   }
   function duck(on) {
-    const v = on ? BGM_DUCK : BGM_VOL;
-    if (gain && source) gain.gain.setTargetAtTime(v, ctx.currentTime, 0.15);
-    else if (el) el.volume = v;
+    const v = on ? BGM_DUCK / BGM_VOL : 1;
+    if (master) master.gain.setTargetAtTime(v, ctx.currentTime, 0.15);
+    else if (el) el.volume = on ? BGM_DUCK : BGM_VOL;
   }
 
   function stopVoice() {
@@ -405,9 +434,16 @@
   }
 
   function toggles() {
-    const music = bgmOk
-      ? `<button class="sound" id="bgm" aria-pressed="${bgmOn}" aria-label="BGM">${musicSvg}${bgmOn ? "BGM ON" : "BGM OFF"}</button>`
-      : "";
+    const now = TRACKS.find((t) => t.id === track);
+    const music = bgmOk ? `
+      <div class="bgm-wrap">
+        <button class="sound" id="bgm" aria-pressed="${!!track}" aria-haspopup="true" aria-label="BGMを選ぶ">${musicSvg}${now ? esc(now.name) : "BGM OFF"}</button>
+        <div class="bgm-menu" id="bgm-menu" hidden>
+          <p>BGM</p>
+          ${TRACKS.map((t) => `<button data-track="${t.id}" aria-checked="${t.id === track}"><span>${esc(t.name)}</span><small>${t.mood}</small></button>`).join("")}
+          <button data-track="" aria-checked="${!track}"><span>オフ</span></button>
+        </div>
+      </div>` : "";
     const sound = canSpeak
       ? `<button class="sound" id="sound" aria-pressed="${soundOn}" aria-label="英文の音声">${soundOn ? speakerSvg : mutedSvg}${soundOn ? "音声ON" : "音声OFF"}</button>`
       : "";
@@ -423,13 +459,16 @@
   }
   function bindSound() {
     const m = document.getElementById("bgm");
-    if (m) m.onclick = () => {
-      bgmOn = !bgmOn;
-      try { localStorage.setItem("bgm", bgmOn ? "on" : "off"); } catch (e) {}
-      bgmOn ? bgmPlay() : bgmStop();
-      m.setAttribute("aria-pressed", bgmOn);
-      m.innerHTML = musicSvg + (bgmOn ? "BGM ON" : "BGM OFF");
-    };
+    const menu = document.getElementById("bgm-menu");
+    if (m) {
+      m.onclick = (e) => { e.stopPropagation(); menu.hidden = !menu.hidden; };
+      menu.querySelectorAll("[data-track]").forEach((b) => (b.onclick = () => {
+        track = b.dataset.track || null;
+        try { localStorage.setItem("bgmTrack", track || ""); } catch (e) {}
+        track ? bgmPlay() : bgmStop();
+        refreshToggles();
+      }));
+    }
     const b = document.getElementById("sound");
     if (b) b.onclick = () => {
       soundOn = !soundOn;
@@ -660,6 +699,11 @@
     document.getElementById("retry").onclick = () => begin(set);
     document.getElementById("menu").onclick = renderStart;
   }
+
+  document.addEventListener("click", (e) => {
+    const menu = document.getElementById("bgm-menu");
+    if (menu && !menu.hidden && !e.target.closest(".bgm-wrap")) menu.hidden = true;
+  });
 
   QUIZZES.length ? renderStart() : (app.innerHTML = "<p>問題がありません</p>");
 })();
