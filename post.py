@@ -1,0 +1,164 @@
+"""クイズ動画をリールとして投稿し、答えと解説をコメントする。
+
+動画は docs/videos/ に置いて GitHub Pages に push し、その公開URLから Instagram に取り込まれる。
+
+使い方:
+    python3 post.py 101 --dry-run    # キャプションとコメントを表示するだけ
+    python3 post.py 101              # 投稿する
+    python3 post.py --refresh-token  # トークンの有効期限を延長する
+"""
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import time
+import urllib.parse
+import urllib.request
+from datetime import datetime
+from pathlib import Path
+
+ROOT = Path(__file__).parent
+API = "https://graph.instagram.com"
+LOG = ROOT / "posted.json"
+
+CAPTION = """英文法を少しずつ身につけて、英語の理解を深めよう！📘✨
+共通テストやTOEICのリーディングにも役立つ文法ポイントを、わかりやすく紹介しています。
+
+#英文法 #TOEIC対策 #共通テスト英語 #英語力アップ"""
+
+RULE = "--------------------------------------"
+
+
+def load_env():
+    env = ROOT / ".env"
+    if env.exists():
+        for line in env.read_text().splitlines():
+            if "=" in line and not line.startswith("#"):
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+
+
+def api(method, path, **params):
+    params["access_token"] = os.environ["IG_ACCESS_TOKEN"]
+    query = urllib.parse.urlencode(params)
+    if method == "GET":
+        req = urllib.request.Request(f"{API}/{path}?{query}")
+    else:
+        req = urllib.request.Request(f"{API}/{path}", data=query.encode(), method="POST")
+    try:
+        with urllib.request.urlopen(req) as res:
+            return json.load(res)
+    except urllib.error.HTTPError as e:
+        sys.exit(f"API エラー ({path}): {e.read().decode()}")
+
+
+def build_comment(q):
+    answer = q["options"][q["answer"] - 1]
+    sentence = re.sub(r"\(\s*\)", answer, q["question"])
+    return "\n".join([
+        RULE,
+        f"【{q['no']}】",
+        sentence,
+        q["translation"],
+        "",
+        "【解説】",
+        q["explanation"],
+        RULE,
+    ])
+
+
+def wait_until_ready(container_id, timeout=300):
+    """動画の取り込みが終わるまで待つ。"""
+    start = time.time()
+    while time.time() - start < timeout:
+        status = api("GET", container_id, fields="status_code,status")
+        code = status.get("status_code")
+        if code == "FINISHED":
+            return
+        if code in ("ERROR", "EXPIRED"):
+            sys.exit(f"動画の取り込みに失敗: {status}")
+        time.sleep(10)
+    sys.exit("動画の取り込みがタイムアウトしました")
+
+
+def git(*args):
+    subprocess.run(["git", *args], cwd=ROOT, check=True)
+
+
+def stage_video(no, timeout=600):
+    """動画を docs/videos/ に置いて push し、公開URLで取得できるまで待つ。"""
+    src = ROOT / "out" / f"q{no}.mp4"
+    if not src.exists():
+        subprocess.run([sys.executable, "render.py", "quizzes.json", str(no)], cwd=ROOT, check=True)
+    dst = ROOT / "docs" / "videos" / src.name
+    url = f"{os.environ['SITE_URL'].rstrip('/')}/videos/{src.name}"
+    if not dst.exists():
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(src, dst)
+        git("add", str(dst))
+        git("commit", "-q", "-m", f"動画 q{no} を追加")
+        git("push", "-q")
+
+    start = time.time()
+    while time.time() - start < timeout:
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, method="HEAD")) as res:
+                if res.status == 200:
+                    return url
+        except urllib.error.HTTPError:
+            pass
+        time.sleep(15)
+    sys.exit(f"動画が公開URLに反映されませんでした: {url}")
+
+
+def post(q):
+    print("0/4 動画を公開URLに配置")
+    video_url = stage_video(q["no"])
+    user = os.environ["IG_USER_ID"]
+
+    print(f"1/4 動画を送信: {video_url}")
+    container = api("POST", f"{user}/media", media_type="REELS", video_url=video_url,
+                    caption=CAPTION, share_to_feed="true")["id"]
+
+    print("2/4 Instagram 側の処理を待機中…")
+    wait_until_ready(container)
+
+    print("3/4 公開")
+    media_id = api("POST", f"{user}/media_publish", creation_id=container)["id"]
+
+    print("4/4 答えをコメント")
+    api("POST", f"{media_id}/comments", message=build_comment(q))
+
+    permalink = api("GET", media_id, fields="permalink").get("permalink")
+    log = json.loads(LOG.read_text()) if LOG.exists() else []
+    log.append({"no": q["no"], "media_id": media_id, "permalink": permalink,
+                "posted_at": datetime.now().isoformat(timespec="seconds")})
+    LOG.write_text(json.dumps(log, ensure_ascii=False, indent=2) + "\n")
+    print(f"✓ 投稿完了 {permalink}")
+
+
+def refresh_token():
+    res = api("GET", "refresh_access_token", grant_type="ig_refresh_token")
+    env = ROOT / ".env"
+    lines = [l for l in env.read_text().splitlines() if not l.startswith("IG_ACCESS_TOKEN=")]
+    lines.append(f"IG_ACCESS_TOKEN={res['access_token']}")
+    env.write_text("\n".join(lines) + "\n")
+    print(f"✓ トークンを更新しました(残り {res['expires_in'] // 86400} 日)")
+
+
+def main():
+    load_env()
+    if "--refresh-token" in sys.argv:
+        return refresh_token()
+    no = int(sys.argv[1])
+    q = next(q for q in json.loads((ROOT / "quizzes.json").read_text()) if q["no"] == no)
+    if "--dry-run" in sys.argv:
+        print("=== キャプション ===\n" + CAPTION + "\n\n=== コメント ===\n" + build_comment(q))
+        return
+    post(q)
+
+
+if __name__ == "__main__":
+    main()

@@ -16,7 +16,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-AUDIO = ROOT / "site" / "audio"
+AUDIO = ROOT / "docs" / "audio"
 DEFAULT_VOICE = "21m00Tcm4TlvDq8ikWAM"  # Rachel(米国英語・落ち着いた女性)
 MODEL = "eleven_multilingual_v2"
 

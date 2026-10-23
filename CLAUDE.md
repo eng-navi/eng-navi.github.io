@@ -42,7 +42,7 @@ think は、目的語として節を取る場合は、基本的に that節を取
 - 1行目の英文は括弧に正解を入れた完成文。
 - 解説の最後は「〜なので、①◯◯ が正解。」で締める。
 
-## クイズページ (site/)
-- `python3 build_site.py` で quizzes.json の最新10問を `site/data.js` に書き出す。
-- 結果画面のおすすめ(アフィリエイト)は `site/recommend.js` を編集。category ごとに出し分け、なければ default。
+## クイズページ (docs/ = GitHub Pages で公開)
+- `python3 build_site.py` で quizzes.json の最新10問を `docs/data.js` に書き出す。
+- 結果画面のおすすめ(アフィリエイト)は `docs/recommend.js` を編集。category ごとに出し分け、なければ default。
 - quizzes.json の各問には `category`(品詞・前置詞・時制など)、`translation`、`explanation` を必ず入れる。

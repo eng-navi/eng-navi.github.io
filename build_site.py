@@ -1,4 +1,4 @@
-"""quizzes.json からクイズページ用のデータ (site/data.js) を書き出す。
+"""quizzes.json からクイズページ用のデータ (docs/data.js) を書き出す。
 
 使い方:
     python3 build_site.py
@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).parent
-SITE = ROOT / "site"
+SITE = ROOT / "docs"
 FIELDS = ["no", "category", "question", "options", "answer", "translation", "explanation"]
 
 
