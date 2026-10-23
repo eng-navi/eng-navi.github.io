@@ -153,11 +153,12 @@
   .timer-row .sec { font-family: var(--serif); font-size: 22px; font-variant-numeric: tabular-nums; }
   .timer .bar { margin-top: 8px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
   .timer .bar i { display: block; height: 100%; width: 100%; background: var(--accent-ink); transform-origin: left; transition: transform .1s linear; }
-  .timer.hurry .sec, .timer.hurry .hint { color: var(--ng); }
+  .timer.hurry .sec { color: var(--ng); }
   .timer.hurry .bar i { background: var(--ng); }
-  .timer.hurry .sec { animation: beat 1s ease-in-out infinite; }
+  .timer.over .sec, .timer.over .bar { visibility: hidden; }
+  .timer.over .hint { color: var(--sub); }
+  .timer.off .sec, .timer.off .bar { display: none; }
   @keyframes nudge { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-3px); opacity: .7; } }
-  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } }
 
   /* 答え合わせ・解説 */
   .reveal { margin-top: 26px; animation: pop .35s ease-out; }
@@ -417,6 +418,7 @@
     u.onend = () => duck(false);
     speechSynthesis.speak(u);
   }
+  const clockSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>';
   const musicSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
   const speakerSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
   const mutedSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m22 9-6 6M16 9l6 6"/></svg>';
@@ -475,7 +477,8 @@
     const sound = canSpeak
       ? `<button class="sound" id="sound" aria-pressed="${soundOn}" aria-label="英文の音声">${soundOn ? speakerSvg : mutedSvg}${soundOn ? "音声ON" : "音声OFF"}</button>`
       : "";
-    return `<div class="toggles" id="toggles">${music}${sound}</div>`;
+    const timer = `<button class="sound" id="timer-toggle" aria-pressed="${timerOn}" aria-label="制限時間">${clockSvg}${timerOn ? TIME_LIMIT + "秒" : "時間OFF"}</button>`;
+    return `<div class="toggles" id="toggles">${music}${timer}${sound}</div>`;
   }
   function header() {
     const dots = set.map((_, i) => `<i class="${i < idx ? "done" : i === idx ? "now" : ""}"></i>`).join("");
@@ -497,6 +500,19 @@
         refreshToggles();
       }));
     }
+    const tt = document.getElementById("timer-toggle");
+    if (tt) tt.onclick = () => {
+      timerOn = !timerOn;
+      try { localStorage.setItem("timer", timerOn ? "on" : "off"); } catch (e) {}
+      const timer = document.getElementById("timer");
+      if (timer) {
+        timer.classList.toggle("off", !timerOn);
+        timer.classList.remove("hurry", "over");
+        timer.querySelector(".hint").textContent = "👆 タップして答えを選んでね";
+        timerOn ? startTimer() : stopTimer();
+      }
+      refreshToggles();
+    };
     const b = document.getElementById("sound");
     if (b) b.onclick = () => {
       soundOn = !soundOn;
@@ -591,13 +607,13 @@
         <div class="opts">
           ${q.options.map((o, i) => `<button class="opt" data-i="${i + 1}"><span class="c">${i + 1}</span><span class="w">${esc(o)}</span></button>`).join("")}
         </div>
-        <div class="timer" id="timer">
+        <div class="timer ${timerOn ? "" : "off"}" id="timer">
           <div class="timer-row"><span class="hint">👆 タップして答えを選んでね</span><span class="sec" id="sec">${TIME_LIMIT}</span></div>
           <div class="bar"><i id="bar"></i></div>
         </div>
         <div id="after"></div>`;
       app.querySelectorAll(".opt").forEach((b) => (b.onclick = () => answer(q, Number(b.dataset.i))));
-      startTimer(q);
+      startTimer();
     }
     bindSound();
     window.scrollTo({ top: 0 });
@@ -614,24 +630,14 @@
       ${nudge}`;
   }
 
-  // ---- 制限時間(残り5秒から時計の音) ----
+  // ---- 制限時間(右上でON/OFF。時間が来ても答えは開かず、そのまま考えてよい) ----
   const TIME_LIMIT = 15;
-  let timerId = null, tickCtx = null;
-  function tick(strong) {
-    if (!soundOn || !AC) return;
-    tickCtx = tickCtx || new AC();
-    const t = tickCtx.currentTime;
-    const o = tickCtx.createOscillator(), g = tickCtx.createGain();
-    o.type = "square";
-    o.frequency.value = strong ? 1600 : 1200;
-    g.gain.setValueAtTime(strong ? 0.05 : 0.025, t);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
-    o.connect(g).connect(tickCtx.destination);
-    o.start(t);
-    o.stop(t + 0.06);
-  }
-  function startTimer(q) {
+  let timerOn = true;
+  try { timerOn = localStorage.getItem("timer") !== "off"; } catch (e) {}
+  let timerId = null;
+  function startTimer() {
     stopTimer();
+    if (!timerOn) return;
     const start = performance.now();
     let last = TIME_LIMIT;
     timerId = setInterval(() => {
@@ -643,12 +649,14 @@
       if (sec !== last) {
         last = sec;
         document.getElementById("sec").textContent = sec;
-        if (sec <= 5) {
-          document.getElementById("timer").classList.add("hurry");
-          if (sec > 0) tick(sec <= 3);
-        }
+        if (sec <= 5) document.getElementById("timer").classList.add("hurry");
       }
-      if (left <= 0) answer(q, 0);
+      if (left <= 0) {
+        stopTimer();
+        const timer = document.getElementById("timer");
+        timer.classList.add("over");
+        timer.querySelector(".hint").textContent = "時間になりました。じっくり考えてOK 👆";
+      }
     }, 100);
   }
   function stopTimer() {
@@ -684,7 +692,7 @@
     const after = document.getElementById("after");
     after.innerHTML = `
       <div class="reveal">
-        <p class="verdict ${ok ? "" : "ng"}">${ok ? "正解！" : `${choice ? "不正解" : "時間切れ"}… 正解は ${CIRCLED[q.answer - 1]}`}</p>
+        <p class="verdict ${ok ? "" : "ng"}">${ok ? "正解！" : `不正解… 正解は ${CIRCLED[q.answer - 1]}`}</p>
         <p class="ja">${esc(q.translation || "")}</p>
         ${canSpeak ? `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>` : ""}
         ${explanationBlock(q, !ok)}
