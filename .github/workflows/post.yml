@@ -2,7 +2,8 @@
 name: 予約投稿
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    # GitHub の定期実行は毎時0分・15分などが混みやすいので、少しずらす
+    - cron: "4,19,34,49 * * * *"
   workflow_dispatch:
 permissions:
   contents: write
