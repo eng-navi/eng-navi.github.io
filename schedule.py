@@ -65,9 +65,14 @@ def add(no, at):
         if (s["no"] < no) != (parse_at(s["at"]) < when):
             sys.exit(f"番号と時刻の順番が逆になります({s['no']} は {s['at']})")
     post.publish_video(no)
+    # サイトで流す英文の音声(Kokoro)。専用の環境があるときだけ作る
+    venv = ROOT / ".venv-tts" / "bin" / "python"
+    if venv.exists():
+        subprocess.run([str(venv), "tts.py", str(no)], cwd=ROOT, check=True)
     items.append({"no": no, "at": at})
     save_schedule(items)
-    push([str(SCHEDULE)], f"{no} を {at} に予約")
+    audio = ROOT / "docs" / "audio" / f"q{no}.mp3"
+    push([str(SCHEDULE)] + ([str(audio)] if audio.exists() else []), f"{no} を {at} に予約")
     print(f"✓ {no} を {at} に予約しました({theme(no)})")
 
 

@@ -88,6 +88,8 @@
   .bgm-menu p { font-size: 11px; color: #9a9a9a; letter-spacing: .1em; padding: 4px 10px 6px; }
   .bgm-menu button { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 10px; border-radius: 10px; font-size: 14px; text-align: left; color: var(--ink); }
   .bgm-menu button small { font-size: 11px; color: #9a9a9a; }
+  .bgm-menu .credit { margin-top: 6px; padding: 8px 10px 4px; border-top: 1px solid var(--line); font-size: 10px; line-height: 1.6; letter-spacing: 0; }
+  .bgm-menu .credit a { color: inherit; }
   .bgm-menu button[aria-checked="true"] { background: var(--hl); color: var(--accent-ink); font-weight: 500; }
 
   .num { font-family: var(--num); font-style: italic; font-size: 36px; color: var(--accent); margin-top: 18px; line-height: 1; letter-spacing: .04em; }
@@ -247,6 +249,12 @@
   .rec a small { display: block; font-size: 12px; color: var(--sub); margin-top: 2px; }
   .rec a::after { content: "›"; font-size: 22px; color: var(--accent-ink); }
 
+  .rec + .rec { margin-top: 14px; }
+  .rec-lead { margin-top: 8px; font-size: 13px; line-height: 1.8; color: var(--sub); }
+  .abroad { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; padding: 4px 2px; font-size: 12px; line-height: 1.7; color: var(--sub); text-decoration: none; }
+  .abroad small { font-size: 10px; color: #b0b0b0; letter-spacing: .1em; padding-top: 2px; }
+  .abroad b { color: var(--ink); font-weight: 500; }
+
   /* フッター(アソシエイト表記は規約どおり載せつつ控えめに) */
   .foot { margin-top: 28px; font-size: 10px; line-height: 1.7; color: #b8b8b8; text-align: center; }
   .foot a { color: inherit; }
@@ -266,6 +274,8 @@
   const QUIZZES = window.QUIZZES || [];
   const REC = window.RECOMMEND || {};
   const LINKS = window.LINKS || {};
+  const SPEAK = window.SPEAK;
+  const ABROAD = window.ABROAD;
   const app = document.getElementById("app");
   const CIRCLED = ["①", "②", "③", "④"];
 
@@ -298,13 +308,13 @@
 
   // ---- BGM:気分で選べる。Web Audio でつなぎ目なくループし、ゆっくりフェードイン ----
   const TRACKS = [
-    { id: "lefty", name: "Lefty", mood: "Lo-fi" },
-    { id: "the-waves", name: "The Waves", mood: "Lo-fi" },
-    { id: "tokyo-spring", name: "Tokyo Spring", mood: "Lo-fi" },
-    { id: "just-flow", name: "Just Flow", mood: "Chill" },
-    { id: "darkside", name: "Darkside", mood: "Hip-hop" },
-    { id: "to-the-moon", name: "To The Moon", mood: "Hip-hop" },
-    { id: "funk-formula", name: "Funk Formula", mood: "Funk" },
+    { id: "lefty", name: "Lefty", artist: "Blue Wednesday", mood: "Lo-fi" },
+    { id: "the-waves", name: "The Waves", artist: "Otto.mp3", mood: "Lo-fi" },
+    { id: "tokyo-spring", name: "Tokyo Spring (wooll Remix)", artist: "Yawnathan", mood: "Lo-fi" },
+    { id: "just-flow", name: "Just Flow", artist: "Hartzmann", mood: "Chill" },
+    { id: "darkside", name: "Darkside", artist: "Oliver Michael", mood: "Hip-hop" },
+    { id: "to-the-moon", name: "To The Moon", artist: "21 On The Block", mood: "Hip-hop" },
+    { id: "funk-formula", name: "Funk Formula", artist: "Nick Petrov", mood: "Funk" },
   ];
   const srcOf = (id) => `bgm/${id}.mp3`;
   const BGM_VOL = 0.16;
@@ -459,6 +469,7 @@
           <p>BGM</p>
           ${TRACKS.map((t) => `<button data-track="${t.id}" aria-checked="${t.id === track}"><span>${esc(t.name)}</span><small>${t.mood}</small></button>`).join("")}
           <button data-track="" aria-checked="${!track}"><span>オフ</span></button>
+          <p class="credit">Music from <a href="https://uppbeat.io" target="_blank" rel="noopener">#Uppbeat</a> (free for Creators!)${now ? `<br>${esc(now.name)} / ${esc(now.artist)}` : ""}</p>
         </div>
       </div>` : "";
     const sound = canSpeak
@@ -499,7 +510,8 @@
   const footer = () => `
     <p class="foot">
       Instagram <a href="${esc(LINKS.instagram || "#")}" target="_blank" rel="noopener">@eng_navi</a> のリールの続きです。<br>
-      Amazonのアソシエイトとして、eng_naviは適格販売により収入を得ています。
+      Amazonのアソシエイトとして、eng_naviは適格販売により収入を得ています。<br>
+      BGM: Music from <a href="https://uppbeat.io" target="_blank" rel="noopener">#Uppbeat</a> (free for Creators!) — ${TRACKS.map((t) => `${esc(t.name)} / ${esc(t.artist)}`).join("、")}
     </p>`;
 
   // ---- メニュー ----
@@ -760,6 +772,17 @@
           <h3>${esc(rec.title)}</h3>
           ${rec.items.map(recLink).join("")}
         </div>` : ""}
+      ${SPEAK ? `
+        <div class="rec">
+          <span class="pr">PR</span>
+          <h3>${esc(SPEAK.title)}</h3>
+          <p class="rec-lead">文法で正解できても、会話ではとっさに出てこない…という人は多いです。声に出す練習を足すと、知っている英文が使える英文に変わります。</p>
+          ${SPEAK.items.map(recLink).join("")}
+        </div>` : ""}
+      ${ABROAD ? `
+        <a class="abroad" href="${esc(ABROAD.item.url)}" target="_blank" rel="noopener sponsored nofollow">
+          <small>PR</small><span>${esc(ABROAD.lead)}<br><b>${esc(ABROAD.item.name)}</b> ${esc(ABROAD.item.note)}</span>
+        </a>${pix(ABROAD.item)}` : ""}
       <div class="spacer"></div>
       <button class="primary" id="retry">同じ問題にもう一度チャレンジ</button>
       <button class="ghost strong" id="menu">ほかの問題をえらぶ</button>

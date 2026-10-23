@@ -20,6 +20,9 @@ const ITEMS = {
   reading: { name: "基本文法から学ぶ 英語リーディング教本", note: "文法を土台に、英文を正確に読めるようになる定番の1冊", url: AMAZON("B0B2VJ8BL5", "d769300620a82fda9aee29d46db9f42e") },
   realize: { name: "Realize 英文「解釈」演習99 発展レベル", note: "難関大の和訳問題で、意味を正確につかむ練習", url: AMAZON("B0FYMTW7XT", "0962d322f17bca5063631e367e0dd55a") },
   pinnacle: { name: "大学入試 無敵の難単語 PINNACLE 420", note: "難しい単語で読む手が止まる人に", url: AMAZON("B0CK4HSRZN", "8ecd3ddef08dd6642b8ef647882ce7d7") },
+  speak: { name: "スピーク(AI英会話アプリ)", note: "AIを相手に、声に出して英会話の練習。7日間無料で試せます", ...A8("45KI4S+B1PKVM+5PZU+5YRHE", "www10") },
+  torabit: { name: "TORAbit(トラビット)", note: "シャドーイングと瞬間英作文を、AIの採点つきで1日5分から", ...A8("3ZI1Y9+3LSK76+3N0O+TS3OI", "www11") },
+  yumekana: { name: "夢カナ留学", note: "ワーホリ・留学の無料カウンセリング(18〜30歳が対象)", ...A8("3Z2Q3B+AL1HHE+4Q46+5YJRM", "www19") },
   oversight: { name: "大学入試英単語 OVERSIGHT", note: "「見たことはあるのに訳せない」300語をクイズ形式で", url: AMAZON("B0H2BMN624", "c9b5d7da796b8d08904c91469500b648") },
 };
 
@@ -43,6 +46,17 @@ window.RECOMMEND = {
     title: "英文法をまとめて固めるなら",
     items: [ITEMS.scramble, ITEMS.studysapuri],
   },
+};
+
+// 結果画面で、どのシリーズでも出す「次は話せる英語へ」
+window.SPEAK = {
+  title: "「わかるのに、話せない」を卒業するなら",
+  items: [ITEMS.speak, ITEMS.torabit],
+};
+// 結果画面のいちばん下に、さりげなく1行
+window.ABROAD = {
+  lead: "いつか海外で英語を使ってみたい人は、ちょっと相談してみるのもあり",
+  item: ITEMS.yumekana,
 };
 
 // 結果画面の下に出すリンク
