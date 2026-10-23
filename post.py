@@ -23,11 +23,6 @@ ROOT = Path(__file__).parent
 API = "https://graph.instagram.com"
 LOG = ROOT / "posted.json"
 
-CAPTION = """英文法を少しずつ身につけて、英語の理解を深めよう！📘✨
-共通テストやTOEICのリーディングにも役立つ文法ポイントを、わかりやすく紹介しています。
-
-#英文法 #TOEIC対策 #共通テスト英語 #英語力アップ"""
-
 RULE = "--------------------------------------"
 
 
@@ -55,6 +50,19 @@ def api(method, path, **params):
 
 
 def build_comment(q):
+    if "options" not in q:
+        # ピンク(イディオム紹介):番号なし、語句の意味を並べてから解説
+        return "\n".join([
+            RULE,
+            q["text"].replace("\n", " "),
+            q["translation"],
+            "",
+            *q["glossary"],
+            "",
+            "【解説】",
+            q["explanation"],
+            RULE,
+        ])
     answer = q["options"][q["answer"] - 1]
     sentence = re.sub(r"\(\s*\)", answer, q["question"])
     return "\n".join([
@@ -63,6 +71,8 @@ def build_comment(q):
         sentence,
         q["translation"],
         "",
+        # 語句の意味(任意。例: "by the time：…する時までに")
+        *([*q["glossary"], ""] if q.get("glossary") else []),
         "【解説】",
         q["explanation"],
         RULE,
@@ -120,7 +130,7 @@ def post(q):
 
     print(f"1/4 動画を送信: {video_url}")
     container = api("POST", f"{user}/media", media_type="REELS", video_url=video_url,
-                    caption=CAPTION, share_to_feed="true")["id"]
+                    caption=q["caption"], share_to_feed="true")["id"]
 
     print("2/4 Instagram 側の処理を待機中…")
     wait_until_ready(container)
@@ -154,8 +164,10 @@ def main():
         return refresh_token()
     no = int(sys.argv[1])
     q = next(q for q in json.loads((ROOT / "quizzes.json").read_text()) if q["no"] == no)
+    if not q.get("caption"):
+        sys.exit(f"{no} に caption がありません(同じキャプションの使い回しは避ける)")
     if "--dry-run" in sys.argv:
-        print("=== キャプション ===\n" + CAPTION + "\n\n=== コメント ===\n" + build_comment(q))
+        print("=== キャプション ===\n" + q["caption"] + "\n\n=== コメント ===\n" + build_comment(q))
         return
     post(q)
 

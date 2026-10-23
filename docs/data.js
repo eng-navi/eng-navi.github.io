@@ -13,122 +13,14 @@ window.QUIZZES = [
   },
   {
     "no": 101,
-    "category": "品詞",
-    "question": "The new software allows staff to complete reports more ( ) than before.",
-    "options": [
-      "efficient",
-      "efficiently"
-    ],
-    "answer": 2,
-    "translation": "新しいソフトのおかげで、スタッフは以前より効率よく報告書を仕上げられる。",
-    "explanation": "空所は more ( ) than の比較の形ですが、ポイントは「何を修飾しているか」です。\n\nここでは動詞 complete(仕上げる)を説明しているので、形容詞ではなく副詞が入ります。\n\nしたがって、②efficiently が正解。"
-  },
-  {
-    "no": 102,
-    "category": "前置詞",
-    "question": "Please submit your expense report ( ) Friday.",
-    "options": [
-      "by",
-      "until"
-    ],
-    "answer": 1,
-    "translation": "経費報告書は金曜日までに提出してください。",
-    "explanation": "by は「〜までに」という期限、until は「〜までずっと」という継続を表します。\n\nsubmit(提出する)は一回で終わる動作なので、期限を表す語が合います。\n\nしたがって、①by が正解。"
-  },
-  {
-    "no": 103,
-    "category": "接続詞",
-    "question": "( ) the heavy rain, the outdoor event was held as planned.",
-    "options": [
-      "Although",
-      "Despite"
-    ],
-    "answer": 2,
-    "translation": "激しい雨にもかかわらず、野外イベントは予定どおり開催された。",
-    "explanation": "although は接続詞なので、後ろに〈主語+動詞〉が続きます。\ndespite は前置詞なので、後ろには名詞が続きます。\n\n空所の後ろは the heavy rain という名詞だけなので、前置詞が入ります。\n\nしたがって、②Despite が正解。"
-  },
-  {
-    "no": 104,
-    "category": "関係詞",
-    "question": "The candidate ( ) we interviewed yesterday has strong sales experience.",
-    "options": [
-      "whom",
-      "which"
-    ],
-    "answer": 1,
-    "translation": "昨日面接した候補者は、豊富な営業経験を持っている。",
-    "explanation": "先行詞の the candidate(候補者)は人です。\n\nwhich は物や事に使う関係代名詞なので、人には使えません。\nここでは interviewed の目的語にあたるので、目的格の whom を使います。\n\nしたがって、①whom が正解。"
-  },
-  {
-    "no": 105,
-    "category": "動詞の形",
-    "question": "The manager suggested that the meeting ( ) postponed.",
-    "options": [
-      "be",
-      "is"
-    ],
-    "answer": 1,
-    "translation": "部長は会議を延期するよう提案した。",
-    "explanation": "suggest(提案する)のように「提案・要求」を表す動詞の後の that節では、動詞は原形を使います。\n\n(should) be の should が省略された形と考えると分かりやすいです。\n\nしたがって、①be が正解。"
-  },
-  {
-    "no": 106,
-    "category": "代名詞",
-    "question": "Ms. Tanaka prepared all of the presentation slides by ( ).",
-    "options": [
-      "her",
-      "herself"
-    ],
-    "answer": 2,
-    "translation": "田中さんはプレゼン資料をすべて一人で準備した。",
-    "explanation": "by oneself で「一人で、自力で」という意味の決まった表現です。\n\nby her だと「彼女によって」となり、文の意味が通りません。\n\nしたがって、②herself が正解。"
-  },
-  {
-    "no": 107,
     "category": "時制",
-    "question": "By the time the client arrives, we ( ) the contract.",
+    "question": "We ( ) the new science museum two weeks ago.",
     "options": [
-      "will have finished",
-      "have finished"
-    ],
-    "answer": 1,
-    "translation": "顧客が到着するまでに、私たちは契約書を仕上げているだろう。",
-    "explanation": "By the time 〜 は「〜するまでに」という意味です。\n\n時を表す節の中は未来のことでも現在形(arrives)になりますが、主節は未来の時点を基準にします。\n「未来のある時点までに完了している」ことを表すのは未来完了形です。\n\nしたがって、①will have finished が正解。"
-  },
-  {
-    "no": 108,
-    "category": "分詞",
-    "question": "The sales figures were ( ) to everyone in the department.",
-    "options": [
-      "disappointing",
-      "disappointed"
-    ],
-    "answer": 1,
-    "translation": "売上の数字は、部署の全員にとって期待外れだった。",
-    "explanation": "disappoint は「がっかりさせる」という意味の動詞です。\n\n-ing 形は「がっかりさせるような」、-ed 形は「がっかりした」という意味になります。\n主語の the sales figures(売上の数字)は、人をがっかりさせる側です。\n\nしたがって、①disappointing が正解。"
-  },
-  {
-    "no": 109,
-    "category": "比較",
-    "question": "This year's profits are ( ) higher than last year's.",
-    "options": [
-      "much",
-      "very"
-    ],
-    "answer": 1,
-    "translation": "今年の利益は、昨年よりはるかに多い。",
-    "explanation": "比較級(higher)を強めるときは much や far を使います。\n\nvery は原級(high)を強める語なので、比較級の前には置けません。\n\nしたがって、①much が正解。"
-  },
-  {
-    "no": 110,
-    "category": "語法",
-    "question": "We look forward to ( ) you at the conference.",
-    "options": [
-      "see",
-      "seeing"
+      "have visited",
+      "visited"
     ],
     "answer": 2,
-    "translation": "会議でお会いできるのを楽しみにしています。",
-    "explanation": "look forward to 〜 の to は不定詞ではなく前置詞です。\n\n前置詞の後ろには名詞か動名詞が続くので、動詞の原形は置けません。\n\nしたがって、②seeing が正解。"
+    "translation": "私たちは2週間前に、新しい科学博物館を訪れました。",
+    "explanation": "時制の問題では、「時」を表す語句に注目します。\n\ntwo weeks ago(2週間前)は、はっきりと過去を示す語句です。\n現在完了形(have visited)は、明らかに過去を示す語句と一緒には使えません。\n\nしたがって、過去形の②visited が正解。"
   }
 ];
