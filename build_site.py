@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 SITE = ROOT / "docs"
-FIELDS = ["no", "category", "question", "options", "answer", "translation", "explanation"]
+FIELDS = ["no", "category", "question", "options", "answer", "text", "target", "glossary", "translation", "explanation"]
 
 
 def main():
@@ -20,8 +20,6 @@ def main():
         quizzes = [q for q in quizzes if q["no"] <= latest]
     data = []
     for q in quizzes:
-        if "options" not in q:
-            continue  # ピンク(イディオム紹介)はクイズではないので載せない
         item = {k: q[k] for k in FIELDS if k in q}
         # tts.py で作った音声があれば使う
         if (SITE / "audio" / f"q{q['no']}.mp3").exists():
