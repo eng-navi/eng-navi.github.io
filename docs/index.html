@@ -252,9 +252,8 @@
 
   .rec + .rec { margin-top: 14px; }
   .rec-lead { margin-top: 8px; font-size: 13px; line-height: 1.8; color: var(--sub); }
-  .abroad { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; padding: 4px 2px; font-size: 12px; line-height: 1.7; color: var(--sub); text-decoration: none; }
-  .abroad small { font-size: 10px; color: #b0b0b0; letter-spacing: .1em; padding-top: 2px; }
-  .abroad b { color: var(--ink); font-weight: 500; }
+  .reel { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--sub); text-decoration: none; }
+  .reel::before { content: "▶"; font-size: 9px; color: var(--accent-ink); }
 
   /* フッター(アソシエイト表記は規約どおり載せつつ控えめに) */
   .foot { margin-top: 28px; font-size: 10px; line-height: 1.7; color: #b8b8b8; text-align: center; }
@@ -354,8 +353,27 @@
     node.gain.gain.setTargetAtTime(0, ctx.currentTime, sec / 4);
     node.src.stop(ctx.currentTime + sec);
   }
+  // iPhone はマナーモードだと Web Audio が鳴らない。曲を自分で選んだときだけ「再生」扱いに切り替える
+  let silentEl = null;
+  function allowSoundInSilentMode() {
+    try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+    if (silentEl || !/iP(hone|ad|od)/.test(navigator.userAgent)) return;
+    // 古い iOS 向け:無音の audio 要素を流しておくと、ページ全体が「再生」扱いになる
+    const rate = 8000, n = rate / 2, buf = new ArrayBuffer(44 + n), v = new DataView(buf);
+    const str = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+    str(0, "RIFF"); v.setUint32(4, 36 + n, true); str(8, "WAVEfmt "); v.setUint32(16, 16, true);
+    v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, rate, true); v.setUint32(28, rate, true);
+    v.setUint16(32, 1, true); v.setUint16(34, 8, true); str(36, "data"); v.setUint32(40, n, true);
+    for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
+    silentEl = new Audio(URL.createObjectURL(new Blob([buf], { type: "audio/wav" })));
+    silentEl.loop = true;
+    silentEl.setAttribute("playsinline", "");
+    silentEl.play().catch(() => {});
+  }
+
   async function bgmPlay() {
     if (!bgmOk || !track) return;
+    allowSoundInSilentMode();
     if (!useWebAudio) {
       // ローカル確認用(file://)。曲の切れ目にわずかな間ができる
       if (!el || !el.src.endsWith(srcOf(track))) { if (el) el.pause(); el = new Audio(srcOf(track)); el.loop = true; }
@@ -554,7 +572,7 @@
       <div class="top"><span></span>${toggles()}</div>
       <p class="num">${sorted.length}</p>
       <h1 class="title">eng_navi<br>英語クイズ</h1>
-      <p class="lead">リールで出している問題の<b>続き</b>です。<br>タップで答え合わせ、<b>音声つき</b>で解説も読めます。</p>
+      <p class="lead">リールで出している問題の<b>続き</b>です。過去の問題も<b>すべて無料・登録不要</b>。<br>タップで答え合わせ、<b>音声つき</b>で解説も読めます。</p>
       <button class="primary" id="latest">最新の問題をとく</button>
       ${missed.length ? `<button class="ghost strong" id="missed">前に間違えた問題を復習する(${missed.length}問)</button>` : ""}
       <p class="h">目的からえらぶ</p>
@@ -627,7 +645,8 @@
         <summary>解説を見る</summary>
         <div class="exp">${q.category ? `<span class="tag">${esc(q.category)}</span>\n` : ""}${esc(q.explanation || "")}</div>
       </details>
-      ${nudge}`;
+      ${nudge}
+      ${q.permalink ? `<a class="reel" href="${esc(q.permalink)}" target="_blank" rel="noopener">このリールを Instagram で見る</a>` : ""}`;
   }
 
   // ---- 制限時間(右上でON/OFF。時間が来ても答えは開かず、そのまま考えてよい) ----
@@ -788,9 +807,12 @@
           ${SPEAK.items.map(recLink).join("")}
         </div>` : ""}
       ${ABROAD ? `
-        <a class="abroad" href="${esc(ABROAD.item.url)}" target="_blank" rel="noopener sponsored nofollow">
-          <small>PR</small><span>${esc(ABROAD.lead)}<br><b>${esc(ABROAD.item.name)}</b> ${esc(ABROAD.item.note)}</span>
-        </a>${pix(ABROAD.item)}` : ""}
+        <div class="rec">
+          <span class="pr">PR</span>
+          <h3>✈️ 海外で英語を使ってみたい人へ</h3>
+          <p class="rec-lead">${esc(ABROAD.lead)}</p>
+          ${recLink(ABROAD.item)}
+        </div>` : ""}
       <div class="spacer"></div>
       <button class="primary" id="retry">同じ問題にもう一度チャレンジ</button>
       <button class="ghost strong" id="menu">ほかの問題をえらぶ</button>

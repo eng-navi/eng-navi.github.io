@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 SITE = ROOT / "docs"
-FIELDS = ["no", "category", "question", "options", "answer", "text", "target", "glossary", "translation", "explanation"]
+FIELDS = ["no", "category", "question", "options", "answer", "text", "target", "glossary", "translation", "explanation", "permalink"]
 
 
 def main():
