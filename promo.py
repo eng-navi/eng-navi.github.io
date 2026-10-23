@@ -12,7 +12,9 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 ROOT = Path(__file__).parent
 FONTS = ROOT / "fonts"
 DIR = ROOT / "out" / "promo"
-BGM = ROOT / "docs" / "bgm" / "lefty.mp3"
+# 場面の切り替わりに拍が来るよう、曲と開始位置を選んでいる(拍の解析結果)
+BGM = ROOT / "docs" / "bgm" / "the-waves.mp3"
+BGM_START = 4.56
 W, H, FPS, DURATION = 1080, 1920, 30, 15.5
 
 BG = (253, 253, 253)
@@ -196,7 +198,7 @@ def frame(t):
 def main():
     out = DIR / "promo_archive.mp4"
     cmd = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-           "-i", str(BGM), "-map", "0:v", "-map", "1:a",
+           "-ss", str(BGM_START), "-i", str(BGM), "-map", "0:v", "-map", "1:a",
            "-af", f"afade=t=in:d=0.6,afade=t=out:st={DURATION - 1.5}:d=1.5,loudnorm=I=-16:TP=-1.5",
            "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-c:a", "aac", "-shortest",
            "-movflags", "+faststart", str(out)]
