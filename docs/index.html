@@ -151,7 +151,6 @@
   /* 選んでねのヒントと制限時間 */
   .timer { margin-top: 20px; animation: pop .4s .9s ease-out both; }
   .timer-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--accent-ink); }
-  .timer-row .hint { animation: nudge 1.6s ease-in-out infinite; }
   .timer-row .sec { font-family: var(--serif); font-size: 22px; font-variant-numeric: tabular-nums; }
   .timer .bar { margin-top: 8px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
   .timer .bar i { display: block; height: 100%; width: 100%; background: var(--accent-ink); transform-origin: left; transition: transform .1s linear; }
@@ -160,7 +159,6 @@
   .timer.over .sec, .timer.over .bar { visibility: hidden; }
   .timer.over .hint { color: var(--sub); }
   .timer.off .sec, .timer.off .bar { display: none; }
-  @keyframes nudge { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-3px); opacity: .7; } }
 
   /* 答え合わせ・解説 */
   .reveal { margin-top: 26px; animation: pop .35s ease-out; }
