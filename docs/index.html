@@ -144,6 +144,19 @@
   .opt.wrong .c { border-color: var(--ng); color: var(--ng); }
   .opt.dim { opacity: .45 !important; }
 
+  /* 選んでねのヒントと制限時間 */
+  .timer { margin-top: 20px; animation: pop .4s .9s ease-out both; }
+  .timer-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--accent-ink); }
+  .timer-row .hint { animation: nudge 1.6s ease-in-out infinite; }
+  .timer-row .sec { font-family: var(--serif); font-size: 22px; font-variant-numeric: tabular-nums; }
+  .timer .bar { margin-top: 8px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .timer .bar i { display: block; height: 100%; width: 100%; background: var(--accent-ink); transform-origin: left; transition: transform .1s linear; }
+  .timer.hurry .sec, .timer.hurry .hint { color: var(--ng); }
+  .timer.hurry .bar i { background: var(--ng); }
+  .timer.hurry .sec { animation: beat 1s ease-in-out infinite; }
+  @keyframes nudge { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(-3px); opacity: .7; } }
+  @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } }
+
   /* 答え合わせ・解説 */
   .reveal { margin-top: 26px; animation: pop .35s ease-out; }
   .verdict { font-size: 22px; font-weight: 700; letter-spacing: .06em; color: var(--accent-ink); }
@@ -424,6 +437,10 @@
     return null;
   }
 
+  // A8 は表示回数の計測用に 1×1 の画像をリンクと一緒に置く決まり
+  const pix = (it) => (it.pixel ? `<img src="${esc(it.pixel)}" width="1" height="1" alt="" style="position:absolute;width:1px;height:1px;opacity:0">` : "");
+  const recLink = (it) => `<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${esc(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
+
   function begin(quizzes) {
     if (!quizzes.length) return;
     set = quizzes.slice(0, 10);
@@ -488,6 +505,7 @@
   // ---- メニュー ----
   function renderStart() {
     stopVoice();
+    stopTimer();
     setSeries("blue");
     const bySeries = { green: [], pink: [], blue: [] };
     sorted.forEach((q) => bySeries[seriesOf(q)].push(q));
@@ -561,8 +579,13 @@
         <div class="opts">
           ${q.options.map((o, i) => `<button class="opt" data-i="${i + 1}"><span class="c">${i + 1}</span><span class="w">${esc(o)}</span></button>`).join("")}
         </div>
+        <div class="timer" id="timer">
+          <div class="timer-row"><span class="hint">👆 タップして答えを選んでね</span><span class="sec" id="sec">${TIME_LIMIT}</span></div>
+          <div class="bar"><i id="bar"></i></div>
+        </div>
         <div id="after"></div>`;
       app.querySelectorAll(".opt").forEach((b) => (b.onclick = () => answer(q, Number(b.dataset.i))));
+      startTimer(q);
     }
     bindSound();
     window.scrollTo({ top: 0 });
@@ -570,13 +593,55 @@
 
   function explanationBlock(q, open) {
     const r = recFor(q);
-    const nudge = r ? `<a class="nudge" href="${esc(r.items[0].url)}" target="_blank" rel="noopener sponsored"><small>PR</small><span>${esc(r.title)}<br><b>${esc(r.items[0].name)}</b></span></a>` : "";
+    const nudge = r ? `<a class="nudge" href="${esc(r.items[0].url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(r.title)}<br><b>${esc(r.items[0].name)}</b></span></a>${pix(r.items[0])}` : "";
     return `
       <details ${open ? "open" : ""}>
         <summary>解説を見る</summary>
         <div class="exp">${q.category ? `<span class="tag">${esc(q.category)}</span>\n` : ""}${esc(q.explanation || "")}</div>
       </details>
       ${nudge}`;
+  }
+
+  // ---- 制限時間(残り5秒から時計の音) ----
+  const TIME_LIMIT = 15;
+  let timerId = null, tickCtx = null;
+  function tick(strong) {
+    if (!soundOn || !AC) return;
+    tickCtx = tickCtx || new AC();
+    const t = tickCtx.currentTime;
+    const o = tickCtx.createOscillator(), g = tickCtx.createGain();
+    o.type = "square";
+    o.frequency.value = strong ? 1600 : 1200;
+    g.gain.setValueAtTime(strong ? 0.05 : 0.025, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+    o.connect(g).connect(tickCtx.destination);
+    o.start(t);
+    o.stop(t + 0.06);
+  }
+  function startTimer(q) {
+    stopTimer();
+    const start = performance.now();
+    let last = TIME_LIMIT;
+    timerId = setInterval(() => {
+      const left = Math.min(TIME_LIMIT, Math.max(0, TIME_LIMIT - (performance.now() - start) / 1000));
+      const sec = Math.ceil(left);
+      const bar = document.getElementById("bar");
+      if (!bar) return stopTimer();
+      bar.style.transform = `scaleX(${left / TIME_LIMIT})`;
+      if (sec !== last) {
+        last = sec;
+        document.getElementById("sec").textContent = sec;
+        if (sec <= 5) {
+          document.getElementById("timer").classList.add("hurry");
+          if (sec > 0) tick(sec <= 3);
+        }
+      }
+      if (left <= 0) answer(q, 0);
+    }, 100);
+  }
+  function stopTimer() {
+    clearInterval(timerId);
+    timerId = null;
   }
 
   function next() {
@@ -586,6 +651,9 @@
   }
 
   function answer(q, choice) {
+    stopTimer();
+    const timer = document.getElementById("timer");
+    if (timer) timer.remove();
     const ok = choice === q.answer;
     results[idx] = { q, ok };
     recordResult(q.no, ok);
@@ -604,7 +672,7 @@
     const after = document.getElementById("after");
     after.innerHTML = `
       <div class="reveal">
-        <p class="verdict ${ok ? "" : "ng"}">${ok ? "正解！" : `不正解… 正解は ${CIRCLED[q.answer - 1]}`}</p>
+        <p class="verdict ${ok ? "" : "ng"}">${ok ? "正解！" : `${choice ? "不正解" : "時間切れ"}… 正解は ${CIRCLED[q.answer - 1]}`}</p>
         <p class="ja">${esc(q.translation || "")}</p>
         ${canSpeak ? `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>` : ""}
         ${explanationBlock(q, !ok)}
@@ -663,7 +731,9 @@
     missed.forEach((r) => { const k = r.q.category || SERIES[seriesOf(r.q)].name; counts[k] = (counts[k] || 0) + 1; });
     const worst = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
     const sample = missed.find((r) => (r.q.category || SERIES[seriesOf(r.q)].name) === worst);
-    const rec = recFor(sample ? sample.q : set[0]);
+    // 全問正解なら「次の一歩」(up)、そうでなければ苦手に合わせたおすすめ
+    const base = REC[SERIES[seriesOf(set[0])].name];
+    const rec = missed.length ? recFor(sample.q) : (base && base.up) || recFor(set[0]);
 
     const line = (q) => isIdiom(q)
       ? esc(q.text.replace(/\n/g, " ")).replace(esc(q.target), `<span class="ans">${esc(q.target)}</span>`)
@@ -688,7 +758,7 @@
         <div class="rec">
           <span class="pr">PR</span>
           <h3>${esc(rec.title)}</h3>
-          ${rec.items.map((it) => `<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored"><span><b>${esc(it.name)}</b><small>${esc(it.note || "")}</small></span></a>`).join("")}
+          ${rec.items.map(recLink).join("")}
         </div>` : ""}
       <div class="spacer"></div>
       <button class="primary" id="retry">同じ問題にもう一度チャレンジ</button>

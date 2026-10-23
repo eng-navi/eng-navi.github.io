@@ -1,24 +1,109 @@
 # アフィリエイト・おすすめ商品リスト
 
 クイズサイトの「解説の下」「結果画面」、ストーリー、note などで紹介する商品の元データ。
-ここに書いた情報をもとに、問題の分野・レベルに合うものを Claude が選んで出し分ける。
+サイトに出すものは docs/recommend.js に反映する(この表の「使い方」の列)。
 
-## 書き方
-1つの商品につき、下のブロックを1つコピーして埋める。分からない項目は空欄でよい。
+注意(A8共通)
+- A8 の PR 文・プログラム名称は「メディア会員向けの説明」で、サイトへの転載は不可。紹介文は自分の言葉で書く。
+- 効果・実績(「◯点アップ」「実質0円」など)を断定的に書かない。PR 表記を必ず付ける。
+- A8 のリンクは `<a href>` と 1×1 の計測用画像(img)をセットで置く。
 
-```
-### 商品名
-- リンク: https://...
-- 種類: 本 / アプリ / オンライン英会話 / 講座 / その他
-- 対象: TOEIC / 英検(級) / 大学受験 / 英会話 / 全般
-- 価格・報酬: (例: 1,650円 / 無料体験で1件◯円)
-- 特徴: (公式の説明や、自分が良いと思う点。箇条書きで何行でも)
-- 合う人: (例: 文法でつまずく人、Part5で時間が足りない人)
-- メモ: (使った感想、紹介するときの注意など)
-```
+## サイトで使うもの
+
+| 商品 | 種類 | 合うシリーズ | 使い方 | 報酬の条件(要約) |
+|---|---|---|---|---|
+| スタディサプリENGLISH TOEIC対策コース | アプリ(A8) | 青 TOEIC | 青の解説下・結果画面のメイン | 7日間無料体験あり |
+| 英語のハノン 初級 | 本(Amazon) | 青 TOEIC | 青の結果画面(文法を「使える」形にしたい人) | — |
+| PROGRIT(英語コーチング) | サービス(A8) | 青 TOEIC | 青で全問正解・本気の社会人向け | — |
+| スクランブル英文法・語法 5th | 本(Amazon) | 緑 英検2級・青 | **緑のメイン。問題のネタ元**であることを正直に伝える | — |
+| 大学入試 英文法 Eureka! | 本(Amazon) | 緑 | 緑で全問正解(次のレベル) | — |
+| IDIOMATIC 300 | 本(Amazon) | ピンク | **ピンクのメイン。ネタ元** | — |
+| Realize 英文「解釈」演習99 発展 | 本(Amazon) | ピンク | 読めなかった人(難関大の和訳・読解) | — |
+| 基本文法から学ぶ 英語リーディング教本 | 本(Amazon) | ピンク | 読めなかった人(基礎から読めるようになりたい) | — |
+| 無敵の難単語 PINNACLE 420 | 本(Amazon) | ピンク | 単語で詰まった人 | — |
+| 大学入試英単語 OVERSIGHT | 本(Amazon) | ピンク | 単語で詰まった人(見落としがちな訳) | — |
+| LIBERTY ENGLISH | スクール(A8) | 青・ピンク(上級) | 全問正解の上級者向け | — |
+
+## 今はサイトに載せないもの(理由)
+
+| 商品 | 理由 | 使える場所 |
+|---|---|---|
+| スピーク(AI英会話) | 「話す」練習のアプリで、文法クイズとの相性が弱い | ストーリー、quizify_english(瞬間英作文)側 |
+| TORAbit(シャドーイング×瞬間英作文) | 同上。瞬間英作文なので quizify と相性が良い | quizify_english、ストーリー |
+| 夢カナ留学 | 対象18〜30歳・ワーホリ志望に限定。「実質0円」に注釈必須などルールが厳しい | 留学ネタの投稿・note |
+| アガルートアカデミー | 資格全般の講座で英語特化ではない。「合格で全額返金」の表現に注意が必要 | 使わない |
+| GO School | 幼児〜中学生向けのオンラインスクールで、対象が合わない | 使わない |
 
 ---
 
-## 商品
+## 商品データ(リンク)
 
-(ここから下に追加)
+### スタディサプリENGLISH TOEIC対策コース
+- リンク: https://px.a8.net/svt/ejp?a8mat=3BDQJ0+CTF05E+3AQG+C6QR6
+- 計測画像: https://www19.a8.net/0.gif?a8mat=3BDQJ0+CTF05E+3AQG+C6QR6
+- 要点: TOEIC全パート対応、スマホで完結、1回数分から。中学文法の学び直しから対応。7日間無料体験。
+
+### PROGRIT(プログリット)
+- リンク: https://px.a8.net/svt/ejp?a8mat=3H5XC5+AUKF5U+3NP4+60OXE
+- 計測画像: https://www19.a8.net/0.gif?a8mat=3H5XC5+AUKF5U+3NP4+60OXE
+- 要点: 英語学習のコーチング。学習計画と進め方を伴走してもらうサービス。
+
+### LIBERTY ENGLISH
+- リンク: https://px.a8.net/svt/ejp?a8mat=3Z6RWJ+CTF05E+4MWC+5YRHE
+- 計測画像: https://www11.a8.net/0.gif?a8mat=3Z6RWJ+CTF05E+4MWC+5YRHE
+- 要点: TOEFL・IELTS・TOEIC・大学受験などのハイスコア志向のスクール。英語を根本から積み上げる。
+
+### スピーク
+- リンク: https://px.a8.net/svt/ejp?a8mat=45KI4S+B1PKVM+5PZU+5YRHE
+- 計測画像: https://www10.a8.net/0.gif?a8mat=45KI4S+B1PKVM+5PZU+5YRHE
+- 要点: AI英会話アプリ。話す練習に特化。7日間無料体験。
+
+### TORAbit
+- リンク: https://px.a8.net/svt/ejp?a8mat=3ZI1Y9+3LSK76+3N0O+TS3OI
+- 計測画像: https://www11.a8.net/0.gif?a8mat=3ZI1Y9+3LSK76+3N0O+TS3OI
+- 要点: シャドーイングと瞬間英作文をAI採点で練習できるアプリ。
+
+### 夢カナ留学
+- リンク: https://px.a8.net/svt/ejp?a8mat=3Z2Q3B+AL1HHE+4Q46+5YJRM
+- 計測画像: https://www19.a8.net/0.gif?a8mat=3Z2Q3B+AL1HHE+4Q46+5YJRM
+- 要点: ワーホリ・留学エージェント。成果は18〜30歳のカウンセリング完了。「実質0円」は注釈必須。
+
+### アガルートアカデミー
+- リンク: https://px.a8.net/svt/ejp?a8mat=3Z5945+8BH3LU+44M0+5YRHE
+- 計測画像: https://www11.a8.net/0.gif?a8mat=3Z5945+8BH3LU+44M0+5YRHE
+
+### GO School
+- リンク: https://px.a8.net/svt/ejp?a8mat=3Z5945+7VZSC2+514U+5YJRM
+- 計測画像: https://www17.a8.net/0.gif?a8mat=3Z5945+7VZSC2+514U+5YJRM
+
+### スクランブル英文法・語法 5th Edition
+- リンク: https://www.amazon.co.jp/dp/B0G47KNCKX?tag=mokumoku70e-22&linkCode=ll2&linkId=0ce4d1d04fdd489440ff1dce4f987caf&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 入試頻出の約1700問。文法・語法・語彙・イディオム・会話表現・発音の6分野。簡潔な解説、音声付き。
+
+### 大学入試 英文法 Eureka!
+- リンク: https://www.amazon.co.jp/dp/B09MTFCF6W?tag=mokumoku70e-22&linkCode=ll2&linkId=ba588e8cadb139770f883ff2963f9530&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 暗記では解けない「差のつく」文法問題 約250問。標準から上に抜けたい人向け。
+
+### 大学入試 飛躍のフレーズ IDIOMATIC 300
+- リンク: https://www.amazon.co.jp/dp/B0DCY6K8P2?tag=mokumoku70e-22&linkCode=ll2&linkId=9adf5e34e9b1aabc41601bfe20eb0ccc&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 「よくある言い回し」を書き下ろし英文で学ぶ。問題300問付き、関連表現も多数。
+
+### Realize 英文「解釈」演習99 発展レベル
+- リンク: https://www.amazon.co.jp/dp/B0FYMTW7XT?tag=mokumoku70e-22&linkCode=ll2&linkId=0962d322f17bca5063631e367e0dd55a&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 意味の正確な把握にこだわった英文解釈。実際の難関大の和訳問題。
+
+### 基本文法から学ぶ 英語リーディング教本
+- リンク: https://www.amazon.co.jp/dp/B0B2VJ8BL5?tag=mokumoku70e-22&linkCode=ll2&linkId=d769300620a82fda9aee29d46db9f42e&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 中学英語レベルから、文法を土台に英文を正確に読めるようになるロングセラー。
+
+### 大学入試 無敵の難単語 PINNACLE 420
+- リンク: https://www.amazon.co.jp/dp/B0CK4HSRZN?tag=mokumoku70e-22&linkCode=ll2&linkId=8ecd3ddef08dd6642b8ef647882ce7d7&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 難関大で問われる難単語420語。フレーズと問題集付き。
+
+### 大学入試英単語 OVERSIGHT
+- リンク: https://www.amazon.co.jp/dp/B0H2BMN624?tag=mokumoku70e-22&linkCode=ll2&linkId=c9b5d7da796b8d08904c91469500b648&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 「見たことはあるのに訳せない」300語。クイズ形式。
+
+### 英語のハノン 初級
+- リンク: https://www.amazon.co.jp/dp/B09NY53725?tag=mokumoku70e-22&linkCode=ll2&linkId=aaa9fc05b00ffc5bcfd72de9d08bdca0&language=ja_JP&ref_=as_li_ss_tl
+- 要点: 学校文法を音で使えるようにするパターン練習のドリル。

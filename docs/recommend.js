@@ -1,20 +1,47 @@
-// 結果画面に出すおすすめ。間違えた問題の category に合わせて表示する。
-// url はアフィリエイトリンクに差し替える。該当カテゴリがなければ default を使う。
+// サイトに出すおすすめ(元データと選定理由は affiliates.md)。
+// キーはシリーズ名(TOEIC / 英検2級 / 読解・イディオム)。文法の項目名(時制など)をキーにすると、その項目だけ出し分けられる。
+//   title / items … 間違えた・読めなかった人向け(items[0] は解説の下にも1行で出る)
+//   up            … 全問正解した人向けの「次の一歩」
+// A8 のリンクは計測用画像(pixel)とセットで置く。
+const A8 = (id, host) => ({
+  url: `https://px.a8.net/svt/ejp?a8mat=${id}`,
+  pixel: `https://${host}.a8.net/0.gif?a8mat=${id}`,
+});
+const AMAZON = (asin, linkId) => `https://www.amazon.co.jp/dp/${asin}?tag=mokumoku70e-22&linkCode=ll2&linkId=${linkId}&language=ja_JP&ref_=as_li_ss_tl`;
+
+const ITEMS = {
+  studysapuri: { name: "スタディサプリENGLISH TOEIC対策コース", note: "文法の学び直しからパート別の対策まで、スマホで。7日間無料で試せます", ...A8("3BDQJ0+CTF05E+3AQG+C6QR6", "www19") },
+  hanon: { name: "英語のハノン 初級", note: "わかる文法を「口から出る」ところまで落とし込むドリル", url: AMAZON("B09NY53725", "aaa9fc05b00ffc5bcfd72de9d08bdca0") },
+  progrit: { name: "PROGRIT(プログリット)", note: "何をどれだけやるかを一緒に決めてくれる英語コーチング", ...A8("3H5XC5+AUKF5U+3NP4+60OXE", "www19") },
+  liberty: { name: "LIBERTY ENGLISH", note: "TOEIC・TOEFL・大学受験のハイスコアを目指す人向けの英語スクール", ...A8("3Z6RWJ+CTF05E+4MWC+5YRHE", "www11") },
+  scramble: { name: "スクランブル英文法・語法 5th Edition", note: "eng_navi の文法クイズは、この本の出題ポイントをもとに作っています", url: AMAZON("B0G47KNCKX", "0ce4d1d04fdd489440ff1dce4f987caf") },
+  eureka: { name: "大学入試 英文法 Eureka!", note: "暗記だけでは解けない「差がつく」文法問題を約250問", url: AMAZON("B09MTFCF6W", "ba588e8cadb139770f883ff2963f9530") },
+  idiomatic: { name: "飛躍のフレーズ IDIOMATIC 300", note: "eng_navi のイディオム問題のネタ元。よくある言い回しを英文ごと覚えられる", url: AMAZON("B0DCY6K8P2", "9adf5e34e9b1aabc41601bfe20eb0ccc") },
+  reading: { name: "基本文法から学ぶ 英語リーディング教本", note: "文法を土台に、英文を正確に読めるようになる定番の1冊", url: AMAZON("B0B2VJ8BL5", "d769300620a82fda9aee29d46db9f42e") },
+  realize: { name: "Realize 英文「解釈」演習99 発展レベル", note: "難関大の和訳問題で、意味を正確につかむ練習", url: AMAZON("B0FYMTW7XT", "0962d322f17bca5063631e367e0dd55a") },
+  pinnacle: { name: "大学入試 無敵の難単語 PINNACLE 420", note: "難しい単語で読む手が止まる人に", url: AMAZON("B0CK4HSRZN", "8ecd3ddef08dd6642b8ef647882ce7d7") },
+  oversight: { name: "大学入試英単語 OVERSIGHT", note: "「見たことはあるのに訳せない」300語をクイズ形式で", url: AMAZON("B0H2BMN624", "c9b5d7da796b8d08904c91469500b648") },
+};
+
 window.RECOMMEND = {
+  TOEIC: {
+    title: "TOEICの文法を、スキマ時間で固めるなら",
+    items: [ITEMS.studysapuri, ITEMS.hanon],
+    up: { title: "スコアをもう一段上げたい人へ", items: [ITEMS.progrit, ITEMS.liberty] },
+  },
+  英検2級: {
+    title: "この文法を1冊で体系的に固めるなら",
+    items: [ITEMS.scramble],
+    up: { title: "標準レベルから一歩抜け出したい人へ", items: [ITEMS.eureka, ITEMS.scramble] },
+  },
+  "読解・イディオム": {
+    title: "こういう表現を、もっと読めるようになるなら",
+    items: [ITEMS.idiomatic, ITEMS.reading, ITEMS.pinnacle],
+    up: { title: "難しい英文も読み切りたい人へ", items: [ITEMS.realize, ITEMS.oversight] },
+  },
   default: {
-    title: "TOEIC文法をまとめて固めたい人へ",
-    items: [
-      { name: "(ここに文法問題集の名前)", note: "Part5の頻出ポイントを1冊で", url: "#" },
-      { name: "(ここに英語学習サービスの名前)", note: "無料体験あり", url: "#" },
-    ],
-  },
-  品詞: {
-    title: "品詞問題をミスした人へ",
-    items: [{ name: "(品詞に強い問題集)", note: "形容詞・副詞の見分けを徹底", url: "#" }],
-  },
-  時制: {
-    title: "時制で迷った人へ",
-    items: [{ name: "(時制がわかる文法書)", note: "完了形をイメージで理解", url: "#" }],
+    title: "英文法をまとめて固めるなら",
+    items: [ITEMS.scramble, ITEMS.studysapuri],
   },
 };
 
