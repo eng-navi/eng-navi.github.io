@@ -71,8 +71,10 @@
 
   /* ヘッダー */
   .top { display: flex; align-items: center; justify-content: space-between; min-height: 40px; gap: 8px; }
-  .progress { display: flex; gap: 5px; flex-wrap: wrap; }
-  .progress i { width: 14px; height: 4px; border-radius: 2px; background: var(--line); transition: background .3s; }
+  .lefthead { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .home { font-size: 12px; color: var(--sub); padding: 8px 8px 8px 0; white-space: nowrap; }
+  .progress { display: flex; gap: 4px; flex-wrap: wrap; }
+  .progress i { width: 10px; height: 4px; border-radius: 2px; background: var(--line); transition: background .3s; }
   .progress i.done { background: var(--accent); }
   .progress i.now { background: var(--accent-ink); }
   .toggles { display: flex; gap: 4px; flex: none; }
@@ -179,6 +181,11 @@
   .exp { padding: 0 0 18px; font-size: 15px; line-height: 1.9; white-space: pre-line; }
   .tag { display: inline-block; font-size: 11px; color: var(--accent-ink); background: var(--hl); padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; }
   [data-series="green"] .tag { color: #fff; background: var(--accent); }
+
+  /* ピンク:読めた？(任意) */
+  .self { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--sub); }
+  .self button { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); font-size: 13px; color: var(--sub); }
+  .self button[aria-pressed="true"] { background: var(--hl); border-color: var(--hl); color: var(--accent-ink); font-weight: 500; }
 
   /* 解説の下のさりげないおすすめ */
   .nudge {
@@ -500,7 +507,7 @@
   }
   function header() {
     const dots = set.map((_, i) => `<i class="${i < idx ? "done" : i === idx ? "now" : ""}"></i>`).join("");
-    return `<div class="top"><div class="progress" aria-label="${idx + 1} / ${set.length}問目">${dots}</div>${toggles()}</div>`;
+    return `<div class="top"><div class="lefthead"><button class="home" id="home" aria-label="トップに戻る">‹ トップ</button><div class="progress" aria-label="${idx + 1} / ${set.length}問目">${dots}</div></div>${toggles()}</div>`;
   }
   function refreshToggles() {
     const t = document.getElementById("toggles");
@@ -518,6 +525,8 @@
         refreshToggles();
       }));
     }
+    const home = document.getElementById("home");
+    if (home) home.onclick = renderStart;
     const tt = document.getElementById("timer-toggle");
     if (tt) tt.onclick = () => {
       timerOn = !timerOn;
@@ -736,20 +745,25 @@
         ${canSpeak ? `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>` : ""}
         ${gloss ? `<ul class="gloss">${gloss}</ul>` : ""}
         ${explanationBlock(q, true)}
-        <div class="pair">
-          <button class="ghost strong" data-ok="0">読めなかった</button>
-          <button class="primary" data-ok="1">読めた！</button>
+        <div class="self">
+          <span>読めた？</span>
+          <button data-ok="1" aria-pressed="false">読めた</button>
+          <button data-ok="0" aria-pressed="false">むずかしかった</button>
         </div>
+        <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
       </div>`;
     const listen = document.getElementById("listen");
     if (listen) listen.onclick = () => speak(q);
     if (soundOn) speak(q);
+    // 「読めた？」は答えなくても進める。選んだ場合だけ復習リストに反映する
+    results[idx] = { q, ok: true };
     after.querySelectorAll("[data-ok]").forEach((b) => (b.onclick = () => {
       const ok = b.dataset.ok === "1";
       results[idx] = { q, ok };
       recordResult(q.no, ok);
-      next();
+      after.querySelectorAll("[data-ok]").forEach((x) => x.setAttribute("aria-pressed", x === b));
     }));
+    document.getElementById("next").onclick = next;
     after.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
