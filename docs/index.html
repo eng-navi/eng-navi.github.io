@@ -494,6 +494,17 @@
   const shuffle = (a) => a.map((v) => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map((x) => x[1]);
   const sorted = [...QUIZZES].sort((a, b) => a.no - b.no);
 
+  // 解説の下の1件:項目に合う候補 → シリーズの候補の順に探し、問題番号で出し分ける
+  function pickFor(q) {
+    const P = window.PICKS, ITEMS = window.ITEMS || {}, HOOKS = window.HOOKS || {};
+    if (!P) return null;
+    const pool = (q.category && P.CATEGORY[q.category]) || P.SERIES[SERIES[seriesOf(q)].name] || [];
+    // 同じシリーズの番号は3つおきなので、シリーズ内の通し番号(no / 3)で順番に回す
+    const key = pool.length ? pool[Math.floor(q.no / 3) % pool.length] : null;
+    const item = key && ITEMS[key];
+    return item ? { key, hook: HOOKS[key] || "", item } : null;
+  }
+
   // おすすめ:分野 → シリーズ → default の順に、リンクが入っているものを探す
   function recFor(q) {
     const keys = [q && q.category, q && SERIES[seriesOf(q)].name, "default"];
@@ -691,8 +702,8 @@
   }
 
   function explanationBlock(q, open) {
-    const r = recFor(q);
-    const nudge = r ? `<a class="nudge" href="${esc(r.items[0].url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(r.title)}<br><b>${esc(r.items[0].name)}</b></span></a>${pix(r.items[0])}` : "";
+    const p = pickFor(q);
+    const nudge = p ? `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(p.hook)}<br><b>${esc(p.item.name)}</b></span></a>${pix(p.item)}` : "";
     return `
       <details ${open ? "open" : ""}>
         <summary>解説を見る</summary>
@@ -837,9 +848,16 @@
     missed.forEach((r) => { const k = r.q.category || SERIES[seriesOf(r.q)].name; counts[k] = (counts[k] || 0) + 1; });
     const worst = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0];
     const sample = missed.find((r) => (r.q.category || SERIES[seriesOf(r.q)].name) === worst);
-    // 全問正解なら「次の一歩」(up)、そうでなければ苦手に合わせたおすすめ
+    // 全問正解なら「次の一歩」(up)。間違えた問題があれば、それぞれに合う商品を最大3つ
     const base = REC[SERIES[seriesOf(set[0])].name];
-    const rec = missed.length ? recFor(sample.q) : (base && base.up) || recFor(set[0]);
+    let rec;
+    if (missed.length) {
+      const seen = new Set(), items = [];
+      missed.forEach((r) => { const p = pickFor(r.q); if (p && !seen.has(p.key)) { seen.add(p.key); items.push(p.item); } });
+      rec = items.length ? { title: "間違えた問題に合わせたおすすめ", items: items.slice(0, 3) } : recFor(sample.q);
+    } else {
+      rec = (base && base.up) || recFor(set[0]);
+    }
 
     const line = (q) => isIdiom(q)
       ? esc(q.text.replace(/\n/g, " ")).replace(esc(q.target), `<span class="ans">${esc(q.target)}</span>`)

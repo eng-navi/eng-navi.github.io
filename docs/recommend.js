@@ -48,6 +48,38 @@ window.RECOMMEND = {
   },
 };
 
+// 解説の下に出す1件を、問題ごとに選ぶためのルール。
+//   hook   … 商品ごとの誘い文句
+//   SERIES … シリーズごとの候補。問題番号で順番に出し分ける(同じリンクばかり続かないように)
+//   CATEGORY … 文法の項目に合う商品があれば、そちらを優先
+window.HOOKS = {
+  studysapuri: "TOEICの文法を、スキマ時間で固めるなら",
+  hanon: "わかる文法を、話せる英語に変えるなら",
+  scramble: "この文法を1冊で体系的に固めるなら",
+  eureka: "もう一段むずかしい文法問題に挑むなら",
+  idiomatic: "こういう言い回しを、もっと読めるようになるなら",
+  reading: "英文を正確に読む力をつけるなら",
+  pinnacle: "難しい単語で読む手が止まらないように",
+  oversight: "知っている単語の「意外な訳」を押さえるなら",
+  realize: "難しい英文の意味を、正確につかむなら",
+};
+window.PICKS = {
+  SERIES: {
+    TOEIC: ["studysapuri", "scramble", "hanon"],
+    英検2級: ["scramble", "hanon", "scramble", "eureka"],
+    "読解・イディオム": ["idiomatic", "reading", "idiomatic", "pinnacle", "realize", "oversight"],
+  },
+  CATEGORY: {
+    イディオム: ["idiomatic"],
+    名詞: ["oversight", "scramble"],
+    品詞: ["scramble", "oversight"],
+    倒置: ["eureka", "scramble"],
+    関係詞: ["scramble", "eureka"],
+    仮定法: ["scramble", "hanon"],
+  },
+};
+window.ITEMS = ITEMS;
+
 // 結果画面で、どのシリーズでも出す「次は話せる英語へ」
 window.SPEAK = {
   title: "「わかるのに、話せない」を卒業するなら",
