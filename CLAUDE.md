@@ -78,3 +78,9 @@ work could wait：仕事は後回しにできる
 ```
 ピンクのキャプションは毎回書き下ろし(場面の一言紹介+2行目で例文の見どころ)+ `#英語フレーズ #英語学習のコツ #英検準1級`。
 - サイトに載るのは posted.json の最新番号まで(未投稿の答えを先に見せない)。投稿後に build_site.py → commit → push で反映。
+
+## 予約投稿(GitHub Actions)
+- 予約: `python3 schedule.py add <no> "YYYY-MM-DD HH:MM"`(日本時間)。動画を docs/videos に公開してから schedule.json に追加する
+- `.github/workflows/post.yml` が15分おきに `schedule.py run` を実行し、時間になった予約を1件投稿 → posted.json とサイトを更新して push
+- 前の番号が未投稿なら投稿しない(色のローテーション保護)
+- Secrets: IG_USER_ID, IG_ACCESS_TOKEN。トークンは refresh-token.yml が毎週延長(GH_PAT が必要)

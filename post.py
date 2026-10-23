@@ -16,12 +16,13 @@ import sys
 import time
 import urllib.parse
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 API = "https://graph.instagram.com"
 LOG = ROOT / "posted.json"
+JST = timezone(timedelta(hours=9))
 
 RULE = "--------------------------------------"
 
@@ -97,19 +98,25 @@ def git(*args):
     subprocess.run(["git", *args], cwd=ROOT, check=True)
 
 
-def stage_video(no, timeout=600):
-    """動画を docs/videos/ に置いて push し、公開URLで取得できるまで待つ。"""
-    src = ROOT / "out" / f"q{no}.mp4"
+def publish_video(no):
+    """動画を docs/videos/ に置いて push する(まだなら書き出しから)。"""
+    dst = ROOT / "docs" / "videos" / f"q{no}.mp4"
+    if dst.exists():
+        return
+    src = ROOT / "out" / dst.name
     if not src.exists():
         subprocess.run([sys.executable, "render.py", "quizzes.json", str(no)], cwd=ROOT, check=True)
-    dst = ROOT / "docs" / "videos" / src.name
-    url = f"{os.environ['SITE_URL'].rstrip('/')}/videos/{src.name}"
-    if not dst.exists():
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy(src, dst)
-        git("add", str(dst))
-        git("commit", "-q", "-m", f"動画 q{no} を追加")
-        git("push", "-q")
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(src, dst)
+    git("add", str(dst))
+    git("commit", "-q", "-m", f"動画 q{no} を追加")
+    git("push", "-q")
+
+
+def stage_video(no, timeout=600):
+    """動画を公開し、公開URLで取得できるまで待つ。"""
+    publish_video(no)
+    url = f"{os.environ['SITE_URL'].rstrip('/')}/videos/q{no}.mp4"
 
     start = time.time()
     while time.time() - start < timeout:
@@ -144,13 +151,18 @@ def post(q):
     permalink = api("GET", media_id, fields="permalink").get("permalink")
     log = json.loads(LOG.read_text()) if LOG.exists() else []
     log.append({"no": q["no"], "media_id": media_id, "permalink": permalink,
-                "posted_at": datetime.now().isoformat(timespec="seconds")})
+                "posted_at": datetime.now(JST).isoformat(timespec="seconds")})
     LOG.write_text(json.dumps(log, ensure_ascii=False, indent=2) + "\n")
     print(f"✓ 投稿完了 {permalink}")
 
 
 def refresh_token():
     res = api("GET", "refresh_access_token", grant_type="ig_refresh_token")
+    out = os.environ.get("TOKEN_OUT")
+    if out:  # GitHub Actions:ログに出さずファイルに書き、Secret の更新に使う
+        Path(out).write_text(res["access_token"])
+        print(f"✓ トークンを更新しました(残り {res['expires_in'] // 86400} 日)")
+        return
     env = ROOT / ".env"
     lines = [l for l in env.read_text().splitlines() if not l.startswith("IG_ACCESS_TOKEN=")]
     lines.append(f"IG_ACCESS_TOKEN={res['access_token']}")

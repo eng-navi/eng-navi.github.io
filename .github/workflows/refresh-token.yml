@@ -1,0 +1,19 @@
+# Instagram のトークン(有効期限60日)を毎週延長し、Secret を更新する
+name: トークン更新
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 post.py --refresh-token
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          TOKEN_OUT: ${{ runner.temp }}/token
+      - run: gh secret set IG_ACCESS_TOKEN < "$RUNNER_TEMP/token"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_REPO: ${{ github.repository }}
