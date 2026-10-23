@@ -283,6 +283,19 @@
 <script src="data.js"></script>
 <script src="recommend.js"></script>
 <script>
+  // アクセス解析(GA4)。recommend.js に測定IDがあるときだけ読み込む
+  if (window.ANALYTICS_ID) {
+    const tag = document.createElement("script");
+    tag.async = true;
+    tag.src = "https://www.googletagmanager.com/gtag/js?id=" + window.ANALYTICS_ID;
+    document.head.appendChild(tag);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", window.ANALYTICS_ID);
+  }
+</script>
+<script>
 (() => {
   const QUIZZES = window.QUIZZES || [];
   const REC = window.RECOMMEND || {};
@@ -301,6 +314,17 @@
   const seriesOf = (q) => ["pink", "blue", "green"][q.no % 3];
   const isIdiom = (q) => !q.options;
   const setSeries = (s) => { document.body.dataset.series = s || "blue"; };
+
+  // 計測イベント。GA4 が無ければ何もしない
+  const trackEvent = (name, params = {}) => { try { if (window.gtag) gtag("event", name, params); } catch (e) {} };
+  // リンクのクリックを場所ごとに記録(どのおすすめが押されたかを見る)
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const place = a.classList.contains("nudge") ? "explanation" : a.classList.contains("reel") ? "reel" : a.closest(".rec") ? "result" : a.closest(".foot") ? "footer" : "other";
+    const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
+    trackEvent("link_click", { place, label, link_domain: new URL(a.href, location.href).hostname });
+  });
 
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const BLANK_RE = /\(\s*\)/;
@@ -491,11 +515,12 @@
 
   function beginAll() {
     const start = loadAllIdx() < sorted.length ? loadAllIdx() : 0;
-    begin(sorted, { all: true, start });
+    begin(sorted, { all: true, start, mode: start ? "all_resume" : "all" });
   }
 
   function begin(quizzes, opt = {}) {
     if (!quizzes.length) return;
+    trackEvent("quiz_start", { mode: opt.mode || (opt.all ? "all" : "other") });
     allMode = !!opt.all;
     set = allMode ? quizzes : quizzes.slice(0, 10);
     idx = opt.start || 0;
@@ -538,6 +563,7 @@
         track = b.dataset.track || null;
         try { localStorage.setItem("bgmTrack", track || ""); } catch (e) {}
         track ? bgmPlay() : bgmStop();
+        window.dispatchEvent(new CustomEvent("bgm", { detail: track || "off" }));
         refreshToggles();
       }));
     }
@@ -620,14 +646,14 @@
     bindSound();
     window.scrollTo({ top: 0 });
 
-    document.getElementById("latest").onclick = () => begin(sorted.slice(-10));
+    document.getElementById("latest").onclick = () => begin(sorted.slice(-10), { mode: "latest" });
     document.getElementById("all").onclick = beginAll;
-    document.getElementById("random").onclick = () => begin(shuffle(sorted));
+    document.getElementById("random").onclick = () => begin(shuffle(sorted), { mode: "random" });
     const m = document.getElementById("missed");
-    if (m) m.onclick = () => begin(shuffle(missed));
-    app.querySelectorAll("[data-goal]").forEach((b) => (b.onclick = () => begin(shuffle(bySeries[b.dataset.goal]))));
-    app.querySelectorAll("[data-cat]").forEach((b) => (b.onclick = () => begin(shuffle(cats[b.dataset.cat]))));
-    app.querySelectorAll("[data-range]").forEach((b) => (b.onclick = () => begin(ranges[b.dataset.range])));
+    if (m) m.onclick = () => begin(shuffle(missed), { mode: "review" });
+    app.querySelectorAll("[data-goal]").forEach((b) => (b.onclick = () => begin(shuffle(bySeries[b.dataset.goal]), { mode: "goal_" + b.dataset.goal })));
+    app.querySelectorAll("[data-cat]").forEach((b) => (b.onclick = () => begin(shuffle(cats[b.dataset.cat]), { mode: "category" })));
+    app.querySelectorAll("[data-range]").forEach((b) => (b.onclick = () => begin(ranges[b.dataset.range], { mode: "range" })));
   }
 
   // ---- 問題(緑・青は2択、ピンクは読んで意味を確認) ----
@@ -722,6 +748,7 @@
     const timer = document.getElementById("timer");
     if (timer) timer.remove();
     const ok = choice === q.answer;
+    trackEvent("quiz_answer", { no: q.no, series: seriesOf(q), correct: ok });
     results[idx] = { q, ok };
     recordResult(q.no, ok);
     app.querySelectorAll(".opt").forEach((b) => {
@@ -755,6 +782,7 @@
   }
 
   function revealIdiom(q) {
+    trackEvent("idiom_reveal", { no: q.no });
     const after = document.getElementById("after");
     const gloss = (q.glossary || []).map((g) => {
       const [en, ja] = g.split("：");
@@ -796,6 +824,7 @@
     const done = results.filter(Boolean);  // 全問チャレンジを途中から始めた場合は、解いた分だけ数える
     const total = done.length;
     const score = done.filter((r) => r.ok).length;
+    trackEvent("quiz_complete", { score, total });
     const missed = done.filter((r) => !r.ok);
     const msg =
       score === total ? "全問クリア！ この調子で毎日1問続けましょう。" :
@@ -865,6 +894,8 @@
     const menu = document.getElementById("bgm-menu");
     if (menu && !menu.hidden && !e.target.closest(".bgm-wrap")) menu.hidden = true;
   });
+
+  window.addEventListener("bgm", (e) => trackEvent("bgm_select", { track: e.detail }));
 
   QUIZZES.length ? renderStart() : (app.innerHTML = "<p>問題がありません</p>");
 })();

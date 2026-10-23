@@ -59,6 +59,9 @@ window.ABROAD = {
   item: ITEMS.yumekana,
 };
 
+// Google アナリティクス(GA4)の測定ID。空なら計測しない。例: "G-XXXXXXXXXX"
+window.ANALYTICS_ID = "";
+
 // 結果画面の下に出すリンク
 window.LINKS = {
   instagram: "https://www.instagram.com/eng_navi/",

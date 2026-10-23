@@ -25,6 +25,8 @@ LOG = ROOT / "posted.json"
 JST = timezone(timedelta(hours=9))
 
 RULE = "--------------------------------------"
+# 答えのコメントの最後に添える一文(サイトへの案内。解説の邪魔をしない短さで)
+SITE_NOTE = "📚 過去の問題100問以上は、プロフィールのリンクから無料で解けます"
 
 
 def load_env():
@@ -62,6 +64,8 @@ def build_comment(q):
             "",
             "【解説】",
             q["explanation"],
+            "",
+            SITE_NOTE,
             RULE,
         ])
     answer = q["options"][q["answer"] - 1]
@@ -76,6 +80,8 @@ def build_comment(q):
         *([*q["glossary"], ""] if q.get("glossary") else []),
         "【解説】",
         q["explanation"],
+        "",
+        SITE_NOTE,
         RULE,
     ])
 
