@@ -72,16 +72,24 @@
   /* ヘッダー */
   .top { display: flex; align-items: center; justify-content: space-between; min-height: 40px; gap: 8px; }
   .lefthead { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .home { font-size: 12px; color: var(--sub); padding: 8px 8px 8px 0; white-space: nowrap; }
-  .progress { display: flex; gap: 4px; flex-wrap: wrap; }
-  .progress i { width: 10px; height: 4px; border-radius: 2px; background: var(--line); transition: background .3s; }
-  .progress i.done { background: var(--accent); }
-  .progress i.now { background: var(--accent-ink); }
+  .home {
+    font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap;
+    padding: 7px 14px 7px 11px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .7);
+  }
+  .home:active { background: var(--hl); }
+  .count { font-family: var(--serif); font-size: 17px; color: var(--accent-ink); white-space: nowrap; }
+  .count small { font-size: 13px; color: #9a9a9a; }
   .toggles { display: flex; gap: 4px; flex: none; }
   .sound { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--accent-ink); padding: 8px 0 8px 6px; white-space: nowrap; }
   .sound svg { width: 18px; height: 18px; }
   .sound[aria-pressed="false"] { color: #b9b9b9; }
   .bgm-wrap { position: relative; }
+  /* 問題画面の狭い画面では、右上はアイコンだけにして「トップ」と重ならないようにする */
+  @media (max-width: 420px) {
+    .lefthead ~ .toggles .lbl { display: none; }
+    .lefthead ~ .toggles .sound { padding: 8px 4px; }
+    .lefthead ~ .toggles .sound svg { width: 21px; height: 21px; }
+  }
   .bgm-menu {
     position: absolute; right: 0; top: calc(100% + 4px); z-index: 10; min-width: 200px; padding: 8px;
     background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
@@ -476,10 +484,21 @@
   const pix = (it) => (it.pixel ? `<img src="${esc(it.pixel)}" width="1" height="1" alt="" style="position:absolute;width:1px;height:1px;opacity:0">` : "");
   const recLink = (it) => `<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${esc(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
 
-  function begin(quizzes) {
+  // 全問チャレンジは、どこまで進んだかを端末に記録して続きから再開できる
+  let allMode = false;
+  const loadAllIdx = () => { try { return Number(localStorage.getItem("allIdx")) || 0; } catch (e) { return 0; } };
+  const saveAllIdx = (i) => { try { localStorage.setItem("allIdx", String(i)); } catch (e) {} };
+
+  function beginAll() {
+    const start = loadAllIdx() < sorted.length ? loadAllIdx() : 0;
+    begin(sorted, { all: true, start });
+  }
+
+  function begin(quizzes, opt = {}) {
     if (!quizzes.length) return;
-    set = quizzes.slice(0, 10);
-    idx = 0;
+    allMode = !!opt.all;
+    set = allMode ? quizzes : quizzes.slice(0, 10);
+    idx = opt.start || 0;
     results = [];
     bgmPlay();
     renderItem();
@@ -489,7 +508,7 @@
     const now = TRACKS.find((t) => t.id === track);
     const music = bgmOk ? `
       <div class="bgm-wrap">
-        <button class="sound" id="bgm" aria-pressed="${!!track}" aria-haspopup="true" aria-label="BGMを選ぶ">${musicSvg}${now ? esc(now.name) : "BGM OFF"}</button>
+        <button class="sound" id="bgm" aria-pressed="${!!track}" aria-haspopup="true" aria-label="BGMを選ぶ">${musicSvg}<span class="lbl">${now ? esc(now.name) : "BGM OFF"}</span></button>
         <div class="bgm-menu" id="bgm-menu" hidden>
           <p>BGM</p>
           ${TRACKS.map((t) => `<button data-track="${t.id}" aria-checked="${t.id === track}"><span>${esc(t.name)}</span><small>${t.mood}</small></button>`).join("")}
@@ -498,14 +517,13 @@
         </div>
       </div>` : "";
     const sound = canSpeak
-      ? `<button class="sound" id="sound" aria-pressed="${soundOn}" aria-label="英文の音声">${soundOn ? speakerSvg : mutedSvg}${soundOn ? "音声ON" : "音声OFF"}</button>`
+      ? `<button class="sound" id="sound" aria-pressed="${soundOn}" aria-label="英文の音声">${soundOn ? speakerSvg : mutedSvg}<span class="lbl">${soundOn ? "音声ON" : "音声OFF"}</span></button>`
       : "";
-    const timer = `<button class="sound" id="timer-toggle" aria-pressed="${timerOn}" aria-label="制限時間">${clockSvg}${timerOn ? TIME_LIMIT + "秒" : "時間OFF"}</button>`;
+    const timer = `<button class="sound" id="timer-toggle" aria-pressed="${timerOn}" aria-label="制限時間">${clockSvg}<span class="lbl">${timerOn ? TIME_LIMIT + "秒" : "時間OFF"}</span></button>`;
     return `<div class="toggles" id="toggles">${music}${timer}${sound}</div>`;
   }
   function header() {
-    const dots = set.map((_, i) => `<i class="${i < idx ? "done" : i === idx ? "now" : ""}"></i>`).join("");
-    return `<div class="top"><div class="lefthead"><button class="home" id="home" aria-label="トップに戻る">‹ トップ</button><div class="progress" aria-label="${idx + 1} / ${set.length}問目">${dots}</div></div>${toggles()}</div>`;
+    return `<div class="top"><div class="lefthead"><button class="home" id="home" aria-label="トップに戻る">‹ トップ</button><span class="count">${idx + 1}<small> / ${set.length}</small></span></div>${toggles()}</div>`;
   }
   function refreshToggles() {
     const t = document.getElementById("toggles");
@@ -544,7 +562,7 @@
       try { localStorage.setItem("sound", soundOn ? "on" : "off"); } catch (e) {}
       if (!soundOn) stopVoice();
       b.setAttribute("aria-pressed", soundOn);
-      b.innerHTML = (soundOn ? speakerSvg : mutedSvg) + (soundOn ? "音声ON" : "音声OFF");
+      b.innerHTML = (soundOn ? speakerSvg : mutedSvg) + `<span class="lbl">${soundOn ? "音声ON" : "音声OFF"}</span>`;
     };
   }
 
@@ -581,6 +599,7 @@
       <h1 class="title">eng_navi<br>英語クイズ</h1>
       <p class="lead">リールで出している問題の<b>続き</b>です。過去の問題も<b>すべて無料・登録不要</b>。<br>タップで答え合わせ、<b>音声つき</b>で解説も読めます。</p>
       <button class="primary" id="latest">最新の問題をとく</button>
+      <button class="ghost strong" id="all">${loadAllIdx() > 0 && loadAllIdx() < sorted.length ? `全問チャレンジの続きから(${loadAllIdx() + 1}問目〜)` : `全問チャレンジ(${sorted.length}問を1番から)`}</button>
       ${missed.length ? `<button class="ghost strong" id="missed">前に間違えた問題を復習する(${missed.length}問)</button>` : ""}
       <p class="h">目的からえらぶ</p>
       <div class="goals">
@@ -602,6 +621,7 @@
     window.scrollTo({ top: 0 });
 
     document.getElementById("latest").onclick = () => begin(sorted.slice(-10));
+    document.getElementById("all").onclick = beginAll;
     document.getElementById("random").onclick = () => begin(shuffle(sorted));
     const m = document.getElementById("missed");
     if (m) m.onclick = () => begin(shuffle(missed));
@@ -693,6 +713,7 @@
   function next() {
     stopVoice();
     idx++;
+    if (allMode) saveAllIdx(idx >= set.length ? 0 : idx);
     idx >= set.length ? renderResult() : renderItem();
   }
 
@@ -723,11 +744,13 @@
         ${canSpeak ? `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>` : ""}
         ${explanationBlock(q, !ok)}
         <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
+        <button class="ghost" data-home>トップに戻る</button>
       </div>`;
     const listen = document.getElementById("listen");
     if (listen) listen.onclick = () => speak(q);
     if (soundOn) speak(q);
     document.getElementById("next").onclick = next;
+    after.querySelector("[data-home]").onclick = renderStart;
     after.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
@@ -749,7 +772,9 @@
           <button data-ok="0" aria-pressed="false">むずかしかった</button>
         </div>
         <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
+        <button class="ghost" data-home>トップに戻る</button>
       </div>`;
+    after.querySelector("[data-home]").onclick = renderStart;
     const listen = document.getElementById("listen");
     if (listen) listen.onclick = () => speak(q);
     if (soundOn) speak(q);
@@ -768,9 +793,10 @@
   // ---- 結果 ----
   function renderResult() {
     setSeries("blue");
-    const total = results.length;
-    const score = results.filter((r) => r.ok).length;
-    const missed = results.filter((r) => !r.ok);
+    const done = results.filter(Boolean);  // 全問チャレンジを途中から始めた場合は、解いた分だけ数える
+    const total = done.length;
+    const score = done.filter((r) => r.ok).length;
+    const missed = done.filter((r) => !r.ok);
     const msg =
       score === total ? "全問クリア！ この調子で毎日1問続けましょう。" :
       score >= total * 0.7 ? "あと少し！ 間違えた問題だけ見直せば完璧です。" :
@@ -831,7 +857,7 @@
       ${footer()}`;
     bindSound();
     window.scrollTo({ top: 0 });
-    document.getElementById("retry").onclick = () => begin(set);
+    document.getElementById("retry").onclick = () => (allMode ? begin(sorted, { all: true }) : begin(set));
     document.getElementById("menu").onclick = renderStart;
   }
 
