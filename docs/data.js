@@ -1384,5 +1384,18 @@ window.QUIZZES = [
     "translation": "「好きにしていいよ」と言って、彼女は午後のあいだ子どもたちを自由にさせておいた。",
     "explanation": "「leave X to X's own devices」は「Xの好きにさせる、自由にさせておく」という意味です。\nここでの devices は「機器」ではなく「(自分なりの)やり方・工夫」のことで、「本人のやり方に任せて口を出さない」というイメージです。\n\nこの文では、彼女が子どもたちに指示を出さず、午後を自由に過ごさせた様子を表しています。",
     "audio": "audio/q102.mp3"
+  },
+  {
+    "no": 103,
+    "category": "時制",
+    "question": "Ms. Lee is not sure when the shipment ( ) at the warehouse.",
+    "options": [
+      "will arrive",
+      "arrives"
+    ],
+    "answer": 1,
+    "translation": "リーさんは、荷物がいつ倉庫に届くのかはっきり分かっていない。",
+    "explanation": "when 以下は is not sure の内容を表す「名詞節」です。\n\n「時を表す副詞節」の中では未来のことも現在形で表しますが、名詞節の中では未来のことは will を使って表します。\n\nここでは「いつ届くのか」という名詞節なので、①will arrive が正解。",
+    "audio": "audio/q103.mp3"
   }
 ];
