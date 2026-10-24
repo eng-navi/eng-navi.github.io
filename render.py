@@ -176,16 +176,22 @@ class Video:
     def highlight(self, d, p):
         t, f = self.t, self.f_q
         if t["hl_style"] == "phrase":
-            # ピンク:ターゲットの表現だけを囲む(行をまたぐ場合は行ごとに)
-            target = self.q["target"]
+            # ピンク:ターゲットの表現だけを囲む。行をまたぐ場合は、行ごとにその部分を囲む
+            full = " ".join(self.lines)
+            start = full.find(self.q["target"].replace("\n", " "))
+            if start < 0:
+                return
+            end = start + len(self.q["target"])
+            pos = 0
             for line, base in zip(self.lines, self.baselines):
-                start = line.find(target) if target in line else -1
-                if start < 0:
-                    continue
-                x0 = self.x + f.getlength(line[:start]) - 8
-                x1 = self.x + f.getlength(line[: start + len(target)]) + 8
-                top = base + cap_top(f) - 8
-                d.rectangle([x0, top, x0 + (x1 - x0) * p, base + f.size * 0.25], fill=t["hl"])
+                a, b = max(start, pos), min(end, pos + len(line))
+                if a < b:
+                    seg = line[a - pos:b - pos]
+                    x0 = self.x + f.getlength(line[:a - pos]) + (f.getlength(seg) - f.getlength(seg.lstrip())) - 8
+                    x1 = self.x + f.getlength(line[:b - pos].rstrip()) + 8
+                    top = base + cap_top(f) - 8
+                    d.rectangle([x0, top, x0 + (x1 - x0) * p, base + f.size * 0.25], fill=t["hl"])
+                pos += len(line) + 1
             return
         # 緑・青:括弧のある行
         i = next((i for i, line in enumerate(self.lines) if "(" in line), 0)

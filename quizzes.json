@@ -1397,5 +1397,276 @@
     "translation": "リーさんは、荷物がいつ倉庫に届くのかはっきり分かっていない。",
     "explanation": "when 以下は is not sure の内容を表す「名詞節」です。\n\n「時を表す副詞節」の中では未来のことも現在形で表しますが、名詞節の中では未来のことは will を使って表します。\n\nここでは「いつ届くのか」という名詞節なので、①will arrive が正解。",
     "caption": "when のあとは現在形？それとも will？📦\nTOEIC Part5で差がつく「名詞節と副詞節」の見分け方です。\n\n#TOEIC対策 #TOEICPart5 #英文法"
+  },
+  {
+    "no": 104,
+    "category": "時制",
+    "question": "This old guitar ( ) to my grandfather.",
+    "options": [
+      "is belonging",
+      "belongs"
+    ],
+    "answer": 2,
+    "translation": "この古いギターは祖父のものだ。",
+    "explanation": "belong（〜のものである、所属している）は「状態」を表す動詞です。\n状態を表す動詞は、ふつう進行形にしません。\n\nしたがって、②belongs が正解。",
+    "caption": "「〜のものだ」は進行形にできる？🎸\n英検2級で狙われる「進行形にしない動詞」をチェック。\n\n#英検2級 #英文法 #状態動詞"
+  },
+  {
+    "no": 105,
+    "text": "After a few meetings, the two designers were finally on the same wavelength.",
+    "target": "on the same wavelength",
+    "translation": "何度か打ち合わせをして、2人のデザイナーはようやく考えが合うようになった。",
+    "glossary": [
+      "after a few meetings：何度か打ち合わせをして",
+      "be on the same wavelength：波長が合う、考え方が同じである",
+      "finally：ようやく"
+    ],
+    "explanation": "「be on the same wavelength (as X)」は「(Xと)波長が合う、考え方や感じ方が同じ」という意味です。\nはっきり言葉にしなくても通じ合っている、というニュアンスがあります。\n\n反対は be on a different wavelength で「考えが合わない」となります。",
+    "caption": "「波長が合う」は英語でもそのまま？📻\non the same wavelength、一瞬で読めますか。\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 106,
+    "category": "時制",
+    "question": "By the time Mr. Kato arrived at the station, the express train ( ).",
+    "options": [
+      "has already left",
+      "had already left"
+    ],
+    "answer": 2,
+    "translation": "加藤さんが駅に着いたときには、急行列車はすでに出発していた。",
+    "explanation": "「着いたとき」という過去の時点までに完了していたことは、過去完了形で表します。\n現在完了は「今」とのつながりを表すので、過去の時点が基準のときは使えません。\n\nしたがって、②had already left が正解。",
+    "caption": "過去のある時点「までに」終わっていたら？🚄\nTOEIC Part5 の定番、過去完了です。\n\n#TOEIC対策 #TOEICPart5 #過去完了"
+  },
+  {
+    "no": 107,
+    "category": "時制",
+    "question": "Ken and I ( ) each other since elementary school.",
+    "options": [
+      "have known",
+      "have been knowing"
+    ],
+    "answer": 1,
+    "translation": "ケンと私は小学校のころからの知り合いだ。",
+    "explanation": "since 〜（〜以来）があるので、今までずっと続いていることを表す現在完了を使います。\nknow は「状態」を表す動詞なので、進行形の have been knowing にはしません。\n\nしたがって、①have known が正解。",
+    "caption": "「ずっと知っている」は have been knowing？🤝\nsince と一緒に使う時制のポイントです。\n\n#英検対策 #現在完了 #英文法"
+  },
+  {
+    "no": 108,
+    "text": "Her curiosity about space knows no bounds; she reads every article she can find.",
+    "target": "knows no bounds",
+    "translation": "彼女の宇宙への好奇心は果てしない。見つけた記事は全部読んでしまう。",
+    "glossary": [
+      "curiosity：好奇心",
+      "X know no bounds：Xには際限がない",
+      "every article she can find：見つけられる記事は全部"
+    ],
+    "explanation": "「X know no bounds」は「Xには際限がない、とどまるところを知らない」という意味です。\nbounds は「限界、境界」のことで、好奇心や欲など、人の気持ちや性質に使われることが多い表現です。",
+    "caption": "好奇心が止まらない人を、英語で言うと？🔭\nknow no bounds の意味をチェック。\n\n#英語フレーズ #英語学習のコツ #英検準1級"
+  },
+  {
+    "no": 109,
+    "category": "時制",
+    "question": "Ms. Rivera ( ) for the company since 2018.",
+    "options": [
+      "has been working",
+      "is working"
+    ],
+    "answer": 1,
+    "translation": "リベラさんは2018年からその会社で働いている。",
+    "explanation": "since 2018（2018年から）があるので、過去から今まで続いていることを表します。\nwork のような「動作」を表す動詞で継続を言うときは、現在完了進行形を使います。\n\nしたがって、①has been working が正解。",
+    "caption": "since があったら、まず疑う時制は？💼\nTOEICで頻出の「継続」の表し方です。\n\n#TOEIC対策 #英文法 #現在完了進行形"
+  },
+  {
+    "no": 110,
+    "category": "時制",
+    "question": "My friend called me while I ( ) dinner.",
+    "options": [
+      "have cooked",
+      "was cooking"
+    ],
+    "answer": 2,
+    "translation": "夕食を作っていたときに、友だちから電話があった。",
+    "explanation": "「電話があった」という過去のある時点で、「夕食を作る」動作がちょうど進行中でした。\n過去のある時点で進行中の動作は、過去進行形で表します。\n\nしたがって、②was cooking が正解。",
+    "caption": "「〜していたときに電話が鳴った」☎️\n過去進行形の使いどころを1問で。\n\n#英検2級 #英語学習 #過去進行形"
+  },
+  {
+    "no": 111,
+    "text": "We're running short of time, so let's skip the coffee break today.",
+    "target": "running short of",
+    "translation": "時間が足りなくなってきたので、今日はコーヒー休憩をなしにしよう。",
+    "glossary": [
+      "run short of X：Xが足りなくなる",
+      "skip：省く、飛ばす",
+      "coffee break：休憩"
+    ],
+    "explanation": "「run short of X」は「Xが足りなくなる、Xを切らしかけている」という意味です。\n進行形で「だんだん足りなくなってきている」という感じを出すことが多い表現です。\n\nX run short（Xが不足する）の形でも使います。",
+    "caption": "「時間が足りない！」をネイティブっぽく⏰\nrun short of、会議でもよく聞く表現です。\n\n#英語フレーズ #英会話 #英語イディオム"
+  },
+  {
+    "no": 112,
+    "category": "時制",
+    "question": "By next Friday, the marketing team ( ) the final report.",
+    "options": [
+      "has completed",
+      "will have completed"
+    ],
+    "answer": 2,
+    "translation": "来週の金曜日までには、マーケティングチームは最終報告書を仕上げているだろう。",
+    "explanation": "By next Friday（来週の金曜日までに）は未来の時点です。\n「未来のある時点までに完了している」ことは未来完了形で表します。\n\nしたがって、②will have completed が正解。",
+    "caption": "by＋未来の時点 のサインに気づける？📅\nTOEIC Part5 で狙われる未来完了です。\n\n#TOEIC対策 #TOEICPart5 #英文法"
+  },
+  {
+    "no": 113,
+    "category": "時制",
+    "question": "The bus ( ), so we'll have to wait for the next one.",
+    "options": [
+      "has just left",
+      "just leaves"
+    ],
+    "answer": 1,
+    "translation": "バスはちょうど出てしまったので、次のバスを待たなければならない。",
+    "explanation": "just（たった今）と一緒に使い、「〜したところだ」という完了を表すのは現在完了です。\n「出てしまったので、今は乗れない」という今の状況につながっています。\n\nしたがって、①has just left が正解。",
+    "caption": "just と相性のいい時制は？🚌\n「〜したところだ」の言い方を確認しましょう。\n\n#英検2級 #現在完了 #英文法"
+  },
+  {
+    "no": 114,
+    "text": "In retrospect, quitting that job was the best decision I ever made.",
+    "target": "In retrospect",
+    "translation": "振り返ってみると、あの仕事を辞めたのは今までで一番いい決断だった。",
+    "glossary": [
+      "in retrospect：振り返ってみると",
+      "quit：辞める",
+      "the best decision I ever made：今までで一番いい決断"
+    ],
+    "explanation": "「in retrospect」は「振り返ってみると、今思えば」という意味です。\n当時はわからなかったことを、あとから考えて評価するときに使います。\n\nlooking back や in hindsight（あとから考えると）もほぼ同じ意味です。",
+    "caption": "「今思えば…」を英語で言えますか？🕰\nin retrospect、文章でも会話でも使えます。\n\n#英語フレーズ #英検準1級 #英語学習のコツ"
+  },
+  {
+    "no": 115,
+    "category": "時制",
+    "question": "The company ( ) its new headquarters in Osaka three years ago.",
+    "options": [
+      "opened",
+      "has opened"
+    ],
+    "answer": 1,
+    "translation": "その会社は3年前に大阪に新しい本社を開設した。",
+    "explanation": "three years ago（3年前に）は、はっきりと過去を示す語句です。\n現在完了は、こうした過去を示す語句と一緒には使えません。\n\nしたがって、過去形の①opened が正解。",
+    "caption": "ago と現在完了、一緒に使える？🏢\nTOEICで差がつく時制の基本です。\n\n#TOEIC対策 #英文法 #時制"
+  },
+  {
+    "no": 116,
+    "category": "時制",
+    "question": "Emma isn't at home now. She ( ) to the library.",
+    "options": [
+      "has been",
+      "has gone"
+    ],
+    "answer": 2,
+    "translation": "エマは今家にいない。図書館に行ってしまった。",
+    "explanation": "have gone to 〜 は「〜へ行ってしまった（今ここにいない）」という結果を表します。\nhave been to 〜 は「〜へ行ったことがある」「〜へ行ってきたところだ」という意味です。\n\n今家にいないので、②has gone が正解。",
+    "caption": "has been to と has gone to、ちがいは言える？📚\n英検で何度も出る定番ポイントです。\n\n#英検2級 #英文法 #英語の勉強"
+  },
+  {
+    "no": 117,
+    "text": "The small café exploded in popularity after a famous singer posted about it.",
+    "target": "exploded in popularity",
+    "translation": "有名な歌手が投稿してから、その小さなカフェは一気に人気になった。",
+    "glossary": [
+      "explode in popularity：人気が爆発する",
+      "post about X：Xについて投稿する"
+    ],
+    "explanation": "「explode in popularity」は「人気が爆発する、一気に人気が出る」という意味です。\nexplode（爆発する）を人気の急上昇にたとえています。\n\ngrow in popularity（だんだん人気が出る）とセットで覚えておくと便利です。",
+    "caption": "「バズって一気に人気に」を英語で☕️\nexplode in popularity を読んでみましょう。\n\n#英語フレーズ #英語イディオム #英検準1級"
+  },
+  {
+    "no": 118,
+    "category": "時制",
+    "question": "The technicians ( ) on the system for hours before they found the problem.",
+    "options": [
+      "have been working",
+      "had been working"
+    ],
+    "answer": 2,
+    "translation": "技術者たちは、問題を見つけるまで何時間もシステムの作業をしていた。",
+    "explanation": "「問題を見つけた」という過去の時点まで、作業がずっと続いていました。\n過去のある時点までの動作の継続は、過去完了進行形で表します。\n\nしたがって、②had been working が正解。",
+    "caption": "過去のある時点まで「ずっと〜していた」🛠\n過去完了進行形を1問で確認。\n\n#TOEIC対策 #TOEICPart5 #英語学習"
+  },
+  {
+    "no": 119,
+    "category": "時制",
+    "question": "Listen! I ( ) someone knocking on the door.",
+    "options": [
+      "hear",
+      "am hearing"
+    ],
+    "answer": 1,
+    "translation": "ほら！誰かがドアをノックしているのが聞こえる。",
+    "explanation": "hear（聞こえる）や see（見える）は、自然に感じとる「知覚」を表す動詞で、ふつう進行形にしません。\nlisten to（耳をすます）のような意識的な動作なら進行形にできます。\n\nしたがって、①hear が正解。",
+    "caption": "「聞こえている」は am hearing？👂\n知覚を表す動詞の使い方をチェック。\n\n#英検対策 #英文法 #時制"
+  },
+  {
+    "no": 120,
+    "text": "“Was the test easy?”\n“Far from it. I barely finished in time.”",
+    "target": "Far from it.",
+    "translation": "「テスト簡単だった？」「とんでもない。ギリギリで終わったよ」",
+    "glossary": [
+      "Far from it.：とんでもない、全然そんなことない",
+      "barely：かろうじて",
+      "in time：時間内に"
+    ],
+    "explanation": "「Far from it.」は相手の言ったことを強く否定して「とんでもない、全くそうではない」と返す表現です。\nfar from X（Xとは程遠い）から来ていて、Not at all. に近い意味になります。",
+    "caption": "「全然そんなことない！」を一言で📝\nFar from it. の意味、わかりますか。\n\n#英語フレーズ #英会話 #英語学習のコツ"
+  },
+  {
+    "no": 121,
+    "category": "時制",
+    "question": "The package ( ) several samples of our new products.",
+    "options": [
+      "contains",
+      "is containing"
+    ],
+    "answer": 1,
+    "translation": "その小包には、新製品のサンプルがいくつか入っている。",
+    "explanation": "contain（〜を含んでいる）は「状態」を表す動詞なので、ふつう進行形にしません。\nhave、own、include なども同じ仲間です。\n\nしたがって、①contains が正解。",
+    "caption": "「入っている」は is containing？📦\nTOEICでよく見る状態動詞のポイントです。\n\n#TOEIC対策 #英文法 #状態動詞"
+  },
+  {
+    "no": 122,
+    "category": "時制",
+    "question": "We ( ) for Hawaii next Monday. The tickets are already booked.",
+    "options": [
+      "have left",
+      "are leaving"
+    ],
+    "answer": 2,
+    "translation": "私たちは来週の月曜日にハワイへ出発する。チケットはもう予約してある。",
+    "explanation": "準備ができている「確定した近い未来の予定」は、現在進行形で表せます。\nnext Monday（来週の月曜日）という未来の時を表す語があるので、現在完了は使えません。\n\nしたがって、②are leaving が正解。",
+    "caption": "未来の予定なのに進行形？🌺\n「決まっている予定」の言い方を1問で。\n\n#英検2級 #英語学習 #現在進行形"
+  },
+  {
+    "no": 123,
+    "text": "Her research paved the way for a new treatment for the disease.",
+    "target": "paved the way for",
+    "translation": "彼女の研究は、その病気の新しい治療法への道を開いた。",
+    "glossary": [
+      "pave the way for X：Xへの道を開く、Xの下地を作る",
+      "treatment：治療法"
+    ],
+    "explanation": "「pave the way for X」は「Xへの道を開く、Xの準備を整える」という意味です。\npave は「道を舗装する」ことで、あとに続くものが進みやすくなるようにする、というイメージです。",
+    "caption": "「〜への道を開く」を英語で🧪\npave the way for、ニュースや長文の頻出表現です。\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 124,
+    "category": "時制",
+    "question": "( ) you ever attended one of our product launch events?",
+    "options": [
+      "Did",
+      "Have"
+    ],
+    "answer": 2,
+    "translation": "弊社の新製品発表会に参加されたことはありますか？",
+    "explanation": "ever（これまでに）は「経験」を表す現在完了とよく一緒に使われます。\n「今までに〜したことがあるか」をたずねるので、Have you ever 〜? の形になります。\n\nしたがって、②Have が正解。",
+    "caption": "ever があったら、時制は？🎤\n「経験」を表す現在完了の基本です。\n\n#TOEIC対策 #英語学習 #現在完了"
   }
 ]
