@@ -85,3 +85,4 @@ work could wait：仕事は後回しにできる
 - 前の番号が未投稿なら投稿しない(色のローテーション保護)
 - Secrets: IG_USER_ID, IG_ACCESS_TOKEN。トークンは refresh-token.yml が毎週延長(GH_PAT が必要)
 - Instagram は空行を詰めるため、コメント・キャプションの空行には全角スペースを1文字入れる(post.py の keep_blank_lines で自動)。
+- build_site.py は問題ごとのページ(docs/q/<no>/)、一覧(docs/q/)、sitemap.xml、robots.txt も書き出す(build_pages.py)。/?q=<no> でその問題からクイズを始められる。

@@ -6,6 +6,8 @@
 import json
 from pathlib import Path
 
+import build_pages
+
 ROOT = Path(__file__).parent
 SITE = ROOT / "docs"
 FIELDS = ["no", "category", "question", "options", "answer", "text", "target", "glossary", "translation", "explanation", "permalink"]
@@ -29,6 +31,8 @@ def main():
     out.write_text("window.QUIZZES = " + json.dumps(data, ensure_ascii=False, indent=2) + ";\n")
     voiced = sum(1 for d in data if "audio" in d)
     print(f"✓ {out}({len(data)}問、うち音声あり {voiced}問)")
+    pages = build_pages.build(SITE, quizzes)
+    print(f"✓ 問題ごとのページ {pages} 件、一覧ページ、sitemap.xml、robots.txt")
 
 
 if __name__ == "__main__":

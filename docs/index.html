@@ -265,6 +265,7 @@
 
   .rec + .rec { margin-top: 14px; }
   .rec-lead { margin-top: 8px; font-size: 13px; line-height: 1.8; color: var(--sub); }
+  .reel + .reel { margin-left: 14px; }
   .reel { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--sub); text-decoration: none; }
   .reel::before { content: "▶"; font-size: 9px; color: var(--accent-ink); }
 
@@ -652,6 +653,7 @@
         <summary>番号からえらぶ</summary>
         <div class="chips">${ranges.map((r, i) => `<button class="chip" data-range="${i}">No.${r[0].no}〜${r[r.length - 1].no}</button>`).join("")}</div>
       </details>
+      <a class="ghost" href="q/">問題一覧(答えと解説つき)</a>
       <div class="spacer"></div>
       ${footer()}`;
     bindSound();
@@ -710,7 +712,8 @@
         <div class="exp">${q.category ? `<span class="tag">${esc(q.category)}</span>\n` : ""}${esc(q.explanation || "")}</div>
       </details>
       ${nudge}
-      ${q.permalink ? `<a class="reel" href="${esc(q.permalink)}" target="_blank" rel="noopener">このリールを Instagram で見る</a>` : ""}`;
+      ${q.permalink ? `<a class="reel" href="${esc(q.permalink)}" target="_blank" rel="noopener">このリールを Instagram で見る</a>` : ""}
+      <a class="reel" href="q/${q.no}/">この問題の解説ページ(共有用)</a>`;
   }
 
   // ---- 制限時間(右上でON/OFF。時間が来ても答えは開かず、そのまま考えてよい) ----
@@ -915,7 +918,18 @@
 
   window.addEventListener("bgm", (e) => trackEvent("bgm_select", { track: e.detail }));
 
-  QUIZZES.length ? renderStart() : (app.innerHTML = "<p>問題がありません</p>");
+  // /?q=101 のように番号が付いていたら、その問題から始める(問題ごとのページや共有リンクから来た人向け)
+  function startFromParam() {
+    const no = Number(new URLSearchParams(location.search).get("q"));
+    const first = sorted.find((x) => x.no === no);
+    if (!first) return false;
+    const rest = shuffle(sorted.filter((x) => x !== first && seriesOf(x) === seriesOf(first)));
+    begin([first, ...rest], { mode: "deeplink" });
+    return true;
+  }
+
+  if (!QUIZZES.length) app.innerHTML = "<p>問題がありません</p>";
+  else if (!startFromParam()) renderStart();
 })();
 </script>
 </body>
