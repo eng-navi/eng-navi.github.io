@@ -129,6 +129,11 @@
     padding: 6px 12px 6px 10px; border: 1px solid var(--hl); border-radius: 999px;
   }
   .listen svg { width: 16px; height: 16px; }
+  .listen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; max-width: 320px; }
+  .listen-grid p { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent-ink); }
+  .listen-grid p svg { width: 16px; height: 16px; }
+  .listen-grid .listen { margin-top: 0; justify-content: center; padding: 9px 10px; font-size: 14px; color: var(--ink); background: rgba(255, 255, 255, .6); }
+  .listen-grid .listen[aria-pressed="true"] { background: var(--hl); border-color: var(--hl); color: var(--accent-ink); font-weight: 500; }
 
   /* 選択肢 */
   .opts { margin-top: 30px; display: grid; gap: 12px; }
@@ -266,8 +271,8 @@
 
   .rec + .rec { margin-top: 14px; }
   .rec-lead { margin-top: 8px; font-size: 13px; line-height: 1.8; color: var(--sub); }
-  .reel + .reel { margin-left: 14px; }
-  .reel { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--sub); text-decoration: none; }
+  .reel + .reel { margin-top: 8px; }
+  .reel { display: flex; width: fit-content; align-items: center; gap: 6px; margin-top: 14px; font-size: 12px; color: var(--sub); text-decoration: none; }
   .reel::before { content: "▶"; font-size: 9px; color: var(--accent-ink); }
 
   /* フッター(アソシエイト表記は規約どおり載せつつ控えめに) */
@@ -456,6 +461,28 @@
     const v = on ? BGM_DUCK / BGM_VOL : 1;
     if (master) master.gain.setTargetAtTime(v, ctx.currentTime, 0.15);
     else if (el) el.volume = on ? BGM_DUCK : BGM_VOL;
+  }
+
+  // 答えたあとの「英文を聞く」:声ごとのボタン(2列)。押した声がいつもの声になる
+  function listenBlock(q) {
+    if (!canSpeak) return "";
+    const vs = q.voices && q.voices.length > 1 ? q.voices : null;
+    if (!vs) return `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>`;
+    return `<div class="listen-grid"><p>${speakerSvg}英文を聞く</p>${vs.map((v) =>
+      `<button class="listen" data-listen="${v}" aria-pressed="${soundOn && v === voiceKey}">${VOICE_LABEL[v]}</button>`).join("")}</div>`;
+  }
+  function bindListen(q) {
+    const one = document.getElementById("listen");
+    if (one) one.onclick = () => speak(q);
+    document.querySelectorAll("[data-listen]").forEach((b) => (b.onclick = () => {
+      voiceKey = b.dataset.listen;
+      soundOn = true;
+      try { localStorage.setItem("voice", voiceKey); localStorage.setItem("sound", "on"); } catch (e) {}
+      document.querySelectorAll("[data-listen]").forEach((x) => x.setAttribute("aria-pressed", x === b));
+      trackEvent("voice_listen", { voice: voiceKey, no: q.no });
+      speak(q);
+      refreshToggles();
+    }));
   }
 
   function stopVoice() {
@@ -802,13 +829,12 @@
       <div class="reveal">
         <p class="verdict ${ok ? "" : "ng"}">${ok ? "正解！" : `不正解… 正解は ${CIRCLED[q.answer - 1]}`}</p>
         <p class="ja">${esc(q.translation || "")}</p>
-        ${canSpeak ? `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>` : ""}
+        ${listenBlock(q)}
         ${explanationBlock(q, !ok)}
         <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
         <button class="ghost" data-home>トップに戻る</button>
       </div>`;
-    const listen = document.getElementById("listen");
-    if (listen) listen.onclick = () => speak(q);
+    bindListen(q);
     if (soundOn) speak(q);
     document.getElementById("next").onclick = next;
     after.querySelector("[data-home]").onclick = renderStart;
@@ -825,7 +851,7 @@
     after.innerHTML = `
       <div class="reveal">
         <p class="ja" style="margin-top:0">${esc(q.translation || "")}</p>
-        ${canSpeak ? `<button class="listen" id="listen">${speakerSvg}英文を聞く</button>` : ""}
+        ${listenBlock(q)}
         ${gloss ? `<ul class="gloss">${gloss}</ul>` : ""}
         ${explanationBlock(q, true)}
         <div class="self">
@@ -837,8 +863,7 @@
         <button class="ghost" data-home>トップに戻る</button>
       </div>`;
     after.querySelector("[data-home]").onclick = renderStart;
-    const listen = document.getElementById("listen");
-    if (listen) listen.onclick = () => speak(q);
+    bindListen(q);
     if (soundOn) speak(q);
     // 「読めた？」は答えなくても進める。選んだ場合だけ復習リストに反映する
     results[idx] = { q, ok: true };
