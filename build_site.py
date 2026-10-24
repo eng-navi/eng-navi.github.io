@@ -26,6 +26,8 @@ def main():
         # tts.py で作った音声があれば使う
         if (SITE / "audio" / f"q{q['no']}.mp3").exists():
             item["audio"] = f"audio/q{q['no']}.mp3"
+        # 選べる声(us_f 以外は audio/<声>/q<no>.mp3)
+        item["voices"] = ["us_f"] * ("audio" in item) + [v for v in ("us_m", "uk_f", "uk_m") if (SITE / "audio" / v / f"q{q['no']}.mp3").exists()]
         data.append(item)
     out = SITE / "data.js"
     out.write_text("window.QUIZZES = " + json.dumps(data, ensure_ascii=False, indent=2) + ";\n")

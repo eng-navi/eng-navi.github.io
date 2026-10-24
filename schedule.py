@@ -71,8 +71,8 @@ def add(no, at):
         subprocess.run([str(venv), "tts.py", str(no)], cwd=ROOT, check=True)
     items.append({"no": no, "at": at})
     save_schedule(items)
-    audio = ROOT / "docs" / "audio" / f"q{no}.mp3"
-    push([str(SCHEDULE)] + ([str(audio)] if audio.exists() else []), f"{no} を {at} に予約")
+    audio = [str(p) for p in (ROOT / "docs" / "audio").glob(f"**/q{no}.mp3")]
+    push([str(SCHEDULE)] + audio, f"{no} を {at} に予約")
     print(f"✓ {no} を {at} に予約しました({theme(no)})")
 
 

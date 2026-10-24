@@ -339,6 +339,11 @@
   try { if (localStorage.getItem("sound") === "off") soundOn = false; } catch (e) {}
   let voice = null;
   let player = null;
+  // 選べる声(ファイルは tts.py で作成)。us_f は従来の audio/q<no>.mp3
+  const VOICE_LABEL = { us_f: "🇺🇸 女性", us_m: "🇺🇸 男性", uk_f: "🇬🇧 女性", uk_m: "🇬🇧 男性" };
+  const VOICE_NOTE = { us_f: "アメリカ英語", us_m: "アメリカ英語", uk_f: "イギリス英語", uk_m: "イギリス英語" };
+  let voiceKey = "us_f";
+  try { if (VOICE_LABEL[localStorage.getItem("voice")]) voiceKey = localStorage.getItem("voice"); } catch (e) {}
   const pickVoice = () => {
     const vs = speechSynthesis.getVoices().filter((v) => /^en[-_]US/i.test(v.lang));
     voice = vs.find((v) => /Samantha|Google US English|Aria|Jenny/i.test(v.name)) || vs[0] || null;
@@ -462,7 +467,8 @@
     stopVoice();
     duck(true);
     if (q.audio) {
-      player = new Audio(q.audio);
+      const v = (q.voices || []).includes(voiceKey) ? voiceKey : "us_f";
+      player = new Audio(v === "us_f" ? q.audio : `audio/${v}/q${q.no}.mp3`);
       player.onended = () => duck(false);
       player.play().catch(() => duck(false));
       return;
@@ -554,9 +560,15 @@
           <p class="credit">Music from <a href="https://uppbeat.io" target="_blank" rel="noopener">#Uppbeat</a> (free for Creators!)${now ? `<br>${esc(now.name)} / ${esc(now.artist)}` : ""}</p>
         </div>
       </div>` : "";
-    const sound = canSpeak
-      ? `<button class="sound" id="sound" aria-pressed="${soundOn}" aria-label="英文の音声">${soundOn ? speakerSvg : mutedSvg}<span class="lbl">${soundOn ? "音声ON" : "音声OFF"}</span></button>`
-      : "";
+    const sound = canSpeak ? `
+      <div class="bgm-wrap">
+        <button class="sound" id="sound" aria-pressed="${soundOn}" aria-haspopup="true" aria-label="英文の音声を選ぶ">${soundOn ? speakerSvg : mutedSvg}<span class="lbl">${soundOn ? VOICE_LABEL[voiceKey] : "音声OFF"}</span></button>
+        <div class="bgm-menu" id="voice-menu" hidden>
+          <p>英文の音声</p>
+          ${Object.entries(VOICE_LABEL).map(([k, v]) => `<button data-voice="${k}" aria-checked="${soundOn && k === voiceKey}"><span>${v}</span><small>${VOICE_NOTE[k]}</small></button>`).join("")}
+          <button data-voice="" aria-checked="${!soundOn}"><span>オフ</span></button>
+        </div>
+      </div>` : "";
     const timer = `<button class="sound" id="timer-toggle" aria-pressed="${timerOn}" aria-label="制限時間">${clockSvg}<span class="lbl">${timerOn ? TIME_LIMIT + "秒" : "時間OFF"}</span></button>`;
     return `<div class="toggles" id="toggles">${music}${timer}${sound}</div>`;
   }
@@ -571,7 +583,7 @@
     const m = document.getElementById("bgm");
     const menu = document.getElementById("bgm-menu");
     if (m) {
-      m.onclick = (e) => { e.stopPropagation(); menu.hidden = !menu.hidden; };
+      m.onclick = (e) => { e.stopPropagation(); const v = document.getElementById("voice-menu"); if (v) v.hidden = true; menu.hidden = !menu.hidden; };
       menu.querySelectorAll("[data-track]").forEach((b) => (b.onclick = () => {
         track = b.dataset.track || null;
         try { localStorage.setItem("bgmTrack", track || ""); } catch (e) {}
@@ -596,13 +608,20 @@
       refreshToggles();
     };
     const b = document.getElementById("sound");
-    if (b) b.onclick = () => {
-      soundOn = !soundOn;
-      try { localStorage.setItem("sound", soundOn ? "on" : "off"); } catch (e) {}
-      if (!soundOn) stopVoice();
-      b.setAttribute("aria-pressed", soundOn);
-      b.innerHTML = (soundOn ? speakerSvg : mutedSvg) + `<span class="lbl">${soundOn ? "音声ON" : "音声OFF"}</span>`;
-    };
+    const vmenu = document.getElementById("voice-menu");
+    if (b) {
+      b.onclick = (e) => { e.stopPropagation(); const m2 = document.getElementById("bgm-menu"); if (m2) m2.hidden = true; vmenu.hidden = !vmenu.hidden; };
+      vmenu.querySelectorAll("[data-voice]").forEach((x) => (x.onclick = () => {
+        soundOn = !!x.dataset.voice;
+        if (soundOn) voiceKey = x.dataset.voice;
+        try { localStorage.setItem("sound", soundOn ? "on" : "off"); localStorage.setItem("voice", voiceKey); } catch (e) {}
+        stopVoice();
+        // 答えを見たあとなら、選んだ声ですぐに聞かせる
+        if (soundOn && set[idx] && document.querySelector(".reveal")) speak(set[idx]);
+        trackEvent("voice_select", { voice: soundOn ? voiceKey : "off" });
+        refreshToggles();
+      }));
+    }
   }
 
   const footer = () => `
@@ -913,8 +932,10 @@
   }
 
   document.addEventListener("click", (e) => {
-    const menu = document.getElementById("bgm-menu");
-    if (menu && !menu.hidden && !e.target.closest(".bgm-wrap")) menu.hidden = true;
+    // 開いているメニュー(BGM・音声)の外をタップしたら閉じる
+    document.querySelectorAll(".bgm-menu").forEach((menu) => {
+      if (!menu.hidden && menu.parentElement !== e.target.closest(".bgm-wrap")) menu.hidden = true;
+    });
   });
 
   window.addEventListener("bgm", (e) => trackEvent("bgm_select", { track: e.detail }));
