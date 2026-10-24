@@ -1371,5 +1371,18 @@ window.QUIZZES = [
     "translation": "私たちは2週間前に、新しい科学博物館を訪れました。",
     "explanation": "時制の問題では、「時」を表す語句に注目します。\n\ntwo weeks ago(2週間前)は、はっきりと過去を示す語句です。\n現在完了形(have visited)は、明らかに過去を示す語句と一緒には使えません。\n\nしたがって、過去形の②visited が正解。",
     "audio": "audio/q101.mp3"
+  },
+  {
+    "no": 102,
+    "text": "“Do whatever you like,”\nshe said, leaving the kids to their own devices for the afternoon.",
+    "target": "to their own devices",
+    "glossary": [
+      "do whatever you like：好きなようにする",
+      "leave X to X's own devices：Xの好きにさせる、Xを自由にさせておく",
+      "for the afternoon：午後のあいだ"
+    ],
+    "translation": "「好きにしていいよ」と言って、彼女は午後のあいだ子どもたちを自由にさせておいた。",
+    "explanation": "「leave X to X's own devices」は「Xの好きにさせる、自由にさせておく」という意味です。\nここでの devices は「機器」ではなく「(自分なりの)やり方・工夫」のことで、「本人のやり方に任せて口を出さない」というイメージです。\n\nこの文では、彼女が子どもたちに指示を出さず、午後を自由に過ごさせた様子を表しています。",
+    "audio": "audio/q102.mp3"
   }
 ];
