@@ -2015,5 +2015,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 104,
+    "category": "時制",
+    "question": "This old guitar ( ) to my grandfather.",
+    "options": [
+      "is belonging",
+      "belongs"
+    ],
+    "answer": 2,
+    "translation": "この古いギターは祖父のものだ。",
+    "explanation": "belong（〜のものである、所属している）は「状態」を表す動詞です。\n状態を表す動詞は、ふつう進行形にしません。\n\nしたがって、②belongs が正解。",
+    "audio": "audio/q104.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
