@@ -111,7 +111,7 @@ def run():
     post.load_env()
     post.post(quiz(item["no"]))
     subprocess.run([sys.executable, "build_site.py"], cwd=ROOT, check=True)
-    push([str(post.LOG), "docs/data.js"], f"{item['no']} を投稿")
+    push([str(post.LOG), "docs/data.js", "docs/q", "docs/sitemap.xml", "docs/robots.txt"], f"{item['no']} を投稿")
 
 
 def main():
