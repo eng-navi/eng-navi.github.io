@@ -92,7 +92,7 @@ window.ABROAD = {
 };
 
 // Google アナリティクス(GA4)の測定ID。空なら計測しない。例: "G-XXXXXXXXXX"
-window.ANALYTICS_ID = "";
+window.ANALYTICS_ID = "G-3FH38ZQJDF";
 
 // 結果画面の下に出すリンク
 window.LINKS = {
