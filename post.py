@@ -25,6 +25,23 @@ LOG = ROOT / "posted.json"
 JST = timezone(timedelta(hours=9))
 
 RULE = "--------------------------------------"
+# 答えのコメントの最後に、その問題に合う本を一言で紹介する(リンクは貼れないのでハイライトへ案内)。
+# 選び方はサイトの「解説の下のおすすめ」(docs/recommend.js の PICKS)に合わせ、本だけを候補にしている。
+BOOKS = {
+    "scramble": "スクランブル英文法・語法", "eureka": "大学入試 英文法 Eureka!", "hanon": "英語のハノン",
+    "idiomatic": "飛躍のフレーズ IDIOMATIC 300", "reading": "英語リーディング教本", "pinnacle": "無敵の難単語 PINNACLE 420",
+}
+BOOK_POOL = {1: ["scramble", "hanon"], 2: ["scramble", "eureka"], 0: ["idiomatic", "reading", "idiomatic", "pinnacle"]}
+BOOK_CATEGORY = {"イディオム": ["idiomatic"], "倒置": ["eureka", "scramble"], "関係詞": ["scramble", "eureka"], "仮定法": ["scramble", "hanon"]}
+
+
+def book_note(q):
+    pool = BOOK_CATEGORY.get(q.get("category")) or BOOK_POOL[q["no"] % 3]
+    name = BOOKS[pool[(q["no"] // 3) % len(pool)]]
+    what = "文法" if "options" in q else "表現"
+    return f"📗 この{what}をもっと固めるなら『{name}』(PR)→ ハイライト「おすすめ教材」"
+
+
 # 答えのコメントの最後に添える一文(サイトへの案内。解説の邪魔をしない短さで)
 SITE_NOTE = "📚 過去の問題100問以上は、プロフィールのリンクから無料で解けます"
 
@@ -74,6 +91,7 @@ def _build_comment(q):
             "【解説】",
             q["explanation"],
             "",
+            book_note(q),
             SITE_NOTE,
             RULE,
         ])
@@ -90,6 +108,7 @@ def _build_comment(q):
         "【解説】",
         q["explanation"],
         "",
+        book_note(q),
         SITE_NOTE,
         RULE,
     ])
