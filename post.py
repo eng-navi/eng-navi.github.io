@@ -52,7 +52,16 @@ def api(method, path, **params):
         sys.exit(f"API エラー ({path}): {e.read().decode()}")
 
 
+def keep_blank_lines(text):
+    """Instagram は空の行を詰めてしまうので、空行に全角スペースを1文字入れて残す。"""
+    return "\n".join(line if line.strip() else "\u3000" for line in text.split("\n"))
+
+
 def build_comment(q):
+    return keep_blank_lines(_build_comment(q))
+
+
+def _build_comment(q):
     if "options" not in q:
         # ピンク(イディオム紹介):番号なし、語句の意味を並べてから解説
         return "\n".join([
@@ -143,7 +152,7 @@ def post(q):
 
     print(f"1/4 動画を送信: {video_url}")
     container = api("POST", f"{user}/media", media_type="REELS", video_url=video_url,
-                    caption=q["caption"], share_to_feed="true")["id"]
+                    caption=keep_blank_lines(q["caption"]), share_to_feed="true")["id"]
 
     print("2/4 Instagram 側の処理を待機中…")
     wait_until_ready(container)
