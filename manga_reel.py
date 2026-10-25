@@ -1,6 +1,7 @@
 """4コマを紙芝居リールにする(コマを1つずつ大きく見せ、セリフを読み上げる)。
 
-    .venv-tts/bin/python manga_reel.py inside_out     # out/manga/inside_out_reel.mp4
+    .venv-tts/bin/python manga_reel.py inside_out            # out/manga/inside_out_reel.mp4(やわらかい効果音)
+    .venv-tts/bin/python manga_reel.py inside_out --no-sfx   # out/manga/inside_out_reel_nosfx.mp4(効果音なし)
 
 声:ナビ(フクロウ)= イギリス英語・男性 / ペン(ペンギン)= イギリス英語・女性
 BGMなし(セリフを聞き取りやすく、飽きないように)。コマの切り替えに小さな効果音、ズームはしない
@@ -62,15 +63,27 @@ def frame_for(src, t, dur, title):
     return img
 
 
+SFX_MODE = "soft"  # soft:やわらかい木琴風の音 / none:音なし
+
+
 def pop():
-    """コマが切り替わるときの小さな「ポン」という音。"""
-    t = np.arange(int(SR * 0.12)) / SR
-    freq = 880 * np.exp(-t * 18) + 440
-    return (0.18 * np.sin(2 * np.pi * np.cumsum(freq) / SR) * np.exp(-t * 30)).astype(np.float32)
+    """コマが切り替わるときの効果音。木琴(マリンバ)風の2音を小さく。none なら無音。"""
+    if SFX_MODE == "none":
+        return silence(0.01)
+    out = []
+    for f0, dur in ((1046.5, 0.09), (1318.5, 0.22)):  # ド→ミ
+        t = np.arange(int(SR * dur)) / SR
+        env = np.minimum(1, t / 0.004) * np.exp(-t * 14)
+        tone = np.sin(2 * np.pi * f0 * t) + 0.35 * np.sin(2 * np.pi * f0 * 4 * t) * np.exp(-t * 40)
+        out.append((0.07 * tone * env).astype(np.float32))
+    return np.concatenate(out)
 
 
 def main():
-    name = sys.argv[1] if len(sys.argv) > 1 else "inside_out"
+    global SFX_MODE
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    name = args[0] if args else "inside_out"
+    SFX_MODE = "none" if "--no-sfx" in sys.argv else "soft"
     draw, ex = manga.SCRIPTS[name]
     comic = draw()
     boxes = comic.info["boxes"]
@@ -98,7 +111,7 @@ def main():
     total = sum(d for _, d in scenes)
 
     OUT.mkdir(parents=True, exist_ok=True)
-    out = OUT / f"{name}_reel.mp4"
+    out = OUT / f"{name}_reel{'_nosfx' if SFX_MODE == 'none' else ''}.mp4"
     with tempfile.NamedTemporaryFile(suffix=".wav") as wav:
         import soundfile as sf
         sf.write(wav.name, np.concatenate(audio), SR)
