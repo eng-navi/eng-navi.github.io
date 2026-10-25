@@ -183,11 +183,26 @@ def post(q):
     api("POST", f"{media_id}/comments", message=build_comment(q))
 
     permalink = api("GET", media_id, fields="permalink").get("permalink")
+    story_id = post_story(video_url)
     log = json.loads(LOG.read_text()) if LOG.exists() else []
-    log.append({"no": q["no"], "media_id": media_id, "permalink": permalink,
+    log.append({"no": q["no"], "media_id": media_id, "permalink": permalink, "story_id": story_id,
                 "posted_at": datetime.now(JST).isoformat(timespec="seconds")})
     LOG.write_text(json.dumps(log, ensure_ascii=False, indent=2) + "\n")
     print(f"✓ 投稿完了 {permalink}")
+
+
+def post_story(video_url):
+    """同じ動画をストーリーにも流す(ストーリーを毎日見る習慣づくり)。
+    API ではクイズやリンクのスタンプは付けられない。失敗してもリールの投稿は成功扱いにする。"""
+    try:
+        user = os.environ["IG_USER_ID"]
+        print("+ ストーリーにも投稿")
+        c = api("POST", f"{user}/media", media_type="STORIES", video_url=video_url)["id"]
+        wait_until_ready(c)
+        return api("POST", f"{user}/media_publish", creation_id=c)["id"]
+    except SystemExit as e:
+        print(f"⚠ ストーリーの投稿に失敗しました(リールは投稿済み): {e}")
+        return None
 
 
 def refresh_token():

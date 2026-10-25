@@ -124,3 +124,9 @@ work could wait：仕事は後回しにできる
 - 本の例文と、同じ形(例:X is by far the best Y / lead a workshop on X)・同じ場面・同じ主語を避ける。表現だけを使い、場面ごと変える
 - 同じ本の同じ範囲から続けて選ばない。複数の本・離れたページから混ぜる
 - 10選の一覧は、1行に1つ、表現のイメージに合う絵文字を付ける
+
+## 毎日の投稿(3本柱。どれかが足りなければリマインド)
+1. Instagram リール(eng_navi):1日3本(8:00/13:00/19:00)。schedule.json → GitHub Actions
+2. Instagram ストーリー(eng_navi):リール投稿のたびに同じ動画を自動でストーリーにも流す(post.py の post_story)。クイズ・リンクのスタンプは API で付けられないので、本の紹介(Book Review)やリンク付きは手動
+3. Threads(eng_navi):投票クイズ・10選・4コマ。threads_queue.json
+- 4コマ用の Instagram アカウントは別(作成待ち)。TOEIC編はカピバラ部長が登場
