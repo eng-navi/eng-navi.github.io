@@ -100,7 +100,12 @@ def answer(phrase, ja, en, en_ja, active):
                             fill=sb.RED if on else (255, 255, 255), outline=sb.RED, width=4)
         speaker(d, x0 + 40, y0 + 55, (255, 255, 255) if on else sb.RED, 0.6)
         d.text((x0 + 235, y0 + 70), label, font=sb.JP(34), fill=(255, 255, 255) if on else sb.RED, anchor="ms")
-    d.text((W // 2, 1820), "@eng_navi", font=sb.EN(40), fill=(150, 150, 150), anchor="ms")
+    # URL は貼れないので、プロフィールのリンク(サイトのトップに今週の10選がある)へ案内する
+    note = "10個まとめて音声で → プロフィールのリンクから"
+    nx = (W - (d.textlength(note, font=sb.JP(36)) + 50)) / 2
+    speaker(d, nx, 1745, sb.INK, 0.55)
+    d.text((nx + 50, 1760), note, font=sb.JP(36), fill=sb.INK, anchor="ls")
+    d.text((W // 2, 1860), "@eng_navi", font=sb.EN(38), fill=(150, 150, 150), anchor="ms")
     return img
 
 
@@ -109,14 +114,14 @@ def duration(path):
                                 capture_output=True, text=True).stdout)
 
 
-def main(list_id, n):
+def main(list_id, n, engine=None):
     import tts
     item = next(l for l in json.loads((ROOT / "threads_lists.json").read_text()) if l["id"] == list_id)["items"][n - 1]
     phrase, ja, en, en_ja = item
     OUT.mkdir(parents=True, exist_ok=True)
     stem = OUT / f"{list_id}_{n}"
     question(phrase).save(f"{stem}_q.png")
-    engine = tts.Kokoro()
+    engine = engine or tts.Kokoro()
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
         parts, frames = [], []
@@ -142,4 +147,9 @@ def main(list_id, n):
 
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]), int(sys.argv[2]))
+    import tts
+    lid = int(sys.argv[1])
+    nums = [int(sys.argv[2])] if len(sys.argv) > 2 else range(1, 11)
+    eng = tts.Kokoro()
+    for k in nums:
+        main(lid, k, eng)

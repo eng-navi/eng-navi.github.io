@@ -187,6 +187,14 @@ def main():
         d = SITE / "list" / str(lst["id"])
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(page(lst))
+    # docs/list/ は最新の10選へ(ストーリーの「プロフィールのリンクから」の行き先)
+    stories = ROOT / "stories.json"
+    latest = max(int(x["key"].split("_")[0]) for x in json.loads(stories.read_text())) if stories.exists() else max(l["id"] for l in lists)
+    items = "".join(f'<li><a href="{l["id"]}/">{e(l["title"])}</a></li>' for l in sorted(lists, key=lambda l: -l["id"]))
+    (SITE / "list" / "index.html").write_text(f"""<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>フレーズ10選|eng_navi</title>
+<meta http-equiv="refresh" content="0; url={latest}/"><link rel="canonical" href="{SITE_URL}/list/{latest}/"></head>
+<body><p>最新の10選へ移動します…</p><ul>{items}</ul></body></html>""")
     print(f"✓ 10選のページ {len(lists)} 件")
 
 

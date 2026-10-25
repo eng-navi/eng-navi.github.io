@@ -1,0 +1,18 @@
+# その日に出したストーリーを、ハイライトに追加するようリマインドする(毎日 21:00 日本時間)
+name: ハイライト追加リマインド
+on:
+  schedule:
+    - cron: "11 12 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 highlight_reminder.py
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
