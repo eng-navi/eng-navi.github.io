@@ -176,10 +176,30 @@ BRUSHUP = {
                       line="長文に入る前の、最後のひと磨き", button="▼ 中身をのぞいてみる"),
 }
 
+# 解説の最後(「おすすめ教材」ハイライト)で紹介する本。セール中ではないので割引バッジなし
+IDIOMATIC_LEAD = dict(off=None, lead1="＼ eng_navi のピンク問題のネタ元 ／", lead2="Kindle版・音声DL付き・問題300問つき")
+IDIOMATIC = {
+    # A:ネタ元(ピンクの問題とのつながり)
+    "idiomatic_a": dict(IDIOMATIC_LEAD, tag="おすすめ教材",
+                        notes=[("Point", ["よくある", "言い回しを", "英文ごと"]), ("300", ["空所補充と", "並べ替えで", "300問"]), ("For", ["ピンクの", "問題が", "難しい人"])],
+                        line="「これ↓読める？」が、すっと読めるように", button="▼ 中身をのぞいてみる"),
+    # B:空所が埋まって見える(本の考え方)
+    "idiomatic_b": dict(IDIOMATIC_LEAD, tag="長文が速くなる",
+                        notes=[("Phrase", ["フレーズで", "覚えると", "先が読める"]), ("Audio", ["音声つきで", "耳からも"]), ("For", ["空所補充で", "迷う人"])],
+                        line="選択肢を見る前に、答えが浮かぶ", button="▼ 中身をのぞいてみる"),
+    # C:受験生向け
+    "idiomatic_c": dict(IDIOMATIC_LEAD, tag="入試の英語に",
+                        notes=[("Point", ["入試で", "問われる", "言い回し"]), ("Write", ["英作文にも", "そのまま", "使える"]), ("For", ["単語は", "覚えたのに", "読めない人"])],
+                        line="単語の次は、「言い回し」を覚える", button="▼ 中身をのぞいてみる"),
+}
+
 
 if __name__ == "__main__":
     out = ROOT / "out" / "story"
-    if len(sys.argv) > 1 and sys.argv[1] == "brushup":
+    if len(sys.argv) > 1 and sys.argv[1] == "idiomatic":
+        for name, cfg in IDIOMATIC.items():
+            main(out / "_cover_idiomatic.png", out / f"{name}.png", cfg)
+    elif len(sys.argv) > 1 and sys.argv[1] == "brushup":
         for name, cfg in BRUSHUP.items():
             main(out / "_cover_brushup.png", out / f"{name}.png", cfg)
     else:
