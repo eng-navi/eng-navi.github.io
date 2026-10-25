@@ -580,7 +580,241 @@ def _cafeteria_visual(d):
     d.text((540, 1125), "会社の中にある食堂", font=JP(34), fill=(120, 110, 105), anchor="mm")
 
 
+# ---- 小物 ----
+def sun(d, cx, cy, r):
+    for i in range(12):
+        a = i * math.pi / 6
+        d.line([(cx + r * 1.25 * math.cos(a), cy + r * 1.25 * math.sin(a)), (cx + r * 1.6 * math.cos(a), cy + r * 1.6 * math.sin(a))], fill=(240, 170, 60), width=5)
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 205, 90), outline=INK, width=4)
+
+
+def fan(d, cx, cy, r, seed=130):
+    d.line([(cx, cy + r), (cx, cy + r * 2.2)], fill=INK, width=6)
+    shape(d, rrect_pts(cx - r * 0.8, cy + r * 2.1, cx + r * 0.8, cy + r * 2.35, 6), (200, 210, 220), seed=seed)
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(225, 240, 250), outline=INK, width=4)
+    for i in range(3):
+        a = i * 2 * math.pi / 3
+        d.pieslice([cx - r * 0.8, cy - r * 0.8, cx + r * 0.8, cy + r * 0.8], math.degrees(a), math.degrees(a) + 50, fill=(150, 200, 230))
+    d.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill=INK)
+
+
+def fish(d, cx, cy, w, seed=140):
+    body = [(cx + w / 2 * math.cos(a), cy + w * 0.22 * math.sin(a)) for a in (i * math.pi / 16 for i in range(33))]
+    shape(d, body, (150, 180, 210), seed=seed)
+    shape(d, [(cx + w * 0.45, cy), (cx + w * 0.75, cy - w * 0.22), (cx + w * 0.75, cy + w * 0.22)], (150, 180, 210), seed=seed + 1)
+    d.ellipse([cx - w * 0.36, cy - w * 0.06, cx - w * 0.28, cy + w * 0.02], fill=INK)
+
+
+def snack_box(d, cx, cy, w, seed=150):
+    shape(d, rrect_pts(cx - w / 2, cy - w * 0.35, cx + w / 2, cy + w * 0.35, 8), (245, 200, 210), seed=seed)
+    d.text((cx, cy), "SNACKS", font=EN(int(w * 0.18)), fill=INK, anchor="mm")
+    for k in (-0.25, 0, 0.25):
+        d.ellipse([cx + k * w - 12, cy - w * 0.52, cx + k * w + 12, cy - w * 0.3], fill=(210, 160, 100), outline=INK, width=3)
+
+
+def board(d, x0, y0, x1, y1, title, seed=160):
+    shape(d, rrect_pts(x0, y0, x1, y1, 8), (255, 255, 255), seed=seed)
+    d.text(((x0 + x1) / 2, y0 + (y1 - y0) * 0.35), title, font=EN(int((y1 - y0) * 0.28)), fill=(70, 110, 170), anchor="mm")
+    for i in range(2):
+        yy = y0 + (y1 - y0) * (0.62 + i * 0.16)
+        d.line(wob([(x0 + 20, yy), (x1 - 40 - i * 30, yy)], amp=1), fill=(170, 170, 170), width=3)
+
+
+def zzz(img, x, y):
+    sfx(img, (x, y), "Zzz", 40, (110, 120, 160), -12)
+
+
+def door(d, cx, top, w, h, seed=170):
+    shape(d, rrect_pts(cx - w / 2, top, cx + w / 2, top + h, 6), (200, 175, 140), seed=seed)
+    d.ellipse([cx + w * 0.3, top + h * 0.5, cx + w * 0.38, top + h * 0.56], fill=INK)
+    d.rounded_rectangle([cx - w * 0.36, top + h * 0.18, cx + w * 0.36, top + h * 0.34], radius=6, fill=(230, 90, 80), outline=INK, width=3)
+    d.text((cx, top + h * 0.26), "CLOSED", font=EN(int(w * 0.16)), fill=(255, 255, 255), anchor="mm")
+
+
+def calendar(d, cx, cy, w, day="SUN", seed=180):
+    shape(d, rrect_pts(cx - w / 2, cy - w / 2, cx + w / 2, cy + w / 2, 6), (255, 255, 255), seed=seed)
+    d.rectangle([cx - w / 2 + 3, cy - w / 2 + 3, cx + w / 2 - 3, cy - w * 0.15], fill=(230, 90, 80))
+    d.text((cx, cy - w * 0.32), day, font=EN(int(w * 0.22)), fill=(255, 255, 255), anchor="mm")
+    d.text((cx, cy + w * 0.15), "26", font=EN(int(w * 0.38)), fill=INK, anchor="mm")
+
+
+def ice(d, box, y):
+    x0, y0, x1, y1 = box
+    d.polygon([(x0 + 6, y), (x1 - 6, y), (x1 - 6, y1 - 6), (x0 + 6, y1 - 6)], fill=(215, 235, 248))
+    d.line(wob([(x0 + 6, y), (x1 - 6, y)], amp=1), fill=(140, 180, 210), width=4)
+
+
+def penguin_belly(d, cx, cy, s, seed=190):
+    """腹ばいで氷をすべるペン(横向き)。"""
+    body = [(cx + s * 0.7 * math.cos(a), cy + s * 0.32 * math.sin(a)) for a in (i * math.pi / 24 for i in range(49))]
+    shape(d, body, NAVY, seed=seed)
+    belly = [(cx + s * 0.55 * math.cos(a), cy + s * 0.12 + s * 0.16 * math.sin(a)) for a in (i * math.pi / 24 for i in range(49))]
+    d.polygon(belly, fill=(252, 250, 245))
+    hx = cx - s * 0.55
+    shape(d, [(hx - s * 0.22, cy), (hx - s * 0.38, cy + s * 0.06), (hx - s * 0.22, cy + s * 0.1)], ORANGE, w=3, seed=seed + 1)
+    d.arc([hx - 12, cy - s * 0.12, hx + 6, cy - s * 0.02], 200, 340, fill=INK, width=4)
+    d.ellipse([hx - 4, cy + s * 0.02, hx + 14, cy + s * 0.08], fill=BLUSH)
+    for k in (0.55, 0.68):
+        shape(d, rrect_pts(cx + k * s, cy - s * 0.04, cx + k * s + s * 0.16, cy + s * 0.06, 5), ORANGE, w=3, seed=seed + 2)
+    for i in range(3):
+        y = cy - s * 0.15 + i * s * 0.15
+        d.line([(cx + s * 0.85, y), (cx + s * 1.15, y)], fill=(140, 180, 210), width=4)
+
+
+def _end(img):
+    ImageDraw.Draw(img).text((W - 50, H - 30), HANDLE, font=EN(30), fill=(160, 150, 140), anchor="rm")
+    return img
+
+
+def the_thing_is():
+    img, boxes, pw, ph = comic("the thing is")
+    x0, y0, x1, y1 = boxes[0]; d = panel(img, boxes[0], 51)
+    sun(d, x0 + pw * 0.84, y0 + ph * 0.5, 30)
+    owl(d, x0 + pw * 0.3, y0 + ph * 0.68, 145, "happy")
+    penguin(d, x0 + pw * 0.72, y0 + ph * 0.7, 125, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205), "Let's go to\nthe beach!", "海行こう!", 1)
+    x0, y0, x1, y1 = boxes[1]; d = panel(img, boxes[1], 52)
+    penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 175, "normal", hat_on=False)
+    sweat(d, x0 + pw * 0.72, y0 + ph * 0.45)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.5, y0 + 205),
+           "I'd love to, but\nthe thing is...", "行きたいんだけど、実はね…", 2)
+    x0, y0, x1, y1 = boxes[2]; d = panel(img, boxes[2], 53)
+    fan(d, x0 + pw * 0.78, y0 + ph * 0.55, 46)
+    penguin(d, x0 + pw * 0.34, y0 + ph * 0.66, 165, "shock", hat_on=False)
+    for k in range(3):
+        sweat(d, x0 + pw * (0.18 + k * 0.16), y0 + ph * (0.4 + (k % 2) * 0.08), 16)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 140), (x0 + pw * 0.34, y0 + 180), "I melt in summer.", "夏はとけちゃうの", 3)
+    sfx(img, (x0 + pw * 0.62, y0 + ph * 0.92), "*drip*", 30, (110, 150, 200), 6)
+    x0, y0, x1, y1 = boxes[3]; d = panel(img, boxes[3], 54)
+    owl(d, x0 + pw * 0.3, y0 + ph * 0.68, 150, "shock")
+    penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 125, "smug", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205),
+           "You're not\nice cream!", "アイスじゃないんだから!", 4)
+    return _end(img)
+
+
+def by_far():
+    img, boxes, pw, ph = comic("by far")
+    x0, y0, x1, y1 = boxes[0]; d = panel(img, boxes[0], 61)
+    snack_box(d, x0 + pw * 0.5, y0 + ph * 0.78, 120)
+    owl(d, x0 + pw * 0.24, y0 + ph * 0.7, 125, "happy")
+    penguin(d, x0 + pw * 0.78, y0 + ph * 0.7, 125, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.26, y0 + 205),
+           "Which snack\ndo you like?", "どのおやつが好き?", 1)
+    x0, y0, x1, y1 = boxes[1]; d = panel(img, boxes[1], 62)
+    penguin(d, x0 + pw * 0.44, y0 + ph * 0.66, 170, "happy", hat_on=False)
+    fish(d, x0 + pw * 0.8, y0 + ph * 0.7, 120)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.44, y0 + 205),
+           "This one is\nby far the best.", "これが断然いちばん", 2)
+    sfx(img, (x0 + pw * 0.84, y0 + ph * 0.52), "*shine*", 30, (200, 160, 60), 8)
+    x0, y0, x1, y1 = boxes[2]; d = panel(img, boxes[2], 63)
+    owl(d, x0 + pw * 0.34, y0 + ph * 0.68, 165, "shock")
+    sweat(d, x0 + pw * 0.54, y0 + ph * 0.44)
+    fish(d, x0 + pw * 0.78, y0 + ph * 0.8, 110)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw * 0.8, y0 + 134), (x0 + pw * 0.34, y0 + 176), "That's a fish.", "それ魚だよ", 3)
+    x0, y0, x1, y1 = boxes[3]; d = panel(img, boxes[3], 64)
+    penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 175, "smug", hat_on=False)
+    fish(d, x0 + pw * 0.82, y0 + ph * 0.76, 90)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 140), (x0 + pw * 0.5, y0 + 180), "Fish is a snack.", "魚はおやつだよ", 4)
+    sfx(img, (x0 + pw * 0.16, y0 + ph * 0.9), "*munch*", 30, (200, 140, 60), -8)
+    return _end(img)
+
+
+def lead_a_workshop():
+    img, boxes, pw, ph = comic("lead a workshop", series="toeic")
+    x0, y0, x1, y1 = boxes[0]; d = panel(img, boxes[0], 71)
+    capybara(d, x0 + pw * 0.5, y0 + ph * 0.66, 200, "calm")
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.36, y0 + 210),
+           "Today, I'll lead\na workshop.", "今日は私が研修を担当する", 1)
+    x0, y0, x1, y1 = boxes[1]; d = panel(img, boxes[1], 72)
+    board(d, x0 + pw * 0.14, y0 + ph * 0.38, x0 + pw * 0.86, y0 + ph * 0.62, "How to Relax")
+    owl(d, x0 + pw * 0.28, y0 + ph * 0.84, 100, "normal")
+    penguin(d, x0 + pw * 0.72, y0 + ph * 0.84, 95, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 130), (x0 + pw * 0.3, y0 + 168), "The topic is...?", "テーマは…?", 2)
+    x0, y0, x1, y1 = boxes[2]; d = panel(img, boxes[2], 73)
+    capybara(d, x0 + pw * 0.52, y0 + ph * 0.7, 210, "calm")
+    zzz(img, x0 + pw * 0.78, y0 + ph * 0.42)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 140), (x0 + pw * 0.36, y0 + 180), "Step one: sleep.", "その1:寝る", 3)
+    x0, y0, x1, y1 = boxes[3]; d = panel(img, boxes[3], 74)
+    owl(d, x0 + pw * 0.26, y0 + ph * 0.7, 130, "smug")
+    penguin(d, x0 + pw * 0.56, y0 + ph * 0.74, 110, "smug", hat_on=False)
+    capybara(d, x0 + pw * 0.84, y0 + ph * 0.84, 110, "calm")
+    zzz(img, x0 + pw * 0.62, y0 + ph * 0.46)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.28, y0 + 205),
+           "...Great\nworkshop.", "…すばらしい研修", 4)
+    return _end(img)
+
+
+def make_an_appointment():
+    img, boxes, pw, ph = comic("make an appointment", series="toeic")
+    x0, y0, x1, y1 = boxes[0]; d = panel(img, boxes[0], 81)
+    owl(d, x0 + pw * 0.3, y0 + ph * 0.68, 145, "normal")
+    penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 125, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205),
+           "Did you make an\nappointment?", "取引先とアポ取った?", 1)
+    x0, y0, x1, y1 = boxes[1]; d = panel(img, boxes[1], 82)
+    penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 175, "smug", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 140), (x0 + pw * 0.5, y0 + 180), "Yes! Today at 3.", "うん!今日の3時", 2)
+    sfx(img, (x0 + pw * 0.84, y0 + ph * 0.9), "*proud*", 30, (200, 160, 60), 8)
+    x0, y0, x1, y1 = boxes[2]; d = panel(img, boxes[2], 83)
+    door(d, x0 + pw * 0.68, y0 + ph * 0.3, 170, 300)
+    penguin(d, x0 + pw * 0.28, y0 + ph * 0.7, 140, "shock", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw * 0.62, y0 + 120), (x0 + pw * 0.28, y0 + 160), "Hello...?", "こんにちは…?", 3)
+    sfx(img, (x0 + pw * 0.5, y0 + ph * 0.5), "...", 40, (110, 120, 140), 0)
+    x0, y0, x1, y1 = boxes[3]; d = panel(img, boxes[3], 84)
+    calendar(d, x0 + pw * 0.8, y0 + ph * 0.46, 90)
+    owl(d, x0 + pw * 0.32, y0 + ph * 0.7, 145, "shock")
+    sweat(d, x0 + pw * 0.5, y0 + ph * 0.46)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.32, y0 + 205),
+           "Pen...\ntoday is Sunday.", "ペン…今日日曜だよ", 4)
+    return _end(img)
+
+
+def from_time_to_time():
+    img, boxes, pw, ph = comic("from time to time")
+    x0, y0, x1, y1 = boxes[0]; d = panel(img, boxes[0], 91)
+    owl(d, x0 + pw * 0.3, y0 + ph * 0.68, 145, "normal")
+    penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 125, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw * 0.8, y0 + 134), (x0 + pw * 0.3, y0 + 176), "Do you exercise?", "運動してる?", 1)
+    x0, y0, x1, y1 = boxes[1]; d = panel(img, boxes[1], 92)
+    penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 175, "smug", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 140), (x0 + pw * 0.5, y0 + 180), "From time to time.", "ときどきね", 2)
+    x0, y0, x1, y1 = boxes[2]; d = panel(img, boxes[2], 93)
+    ice(d, boxes[2], y0 + ph * 0.7)
+    penguin_belly(d, x0 + pw * 0.42, y0 + ph * 0.64, 170)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 140), (x0 + pw * 0.4, y0 + 180), "This is my workout.", "これがぼくの運動", 3)
+    sfx(img, (x0 + pw * 0.8, y0 + ph * 0.48), "*slide*", 34, (110, 150, 200), -8)
+    x0, y0, x1, y1 = boxes[3]; d = panel(img, boxes[3], 94)
+    owl(d, x0 + pw * 0.32, y0 + ph * 0.68, 150, "shock")
+    sweat(d, x0 + pw * 0.5, y0 + ph * 0.46)
+    penguin(d, x0 + pw * 0.76, y0 + ph * 0.72, 115, "happy", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205),
+           "That's just\nsliding!", "すべってるだけじゃん!", 4)
+    return _end(img)
+
+
+def _visual_simple(draw_fn, note):
+    def v(d):
+        draw_fn(d)
+        d.text((540, 1125), note, font=JP(34), fill=(120, 110, 105), anchor="mm")
+    return v
+
+
 SCRIPTS = {
+    "the_thing_is": (the_thing_is, ("the thing is", "実はね、要するに", "I'd love to help, but the thing is, I'm busy today.",
+                                    "手伝いたいんだけど、実は今日忙しいんだ",
+                                    _visual_simple(lambda d: (penguin(d, 540, 960, 160, "normal", hat_on=False), sweat(d, 640, 880)), "言いにくいことを切り出すときに"))),
+    "by_far": (by_far, ("by far", "断然、ずば抜けて", "Summer is by far my favorite season.", "夏は断然いちばん好きな季節",
+                        _visual_simple(lambda d: (penguin(d, 440, 960, 160, "happy", hat_on=False), fish(d, 700, 990, 150)), "比べるまでもなく一番、のときに"))),
+    "lead_a_workshop": (lead_a_workshop, ("lead a workshop", "研修を担当する", "I'll lead a short workshop for new staff next week.",
+                                          "来週、新人向けに短い研修を担当する",
+                                          _visual_simple(lambda d: board(d, 340, 860, 740, 1060, "Workshop"), "TOEICでは会社の研修・講習会の話でよく出る"))),
+    "make_an_appointment": (make_an_appointment, ("make an appointment", "(人と会う)約束をする", "I need to make an appointment with my dentist.",
+                                                  "歯医者さんの予約を取らないと",
+                                                  _visual_simple(lambda d: calendar(d, 540, 960, 170, "MON"), "ホテルなどの予約は reservation"))),
+    "from_time_to_time": (from_time_to_time, ("from time to time", "ときどき", "We still meet for coffee from time to time.",
+                                              "今でもときどきお茶をする",
+                                              _visual_simple(lambda d: penguin_belly(d, 520, 980, 200), "sometimes とほぼ同じ意味"))),
     "company_cafeteria": (company_cafeteria, ("the company cafeteria", "社員食堂", "The company cafeteria gets crowded at noon.",
                                               "社員食堂はお昼に混む", _cafeteria_visual)),
     "inside_out": (inside_out, ("inside out", "裏返しに", "My son wore his sweater inside out.",

@@ -31,6 +31,21 @@ BGM_VOLUME = 0.07
 
 # コマごとに読み上げるセリフ(話す人, 英語)。最後は解説の画面
 SCRIPTS = {
+    "the_thing_is": dict(lines=[("navi", "Let's go to the beach!"), ("pen", "I'd love to, but the thing is..."),
+                                ("pen", "I melt in summer."), ("navi", "You're not ice cream!")],
+                         explain=[("navi", "The thing is."), ("pen", "I'd love to help, but the thing is, I'm busy today.")]),
+    "by_far": dict(lines=[("navi", "Which snack do you like?"), ("pen", "This one is by far the best."),
+                          ("navi", "That's a fish."), ("pen", "Fish is a snack.")],
+                   explain=[("navi", "By far."), ("pen", "Summer is by far my favorite season.")]),
+    "lead_a_workshop": dict(lines=[("boss", "Today, I'll lead a workshop."), ("navi", "The topic is...?"),
+                                   ("boss", "Step one: sleep."), ("navi", "Great workshop.")],
+                            explain=[("navi", "Lead a workshop."), ("boss", "I'll lead a short workshop for new staff next week.")]),
+    "make_an_appointment": dict(lines=[("navi", "Did you make an appointment?"), ("pen", "Yes! Today at three."),
+                                       ("pen", "Hello...?"), ("navi", "Pen... today is Sunday.")],
+                                explain=[("navi", "Make an appointment."), ("pen", "I need to make an appointment with my dentist.")]),
+    "from_time_to_time": dict(lines=[("navi", "Do you exercise?"), ("pen", "From time to time."),
+                                     ("pen", "This is my workout."), ("navi", "That's just sliding!")],
+                              explain=[("navi", "From time to time."), ("pen", "We still meet for coffee from time to time.")]),
     "company_cafeteria": dict(
         lines=[("navi", "Where's the boss?"), ("pen", "Probably in the company cafeteria."),
                ("boss", "This is my office."), ("navi", "Boss, it's 10 a.m.!")],
