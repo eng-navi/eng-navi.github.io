@@ -296,7 +296,10 @@ def explain(phrase, meaning, en, ja, visual):
         d.line([(x, 0), (x, H)], fill=(225, 220, 212), width=2)
     for y in range(0, H, 54):
         d.line([(0, y), (W, y)], fill=(225, 220, 212), width=2)
-    d.text((W // 2, 230), phrase, font=EN(130), fill=INK, anchor="mm")
+    size = 130  # 長い表現は、画面に収まるまで文字を小さくする
+    while EN(size).getlength(phrase) > W - 120:
+        size -= 6
+    d.text((W // 2, 230), phrase, font=EN(size), fill=INK, anchor="mm")
     d.line(wob([(220, 310), (860, 304)], amp=2), fill=(200, 52, 48), width=7)
     d.text((W // 2, 400), f"= {meaning}", font=JP(70), fill=(200, 52, 48), anchor="mm")
     d.text((W // 2, 590), en, font=EN(46), fill=INK, anchor="mm")
@@ -504,7 +507,81 @@ def _inside_visual(d):
             lambda d, x, y: penguin(d, x, y, 160, "happy", hat_flipped=True), "inside out")
 
 
+def table(d, box, y, seed=110):
+    x0, y0, x1, y1 = box
+    shape(d, rrect_pts(x0 + 10, y, x1 - 10, y + 26, 6), (205, 160, 110), seed=seed)
+    for k in (0.15, 0.85):
+        d.line([(x0 + (x1 - x0) * k, y + 26), (x0 + (x1 - x0) * k, y1 - 8)], fill=INK, width=6)
+
+
+def tray(d, cx, cy, w, seed=120):
+    """料理がたくさんのったトレー。"""
+    shape(d, rrect_pts(cx - w / 2, cy, cx + w / 2, cy + w * 0.12, 6), (190, 200, 210), seed=seed)
+    items = [(-0.3, (240, 200, 120), 0.2), (0.0, (230, 120, 90), 0.24), (0.3, (180, 210, 140), 0.2)]
+    for dx, col, r in items:
+        x = cx + dx * w
+        d.pieslice([x - w * r / 2, cy - w * r * 0.55, x + w * r / 2, cy + w * r * 0.45], 180, 360, fill=col, outline=INK, width=4)
+        d.line([(x - w * r / 2, cy), (x + w * r / 2, cy)], fill=INK, width=4)
+    for i in range(3):  # 湯気
+        x = cx - w * 0.15 + i * w * 0.15
+        d.line(wob([(x, cy - w * 0.2), (x + 6, cy - w * 0.3), (x - 4, cy - w * 0.4)], amp=1), fill=(190, 190, 190), width=3)
+
+
+def clock(d, cx, cy, r):
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 255, 255), outline=INK, width=4)
+    d.line([(cx, cy), (cx, cy - r * 0.7)], fill=INK, width=4)       # 12
+    d.line([(cx, cy), (cx - r * 0.5, cy - r * 0.05)], fill=INK, width=5)  # 10時
+
+
+def company_cafeteria():
+    img, boxes, pw, ph = comic("the company cafeteria", series="toeic")
+    # 1:ナビが部長をさがす
+    x0, y0, x1, y1 = boxes[0]
+    d = panel(img, boxes[0], 41)
+    clock(d, x0 + pw * 0.84, y0 + ph * 0.44, 34)
+    owl(d, x0 + pw * 0.32, y0 + ph * 0.68, 145, "normal")
+    penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 125, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 134), (x0 + pw * 0.3, y0 + 176), "Where's the boss?", "部長どこ?", 1)
+    sfx(img, (x0 + pw * 0.12, y0 + ph * 0.5), "?", 60, (220, 80, 70), 10)
+    # 2:ペンが「たぶん社員食堂」
+    x0, y0, x1, y1 = boxes[1]
+    d = panel(img, boxes[1], 42)
+    penguin(d, x0 + pw * 0.5, y0 + ph * 0.64, 175, "smug", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.5, y0 + 205),
+           "Probably in the\ncompany cafeteria.", "たぶん社員食堂", 2)
+    # 3:部長、料理を前にくつろぐ
+    x0, y0, x1, y1 = boxes[2]
+    d = panel(img, boxes[2], 43)
+    capybara(d, x0 + pw * 0.5, y0 + ph * 0.6, 190, "calm")
+    table(d, boxes[2], y0 + ph * 0.78)
+    tray(d, x0 + pw * 0.5, y0 + ph * 0.74, 300)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 140), (x0 + pw * 0.42, y0 + 180), "This is my office.", "ここがぼくのオフィス", 3)
+    sfx(img, (x0 + pw * 0.86, y0 + ph * 0.45), "*munch*", 30, (200, 140, 60), -8)
+    # 4:ナビのツッコミ
+    x0, y0, x1, y1 = boxes[3]
+    d = panel(img, boxes[3], 44)
+    clock(d, x0 + pw * 0.84, y0 + ph * 0.42, 34)
+    owl(d, x0 + pw * 0.3, y0 + ph * 0.68, 150, "shock")
+    sweat(d, x0 + pw * 0.48, y0 + ph * 0.46)
+    penguin(d, x0 + pw * 0.72, y0 + ph * 0.72, 120, "happy", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205),
+           "Boss,\nit's 10 a.m.!", "部長、まだ朝10時です!", 4)
+    d = ImageDraw.Draw(img)
+    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    return img
+
+
+def _cafeteria_visual(d):
+    d.rounded_rectangle([370, 800, 710, 860], radius=8, fill=(255, 215, 90), outline=INK, width=4)
+    d.text((540, 830), "CAFETERIA", font=EN(40), fill=INK, anchor="mm")
+    table(d, (300, 900, 780, 1080), 1000)
+    tray(d, 540, 975, 330)
+    d.text((540, 1125), "会社の中にある食堂", font=JP(34), fill=(120, 110, 105), anchor="mm")
+
+
 SCRIPTS = {
+    "company_cafeteria": (company_cafeteria, ("the company cafeteria", "社員食堂", "The company cafeteria gets crowded at noon.",
+                                              "社員食堂はお昼に混む", _cafeteria_visual)),
     "inside_out": (inside_out, ("inside out", "裏返しに", "My son wore his sweater inside out.",
                                 "息子はセーターを裏返しに着ていた", _inside_visual)),
     "baggage_claim": (baggage_claim, ("baggage claim", "手荷物受取所", "I waited at baggage claim for twenty minutes.",

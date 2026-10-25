@@ -19,11 +19,11 @@ import manga
 ROOT = Path(__file__).parent
 OUT = ROOT / "out" / "manga"
 W, H, FPS, SR = 1080, 1920, 30, 24000
-# 声(Kokoro の声, 声の高さの倍率)。世界観に合わせて、少し高めのかわいい声に
+# 声(Kokoro の声, 声の高さの倍率)。かわいい系も試したが、元の声のほうが良いとのことで戻した
 VOICE = {
-    "navi": ("a", "am_puck", 1.07),   # フクロウのナビ:元気なツッコミ
-    "pen": ("a", "af_sky", 1.10),     # ペンギンのペン:ふんわりしたボケ
-    "boss": ("a", "am_echo", 0.97),   # カピバラ部長:のんびり
+    "navi": ("b", "bm_george", 1.0),  # フクロウのナビ:イギリス英語・男性
+    "pen": ("b", "bf_emma", 1.0),     # ペンギンのペン:イギリス英語・女性
+    "boss": ("a", "am_michael", 1.0), # カピバラ部長
 }
 # 後ろでかすかに流す曲(Uppbeat)。回ごとに順番に使う
 BGM = [("cozy-places", "Cozy Places", "Yokonap"), ("sketch-book", "Sketch Book", "Prigida"), ("summer-vibes", "Summer Vibes", "Movediz")]
@@ -31,6 +31,11 @@ BGM_VOLUME = 0.07
 
 # コマごとに読み上げるセリフ(話す人, 英語)。最後は解説の画面
 SCRIPTS = {
+    "company_cafeteria": dict(
+        lines=[("navi", "Where's the boss?"), ("pen", "Probably in the company cafeteria."),
+               ("boss", "This is my office."), ("navi", "Boss, it's 10 a.m.!")],
+        explain=[("navi", "The company cafeteria."), ("pen", "The company cafeteria gets crowded at noon.")],
+    ),
     "baggage_claim": dict(
         lines=[("navi", "Let's go to baggage claim."), ("pen", "Where's my suitcase?"),
                ("boss", "Ahh... nice ride."), ("navi", "Boss! That's not a ride!")],
