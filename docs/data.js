@@ -2072,5 +2072,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 107,
+    "category": "時制",
+    "question": "Ken and I ( ) each other since elementary school.",
+    "options": [
+      "have known",
+      "have been knowing"
+    ],
+    "answer": 1,
+    "translation": "ケンと私は小学校のころからの知り合いだ。",
+    "explanation": "since 〜（〜以来）があるので、今までずっと続いていることを表す現在完了を使います。\nknow は「状態」を表す動詞なので、進行形の have been knowing にはしません。\n\nしたがって、①have known が正解。",
+    "audio": "audio/q107.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
