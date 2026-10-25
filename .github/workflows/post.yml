@@ -30,3 +30,16 @@ jobs:
           MANGA_IG_USER_ID: ${{ secrets.MANGA_IG_USER_ID }}
           MANGA_IG_ACCESS_TOKEN: ${{ secrets.MANGA_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: Threads(eng_navi)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 threads_queue.py run
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain threads_queue_posted.json)" ]; then
+            git add threads_queue_posted.json && git commit -q -m "Threads の投稿記録" && git pull -q --rebase --autostash && git push -q
+          fi
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
