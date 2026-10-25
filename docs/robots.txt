@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /links/
 Sitemap: https://eng-navi.github.io/sitemap.xml
