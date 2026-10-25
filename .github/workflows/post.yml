@@ -43,3 +43,12 @@ jobs:
         env:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+      - name: フレーズのストーリー(eng_navi)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 story_phrase.py run
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          SITE_URL: https://eng-navi.github.io

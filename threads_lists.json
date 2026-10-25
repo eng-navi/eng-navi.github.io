@@ -142,5 +142,485 @@
       "note": "TOEICによく出る会社・生活の英語を、音声つきで",
       "url": "https://link.amazon/B09qOB6Ou"
     }
+  },
+  {
+    "id": 3,
+    "title": "友だちとの会話でそのまま使える英語5選",
+    "hook": "これ言えたら、会話がぐっと自然に🫶",
+    "items": [
+      [
+        "might as well",
+        "(どうせなら)〜しようか",
+        "The bus is late. We might as well walk.",
+        "バス来ないね。歩いちゃおうか",
+        "🤷"
+      ],
+      [
+        "just in case",
+        "念のため",
+        "Take a jacket, just in case.",
+        "念のため上着持っていきな",
+        "☂️"
+      ],
+      [
+        "it's my turn",
+        "ぼくの番だよ",
+        "You paid last time, so it's my turn.",
+        "前回払ってくれたから、今回はぼくの番",
+        "🙋"
+      ],
+      [
+        "couldn't be better",
+        "最高だよ",
+        "How's your new job? — Couldn't be better!",
+        "新しい仕事どう?— 最高!",
+        "🌈"
+      ],
+      [
+        "give 人 a ride",
+        "車で送る",
+        "I can give you a ride to the station.",
+        "駅まで車で送れるよ",
+        "🚗"
+      ]
+    ],
+    "closing": "気になったものから1つ、今日使ってみてね😊",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 4,
+    "title": "TOEICで出る「お金」の英語5選",
+    "hook": "お金まわりの英語、TOEICでは超定番💰",
+    "items": [
+      [
+        "free of charge",
+        "無料で",
+        "Parking is free of charge after 6 p.m.",
+        "18時以降は駐車無料",
+        "🆓"
+      ],
+      [
+        "an additional fee",
+        "追加料金",
+        "Extra towels come with an additional fee.",
+        "タオルの追加は別料金です",
+        "💸"
+      ],
+      [
+        "a bus fare",
+        "バスの運賃",
+        "Kids under six don't need to pay a bus fare.",
+        "6歳未満はバス代いらないよ",
+        "🚌"
+      ],
+      [
+        "make a deposit",
+        "手付金を払う",
+        "You can make a deposit online to book the room.",
+        "オンラインで手付金を払えば部屋を予約できます",
+        "🏦"
+      ],
+      [
+        "can't afford to",
+        "〜する余裕がない",
+        "I can't afford to eat out this week.",
+        "今週は外食する余裕がない",
+        "🥲"
+      ]
+    ],
+    "closing": "fare(運賃)と fee(料金)、ごっちゃにしやすいので注意📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 5,
+    "title": "やる気が出ない日の英語5選",
+    "hook": "わかる…って思ったら保存してね😪",
+    "items": [
+      [
+        "can't bring myself to",
+        "〜する気になれない",
+        "I can't bring myself to clean my room today.",
+        "今日は部屋を片づける気になれない",
+        "🛋️"
+      ],
+      [
+        "stay up all night",
+        "徹夜する",
+        "I stayed up all night watching dramas.",
+        "ドラマ見て徹夜しちゃった",
+        "🌙"
+      ],
+      [
+        "waste my time",
+        "時間をむだにする",
+        "I wasted my whole Sunday scrolling on my phone.",
+        "日曜まるごとスマホ見てむだにした",
+        "⏳"
+      ],
+      [
+        "drive me crazy",
+        "イライラさせる",
+        "This slow Wi-Fi is driving me crazy.",
+        "この遅いWi-Fi、ほんとイライラする",
+        "🤯"
+      ],
+      [
+        "there's no point in",
+        "〜してもむだ",
+        "There's no point in worrying about it now.",
+        "今さら心配してもしょうがない",
+        "🙅"
+      ]
+    ],
+    "closing": "明日はちょっとがんばろうね☕",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 6,
+    "title": "TOEICで出る「会社の場所」英語5選",
+    "hook": "オフィスの英語、ぜんぶ言えるかな?🏢",
+    "items": [
+      [
+        "a conference room",
+        "会議室",
+        "The meeting moved to the conference room on the third floor.",
+        "会議は3階の会議室に変更です",
+        "🪑"
+      ],
+      [
+        "an emergency exit",
+        "非常口",
+        "Please check where the emergency exit is.",
+        "非常口の場所を確認してください",
+        "🚪"
+      ],
+      [
+        "the marketing department",
+        "マーケティング部",
+        "She just moved to the marketing department.",
+        "彼女はマーケティング部に異動したばかり",
+        "📊"
+      ],
+      [
+        "a fitness center",
+        "フィットネスセンター",
+        "Our hotel has a fitness center on the top floor.",
+        "当ホテルの最上階にはジムがあります",
+        "🏋️"
+      ],
+      [
+        "on display",
+        "展示されて",
+        "Her photos are on display in the lobby.",
+        "ロビーに彼女の写真が展示されている",
+        "🖼️"
+      ]
+    ],
+    "closing": "fitness center は gym と言いかえられることも多いよ📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 7,
+    "title": "やさしい気持ちを伝える英語5選",
+    "hook": "大切な人に使ってみてね🫶",
+    "items": [
+      [
+        "I can't thank you enough",
+        "感謝してもしきれない",
+        "I can't thank you enough for helping me move.",
+        "引っ越し手伝ってくれて、ほんとにありがとう",
+        "🙏"
+      ],
+      [
+        "take good care of",
+        "大切に世話をする",
+        "Please take good care of my plants while I'm away.",
+        "留守の間、植物をよろしくね",
+        "🐟"
+      ],
+      [
+        "take 人 out to dinner",
+        "夕食に連れて行く",
+        "Let me take you out to dinner on your birthday.",
+        "誕生日はごはんに連れて行かせて",
+        "🍝"
+      ],
+      [
+        "just out of curiosity",
+        "ちょっと気になって聞くんだけど",
+        "Just out of curiosity, where did you buy that bag?",
+        "ちょっと気になったんだけど、そのバッグどこで買ったの?",
+        "👀"
+      ],
+      [
+        "don't take it so seriously",
+        "そんなに深く考えないで",
+        "It's just a game. Don't take it so seriously.",
+        "ただのゲームだよ。気にしないで",
+        "😌"
+      ]
+    ],
+    "closing": "どれか1つ、今日だれかに送ってみよう💌",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 8,
+    "title": "TOEICで出る「イベント・会議」英語5選",
+    "hook": "発表やセミナーの場面でよく聞くよ🎤",
+    "items": [
+      [
+        "give a lecture",
+        "講演をする",
+        "A famous chef will give a lecture at the library.",
+        "有名シェフが図書館で講演をする",
+        "🎤"
+      ],
+      [
+        "questions from the audience",
+        "聴衆からの質問",
+        "We'll take questions from the audience at the end.",
+        "最後に会場からのご質問を受け付けます",
+        "🙋"
+      ],
+      [
+        "turn off your phone",
+        "スマホの電源を切る",
+        "Please turn off your phone before the show starts.",
+        "開演前にスマホの電源をお切りください",
+        "📵"
+      ],
+      [
+        "send invitations",
+        "招待状を送る",
+        "We sent invitations to all our clients.",
+        "すべての取引先に招待状を送った",
+        "✉️"
+      ],
+      [
+        "grab 人's attention",
+        "注目を集める",
+        "The bright poster grabbed everyone's attention.",
+        "派手なポスターがみんなの目を引いた",
+        "🧲"
+      ]
+    ],
+    "closing": "give a lecture / speech / presentation は give とセットで覚えよう📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 9,
+    "title": "ネイティブがよく言う ひとこと英語5選",
+    "hook": "短いのに、言えるとかっこいい🗣️",
+    "items": [
+      [
+        "That's the way it is.",
+        "それが現実だよ",
+        "Rent is expensive here. That's the way it is.",
+        "このへんは家賃が高い。そういうもんだよ",
+        "🤷‍♀️"
+      ],
+      [
+        "What a shame!",
+        "それは残念!",
+        "The festival was canceled? What a shame!",
+        "お祭り中止?残念!",
+        "😢"
+      ],
+      [
+        "better than nothing",
+        "ないよりまし",
+        "It's only one day off, but it's better than nothing.",
+        "休みは1日だけだけど、ないよりまし",
+        "👍"
+      ],
+      [
+        "from what I hear",
+        "聞いたところでは",
+        "From what I hear, the new café is really good.",
+        "聞いた話だと、新しいカフェすごくいいらしい",
+        "👂"
+      ],
+      [
+        "having said that",
+        "とはいえ",
+        "The test was hard. Having said that, I enjoyed it.",
+        "テストは難しかった。とはいえ楽しかった",
+        "✋"
+      ]
+    ],
+    "closing": "会話でさらっと言えたら上級者です😎",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 10,
+    "title": "TOEICで出る「移動・旅行」英語5選",
+    "hook": "出張や旅行のシーンでよく出るよ✈️",
+    "items": [
+      [
+        "a departure time",
+        "出発時刻",
+        "Please check the departure time on your ticket.",
+        "チケットで出発時刻をご確認ください",
+        "🕒"
+      ],
+      [
+        "get to your destination",
+        "目的地に着く",
+        "This app helps you get to your destination faster.",
+        "このアプリで目的地に早く着けます",
+        "📍"
+      ],
+      [
+        "a travel brochure",
+        "旅行パンフレット",
+        "I picked up a travel brochure at the station.",
+        "駅で旅行パンフレットをもらった",
+        "🗺️"
+      ],
+      [
+        "get stuck in traffic",
+        "渋滞につかまる",
+        "Sorry I'm late. I got stuck in traffic.",
+        "遅れてごめん、渋滞にはまってた",
+        "🚗"
+      ],
+      [
+        "an ID badge",
+        "身分証バッジ",
+        "Visitors must wear an ID badge in the building.",
+        "来訪者は館内でバッジをつけてください",
+        "🪪"
+      ]
+    ],
+    "closing": "departure(出発)⇔ arrival(到着)もセットで📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 11,
+    "title": "健康にまつわる英語5選",
+    "hook": "体をいたわる英語、覚えておこう🥗",
+    "items": [
+      [
+        "stay fit",
+        "健康を保つ",
+        "I walk to work to stay fit.",
+        "健康のために歩いて通勤してる",
+        "🏃"
+      ],
+      [
+        "eat a healthy diet",
+        "バランスのいい食事をとる",
+        "Try to eat a healthy diet with lots of vegetables.",
+        "野菜多めのバランスのいい食事を心がけて",
+        "🥗"
+      ],
+      [
+        "low in calories",
+        "カロリーが低い",
+        "This soup is low in calories but very filling.",
+        "このスープ、低カロリーなのにお腹にたまる",
+        "🍰"
+      ],
+      [
+        "keep me awake",
+        "目がさえる",
+        "Coffee at night keeps me awake.",
+        "夜にコーヒー飲むと眠れなくなる",
+        "☕"
+      ],
+      [
+        "catch a cold",
+        "かぜをひく",
+        "Dress warmly so you don't catch a cold.",
+        "かぜをひかないよう暖かくしてね",
+        "🤧"
+      ]
+    ],
+    "closing": "diet は「ダイエット」だけじゃなく「食事」の意味もあるよ📝",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 12,
+    "title": "TOEICで出る「書類・手続き」英語5選",
+    "hook": "社会人なら一度は使う英語📄",
+    "items": [
+      [
+        "sign a document",
+        "書類に署名する",
+        "Please sign the document at the bottom.",
+        "書類のいちばん下に署名してください",
+        "✍️"
+      ],
+      [
+        "send an application form",
+        "応募書類を送る",
+        "Send your application form by Friday.",
+        "応募書類は金曜までに送ってください",
+        "📮"
+      ],
+      [
+        "make a complaint",
+        "苦情を言う",
+        "He made a complaint about the noise next door.",
+        "彼は隣の騒音について苦情を言った",
+        "😤"
+      ],
+      [
+        "make a decision",
+        "決断する",
+        "We need to make a decision by tomorrow.",
+        "明日までに決めないといけない",
+        "✅"
+      ],
+      [
+        "on duty",
+        "勤務中で",
+        "Two nurses are on duty tonight.",
+        "今夜は看護師が2人勤務している",
+        "👮"
+      ]
+    ],
+    "closing": "complain(動詞)と complaint(名詞)の違いに注意📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
   }
 ]

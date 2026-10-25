@@ -49,7 +49,7 @@
 </head>
 <body>
 <main>
-  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › 10選 No.2</p>
+  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › フレーズ集 No.2</p>
   <h1>TOEICで出る「会社の英語」10選</h1>
   <p class="lead">Threads で紹介した表現を、例文と音声でまとめました。声を選んで、▶ で聞けます。</p>
   <div class="modes"><button data-m="list">一覧</button><button data-m="quiz">クイズ</button><button data-m="listen">聞き流し</button></div>
@@ -169,7 +169,7 @@
   document.querySelectorAll("[data-m]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.m === "list"));
   document.getElementById("mode-note").textContent = NOTES.list;
   document.getElementById("all").onclick = () => {
-    queue = [1,2,3,4,5,6,7,8,9,10];
+    queue = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const step = () => {
       cards.forEach((c) => c.classList.remove("now"));
       const n = queue.shift();

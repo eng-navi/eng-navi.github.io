@@ -131,3 +131,5 @@ work could wait：仕事は後回しにできる
 3. Threads(eng_navi):投票クイズ・10選・4コマ。threads_queue.json
 - 4コマ用の Instagram アカウントは別(作成待ち)。TOEIC編はカピバラ部長が登場
 - 4コマは manga_post.py(予約表 manga_schedule.json、トークンは MANGA_IG_*)。@yonkoma_eigo に投稿し、同じ動画をストーリーにも流す
+- Threads の5選:threads_lists.json(items は [表現, 意味, 例文, 和訳, 絵文字])。一覧の頭に hook(つかみの一言)、絵文字つき。音声ページは build_lists.py
+- フレーズのストーリー(eng_navi):story_phrase.py。1枚目「この英語、わかる?」→ 2枚目 答えと例文の動画(🇬🇧女性・男性)。スタンプなしで自動投稿。予約は story_queue.json(毎日18:00)

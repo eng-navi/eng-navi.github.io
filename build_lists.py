@@ -26,7 +26,7 @@ def make_audio(lists):
     import tts
     engine = None
     for lst in lists:
-        for n, (_, _, en, _) in enumerate(lst["items"], 1):
+        for n, (_, _, en, *_) in enumerate(lst["items"], 1):
             for v in VOICES:
                 out = audio(lst["id"], n, v)
                 if out.exists():
@@ -38,7 +38,7 @@ def make_audio(lists):
 
 def page(lst):
     rows = ""
-    for n, (phrase, ja, en, en_ja) in enumerate(lst["items"], 1):
+    for n, (phrase, ja, en, en_ja, *_) in enumerate(lst["items"], 1):
         rows += f"""
     <li>
       <p class="ph"><span class="n">{n:02d}</span>{e(phrase)}<small class="hide">{e(ja)}</small></p>
@@ -54,7 +54,7 @@ def page(lst):
   </section>""" if b else ""
     voices = "".join(f'<button data-v="{k}">{v}</button>' for k, v in VOICES.items())
     title = f"{lst['title']}|音声つき|eng_navi"
-    desc = "・".join(i[0] for i in lst["items"][:5]) + " など10の表現を、例文と音声(アメリカ・イギリス英語)で。"
+    desc = "・".join(i[0] for i in lst["items"][:5]) + f" など{len(lst['items'])}の表現を、例文と音声(アメリカ・イギリス英語)で。"
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -106,7 +106,7 @@ def page(lst):
 </head>
 <body>
 <main>
-  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › 10選 No.{lst['id']}</p>
+  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › フレーズ集 No.{lst['id']}</p>
   <h1>{e(lst['title'])}</h1>
   <p class="lead">Threads で紹介した表現を、例文と音声でまとめました。声を選んで、▶ で聞けます。</p>
   <div class="modes"><button data-m="list">一覧</button><button data-m="quiz">クイズ</button><button data-m="listen">聞き流し</button></div>
@@ -114,7 +114,7 @@ def page(lst):
   <div class="voices">{voices}</div>
   <ol>{rows}
   </ol>
-  <button class="all" id="all">▶ 10個まとめて聞く</button>
+  <button class="all" id="all">▶ {len(lst['items'])}個まとめて聞く</button>
   {book}
   <a class="cta" href="/">英文法クイズに挑戦する(無料・100問以上)</a>
   <a class="sub" href="https://www.threads.net/@eng_navi" target="_blank" rel="noopener">Threads で毎日1つ @eng_navi</a>
@@ -145,7 +145,7 @@ def page(lst):
   }}
   document.querySelectorAll(".play").forEach((b) => (b.onclick = () => play(Number(b.dataset.n))));
   // モード:一覧(全部見える)/クイズ(意味を隠してタップで表示)/聞き流し(順番に再生して今の表現を目立たせる)
-  const NOTES = {{ list: "意味と例文をまとめて確認できます。", quiz: "意味が隠れています。考えてから「意味を見る」で答え合わせ。", listen: "10個を順番に再生します。画面を見ずに聞き流してもOK。" }};
+  const NOTES = {{ list: "意味と例文をまとめて確認できます。", quiz: "意味が隠れています。考えてから「意味を見る」で答え合わせ。", listen: "{len(lst['items'])}個を順番に再生します。画面を見ずに聞き流してもOK。" }};
   const cards = [...document.querySelectorAll("li")];
   document.querySelectorAll(".reveal").forEach((b, i) => (b.onclick = () => {{ cards[i].classList.add("open"); play(i + 1); }}));
   function setMode(m) {{
@@ -162,7 +162,7 @@ def page(lst):
   document.querySelectorAll("[data-m]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.m === "list"));
   document.getElementById("mode-note").textContent = NOTES.list;
   document.getElementById("all").onclick = () => {{
-    queue = [1,2,3,4,5,6,7,8,9,10];
+    queue = {list(range(1, len(lst['items']) + 1))};
     const step = () => {{
       cards.forEach((c) => c.classList.remove("now"));
       const n = queue.shift();

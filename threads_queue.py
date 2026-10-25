@@ -29,19 +29,24 @@ CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩"
 
 
 def list_posts(list_id):
+    """一覧(絵文字つき)→ 例文の返信(500文字ごとに分ける)→ 締めと音声ページのリンク。"""
     lst = next(l for l in json.loads(LISTS.read_text()) if l["id"] == list_id)
     items = lst["items"]
-    head = f"【{lst['title']}】\n\n" + "\n".join(f"{CIRCLED[i]} {p} = {ja}" for i, (p, ja, _, _) in enumerate(items))
-
-    def examples(rng):
-        return "\n\n".join(f"{CIRCLED[i]} {items[i][0]}\n{items[i][2]}\n({items[i][3]})" for i in rng)
-
+    mark = lambda i: items[i][4] if len(items[i]) > 4 else CIRCLED[i]
+    head = (f"{lst['hook']}\n\n" if lst.get("hook") else "") + f"【{lst['title']}】\n\n" + \
+        "\n".join(f"{mark(i)} {it[0]} = {it[1]}" for i, it in enumerate(items))
+    blocks = [f"{mark(i)} {it[0]}\n{it[2]}\n({it[3]})" for i, it in enumerate(items)]
+    posts, cur = [], "例文で覚えよう✍️"
+    for b in blocks:
+        if len(cur) + len(b) + 2 > LIMIT:
+            posts.append(cur)
+            cur = b
+        else:
+            cur += "\n\n" + b
     link = f"{SITE_URL}/list/{list_id}/?utm_source=threads&utm_medium=social"
     tail = f"{lst['closing']}\n🔊 音声つきで聞けます → {link}"
-    last = examples(range(5, 10))
-    posts = [head, "例文で覚えよう✍️\n\n" + examples(range(5))]
-    # 500文字に収まらなければ、締めの一言とリンクを別の返信にする
-    return posts + ([last + "\n\n" + tail] if len(last) + len(tail) + 2 <= LIMIT else [last, tail])
+    posts += [cur + "\n\n" + tail] if len(cur) + len(tail) + 2 <= LIMIT else [cur, tail]
+    return [head] + posts
 
 
 def render(item):
