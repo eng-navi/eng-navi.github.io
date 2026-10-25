@@ -31,6 +31,27 @@ def main():
         last, days = None, -1
     print(f"未投稿の予約 {len(left)} 件 / 残り {days:.1f} 日")
 
+    # Threads(4コマ・10選・投票クイズ)の予約も、種類ごとに残りを確かめる
+    notes = []
+    tq, tl = ROOT / "threads_queue.json", ROOT / "threads_queue_posted.json"
+    if tq.exists():
+        tdone = json.loads(tl.read_text()) if tl.exists() else {}
+        kinds = {"carousel": "4コマ", "list": "10選", "poll": "投票クイズ", "quiz": "投票クイズ"}
+        last_by = {}
+        for it in json.loads(tq.read_text()):
+            if it["key"] in tdone or it["type"] not in kinds:
+                continue
+            at = datetime.strptime(it["at"], "%Y-%m-%d %H:%M").replace(tzinfo=JST)
+            k = kinds[it["type"]]
+            last_by[k] = max(last_by.get(k, at), at)
+        for k in ("4コマ", "10選", "投票クイズ"):
+            d2 = (last_by[k] - now).total_seconds() / 86400 if k in last_by else -1
+            if d2 <= THRESHOLD_DAYS:
+                notes.append(f"- Threads の{k}:" + ("予約がありません" if d2 < 0 else f"あと {d2:.1f} 日"))
+    if notes:
+        print("\n".join(notes))
+        days = min(days, THRESHOLD_DAYS)  # Threads 側が少ないときもお知らせを出す
+
     subprocess.run(["gh", "label", "create", LABEL, "--color", "D93F0B", "--force"], cwd=ROOT, capture_output=True)
     open_issues = json.loads(gh("issue", "list", "--label", LABEL, "--state", "open", "--json", "number"))
 
@@ -40,9 +61,10 @@ def main():
         return
 
     head = "予約がありません。投稿が止まっています。" if last is None else f"予約はあと {max(days, 0):.1f} 日({last:%m/%d %H:%M} まで)です。"
-    body = (f"📸 {head}\n\n"
+    body = (f"📸 {head}\n" + ("\n".join(notes) + "\n" if notes else "") + "\n"
             "次の週の本のスクショ(Scramble と IDIOMATIC 300、合わせて10ページほど)を `~/insta-quiz/source/` に入れて、"
-            "Claude Code に「次の週の問題を作って」と伝えてください。\n\n予約が補充されると、このお知らせは自動で閉じます。")
+            "Claude Code に「次の週の問題を作って」と伝えてください。"
+            "4コマ・10選の材料は、セットフレーズ1000 やキクフレを離れたページから10見開きほど。\n\n予約が補充されると、このお知らせは自動で閉じます。")
     if open_issues:
         gh("issue", "comment", str(open_issues[0]["number"]), "--body", body)
     else:
