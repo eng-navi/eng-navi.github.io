@@ -15,6 +15,7 @@ ROOT = Path(__file__).parent
 F = ROOT / "fonts"
 OUT = ROOT / "out" / "manga"
 W, H = 1080, 1350
+HANDLE = "@yonkoma_eigo"  # 4コマのアカウント(Threads は eng_navi に集約)
 INK = (45, 40, 38)
 PAPER = (255, 253, 248)
 YELLOW = (255, 214, 102)
@@ -285,7 +286,7 @@ def inside_out():
            "...Me too.", "…ぼくも", 4)
     sfx(img, (x0 + pw * 0.84, y0 + ph * 0.28), "*flip*", 40, (220, 80, 70), -12)
     d = ImageDraw.Draw(img)
-    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    d.text((W - 50, H - 30), HANDLE, font=EN(30), fill=(160, 150, 140), anchor="rm")
     return img
 
 
@@ -307,7 +308,7 @@ def explain(phrase, meaning, en, ja, visual):
     visual(d)
     d.text((W // 2, 1200), "🔊 音声つきの10選は、プロフィールのリンクから".replace("🔊 ", ""), font=JP(36), fill=INK, anchor="mm")
     d.text((W // 2, 1255), "保存して、使ってみてね", font=JP(32), fill=(200, 52, 48), anchor="mm")
-    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    d.text((W - 50, H - 30), HANDLE, font=EN(30), fill=(160, 150, 140), anchor="rm")
     return img
 
 
@@ -397,7 +398,7 @@ def wet_to_the_skin():
     bubble(d, (x0 + 18, y0 + 16, x0 + pw - 18, y0 + 166), (x0 + pw * 0.5, y0 + 200),
            "I like the sea...\nnot the rain.", "好きなのは海…雨じゃない", 4)
     d = ImageDraw.Draw(img)
-    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    d.text((W - 50, H - 30), HANDLE, font=EN(30), fill=(160, 150, 140), anchor="rm")
     return img
 
 
@@ -482,7 +483,7 @@ def baggage_claim():
     bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205),
            "Boss!\nThat's not a ride!", "部長!それ乗り物じゃないです!", 4)
     d = ImageDraw.Draw(img)
-    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    d.text((W - 50, H - 30), HANDLE, font=EN(30), fill=(160, 150, 140), anchor="rm")
     return img
 
 
@@ -567,7 +568,7 @@ def company_cafeteria():
     bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205),
            "Boss,\nit's 10 a.m.!", "部長、まだ朝10時です!", 4)
     d = ImageDraw.Draw(img)
-    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    d.text((W - 50, H - 30), HANDLE, font=EN(30), fill=(160, 150, 140), anchor="rm")
     return img
 
 

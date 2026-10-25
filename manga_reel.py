@@ -85,7 +85,7 @@ def frame_for(src, t, dur, title):
     th = int(src.height * tw / src.width)
     im = src.resize((tw, th), Image.LANCZOS)
     img.paste(im, ((W - tw) // 2, 330 + (1320 - th) // 2))
-    d.text((W - 60, H - 70), "@eng_navi", font=manga.EN(40), fill=(160, 150, 140), anchor="rm")
+    d.text((W - 60, H - 70), manga.HANDLE, font=manga.EN(40), fill=(160, 150, 140), anchor="rm")
     return img
 
 

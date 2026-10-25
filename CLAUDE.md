@@ -130,3 +130,4 @@ work could wait：仕事は後回しにできる
 2. Instagram ストーリー(eng_navi):リール投稿のたびに同じ動画を自動でストーリーにも流す(post.py の post_story)。クイズ・リンクのスタンプは API で付けられないので、本の紹介(Book Review)やリンク付きは手動
 3. Threads(eng_navi):投票クイズ・10選・4コマ。threads_queue.json
 - 4コマ用の Instagram アカウントは別(作成待ち)。TOEIC編はカピバラ部長が登場
+- 4コマは manga_post.py(予約表 manga_schedule.json、トークンは MANGA_IG_*)。@yonkoma_eigo に投稿し、同じ動画をストーリーにも流す
