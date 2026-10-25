@@ -229,15 +229,21 @@ def sweat(d, x, y, s=18):
     d.ellipse([x - s * 0.6, y - s * 0.1, x + s * 0.6, y + s * 0.8], fill=(160, 200, 240))
 
 
-def inside_out():
+def comic(title):
+    """4コマの土台(見出しと2×2のコマ)。boxes はコマの位置(紙芝居リールでも使う)。"""
     img = Image.new("RGB", (W, H), (244, 241, 234))
     d = ImageDraw.Draw(img)
-    d.text((W // 2, 70), "inside out", font=EN(64), fill=INK, anchor="mm")
+    d.text((W // 2, 70), title, font=EN(64), fill=INK, anchor="mm")
     d.text((W // 2, 120), "4コマで覚える英語", font=JP(30), fill=(150, 140, 130), anchor="mm")
     pad, top, gap = 40, 160, 22
     pw, ph = (W - pad * 2 - gap) / 2, (H - top - pad - gap - 40) / 2
     boxes = [(pad + c * (pw + gap), top + r * (ph + gap), pad + c * (pw + gap) + pw, top + r * (ph + gap) + ph) for r in (0, 1) for c in (0, 1)]
-    img.info["boxes"] = boxes  # 紙芝居リール(manga_reel.py)でコマを切り出すため
+    img.info["boxes"] = boxes
+    return img, boxes, pw, ph
+
+
+def inside_out():
+    img, boxes, pw, ph = comic("inside out")
 
     # 1:あいさつ。ペンのニット帽は裏返し(タグが外)
     x0, y0, x1, y1 = boxes[0]
@@ -274,7 +280,7 @@ def inside_out():
     return img
 
 
-def explain(phrase, meaning, en, ja, tip):
+def explain(phrase, meaning, en, ja, visual):
     img = Image.new("RGB", (W, H), (244, 241, 234))
     d = ImageDraw.Draw(img)
     for x in range(0, W, 54):
@@ -286,22 +292,120 @@ def explain(phrase, meaning, en, ja, tip):
     d.text((W // 2, 400), f"= {meaning}", font=JP(70), fill=(200, 52, 48), anchor="mm")
     d.text((W // 2, 590), en, font=EN(46), fill=INK, anchor="mm")
     d.text((W // 2, 650), f"({ja})", font=JP(34), fill=(120, 110, 105), anchor="mm")
-    penguin(d, 330, 960, 160, "normal")
-    penguin(d, 750, 960, 160, "happy", hat_flipped=True)
-    d.text((330, 1125), "ふだん", font=JP(34), fill=(120, 110, 105), anchor="mm")
-    d.text((750, 1125), "inside out", font=EN(40), fill=(200, 52, 48), anchor="mm")
-    d.line(wob([(450, 930), (630, 930)], amp=1.5), fill=INK, width=5)
-    d.line([(630, 930), (605, 915)], fill=INK, width=5)
-    d.line([(630, 930), (605, 945)], fill=INK, width=5)
+    visual(d)
     d.text((W // 2, 1200), "🔊 音声つきの10選は、プロフィールのリンクから".replace("🔊 ", ""), font=JP(36), fill=INK, anchor="mm")
     d.text((W // 2, 1255), "保存して、使ってみてね", font=JP(32), fill=(200, 52, 48), anchor="mm")
     d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
     return img
 
 
+def compare(d, left, right, label):
+    """解説の「ふだん → この表現」の絵。left/right はキャラを描く関数。"""
+    left(d, 330, 960)
+    right(d, 750, 960)
+    d.text((330, 1125), "ふだん", font=JP(34), fill=(120, 110, 105), anchor="mm")
+    d.text((750, 1125), label, font=EN(40), fill=(200, 52, 48), anchor="mm")
+    d.line(wob([(450, 930), (630, 930)], amp=1.5), fill=INK, width=5)
+    d.line([(630, 930), (605, 915)], fill=INK, width=5)
+    d.line([(630, 930), (605, 945)], fill=INK, width=5)
+
+
+def umbrella(d, cx, top, w, color=(240, 120, 120), seed=60):
+    pts = [(cx + w / 2 * math.cos(a), top + w * 0.42 - w * 0.42 * math.sin(a)) for a in (i * math.pi / 16 for i in range(17))]
+    shape(d, pts + [pts[0]], color, seed=seed)
+    for k in (-0.25, 0, 0.25):
+        d.line([(cx + k * w * 0.9, top + w * 0.42), (cx + k * w * 0.4, top + w * 0.05)], fill=INK, width=3)
+    d.line(wob([(cx, top + w * 0.42), (cx, top + w * 0.95)], amp=0.8), fill=INK, width=5)
+    d.arc([cx - w * 0.12, top + w * 0.85, cx + w * 0.04, top + w * 1.02], 0, 180, fill=INK, width=5)
+
+
+def rain(d, box, n=28, seed=70):
+    import random as _r
+    r = _r.Random(seed)
+    x0, y0, x1, y1 = box
+    for _ in range(n):
+        x, y = r.uniform(x0 + 10, x1 - 20), r.uniform(y0 + 10, y1 - 30)
+        d.line([(x, y), (x - 8, y + 26)], fill=(130, 175, 220), width=4)
+
+
+def drips(d, cx, cy, s):
+    for dx, dy in ((-0.55, -0.1), (0.6, 0.05), (-0.45, 0.45), (0.5, 0.5), (0.05, -0.75)):
+        sweat(d, cx + dx * s, cy + dy * s, s * 0.09)
+    d.ellipse([cx - s * 0.6, cy + s * 0.92, cx + s * 0.6, cy + s * 1.02], fill=(170, 205, 235))
+
+
+def shiver(d, cx, cy, s):
+    for k in (-1, 1):
+        for i in range(3):
+            x = cx + k * (s * 0.62 + i * 10)
+            d.line([(x, cy - s * 0.2 + i * 8), (x + k * 6, cy + s * 0.05 + i * 8)], fill=INK, width=3)
+
+
+def towel(d, cx, cy, s, seed=80):
+    pts = rrect_pts(cx - s * 0.55, cy + s * 0.05, cx + s * 0.55, cy + s * 0.7, s * 0.15)
+    shape(d, pts, (250, 225, 150), seed=seed)
+    for i in range(1, 4):
+        d.line([(cx - s * 0.5, cy + s * 0.05 + i * s * 0.16), (cx + s * 0.5, cy + s * 0.05 + i * s * 0.16)], fill=(225, 190, 110), width=3)
+
+
+def wet_to_the_skin():
+    img, boxes, pw, ph = comic("wet to the skin")
+    # 1:ナビが傘を持って、雨だよ
+    x0, y0, x1, y1 = boxes[0]
+    d = panel(img, boxes[0], 21)
+    rain(d, boxes[0], seed=71)
+    umbrella(d, x0 + pw * 0.7, y0 + ph * 0.4, 150)
+    owl(d, x0 + pw * 0.7, y0 + ph * 0.76, 125, "normal")
+    penguin(d, x0 + pw * 0.26, y0 + ph * 0.74, 120, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 164), (x0 + pw * 0.62, y0 + 196),
+           "It's raining!\nTake an umbrella.", "雨だよ!傘持っていきな", 1)
+    # 2:ペンはドヤ顔で、雨の中へ
+    x0, y0, x1, y1 = boxes[1]
+    d = panel(img, boxes[1], 22)
+    rain(d, boxes[1], seed=72)
+    penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 190, "smug", hat_on=False)
+    bubble(d, (x0 + 18, y0 + 16, x0 + pw - 18, y0 + 166), (x0 + pw * 0.5, y0 + 205),
+           "No need.\nI'm a penguin.", "いらない。ペンギンだし", 2)
+    sfx(img, (x0 + pw * 0.86, y0 + ph * 0.88), "*waddle*", 32, (110, 150, 200), 8)
+    # 3:ずぶぬれで震えるペンに、ナビがツッコむ
+    x0, y0, x1, y1 = boxes[2]
+    d = panel(img, boxes[2], 23)
+    penguin(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "shock", hat_on=False)
+    drips(d, x0 + pw * 0.3, y0 + ph * 0.66, 150)
+    shiver(d, x0 + pw * 0.3, y0 + ph * 0.66, 150)
+    owl(d, x0 + pw * 0.76, y0 + ph * 0.7, 135, "shock")
+    bubble(d, (x0 + pw * 0.3, y0 + 16, x0 + pw - 14, y0 + 166), (x0 + pw * 0.72, y0 + 210),
+           "You're wet\nto the skin!", "ずぶぬれじゃん!", 3)
+    sfx(img, (x0 + pw * 0.14, y0 + ph * 0.22), "*shiver*", 34, (110, 150, 200), -10)
+    # 4:タオルにくるまって、言い訳
+    x0, y0, x1, y1 = boxes[3]
+    d = panel(img, boxes[3], 24)
+    penguin(d, x0 + pw * 0.5, y0 + ph * 0.64, 180, "smug", hat_on=False)
+    towel(d, x0 + pw * 0.5, y0 + ph * 0.64, 180)
+    bubble(d, (x0 + 18, y0 + 16, x0 + pw - 18, y0 + 166), (x0 + pw * 0.5, y0 + 200),
+           "I like the sea...\nnot the rain.", "好きなのは海…雨じゃない", 4)
+    d = ImageDraw.Draw(img)
+    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    return img
+
+
+def _wet_visual(d):
+    def soaked(d, x, y):
+        penguin(d, x, y, 160, "shock", hat_on=False)
+        drips(d, x, y, 160)
+    compare(d, lambda d, x, y: penguin(d, x, y, 160, "happy", hat_on=False), soaked, "wet to the skin")
+
+
+def _inside_visual(d):
+    compare(d, lambda d, x, y: penguin(d, x, y, 160, "normal"),
+            lambda d, x, y: penguin(d, x, y, 160, "happy", hat_flipped=True), "inside out")
+
+
 SCRIPTS = {
     "inside_out": (inside_out, ("inside out", "裏返しに", "My son wore his sweater inside out.",
-                                "息子はセーターを裏返しに着ていた", "turn it\ninside out!")),
+                                "息子はセーターを裏返しに着ていた", _inside_visual)),
+    "wet_to_the_skin": (wet_to_the_skin, ("wet to the skin", "ずぶぬれ", "I forgot my umbrella and got wet to the skin.",
+                                          "傘を忘れて、ずぶぬれになった", _wet_visual)),
 }
 
 

@@ -23,6 +23,11 @@ VOICE = {"navi": ("b", "bm_george"), "pen": ("b", "bf_emma")}
 
 # コマごとに読み上げるセリフ(話す人, 英語)。最後は解説の画面
 SCRIPTS = {
+    "wet_to_the_skin": dict(
+        lines=[("navi", "It's raining! Take an umbrella."), ("pen", "No need. I'm a penguin."),
+               ("navi", "You're wet to the skin!"), ("pen", "I like the sea... not the rain.")],
+        explain=[("navi", "Wet to the skin."), ("pen", "I forgot my umbrella and got wet to the skin.")],
+    ),
     "inside_out": dict(
         lines=[("pen", "Morning!"), ("navi", "Your hat is inside out!"), ("pen", "I know. It's the new trend."), ("navi", "Me too.")],
         explain=[("navi", "Inside out."), ("pen", "My son wore his sweater inside out.")],
