@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "title": "知ってる単語なのに、意味がわかりにくい英語10選",
+    "items": [
+      ["inside out", "裏返しに", "My son wore his sweater inside out all day.", "息子は一日中セーターを裏返しに着ていた。"],
+      ["wet to the skin", "ずぶぬれ", "I forgot my umbrella and got wet to the skin.", "傘を忘れて、ずぶぬれになった。"],
+      ["by far", "断然、ずば抜けて", "This is by far the best ramen in town.", "ここは断然、この街で一番おいしいラーメンだ。"],
+      ["the thing is", "実はね、要するに", "I want to go, but the thing is, I have work tomorrow.", "行きたいんだけど、実は明日仕事なんだ。"],
+      ["from time to time", "ときどき", "I still call my old teacher from time to time.", "今でもときどき昔の先生に電話する。"],
+      ["outgrow", "大きくなって(服などが)合わなくなる", "Kids outgrow their shoes so fast.", "子どもはすぐに靴が合わなくなる。"],
+      ["in vain", "無駄に", "We looked for the key for an hour, but in vain.", "1時間鍵を探したが、無駄だった。"],
+      ["to date", "今までのところ", "It's her best work to date.", "これまでで彼女の最高の作品だ。"],
+      ["be on good terms with", "〜と仲がいい", "I'm on good terms with my neighbors.", "私はご近所さんと仲がいい。"],
+      ["turn out fine", "結局うまくいく", "I was nervous, but everything turned out fine.", "緊張したけど、結局すべてうまくいった。"]
+    ],
+    "closing": "保存して、1日1つ使ってみてね😊"
+  },
+  {
+    "id": 2,
+    "title": "TOEICで出る「会社の英語」10選",
+    "items": [
+      ["a job candidate", "求職者", "We interviewed three job candidates today.", "今日は3人の求職者を面接した。"],
+      ["a work assignment", "仕事の割り当て", "She finished her work assignment before lunch.", "彼女は昼前に割り当ての仕事を終えた。"],
+      ["lead a workshop", "研修を担当する", "Mr. Sato will lead a workshop on time management.", "佐藤さんが時間管理の研修を担当する。"],
+      ["an admission fee", "入場料", "The museum's admission fee is 800 yen.", "その美術館の入場料は800円だ。"],
+      ["baggage claim", "手荷物受取所", "Let's meet at baggage claim after the flight.", "着いたら手荷物受取所で会おう。"],
+      ["a factory tour", "工場見学", "Visitors can join a factory tour every Friday.", "毎週金曜日は工場見学に参加できる。"],
+      ["the company cafeteria", "社員食堂", "I usually eat lunch in the company cafeteria.", "たいてい社員食堂で昼食をとる。"],
+      ["call extension 25", "内線25番に電話する", "For questions, please call extension 25.", "ご質問は内線25番までお電話ください。"],
+      ["win an award", "賞を取る", "Our team won an award for the new design.", "私たちのチームは新しいデザインで賞を取った。"],
+      ["ask for directions", "道をたずねる", "I got lost and asked for directions at a shop.", "道に迷って、お店で道をたずねた。"]
+    ],
+    "closing": "tour は「旅行」だけじゃなく「見学」の意味も📝"
+  }
+]
