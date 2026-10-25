@@ -16,7 +16,7 @@ const ITEMS = {
   liberty: { name: "LIBERTY ENGLISH", note: "TOEIC・TOEFL・大学受験のハイスコアを目指す人向けの英語スクール", ...A8("3Z6RWJ+CTF05E+4MWC+5YRHE", "www11") },
   scramble: { name: "スクランブル英文法・語法 5th Edition", note: "eng_navi の文法クイズは、この本の出題ポイントをもとに作っています", url: AMAZON("B0G47KNCKX", "0ce4d1d04fdd489440ff1dce4f987caf") },
   eureka: { name: "大学入試 英文法 Eureka!", note: "暗記だけでは解けない「差がつく」文法問題を約250問", url: AMAZON("B09MTFCF6W", "ba588e8cadb139770f883ff2963f9530") },
-  idiomatic: { name: "飛躍のフレーズ IDIOMATIC 300", note: "eng_navi のイディオム問題のネタ元。よくある言い回しを英文ごと覚えられる", url: AMAZON("B0DCY6K8P2", "9adf5e34e9b1aabc41601bfe20eb0ccc") },
+  idiomatic: { name: "飛躍のフレーズ IDIOMATIC 300", note: "よくある言い回しを、英文ごと覚えられる。問題300問つき", url: AMAZON("B0DCY6K8P2", "9adf5e34e9b1aabc41601bfe20eb0ccc") },
   reading: { name: "基本文法から学ぶ 英語リーディング教本", note: "文法を土台に、英文を正確に読めるようになる定番の1冊", url: AMAZON("B0B2VJ8BL5", "d769300620a82fda9aee29d46db9f42e") },
   realize: { name: "Realize 英文「解釈」演習99 発展レベル", note: "難関大の和訳問題で、意味を正確につかむ練習", url: AMAZON("B0FYMTW7XT", "0962d322f17bca5063631e367e0dd55a") },
   pinnacle: { name: "大学入試 無敵の難単語 PINNACLE 420", note: "難しい単語で読む手が止まる人に", url: AMAZON("B0CK4HSRZN", "8ecd3ddef08dd6642b8ef647882ce7d7") },

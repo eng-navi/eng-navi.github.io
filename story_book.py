@@ -177,7 +177,7 @@ BRUSHUP = {
 }
 
 # 解説の最後(「おすすめ教材」ハイライト)で紹介する本。セール中ではないので割引バッジなし
-IDIOMATIC_LEAD = dict(off=None, lead1="＼ eng_navi のピンク問題のネタ元 ／", lead2="Kindle版・音声DL付き・問題300問つき")
+IDIOMATIC_LEAD = dict(off=None, lead1="＼ 言い回しを覚えると、英文が速くなる ／", lead2="Kindle版・音声DL付き・問題300問つき")
 IDIOMATIC = {
     # A:ネタ元(ピンクの問題とのつながり)
     "idiomatic_a": dict(IDIOMATIC_LEAD, tag="おすすめ教材",
