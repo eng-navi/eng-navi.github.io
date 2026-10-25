@@ -9,6 +9,7 @@ type
     poll  : オリジナルの投票クイズ(text, options, answer_text)。答えはツリーの返信で続けて出す
     list  : 10選のツリー(list_id → threads_lists.json)。1/3 一覧 → 2/3・3/3 例文 + 音声ページのリンク
     image : 画像つき投稿(text, image = docs/ からのパス)
+    carousel : 画像を複数枚まとめた投稿(text, images = docs/ からのパスのリスト, reply = 任意の返信)
 """
 import json
 import sys
@@ -72,6 +73,26 @@ def post(item, log):
         ids = [publish(texts[0], poll_attachment=json.dumps(opts, ensure_ascii=False))]
         time.sleep(5)
         ids.append(publish(texts[1], reply_to=ids[0]))
+    elif t == "carousel":  # 画像を複数枚まとめた投稿(4コマ+解説など)
+        user = th.os.environ["THREADS_USER_ID"]
+        children = []
+        for path in item["images"]:
+            cid = th.api("POST", f"{user}/threads", media_type="IMAGE", image_url=f"{SITE_URL}/{path}", is_carousel_item="true")["id"]
+            for _ in range(24):
+                if th.api("GET", cid, fields="status").get("status") == "FINISHED":
+                    break
+                time.sleep(5)
+            children.append(cid)
+        cid = th.api("POST", f"{user}/threads", media_type="CAROUSEL", children=",".join(children),
+                     text=texts[0], topic_tag=th.TOPIC)["id"]
+        for _ in range(24):
+            if th.api("GET", cid, fields="status").get("status") == "FINISHED":
+                break
+            time.sleep(5)
+        ids = [th.api("POST", f"{user}/threads_publish", creation_id=cid)["id"]]
+        if item.get("reply"):
+            time.sleep(5)
+            ids.append(publish(item["reply"], reply_to=ids[0]))
     elif t == "image":
         user = th.os.environ["THREADS_USER_ID"]
         cid = th.api("POST", f"{user}/threads", media_type="IMAGE", image_url=f"{SITE_URL}/{item['image']}",

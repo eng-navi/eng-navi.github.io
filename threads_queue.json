@@ -4,7 +4,11 @@
     "at": "2026-10-25 19:45",
     "type": "poll",
     "text": "英語でなんて言う?🤔\n\n「私の知る限り、会議は予定どおりだよ」\n(　　　) as I know, the meeting is still on.\n\n投票してから、答えはスレッドの続きへ👇",
-    "options": ["As far", "As long", "As soon"],
+    "options": [
+      "As far",
+      "As long",
+      "As soon"
+    ],
     "answer_text": "✅ 正解は「As far」\n\nAs far as I know, the meeting is still on.\n(私の知る限り、会議は予定どおりだよ)\n\nas far as I know で「私の知る限り」。\nas long as は「〜する限りは(条件)」なので、ここでは使えません。"
   },
   {
@@ -25,5 +29,16 @@
     "at": "2026-10-25 22:30",
     "type": "list",
     "list_id": 2
+  },
+  {
+    "key": "manga_inside_out",
+    "at": "2026-10-26 07:30",
+    "type": "carousel",
+    "text": "ペンの帽子、なんか変じゃない?🐧🧢\n\n今日のフレーズは「inside out」\n2枚目で意味をチェック👉",
+    "images": [
+      "manga/inside_out_1.png",
+      "manga/inside_out_2.png"
+    ],
+    "reply": "inside out = 裏返しに\n\n服や帽子を「裏返しに」着ちゃったときに使います。\nMy son wore his sweater inside out.\n(息子はセーターを裏返しに着ていた)\n\nあなたは朝、服を裏返しに着ちゃったことある?😂"
   }
 ]
