@@ -2034,5 +2034,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 105,
+    "text": "After a few meetings, the two designers were finally on the same wavelength.",
+    "target": "on the same wavelength",
+    "glossary": [
+      "after a few meetings：何度か打ち合わせをして",
+      "be on the same wavelength：波長が合う、考え方が同じである",
+      "finally：ようやく"
+    ],
+    "translation": "何度か打ち合わせをして、2人のデザイナーはようやく考えが合うようになった。",
+    "explanation": "「be on the same wavelength (as X)」は「(Xと)波長が合う、考え方や感じ方が同じ」という意味です。\nはっきり言葉にしなくても通じ合っている、というニュアンスがあります。\n\n反対は be on a different wavelength で「考えが合わない」となります。",
+    "audio": "audio/q105.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
