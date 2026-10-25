@@ -97,3 +97,8 @@ work could wait：仕事は後回しにできる
 - 毎週月曜 8:00(日本時間)に、新刊・語学書セール・TOEIC/英検の公式日程を Web で調べ、実行結果(claude.ai の routines 画面の実行履歴)にレポートを書き、スマホに通知する。クラウド環境からは公式サイトに直接アクセスできないことがあり、その場合は「公式未確認」と書かれる
 - 管理・停止: https://claude.ai/code/routines/trig_01BPeiVpLe4SGi4rhh8STQRF
 - 結果から「今月のお得」ストーリー(story_book.py)や Threads・フィードの投稿を作る。値段・割引率は日付つきで扱う
+
+## Threads(threads.py)
+- 投票クイズ: `python3 threads.py poll <no>`(2択の問題を流用、トピック「英語学習」)。記録は threads_posted.json
+- 答え: `python3 threads.py answer` で投稿から4時間後に「正解・正解率・完成文・和訳・解説の要点」を返信
+- .env: THREADS_USER_ID, THREADS_ACCESS_TOKEN(12/24期限。refresh-token で延長)
