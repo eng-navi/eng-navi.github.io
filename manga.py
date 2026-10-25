@@ -237,6 +237,7 @@ def inside_out():
     pad, top, gap = 40, 160, 22
     pw, ph = (W - pad * 2 - gap) / 2, (H - top - pad - gap - 40) / 2
     boxes = [(pad + c * (pw + gap), top + r * (ph + gap), pad + c * (pw + gap) + pw, top + r * (ph + gap) + ph) for r in (0, 1) for c in (0, 1)]
+    img.info["boxes"] = boxes  # 紙芝居リール(manga_reel.py)でコマを切り出すため
 
     # 1:あいさつ。ペンのニット帽は裏返し(タグが外)
     x0, y0, x1, y1 = boxes[0]
