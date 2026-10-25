@@ -2053,5 +2053,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 106,
+    "category": "時制",
+    "question": "By the time Mr. Kato arrived at the station, the express train ( ).",
+    "options": [
+      "has already left",
+      "had already left"
+    ],
+    "answer": 2,
+    "translation": "加藤さんが駅に着いたときには、急行列車はすでに出発していた。",
+    "explanation": "「着いたとき」という過去の時点までに完了していたことは、過去完了形で表します。\n現在完了は「今」とのつながりを表すので、過去の時点が基準のときは使えません。\n\nしたがって、②had already left が正解。",
+    "audio": "audio/q106.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
