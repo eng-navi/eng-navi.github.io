@@ -3,6 +3,7 @@
     .venv-tts/bin/python manga_reel.py inside_out     # out/manga/inside_out_reel.mp4
 
 声:ナビ(フクロウ)= イギリス英語・男性 / ペン(ペンギン)= イギリス英語・女性
+BGMなし(セリフを聞き取りやすく、飽きないように)。コマの切り替えに小さな効果音、ズームはしない
 """
 import subprocess
 import sys
@@ -16,7 +17,6 @@ import manga
 
 ROOT = Path(__file__).parent
 OUT = ROOT / "out" / "manga"
-BGM = ROOT / "docs" / "bgm" / "lefty.mp3"
 W, H, FPS, SR = 1080, 1920, 30, 24000
 VOICE = {"navi": ("b", "bm_george"), "pen": ("b", "bf_emma")}
 
@@ -52,13 +52,21 @@ def frame_for(src, t, dur, title):
     d = ImageDraw.Draw(img)
     d.text((W // 2, 170), title, font=manga.EN(90), fill=manga.INK, anchor="mm")
     d.text((W // 2, 250), "4コマで覚える英語", font=manga.JP(40), fill=(150, 140, 130), anchor="mm")
-    z = 1.0 + 0.04 * min(1, t / max(dur, 0.1))
+    # ズームはせず、出る瞬間だけ少しふわっと(0.15秒)
+    z = 1.0 if t >= 0.15 else 0.96 + 0.04 * (t / 0.15)
     tw = int(980 * z)
     th = int(src.height * tw / src.width)
     im = src.resize((tw, th), Image.LANCZOS)
     img.paste(im, ((W - tw) // 2, 330 + (1320 - th) // 2))
     d.text((W - 60, H - 70), "@eng_navi", font=manga.EN(40), fill=(160, 150, 140), anchor="rm")
     return img
+
+
+def pop():
+    """コマが切り替わるときの小さな「ポン」という音。"""
+    t = np.arange(int(SR * 0.12)) / SR
+    freq = 880 * np.exp(-t * 18) + 440
+    return (0.18 * np.sin(2 * np.pi * np.cumsum(freq) / SR) * np.exp(-t * 30)).astype(np.float32)
 
 
 def main():
@@ -74,15 +82,16 @@ def main():
     for box, (who, text) in zip(boxes, sc["lines"]):
         clip = voice(who, text)
         dur = len(clip) / SR + 0.9
-        audio += [silence(0.35), clip, silence(dur - len(clip) / SR - 0.35)]
+        p = pop()
+        audio += [p, silence(0.35 - len(p) / SR), clip, silence(dur - len(clip) / SR - 0.35)]
         scenes.append((comic.crop(tuple(int(v) for v in box)), dur))
     # 全体の4コマを一瞬見せてから、解説(2人が読み上げる)
     scenes.append((comic, 1.6))
     audio.append(silence(1.6))
-    ex_audio = [silence(0.3)]
+    ex_audio = [pop(), silence(0.3)]
     for who, text in sc["explain"]:
         ex_audio += [voice(who, text), silence(0.5)]
-    ex_audio.append(silence(0.8))
+    ex_audio.append(silence(0.5))
     ex_clip = np.concatenate(ex_audio)
     scenes.append((explain, len(ex_clip) / SR))
     audio.append(ex_clip)
@@ -94,9 +103,7 @@ def main():
         import soundfile as sf
         sf.write(wav.name, np.concatenate(audio), SR)
         cmd = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-               "-i", wav.name, "-stream_loop", "-1", "-i", str(BGM),
-               "-filter_complex", f"[2:a]volume=0.12,afade=t=out:st={total - 1.2}:d=1.2[b];[1:a]aresample=44100,volume=1.6[v];[v][b]amix=inputs=2:duration=first[a]",
-               "-map", "0:v", "-map", "[a]", "-t", f"{total:.2f}",
+               "-i", wav.name, "-map", "0:v", "-map", "1:a", "-af", "volume=1.6", "-t", f"{total:.2f}",
                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-c:a", "aac", "-movflags", "+faststart", str(out)]
         proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
         for src, dur in scenes:
