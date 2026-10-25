@@ -1,10 +1,12 @@
 """本の紹介ストーリー(Book Review 風)を作る。
 
-    python3 story_book.py      # out/story/sale_horikoshi.png
+    python3 story_book.py           # out/story/sale_horikoshi.png
+    python3 story_book.py brushup   # out/story/brushup_a〜c.png
 
 方眼の背景に、手書き風の見出しと短いコメント。下はリンクスタンプ(白地に青字)を置く帯。
 """
 import math
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -62,7 +64,9 @@ def note(d, xy, title, body, anchor_x="mm"):
         d.text((x, y + 70 + i * 52), line, font=JP(38), fill=INK, anchor="ms")
 
 
-def main(cover_path, out_path):
+def main(cover_path, out_path, cfg=None):
+    """cfg で本ごとの文言を差し替える(省略時は『英文読解ガチ講義』)。"""
+    c = dict(HORIKOSHI, **(cfg or {}))
     img = Image.new("RGB", (W, H), PAPER)
     d = ImageDraw.Draw(img)
     for x in range(0, W, 54):
@@ -71,14 +75,15 @@ def main(cover_path, out_path):
         d.line([(0, y), (W, y)], fill=GRID, width=2)
 
     # 見出し
-    d.text((W // 2, 230), "Book Review", font=EN(122), fill=INK, anchor="ms")
+    d.text((W // 2, 230), c["title"], font=EN(122), fill=INK, anchor="ms")
     for side in (-1, 1):
         cx = W // 2 + side * 365
         for dy, ln in ((-62, 46), (-30, 56), (2, 46)):
             ang = dy / 140
             d.line([(cx, 190 + dy), (cx + side * ln * math.cos(ang), 190 + dy + ln * math.sin(ang) * 0.6)], fill=RED, width=6)
-    d.text((W // 2, 330), "10月のおすすめ", font=JP(50), fill=RED, anchor="ms")
-    d.ellipse([W // 2 - 205, 270, W // 2 + 205, 360], outline=RED, width=4)
+    tag_w = d.textlength(c["tag"], font=JP(50)) / 2 + 40
+    d.text((W // 2, 330), c["tag"], font=JP(50), fill=RED, anchor="ms")
+    d.ellipse([W // 2 - tag_w, 270, W // 2 + tag_w, 360], outline=RED, width=4)
     d.text((W - 70, 120), "PR", font=EN(40), fill=(120, 120, 120), anchor="ms")
     star(d, 110, 330, 22)
     star(d, 160, 380, 13)
@@ -99,38 +104,41 @@ def main(cover_path, out_path):
     img.paste(fr, (cx - fr.width // 2, cy - fr.height // 2), fr)
     d = ImageDraw.Draw(img)
 
-    # まわりのメモ(左右2つずつ、余白をたっぷり)
-    note(d, (150, 560), "Point", ["英文を", "カタマリで", "読む"])
-    arrow(d, curve((205, 745), (225, 800), (270, 820)))
-    note(d, (935, 680), "動画", ["授業動画", "42本つき"])
-    arrow(d, curve((935, 810), (920, 860), (840, 880)))
-    note(d, (150, 1080), "For", ["長文で", "迷子に", "なる人"])
-    arrow(d, curve((215, 1270), (250, 1300), (270, 1250)))
+    # まわりのメモ(左上・右上・左下・右下。右下は Would I recommend? 固定)
+    (t1, b1), (t2, b2), (t3, b3) = c["notes"]
+    note(d, (150, 560), t1, b1)
+    arrow(d, curve((205, 560 + 70 + len(b1) * 52), (225, 800), (270, 820)))
+    note(d, (935, 680), t2, b2)
+    arrow(d, curve((935, 680 + 70 + len(b2) * 52 - 20), (920, 860), (840, 880)))
+    note(d, (150, 1080), t3, b3)
+    arrow(d, curve((215, 1080 + 70 + len(b3) * 52 - 30), (250, 1300), (270, 1250)))
     note(d, (935, 1120), "Would I", ["recommend?"])
     d.text((875, 1255), "Yes", font=EN(46), fill=INK, anchor="ms")
     d.ellipse([826, 1205, 926, 1272], outline=RED, width=4)
     d.text((990, 1255), "No", font=EN(46), fill=INK, anchor="ms")
 
     # ひとこと
-    d.text((W // 2, 1395), "「なんとなく読む」を卒業したい人へ", font=JP(44), fill=INK, anchor="ms")
-    underline(d, 200, 880, 1415, w=3)
+    d.text((W // 2, 1395), c["line"], font=JP(44), fill=INK, anchor="ms")
+    lw = d.textlength(c["line"], font=JP(44)) / 2
+    underline(d, W // 2 - lw - 10, W // 2 + lw + 10, 1415, w=3)
 
     # 割引のバッジ(表紙の右上に貼ったシール風)
-    bx, by, br = 830, 470, 92
-    d.ellipse([bx - br, by - br, bx + br, by + br], fill=RED)
-    d.ellipse([bx - br + 9, by - br + 9, bx + br - 9, by + br - 9], outline=(255, 255, 255), width=3)
-    d.text((bx, by - 22), "Kindle版", font=JP(28), fill=(255, 255, 255), anchor="ms")
-    d.text((bx, by + 30), "50%", font=EN(62), fill=(255, 255, 255), anchor="ms")
-    d.text((bx, by + 62), "OFF", font=EN(30), fill=(255, 255, 255), anchor="ms")
+    if c.get("off"):
+        bx, by, br = 830, 470, 92
+        d.ellipse([bx - br, by - br, bx + br, by + br], fill=RED)
+        d.ellipse([bx - br + 9, by - br + 9, bx + br - 9, by + br - 9], outline=(255, 255, 255), width=3)
+        d.text((bx, by - 22), "Kindle版", font=JP(28), fill=(255, 255, 255), anchor="ms")
+        d.text((bx, by + 30), c["off"], font=EN(62), fill=(255, 255, 255), anchor="ms")
+        d.text((bx, by + 62), "OFF", font=EN(30), fill=(255, 255, 255), anchor="ms")
 
     # ボタンの上のマイクロコピー(背中を押す一言)
-    d.text((W // 2, 1490), "＼ 今だけ Kindle版が半額 ／", font=JP(48), fill=RED, anchor="ms")
-    d.text((W // 2, 1540), "期間限定キャンペーン・残り11日(10/25時点)", font=JP(30), fill=(110, 110, 110), anchor="ms")
+    d.text((W // 2, 1490), c["lead1"], font=JP(48), fill=RED, anchor="ms")
+    d.text((W // 2, 1540), c["lead2"], font=JP(30), fill=(110, 110, 110), anchor="ms")
 
     # リンクスタンプを置く帯(左右いっぱい)
     top = 1590
     d.rectangle([0, top, W, top + 250], fill=BAND)
-    d.text((W // 2, top + 70), "▼ 中身をのぞいてみる", font=JP(44), fill=(255, 255, 255), anchor="ms")
+    d.text((W // 2, top + 70), c["button"], font=JP(44), fill=(255, 255, 255), anchor="ms")
     bx0, by0, bx1, by1 = W // 2 - 250, top + 110, W // 2 + 250, top + 205
     for x in range(bx0, bx1, 22):
         d.line([(x, by0), (min(x + 11, bx1), by0)], fill=(255, 255, 255), width=3)
@@ -144,5 +152,35 @@ def main(cover_path, out_path):
     print(f"✓ {out_path}")
 
 
+# 本ごとの文言。値段・割引率には必ず「Kindle版」と日付を添える
+HORIKOSHI = dict(
+    title="Book Review", tag="10月のおすすめ", off="50%",
+    notes=[("Point", ["英文を", "カタマリで", "読む"]), ("動画", ["授業動画", "42本つき"]), ("For", ["長文で", "迷子に", "なる人"])],
+    line="「なんとなく読む」を卒業したい人へ",
+    lead1="＼ 今だけ Kindle版が半額 ／", lead2="期間限定キャンペーン・残り11日(10/25時点)",
+    button="▼ 中身をのぞいてみる",
+)
+BRUSHUP_LEAD = dict(off="26%", lead1="＼ 今だけ Kindle版が26%OFF ／", lead2="期間限定キャンペーン・残り6日(10/25時点)")
+BRUSHUP = {
+    # A:効率(見開きでサクッと)
+    "brushup_a": dict(BRUSHUP_LEAD, tag="10月のおすすめ",
+                      notes=[("Point", ["1テーマ", "見開きで", "サクッと"]), ("Killer", ["読解の", "「カギ」の", "フレーズ"]), ("For", ["時間が", "ない人に"])],
+                      line="つまずきやすい所だけ、短期間で", button="▼ 中身をのぞいてみる"),
+    # B:先生(河合塾講師の要点)
+    "brushup_b": dict(BRUSHUP_LEAD, tag="読解の仕上げに",
+                      notes=[("Teacher", ["河合塾", "講師の", "要点だけ"]), ("130", ["入試英文", "130題"]), ("For", ["なんとなく", "訳して", "しまう人"])],
+                      line="あいまいな訳を、ひとつずつ消していく", button="▼ 中身をのぞいてみる"),
+    # C:直前の見直し
+    "brushup_c": dict(BRUSHUP_LEAD, tag="入試直前の見直しに",
+                      notes=[("Check", ["読めた", "つもりを", "チェック"]), ("Speed", ["短い英文で", "サクサク"]), ("For", ["長文の", "仕上げを", "したい人"])],
+                      line="長文に入る前の、最後のひと磨き", button="▼ 中身をのぞいてみる"),
+}
+
+
 if __name__ == "__main__":
-    main(ROOT / "out" / "story" / "_cover_horikoshi.png", ROOT / "out" / "story" / "sale_horikoshi.png")
+    out = ROOT / "out" / "story"
+    if len(sys.argv) > 1 and sys.argv[1] == "brushup":
+        for name, cfg in BRUSHUP.items():
+            main(out / "_cover_brushup.png", out / f"{name}.png", cfg)
+    else:
+        main(out / "_cover_horikoshi.png", out / "sale_horikoshi.png")
