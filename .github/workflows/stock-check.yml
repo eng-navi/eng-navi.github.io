@@ -1,0 +1,18 @@
+# 予約の残りを毎日チェックし、3日以下なら Issue でお知らせする(毎日 21:00 日本時間)
+name: 予約の残りチェック
+on:
+  schedule:
+    - cron: "7 12 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 stock_check.py
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
