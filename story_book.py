@@ -102,8 +102,8 @@ def main(cover_path, out_path):
     # まわりのメモ(左右2つずつ、余白をたっぷり)
     note(d, (150, 560), "Point", ["英文を", "カタマリで", "読む"])
     arrow(d, curve((205, 745), (225, 800), (270, 820)))
-    note(d, (935, 600), "動画", ["授業動画", "42本つき"])
-    arrow(d, curve((935, 730), (920, 790), (840, 815)))
+    note(d, (935, 680), "動画", ["授業動画", "42本つき"])
+    arrow(d, curve((935, 810), (920, 860), (840, 880)))
     note(d, (150, 1080), "For", ["長文で", "迷子に", "なる人"])
     arrow(d, curve((215, 1270), (250, 1300), (270, 1250)))
     note(d, (935, 1120), "Would I", ["recommend?"])
@@ -112,14 +112,25 @@ def main(cover_path, out_path):
     d.text((990, 1255), "No", font=EN(46), fill=INK, anchor="ms")
 
     # ひとこと
-    d.text((W // 2, 1440), "「なんとなく読む」を卒業したい人へ", font=JP(46), fill=INK, anchor="ms")
-    underline(d, 190, 890, 1462, w=3)
+    d.text((W // 2, 1395), "「なんとなく読む」を卒業したい人へ", font=JP(44), fill=INK, anchor="ms")
+    underline(d, 200, 880, 1415, w=3)
+
+    # 割引のバッジ(表紙の右上に貼ったシール風)
+    bx, by, br = 830, 470, 92
+    d.ellipse([bx - br, by - br, bx + br, by + br], fill=RED)
+    d.ellipse([bx - br + 9, by - br + 9, bx + br - 9, by + br - 9], outline=(255, 255, 255), width=3)
+    d.text((bx, by - 22), "Kindle版", font=JP(28), fill=(255, 255, 255), anchor="ms")
+    d.text((bx, by + 30), "50%", font=EN(62), fill=(255, 255, 255), anchor="ms")
+    d.text((bx, by + 62), "OFF", font=EN(30), fill=(255, 255, 255), anchor="ms")
+
+    # ボタンの上のマイクロコピー(背中を押す一言)
+    d.text((W // 2, 1490), "＼ 今だけ Kindle版が半額 ／", font=JP(48), fill=RED, anchor="ms")
+    d.text((W // 2, 1540), "期間限定キャンペーン・残り11日(10/25時点)", font=JP(30), fill=(110, 110, 110), anchor="ms")
 
     # リンクスタンプを置く帯(左右いっぱい)
-    top = 1560
+    top = 1590
     d.rectangle([0, top, W, top + 250], fill=BAND)
     d.text((W // 2, top + 70), "▼ 中身をのぞいてみる", font=JP(44), fill=(255, 255, 255), anchor="ms")
-    # スタンプの目安(点線の枠)
     bx0, by0, bx1, by1 = W // 2 - 250, top + 110, W // 2 + 250, top + 205
     for x in range(bx0, bx1, 22):
         d.line([(x, by0), (min(x + 11, bx1), by0)], fill=(255, 255, 255), width=3)

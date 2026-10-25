@@ -87,3 +87,7 @@ work could wait：仕事は後回しにできる
 - Instagram は空行を詰めるため、コメント・キャプションの空行には全角スペースを1文字入れる(post.py の keep_blank_lines で自動)。
 - build_site.py は問題ごとのページ(docs/q/<no>/)、一覧(docs/q/)、sitemap.xml、robots.txt も書き出す(build_pages.py)。/?q=<no> でその問題からクイズを始められる。
 - docs/index.html の google-site-verification のメタタグは Search Console の所有権確認用。削除しないこと。
+
+## 本の紹介ストーリー(story_book.py)
+- 方眼の背景+手書き風フォント(Kalam/Klee One)。下は左右いっぱいの赤い帯にリンクスタンプ(白地・青字)を置く
+- 割引はバッジとボタン上のマイクロコピーで。値段・割引率には必ず「Kindle版」と日付(〇/〇時点)を添える
