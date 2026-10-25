@@ -229,12 +229,21 @@ def sweat(d, x, y, s=18):
     d.ellipse([x - s * 0.6, y - s * 0.1, x + s * 0.6, y + s * 0.8], fill=(160, 200, 240))
 
 
-def comic(title):
-    """4コマの土台(見出しと2×2のコマ)。boxes はコマの位置(紙芝居リールでも使う)。"""
-    img = Image.new("RGB", (W, H), (244, 241, 234))
+TOEIC_BG = (231, 238, 243)
+TOEIC_TAG = (70, 120, 170)
+
+
+def comic(title, series=None):
+    """4コマの土台(見出しと2×2のコマ)。boxes はコマの位置(紙芝居リールでも使う)。series="toeic" で TOEIC編。"""
+    img = Image.new("RGB", (W, H), TOEIC_BG if series == "toeic" else (244, 241, 234))
     d = ImageDraw.Draw(img)
     d.text((W // 2, 70), title, font=EN(64), fill=INK, anchor="mm")
-    d.text((W // 2, 120), "4コマで覚える英語", font=JP(30), fill=(150, 140, 130), anchor="mm")
+    if series == "toeic":
+        d.rounded_rectangle([W // 2 - 250, 100, W // 2 - 90, 142], radius=20, fill=TOEIC_TAG)
+        d.text((W // 2 - 170, 121), "TOEIC編", font=JP(26), fill=(255, 255, 255), anchor="mm")
+        d.text((W // 2 + 60, 121), "4コマで覚える英語", font=JP(30), fill=(120, 130, 140), anchor="mm")
+    else:
+        d.text((W // 2, 120), "4コマで覚える英語", font=JP(30), fill=(150, 140, 130), anchor="mm")
     pad, top, gap = 40, 160, 22
     pw, ph = (W - pad * 2 - gap) / 2, (H - top - pad - gap - 40) / 2
     boxes = [(pad + c * (pw + gap), top + r * (ph + gap), pad + c * (pw + gap) + pw, top + r * (ph + gap) + ph) for r in (0, 1) for c in (0, 1)]
@@ -389,6 +398,100 @@ def wet_to_the_skin():
     return img
 
 
+CAPY = (176, 128, 86)
+CAPY_DARK = (140, 98, 62)
+SUIT = (90, 170, 170)
+
+
+def capybara(d, cx, cy, s, expr="calm", seed=91):
+    """カピバラ部長(マイペースな上司)。横長の体。cy は顔の中心。"""
+    body = rrect_pts(cx - s * 0.62, cy - s * 0.28, cx + s * 0.55, cy + s * 0.42, s * 0.28)
+    shape(d, body, CAPY, seed=seed)
+    for k in (-0.38, 0.32):  # 足
+        shape(d, rrect_pts(cx + k * s - s * 0.07, cy + s * 0.36, cx + k * s + s * 0.07, cy + s * 0.5, 5), CAPY_DARK, w=3, seed=seed + 1)
+    shape(d, [(cx - s * 0.5, cy - s * 0.24), (cx - s * 0.42, cy - s * 0.38), (cx - s * 0.34, cy - s * 0.26)], CAPY_DARK, w=3, seed=seed + 2)
+    shape(d, [(cx - s * 0.2, cy - s * 0.28), (cx - s * 0.12, cy - s * 0.4), (cx - s * 0.04, cy - s * 0.28)], CAPY_DARK, w=3, seed=seed + 3)
+    # 鼻先(左向き)
+    shape(d, rrect_pts(cx - s * 0.72, cy - s * 0.06, cx - s * 0.4, cy + s * 0.2, s * 0.12), CAPY_DARK, w=4, seed=seed + 4)
+    d.ellipse([cx - s * 0.66, cy + s * 0.02, cx - s * 0.6, cy + s * 0.07], fill=INK)
+    for k in (-0.36, -0.18):
+        x = cx + k * s
+        if expr == "shock":
+            d.ellipse([x - 8, cy - s * 0.12, x + 8, cy - s * 0.12 + 16], fill=(255, 255, 255), outline=INK, width=3)
+            d.ellipse([x - 3, cy - s * 0.12 + 5, x + 3, cy - s * 0.12 + 11], fill=INK)
+        else:  # いつも眠そうな目
+            d.arc([x - 9, cy - s * 0.12, x + 9, cy - s * 0.12 + 12], 0, 180, fill=INK, width=4)
+    d.ellipse([cx - s * 0.32, cy + s * 0.02, cx - s * 0.2, cy + s * 0.08], fill=BLUSH)
+    # ネクタイ(部長らしく)
+    shape(d, [(cx - s * 0.08, cy + s * 0.12), (cx + s * 0.02, cy + s * 0.12), (cx + s * 0.04, cy + s * 0.34), (cx - s * 0.03, cy + s * 0.4), (cx - s * 0.1, cy + s * 0.34)], (200, 80, 80), w=3, seed=seed + 5)
+
+
+def suitcase(d, cx, cy, w, color=SUIT, seed=95):
+    h = w * 0.7
+    shape(d, rrect_pts(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2, w * 0.1), color, seed=seed)
+    d.arc([cx - w * 0.16, cy - h / 2 - w * 0.16, cx + w * 0.16, cy - h / 2 + w * 0.06], 180, 360, fill=INK, width=5)
+    for k in (-0.25, 0.25):
+        d.line([(cx + k * w, cy - h / 2 + 6), (cx + k * w, cy + h / 2 - 6)], fill=(60, 130, 130), width=4)
+
+
+def conveyor(d, box, y):
+    x0, _, x1, _ = box
+    shape(d, [(x0 + 8, y), (x1 - 8, y), (x1 - 8, y + 34), (x0 + 8, y + 34), (x0 + 8, y)], (170, 172, 178), w=4, seed=97)
+    for i in range(int((x1 - x0) / 40)):
+        d.line([(x0 + 20 + i * 40, y + 6), (x0 + 20 + i * 40, y + 28)], fill=(130, 132, 140), width=3)
+
+
+def baggage_claim():
+    img, boxes, pw, ph = comic("baggage claim", series="toeic")
+    # 1:ナビが「手荷物受取所へ」
+    x0, y0, x1, y1 = boxes[0]
+    d = panel(img, boxes[0], 31)
+    owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 140, "happy")
+    penguin(d, x0 + pw * 0.72, y0 + ph * 0.66, 135, "normal", hat_on=False)
+    d.rounded_rectangle([x0 + pw * 0.56, y0 + ph * 0.3, x0 + pw * 0.95, y0 + ph * 0.4], radius=6, fill=(255, 215, 90), outline=INK, width=3)
+    d.text((x0 + pw * 0.755, y0 + ph * 0.35), "BAGGAGE CLAIM", font=EN(22), fill=INK, anchor="mm")
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 200),
+           "Let's go to\nbaggage claim.", "手荷物受取所に行こう", 1)
+    # 2:ペンがベルトの前で待つ
+    x0, y0, x1, y1 = boxes[1]
+    d = panel(img, boxes[1], 32)
+    conveyor(d, boxes[1], y0 + ph * 0.8)
+    suitcase(d, x0 + pw * 0.2, y0 + ph * 0.8 - 32, 70, (230, 150, 120), seed=96)
+    penguin(d, x0 + pw * 0.62, y0 + ph * 0.56, 140, "normal", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.62, y0 + 200),
+           "Where's my\nsuitcase...?", "ぼくのスーツケース、どこ…?", 2)
+    sfx(img, (x0 + pw * 0.86, y0 + ph * 0.68), "*stare*", 30, (110, 120, 140), 6)
+    # 3:部長がペンのスーツケースに乗って回ってくる
+    x0, y0, x1, y1 = boxes[2]
+    d = panel(img, boxes[2], 33)
+    conveyor(d, boxes[2], y0 + ph * 0.8)
+    suitcase(d, x0 + pw * 0.52, y0 + ph * 0.8 - 44, 150)
+    capybara(d, x0 + pw * 0.55, y0 + ph * 0.8 - 160, 170, "calm")
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.4, y0 + 210),
+           "Ahh...\nnice ride.", "あ〜、いい乗り心地", 3)
+    sfx(img, (x0 + pw * 0.8, y0 + ph * 0.4), "*round*", 30, (200, 140, 60), -8)
+    # 4:ナビのツッコミ
+    x0, y0, x1, y1 = boxes[3]
+    d = panel(img, boxes[3], 34)
+    owl(d, x0 + pw * 0.28, y0 + ph * 0.68, 145, "shock")
+    sweat(d, x0 + pw * 0.46, y0 + ph * 0.46)
+    penguin(d, x0 + pw * 0.74, y0 + ph * 0.68, 130, "shock", hat_on=False)
+    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 205),
+           "Boss!\nThat's not a ride!", "部長!それ乗り物じゃないです!", 4)
+    d = ImageDraw.Draw(img)
+    d.text((W - 50, H - 30), "@eng_navi", font=EN(30), fill=(160, 150, 140), anchor="rm")
+    return img
+
+
+def _baggage_visual(d):
+    conveyor(d, (180, 0, 900, 0), 1010)
+    suitcase(d, 380, 978, 110)
+    suitcase(d, 620, 978, 110, (230, 150, 120), seed=96)
+    d.rounded_rectangle([370, 820, 710, 880], radius=8, fill=(255, 215, 90), outline=INK, width=4)
+    d.text((540, 850), "BAGGAGE CLAIM", font=EN(34), fill=INK, anchor="mm")
+    d.text((540, 1110), "空港で、預けた荷物を受け取る場所", font=JP(34), fill=(120, 110, 105), anchor="mm")
+
+
 def _wet_visual(d):
     def soaked(d, x, y):
         penguin(d, x, y, 160, "shock", hat_on=False)
@@ -404,6 +507,8 @@ def _inside_visual(d):
 SCRIPTS = {
     "inside_out": (inside_out, ("inside out", "裏返しに", "My son wore his sweater inside out.",
                                 "息子はセーターを裏返しに着ていた", _inside_visual)),
+    "baggage_claim": (baggage_claim, ("baggage claim", "手荷物受取所", "I waited at baggage claim for twenty minutes.",
+                                      "手荷物受取所で20分待った", _baggage_visual)),
     "wet_to_the_skin": (wet_to_the_skin, ("wet to the skin", "ずぶぬれ", "I forgot my umbrella and got wet to the skin.",
                                           "傘を忘れて、ずぶぬれになった", _wet_visual)),
 }

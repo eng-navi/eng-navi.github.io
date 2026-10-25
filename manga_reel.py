@@ -19,10 +19,15 @@ import manga
 ROOT = Path(__file__).parent
 OUT = ROOT / "out" / "manga"
 W, H, FPS, SR = 1080, 1920, 30, 24000
-VOICE = {"navi": ("b", "bm_george"), "pen": ("b", "bf_emma")}
+VOICE = {"navi": ("b", "bm_george"), "pen": ("b", "bf_emma"), "boss": ("a", "am_michael")}
 
 # コマごとに読み上げるセリフ(話す人, 英語)。最後は解説の画面
 SCRIPTS = {
+    "baggage_claim": dict(
+        lines=[("navi", "Let's go to baggage claim."), ("pen", "Where's my suitcase?"),
+               ("boss", "Ahh... nice ride."), ("navi", "Boss! That's not a ride!")],
+        explain=[("navi", "Baggage claim."), ("boss", "I waited at baggage claim for twenty minutes.")],
+    ),
     "wet_to_the_skin": dict(
         lines=[("navi", "It's raining! Take an umbrella."), ("pen", "No need. I'm a penguin."),
                ("navi", "You're wet to the skin!"), ("pen", "I like the sea... not the rain.")],
