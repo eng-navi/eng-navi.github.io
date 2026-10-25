@@ -36,9 +36,11 @@ def list_posts(list_id):
         return "\n\n".join(f"{CIRCLED[i]} {items[i][0]}\n{items[i][2]}\n({items[i][3]})" for i in rng)
 
     link = f"{SITE_URL}/list/{list_id}/?utm_source=threads&utm_medium=social"
-    return [head,
-            "例文で覚えよう✍️\n\n" + examples(range(5)),
-            examples(range(5, 10)) + f"\n\n{lst['closing']}\n🔊 音声つきで聞けます → {link}"]
+    tail = f"{lst['closing']}\n🔊 音声つきで聞けます → {link}"
+    last = examples(range(5, 10))
+    posts = [head, "例文で覚えよう✍️\n\n" + examples(range(5))]
+    # 500文字に収まらなければ、締めの一言とリンクを別の返信にする
+    return posts + ([last + "\n\n" + tail] if len(last) + len(tail) + 2 <= LIMIT else [last, tail])
 
 
 def render(item):
