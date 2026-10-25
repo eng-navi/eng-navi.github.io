@@ -10,13 +10,17 @@ const A8 = (id, host) => ({
 const AMAZON = (asin, linkId) => `https://www.amazon.co.jp/dp/${asin}?tag=mokumoku70e-22&linkCode=ll2&linkId=${linkId}&language=ja_JP&ref_=as_li_ss_tl`;
 
 const ITEMS = {
+  setphrase: { name: "英語の壁を乗り越えるセットフレーズ1000", note: "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで", url: "https://link.amazon/B0159dCGh" },
+  kikufure: { name: "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ", note: "TOEICによく出るフレーズを、音声つきで", url: "https://link.amazon/B09qOB6Ou" },
+  horikoshi: { name: "堀越先生の 英文読解ガチ講義", note: "英文を「カタマリ」で読む。授業動画つき", url: "https://link.amazon/B01zLDQpI" },
+  brushup: { name: "英語リーディング・ブラッシュアップ(登木健司)", note: "読解のつまずきポイントを見開きでサクッと", url: "https://link.amazon/B0jeP08qp" },
   studysapuri: { name: "スタディサプリENGLISH TOEIC対策コース", note: "文法の学び直しからパート別の対策まで、スマホで。7日間無料で試せます", ...A8("3BDQJ0+CTF05E+3AQG+C6QR6", "www19") },
   hanon: { name: "英語のハノン 初級", note: "わかる文法を「口から出る」ところまで落とし込むドリル", url: AMAZON("B09NY53725", "aaa9fc05b00ffc5bcfd72de9d08bdca0") },
   progrit: { name: "PROGRIT(プログリット)", note: "何をどれだけやるかを一緒に決めてくれる英語コーチング", ...A8("3H5XC5+AUKF5U+3NP4+60OXE", "www19") },
   liberty: { name: "LIBERTY ENGLISH", note: "TOEIC・TOEFL・大学受験のハイスコアを目指す人向けの英語スクール", ...A8("3Z6RWJ+CTF05E+4MWC+5YRHE", "www11") },
   scramble: { name: "スクランブル英文法・語法 5th Edition", note: "eng_navi の文法クイズは、この本の出題ポイントをもとに作っています", url: AMAZON("B0G47KNCKX", "0ce4d1d04fdd489440ff1dce4f987caf") },
   eureka: { name: "大学入試 英文法 Eureka!", note: "暗記だけでは解けない「差がつく」文法問題を約250問", url: AMAZON("B09MTFCF6W", "ba588e8cadb139770f883ff2963f9530") },
-  idiomatic: { name: "飛躍のフレーズ IDIOMATIC 300", note: "よくある言い回しを、英文ごと覚えられる。問題300問つき", url: AMAZON("B0DCY6K8P2", "9adf5e34e9b1aabc41601bfe20eb0ccc") },
+  idiomatic: { name: "飛躍のフレーズ IDIOMATIC 300", note: "よくある言い回しを、英文ごと覚えられる。問題300問つき", url: "https://link.amazon/B0eHBRPkB" },
   reading: { name: "基本文法から学ぶ 英語リーディング教本", note: "文法を土台に、英文を正確に読めるようになる定番の1冊", url: AMAZON("B0B2VJ8BL5", "d769300620a82fda9aee29d46db9f42e") },
   realize: { name: "Realize 英文「解釈」演習99 発展レベル", note: "難関大の和訳問題で、意味を正確につかむ練習", url: AMAZON("B0FYMTW7XT", "0962d322f17bca5063631e367e0dd55a") },
   pinnacle: { name: "大学入試 無敵の難単語 PINNACLE 420", note: "難しい単語で読む手が止まる人に", url: AMAZON("B0CK4HSRZN", "8ecd3ddef08dd6642b8ef647882ce7d7") },
