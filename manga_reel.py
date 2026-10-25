@@ -3,8 +3,8 @@
     .venv-tts/bin/python manga_reel.py inside_out            # out/manga/inside_out_reel.mp4(やわらかい効果音)
     .venv-tts/bin/python manga_reel.py inside_out --no-sfx   # out/manga/inside_out_reel_nosfx.mp4(効果音なし)
 
-声:ナビ(フクロウ)= イギリス英語・男性 / ペン(ペンギン)= イギリス英語・女性
-BGMなし(セリフを聞き取りやすく、飽きないように)。コマの切り替えに小さな効果音、ズームはしない
+声:かわいい系(VOICE 参照)。後ろにかすかなBGM(--bgm cozy-places などで指定)。
+コマの切り替えにやわらかい効果音、ズームはしない。投稿はリールのみ(カルーセルはなし)
 """
 import subprocess
 import sys
@@ -19,7 +19,15 @@ import manga
 ROOT = Path(__file__).parent
 OUT = ROOT / "out" / "manga"
 W, H, FPS, SR = 1080, 1920, 30, 24000
-VOICE = {"navi": ("b", "bm_george"), "pen": ("b", "bf_emma"), "boss": ("a", "am_michael")}
+# 声(Kokoro の声, 声の高さの倍率)。世界観に合わせて、少し高めのかわいい声に
+VOICE = {
+    "navi": ("a", "am_puck", 1.07),   # フクロウのナビ:元気なツッコミ
+    "pen": ("a", "af_sky", 1.10),     # ペンギンのペン:ふんわりしたボケ
+    "boss": ("a", "am_echo", 0.97),   # カピバラ部長:のんびり
+}
+# 後ろでかすかに流す曲(Uppbeat)。回ごとに順番に使う
+BGM = [("cozy-places", "Cozy Places", "Yokonap"), ("sketch-book", "Sketch Book", "Prigida"), ("summer-vibes", "Summer Vibes", "Movediz")]
+BGM_VOLUME = 0.07
 
 # コマごとに読み上げるセリフ(話す人, 英語)。最後は解説の画面
 SCRIPTS = {
@@ -47,10 +55,13 @@ class Voice:
         self.KPipeline = KPipeline
 
     def __call__(self, who, text):
-        lang, name = VOICE[who]
+        lang, name, pitch = VOICE[who]
         if lang not in self.pipes:
             self.pipes[lang] = self.KPipeline(lang_code=lang, repo_id="hexgrad/Kokoro-82M")
-        return np.concatenate([a for _, _, a in self.pipes[lang](text, voice=name, speed=0.9)])
+        # 少しゆっくり読ませてから詰めることで、速さを保ったまま声を高くする
+        a = np.concatenate([x for _, _, x in self.pipes[lang](text, voice=name, speed=0.9 / pitch)])
+        idx = np.arange(0, len(a) - 1, pitch)
+        return np.interp(idx, np.arange(len(a)), a).astype(np.float32)
 
 
 def silence(sec):
@@ -91,7 +102,10 @@ def pop():
 
 def main():
     global SFX_MODE
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    argv = sys.argv[1:]
+    if "--bgm" in argv:
+        i = argv.index("--bgm"); argv = argv[:i] + argv[i + 2:]
+    args = [a for a in argv if not a.startswith("--")]
     name = args[0] if args else "inside_out"
     SFX_MODE = "none" if "--no-sfx" in sys.argv else "soft"
     draw, ex = manga.SCRIPTS[name]
@@ -100,6 +114,8 @@ def main():
     explain = manga.explain(*ex)
     sc = SCRIPTS[name]
     voice = Voice()
+    bgm = BGM[sorted(SCRIPTS).index(name) % len(BGM)] if "--bgm" not in " ".join(sys.argv) else \
+        next(b for b in BGM if b[0] == sys.argv[sys.argv.index("--bgm") + 1])
 
     scenes, audio = [], []  # scenes: (画像, 秒)
     for box, (who, text) in zip(boxes, sc["lines"]):
@@ -126,7 +142,10 @@ def main():
         import soundfile as sf
         sf.write(wav.name, np.concatenate(audio), SR)
         cmd = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-               "-i", wav.name, "-map", "0:v", "-map", "1:a", "-af", "volume=1.6", "-t", f"{total:.2f}",
+               "-i", wav.name, "-stream_loop", "-1", "-i", str(ROOT / "assets" / "manga_bgm" / f"{bgm[0]}.mp3"),
+               "-filter_complex", f"[2:a]volume={BGM_VOLUME},afade=t=in:d=1,afade=t=out:st={total - 1.5}:d=1.5[b];"
+               "[1:a]aresample=44100,volume=1.6[v];[v][b]amix=inputs=2:duration=first:normalize=0[a]",
+               "-map", "0:v", "-map", "[a]", "-t", f"{total:.2f}",
                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-c:a", "aac", "-movflags", "+faststart", str(out)]
         proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
         for src, dur in scenes:
@@ -148,7 +167,7 @@ def main():
                 proc.stdin.write(frame_for(src, i / FPS, dur, title).tobytes())
         proc.stdin.close()
         proc.wait()
-    print(f"✓ {out}({total:.1f}秒)")
+    print(f"✓ {out}({total:.1f}秒・BGM: {bgm[1]} / {bgm[2]})")
 
 
 if __name__ == "__main__":
