@@ -100,5 +100,5 @@ work could wait：仕事は後回しにできる
 
 ## Threads(threads.py)
 - 投票クイズ: `python3 threads.py poll <no>`(2択の問題を流用、トピック「英語学習」)。記録は threads_posted.json
-- 答え: `python3 threads.py answer` で投稿から4時間後に「正解・正解率・完成文・和訳・解説の要点」を返信
+- 答え: 投票クイズの直後に、同じツリーの返信として「正解・完成文・和訳・解説の要点」を投稿(すぐ見られるように)
 - .env: THREADS_USER_ID, THREADS_ACCESS_TOKEN(12/24期限。refresh-token で延長)

@@ -1,7 +1,7 @@
 """Threads に投票クイズを出し、数時間後に答えを返信で付ける。
 
     python3 threads.py poll 103 [--dry-run]   # 103番を投票クイズとして投稿
-    python3 threads.py answer [--dry-run]     # 投稿から ANSWER_AFTER 時間たったクイズに、答えと正答率を返信
+    (答えはクイズの直後に、同じツリーの返信として続けて投稿する)
     python3 threads.py refresh-token          # トークンを延長(60日)
 
 投稿の記録は threads_posted.json。問題は quizzes.json の2択(options のあるもの)を流用する。
@@ -20,7 +20,6 @@ ROOT = Path(__file__).parent
 LOG = ROOT / "threads_posted.json"
 API = "https://graph.threads.net/v1.0"
 JST = timezone(timedelta(hours=9))
-ANSWER_AFTER = timedelta(hours=4)
 TOPIC = "英語学習"
 SERIES = {2: "🟩英検2級", 0: "🩷イディオム", 1: "🟦TOEIC"}
 LETTERS = "abcd"
@@ -58,7 +57,7 @@ def quiz(no):
 
 def poll_text(q):
     question = re.sub(r"\(\s*\)", "(　　　)", q["question"])
-    return f"{SERIES[q['no'] % 3]}でよく出る英文法\n\n{question}\n\nどっちが入る？👇 答えはあとでこのスレッドに"
+    return f"{SERIES[q['no'] % 3]}でよく出る英文法\n\n{question}\n\nどっちが入る？ 投票してから、答えはスレッドの続きへ👇"
 
 
 def answer_text(q, result):
@@ -71,7 +70,7 @@ def answer_text(q, result):
     # 解説は最初の段落と最後の一文だけ(長くしすぎない)
     paras = [p for p in q["explanation"].split("\n\n") if p.strip()]
     exp = paras[0] if len(paras) == 1 else paras[0] + "\n" + paras[-1]
-    return f"正解は {CIRCLED[right]} {q['options'][right]}\n{rate}\n{sentence}\n{q['translation']}\n\n{exp}"[:490]
+    return f"✅ 正解は {CIRCLED[right]} {q['options'][right]}\n{rate}\n{sentence}\n{q['translation']}\n\n{exp}"[:490]
 
 
 def load_log():
@@ -90,34 +89,18 @@ def poll(no, dry):
     opts = {f"option_{LETTERS[i]}": o for i, o in enumerate(q["options"])}
     text = poll_text(q)
     if dry:
-        print(text, "\n", opts)
+        print(text, "\n", opts, "\n----- 返信 -----\n" + answer_text(q, None))
         return
     mid = publish(text, poll_attachment=json.dumps(opts), topic_tag=TOPIC)
+    # 答えはすぐ見られるよう、同じツリーに続けて返信する
+    time.sleep(5)
+    rid = publish(answer_text(q, None), reply_to_id=mid)
     link = api("GET", mid, fields="permalink").get("permalink")
     log = load_log()
-    log.append({"no": no, "media_id": mid, "permalink": link, "posted_at": datetime.now(JST).isoformat(timespec="seconds")})
+    log.append({"no": no, "media_id": mid, "answer_id": rid, "permalink": link,
+                "posted_at": datetime.now(JST).isoformat(timespec="seconds")})
     LOG.write_text(json.dumps(log, ensure_ascii=False, indent=2) + "\n")
     print(f"✓ 投票クイズ {no} を投稿 {link}")
-
-
-def answer(dry):
-    log = load_log()
-    now = datetime.now(JST)
-    for item in log:
-        if item.get("answered") or now - datetime.fromisoformat(item["posted_at"]) < ANSWER_AFTER:
-            continue
-        q = quiz(item["no"])
-        fields = "poll_attachment{total_votes," + ",".join(f"option_{c}_votes_percentage" for c in LETTERS[:len(q["options"])]) + "}"
-        result = api("GET", item["media_id"], fields=fields).get("poll_attachment")
-        text = answer_text(q, result)
-        if dry:
-            print(text)
-            continue
-        publish(text, reply_to_id=item["media_id"])
-        item["answered"] = now.isoformat(timespec="seconds")
-        print(f"✓ {item['no']} に答えを返信")
-    if not dry:
-        LOG.write_text(json.dumps(log, ensure_ascii=False, indent=2) + "\n")
 
 
 def refresh_token():
@@ -138,8 +121,6 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if args[:1] == ["poll"]:
         poll(int(args[1]), dry)
-    elif args[:1] == ["answer"]:
-        answer(dry)
     elif args[:1] == ["refresh-token"]:
         refresh_token()
     else:
