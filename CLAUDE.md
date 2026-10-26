@@ -140,3 +140,4 @@ work could wait：仕事は後回しにできる
 - キャンペーン確認:3日に1回の cloud routine(https://claude.ai/code/routines/trig_01FsPKuKzzuTDpM4XSCa8S4F)がスマホに通知。「キャンペーンの素材を作って」と言われたら、Book Review 系のストーリーと Threads の #PR 投稿を作る
 - Threads の型:5選・10選(list)/「知らないとまずい」「スコアの壁」「意外な意味」(list の reveal:最初は単語だけ、意味はツリーで)/投票クイズ/イディオム画像/4コマ。同じ型を続けない
 - 動画・画像の文字は左右に余白(manga.SAFE=120px)をとり、はみ出す場合は manga.draw_fit で改行する(iPhone SE で英文が欠けたため)
+- 4コマの声は ElevenLabs(Starter・月30,000クレジット上限のキー)。ナビ=Teddy Twinkle、ペン=Candy、部長=Gappu ka Bhai(manga_reel.py の ELEVEN)。同じセリフは out/voice_cache に保存して使い回す。--kokoro で無料の声に戻せる。ElevenLabs のプランは 11/26 に自動更新されない設定
