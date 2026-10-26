@@ -348,6 +348,18 @@
   .homepage .follow p { margin-top: 8px; font-size: 11px; color: var(--sub); letter-spacing: .04em; }
   .homepage .foot { margin-top: 40px; }
 
+  /* セール・無料体験の一言(吹き出し) */
+  .tip { position: relative; display: block; width: fit-content; max-width: 100%; margin: 10px 0 9px; padding: 6px 12px; border-radius: 10px;
+    background: var(--hl); color: var(--accent-ink); font-size: 12px; font-weight: 700; font-style: normal; line-height: 1.5; }
+  .tip::after { content: ""; position: absolute; left: 22px; bottom: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: var(--hl); }
+  .tip small { margin-left: 6px; font-size: 10px; font-weight: 400; opacity: .75; }
+  .tip.hot { background: #d8433b; color: #fff; }
+  .tip.hot::after { border-top-color: #d8433b; }
+  .nudge .cta-row { display: block; margin-top: 4px; }
+  .nudge .cta-row i { margin-top: 0; }
+  .rec .tip { margin-top: 14px; }
+  .hot-badge { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; background: #d8433b; color: #fff; font-style: normal; font-size: 10px; font-weight: 700; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
   }
@@ -634,7 +646,27 @@
 
   // A8 は表示回数の計測用に 1×1 の画像をリンクと一緒に置く決まり
   const pix = (it) => (it.pixel ? `<img src="${esc(it.pixel)}" width="1" height="1" alt="" style="position:absolute;width:1px;height:1px;opacity:0">` : "");
-  const recLink = (it) => `<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${esc(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
+  // セール(期限内のもの)や無料体験の一言。本で何もなければ「Kindleで試し読みできる」
+  const keyOf = (it) => Object.keys(window.ITEMS || {}).find((k) => window.ITEMS[k] === it);
+  function promo(it) {
+    const k = keyOf(it);
+    const sale = k && (window.SALES || {})[k];
+    const today = new Date().toISOString().slice(0, 10);
+    if (sale && today <= sale.until) {
+      const [, mm, dd] = sale.until.split("-");
+      const [, cm, cd] = sale.checked.split("-");
+      return { hot: true, text: `${sale.text}・${+mm}/${+dd}まで`, note: `${+cm}/${+cd}時点` };
+    }
+    const perk = k && (window.PERKS || {})[k];
+    if (perk) return { hot: false, text: perk };
+    if (/amazon|amzn/.test(it.url)) return { hot: false, text: "Kindleなら、すぐ試し読みできる" };
+    return null;
+  }
+  const promoTip = (it) => {
+    const p = promo(it);
+    return p ? `<span class="tip ${p.hot ? "hot" : ""}">${p.hot ? "＼ " : ""}${esc(p.text)}${p.hot ? " ／" : ""}${p.note ? `<small>${esc(p.note)}</small>` : ""}</span>` : "";
+  };
+  const recLink = (it) => `${promoTip(it)}<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${esc(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
 
   // 全問チャレンジは、どこまで進んだかを端末に記録して続きから再開できる
   let allMode = false;
@@ -918,10 +950,10 @@
     sinceNudge = show ? 0 : sinceNudge + 1;
     const p = pickFor(q);
     const nudge = !p ? "" : !show
-      ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>この分野の参考書<b>${esc(p.item.name)}</b></span><i>›</i></a>${pix(p.item)}`
+      ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>この分野の参考書${(promo(p.item) || {}).hot ? `<em class="hot-badge">${esc(promo(p.item).text)}</em>` : ""}<b>${esc(p.item.name)}</b></span><i>›</i></a>${pix(p.item)}`
       : `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow">
           <small>PR</small><em>${esc(p.hook)}</em><b>${esc(p.item.name)}</b>${p.item.note ? `<span>${esc(p.item.note)}</span>` : ""}
-          <i>${/amazon|amzn/.test(p.item.url) ? "Amazonで中身を見る" : "詳しく見る"} →</i></a>${pix(p.item)}`;
+          <span class="cta-row">${promoTip(p.item)}<i>${/amazon|amzn/.test(p.item.url) ? (promo(p.item) || {}).hot ? "セール価格を見る" : "Amazonで中身を見る" : "無料で試してみる"} →</i></span></a>${pix(p.item)}`;
     const V = window.VIEW || {};
     return `<div data-block="exp">
       <details ${open || V.open === "always" ? "open" : ""}>

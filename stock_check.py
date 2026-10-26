@@ -19,11 +19,41 @@ def gh(*args):
     return subprocess.run(["gh", *args], cwd=ROOT, check=True, capture_output=True, text=True).stdout
 
 
+def sale_check(now):
+    """サイトのセール文言(docs/recommend.js の SALES)が古くなっていないか確かめる"""
+    import re
+    js = (ROOT / "docs" / "recommend.js").read_text()
+    m = re.search(r"window\.SALES = \{(.*?)\n\};", js, re.S)
+    stale = []
+    for key, text, until, checked in re.findall(r'(\w+): \{ text: "([^"]+)", until: "([\d-]+)", checked: "([\d-]+)" \}', m.group(1) if m else ""):
+        u = datetime.strptime(until, "%Y-%m-%d").replace(tzinfo=JST)
+        c = datetime.strptime(checked, "%Y-%m-%d").replace(tzinfo=JST)
+        if u < now:
+            stale.append(f"- {key}「{text}」:{until} で終了(サイトでは自動で非表示。SALES から消してOK)")
+        elif (now - c).days >= 3:
+            stale.append(f"- {key}「{text}」:最終確認 {checked}。まだセール中か Amazon で確認してください")
+    label = "セール確認"
+    subprocess.run(["gh", "label", "create", label, "--color", "FBCA04", "--force"], cwd=ROOT, capture_output=True)
+    open_issues = json.loads(gh("issue", "list", "--label", label, "--state", "open", "--json", "number"))
+    if not stale:
+        for i in open_issues:
+            gh("issue", "close", str(i["number"]), "--comment", "セール情報は最新です。")
+        return
+    print("\n".join(stale))
+    body = ("🏷 サイトの「今だけ◯%OFF」の吹き出しを確認してください。\n\n" + "\n".join(stale) +
+            "\n\nClaude Code に「セール確認したよ、〇〇はまだ半額/終わってた」と伝えれば更新します。")
+    if open_issues:
+        gh("issue", "comment", str(open_issues[0]["number"]), "--body", body)
+    else:
+        gh("issue", "create", "--title", "🏷 セール情報の確認をお願いします", "--label", label, "--body", body)
+
+
 def main():
     schedule = json.loads((ROOT / "schedule.json").read_text())
     posted = {p["no"] for p in json.loads((ROOT / "posted.json").read_text())}
     left = [s for s in schedule if s["no"] not in posted]
     now = datetime.now(JST)
+    sale_check(now)
     if left:
         last = max(datetime.strptime(s["at"], "%Y-%m-%d %H:%M").replace(tzinfo=JST) for s in left)
         days = (last - now).total_seconds() / 86400

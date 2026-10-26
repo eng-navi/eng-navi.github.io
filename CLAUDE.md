@@ -142,3 +142,9 @@ work could wait：仕事は後回しにできる
 - 動画・画像の文字は左右に余白(manga.SAFE=120px)をとり、はみ出す場合は manga.draw_fit で改行する(iPhone SE で英文が欠けたため)
 - 4コマの声は ElevenLabs(Starter・月30,000クレジット上限のキー)。ナビ=Teddy Twinkle、ペン=Mia、部長=Gappu ka Bhai(manga_reel.py の ELEVEN)。同じセリフは out/voice_cache に保存して使い回す。--kokoro で無料の声に戻せる。ElevenLabs のプランは 11/26 に自動更新されない設定
 - テンポの速い4コマ:manga_fast.py(最初の1.1秒でターゲット単語+つかみの一言、画面は揺らさない(コマ切り替えだけ一瞬寄る)、声の大きさをそろえる、かすかなBGM(Cozy Places)、ElevenLabs を speed 1.1)。1本につきターゲット単語1つ(英検2級〜準1級)+使える単語を数個、解説の画像に「今回出てきた単語」
+
+## セール・無料体験の吹き出し(サイト)
+- `docs/recommend.js` の `window.SALES`(本のセール。text / until / checked)と `window.PERKS`(サービスの無料体験の一言)が、サイトのおすすめカードのボタン上に吹き出しで出る。セールは赤、until を過ぎると自動で消える。
+- **毎回のセッションの最初に**、SALES のうち checked から3日以上たったもの・until が近いものをユーザーに伝え、Amazon / A8 で本当にセール中か確認してもらう。確認できたら checked を今日に、終わっていたら削除する。
+- 割引率・期限は必ず確認した日付つき(吹き出しに「M/D時点」と出る)。確認できない割引は書かない。
+- 毎日 21:00 の 予約の残りチェック でも、古いセールがあれば「セール確認」ラベルの Issue が立つ。

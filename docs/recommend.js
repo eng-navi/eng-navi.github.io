@@ -101,6 +101,23 @@ window.PICKS = {
 };
 window.ITEMS = ITEMS;
 
+// ---- セール・キャンペーンの一言(吹き出しでボタンの上に出す) ----
+// until を過ぎると自動で出なくなる。checked は最後に Amazon・A8 で確認した日(値段は日付つきで表示する)。
+// 確認したら checked を更新する。Claude は作業のたびに、確認から3日以上たったものをリマインドする
+window.SALES = {
+  horikoshi: { text: "Kindle版が今だけ半額", until: "2026-11-05", checked: "2026-10-25" },
+  brushup: { text: "Kindle版が今だけ26%OFF", until: "2026-10-31", checked: "2026-10-25" },
+};
+// いつも使えるキャンペーン(無料体験など)。セールがない日はこちらを出す
+window.PERKS = {
+  studysapuri: "7日間無料で試せる",
+  speak: "7日間無料で試せる",
+  nativecamp: "7日間無料・予約なしですぐ話せる",
+  sankei: "無料体験レッスン4回つき",
+  audible: "30日間無料で聞き放題",
+  torabit: "まずは無料で試せる",
+};
+
 // 結果画面で、どのシリーズでも出す「次は話せる英語へ」
 // 候補(pool)から毎回2つを選んで出す。GA4 の link_click(label)で、どれが押されているかを比べる
 window.SPEAK = {
