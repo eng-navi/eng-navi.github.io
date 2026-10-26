@@ -75,7 +75,7 @@
   .lefthead { display: flex; align-items: center; gap: 12px; min-width: 0; }
   .home {
     font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap;
-    padding: 7px 14px 7px 11px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .7);
+    padding: 7px 14px 7px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--card);
   }
   .home:active { background: var(--hl); }
   .count { font-family: var(--serif); font-size: 17px; color: var(--accent-ink); white-space: nowrap; }
@@ -93,7 +93,7 @@
   }
   .bgm-menu {
     position: absolute; right: 0; top: calc(100% + 4px); z-index: 10; min-width: 200px; padding: 8px;
-    background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
     animation: pop .2s ease-out;
   }
   .bgm-menu p { font-size: 11px; color: #9a9a9a; letter-spacing: .1em; padding: 4px 10px 6px; }
@@ -108,8 +108,8 @@
   [data-series="green"] .title { font-weight: 700; letter-spacing: .02em; }
 
   /* 問題文:リールと同じく左から伸びるハイライト */
-  .q { font-family: var(--serif); font-size: 25px; line-height: 1.55; margin-top: 26px; }
-  [data-series="green"] .q { font-size: 28px; }
+  .q { font-family: var(--serif); font-size: calc(25px * var(--fs, 1)); line-height: 1.55; margin-top: 26px; }
+  [data-series="green"] .q { font-size: calc(28px * var(--fs, 1)); }
   .q .mark {
     background: var(--mark) no-repeat 0 0 / 0% 100%;
     -webkit-box-decoration-break: clone;
@@ -132,7 +132,7 @@
   .listen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; max-width: 320px; }
   .listen-grid p { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--accent-ink); }
   .listen-grid p svg { width: 16px; height: 16px; }
-  .listen-grid .listen { margin-top: 0; justify-content: center; padding: 9px 10px; font-size: 14px; color: var(--ink); background: rgba(255, 255, 255, .6); }
+  .listen-grid .listen { margin-top: 0; justify-content: center; padding: 9px 10px; font-size: 14px; color: var(--ink); background: var(--card); }
   .listen-grid .listen[aria-pressed="true"] { background: var(--hl); border-color: var(--hl); color: var(--accent-ink); font-weight: 500; }
 
   /* 選択肢 */
@@ -152,7 +152,7 @@
     display: grid; place-items: center; font-size: 22px; font-weight: 500; line-height: 1;
     transition: all .2s;
   }
-  .opt .w { font-family: var(--serif); font-size: 28px; line-height: 1.25; }
+  .opt .w { font-family: var(--serif); font-size: calc(28px * var(--fs, 1)); line-height: 1.25; }
   .opt:not(:disabled):active { background: var(--hl); }
   .opt:disabled { cursor: default; }
   .opt.correct { background: var(--hl); }
@@ -176,10 +176,10 @@
 
   /* 答え合わせ・解説 */
   .reveal { margin-top: 26px; animation: pop .35s ease-out; }
-  .verdict { font-size: 22px; font-weight: 700; letter-spacing: .06em; color: var(--accent-ink); }
+  .verdict { font-size: calc(22px * var(--fs, 1)); font-weight: 700; letter-spacing: .06em; color: var(--accent-ink); }
   .verdict.ng { color: var(--ng); }
-  .ja { margin-top: 10px; font-size: 15px; line-height: 1.8; color: var(--sub); }
-  .gloss { margin-top: 14px; display: grid; gap: 6px; font-size: 14px; line-height: 1.6; }
+  .ja { margin-top: 10px; font-size: calc(15px * var(--fs, 1)); line-height: 1.8; color: var(--sub); }
+  .gloss { margin-top: 14px; display: grid; gap: 6px; font-size: calc(14px * var(--fs, 1)); line-height: 1.6; }
   .gloss li { list-style: none; padding-left: 12px; border-left: 3px solid var(--hl); }
   .gloss b { font-family: var(--serif); font-size: 17px; font-weight: 500; }
   details { margin-top: 16px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -190,7 +190,7 @@
   summary::-webkit-details-marker { display: none; }
   summary::after { content: "＋"; font-weight: 400; transition: transform .2s; }
   details[open] summary::after { transform: rotate(45deg); }
-  .exp { padding: 0 0 18px; font-size: 15px; line-height: 1.9; white-space: pre-line; }
+  .exp { padding: 0 0 18px; font-size: calc(15px * var(--fs, 1)); line-height: 1.9; white-space: pre-line; }
   .tag { display: inline-block; font-size: 11px; color: var(--accent-ink); background: var(--hl); padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; }
   [data-series="green"] .tag { color: #fff; background: var(--accent); }
 
@@ -211,7 +211,7 @@
 
   .primary {
     display: block; width: 100%; margin-top: 24px; padding: 16px; border-radius: 14px;
-    background: var(--ink); color: #fff; font-size: 16px; font-weight: 500; letter-spacing: .06em; text-align: center;
+    background: var(--ink); color: var(--bg); font-size: 16px; font-weight: 500; letter-spacing: .06em; text-align: center;
     text-decoration: none;
   }
   .primary:active { opacity: .85; }
@@ -240,7 +240,7 @@
   .goal:active { transform: scale(.98); }
   .goal.random { background: var(--ink); border-color: var(--ink); }
   .goal.random::before { background: linear-gradient(#456142 0 33%, #f7b6ba 33% 66%, #adc8d1 66%); }
-  .goal.random b { color: #fff; }
+  .goal.random b { color: var(--bg); }
   .goal.random span, .goal.random small { color: #c9c9c9; }
   .more { margin-top: 26px; }
   .more summary { font-size: 13px; padding: 12px 0; }
@@ -279,6 +279,33 @@
   .foot { margin-top: 28px; font-size: 10px; line-height: 1.7; color: #b8b8b8; text-align: center; }
   .foot a { color: inherit; }
 
+  /* ---- 表示の設定(文字の大きさ・ダークモード・ハイライト) ---- */
+  :root { --card: #fff; }
+  html[data-fs="s"] { --fs: .9; } html[data-fs="l"] { --fs: 1.15; } html[data-fs="xl"] { --fs: 1.3; }
+  html[data-mark="off"] .q .mark { background: none !important; animation: none; }
+  html[data-theme="dark"] body, html[data-theme="dark"] [data-series] {
+    --bg: #16181c; --ink: #e9e6e0; --sub: #a8a49d; --line: #30343a; --card: #23262b; --ng-bg: #3a2426;
+  }
+  html[data-theme="dark"] [data-series="blue"], html[data-theme="dark"] body:not([data-series]) { --hl: #283a42; --accent: #7fa9b8; --accent-ink: #9cc4d2; }
+  html[data-theme="dark"] [data-series="green"] { --hl: #2f3d2c; --accent: #8fb08a; --accent-ink: #a9c9a3; --bar: #5d7d59; }
+  html[data-theme="dark"] [data-series="pink"] { --hl: #4a2c31; --accent-ink: #f0a3aa; }
+  html[data-theme="dark"] .opt .c { border-color: var(--ink); }
+  html[data-theme="dark"] .foot, html[data-theme="dark"] .rec .pr { color: #777; }
+  .set-menu .row { padding: 6px 10px 10px; }
+  .set-menu .row > span { display: block; font-size: 11px; color: #9a9a9a; margin-bottom: 6px; }
+  .set-menu .seg { display: flex; gap: 4px; }
+  .set-menu .seg button { flex: 1; justify-content: center; padding: 7px 0; font-size: 13px; border: 1px solid var(--line); }
+  /* 解説を読んでいる間、英文を上に小さく固定 */
+  .pin { position: fixed; top: 0; left: 50%; transform: translate(-50%, -110%); width: min(480px, 100%); z-index: 20;
+    padding: 10px 20px 10px calc(min(8vw, 38px) + 22px); background: var(--card); border-bottom: 1px solid var(--line);
+    font-family: var(--serif); font-size: calc(17px * var(--fs, 1)); line-height: 1.45; box-shadow: 0 4px 14px rgba(0,0,0,.06); transition: transform .25s; }
+  .pin.show { transform: translate(-50%, 0); }
+  .pin small { display: block; font-family: var(--sans); font-size: 11px; color: var(--sub); margin-bottom: 2px; }
+  /* 3問に1回のカード以外の問題に出す、1行だけの控えめなリンク */
+  .slim { display: block; margin-top: 12px; font-size: 12px; color: var(--sub); text-decoration: none; }
+  .slim b { font-weight: 500; color: var(--accent-ink); }
+  .slim small { font-size: 10px; color: #9a9a9a; margin-right: 4px; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
   }
@@ -287,6 +314,19 @@
 <body>
 <main class="app" id="app"></main>
 
+<script>
+  // 表示の設定(端末に保存)。theme: auto / light / dark
+  (function () {
+    let c = {};
+    try { c = JSON.parse(localStorage.getItem("view") || "{}"); } catch (e) {}
+    const h = document.documentElement;
+    h.dataset.fs = c.fs || "m";
+    h.dataset.mark = c.mark || "on";
+    const dark = c.theme === "dark" || (c.theme !== "light" && window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches);
+    h.dataset.theme = dark ? "dark" : "light";
+    window.VIEW = c;
+  })();
+</script>
 <script src="data.js"></script>
 <script src="recommend.js"></script>
 <script>
@@ -599,7 +639,19 @@
         </div>
       </div>` : "";
     const timer = `<button class="sound" id="timer-toggle" aria-pressed="${timerOn}" aria-label="制限時間">${clockSvg}<span class="lbl">${timerOn ? TIME_LIMIT + "秒" : "時間OFF"}</span></button>`;
-    return `<div class="toggles" id="toggles">${music}${timer}${sound}</div>`;
+    const V = window.VIEW || {};
+    const seg = (key, opts, cur) => `<div class="seg">${opts.map(([v, l]) => `<button data-view="${key}" data-v="${v}" aria-checked="${v === cur}">${l}</button>`).join("")}</div>`;
+    const view = `
+      <div class="bgm-wrap">
+        <button class="sound" id="view" aria-label="表示の設定"><b style="font-size:15px">Aa</b><span class="lbl">表示</span></button>
+        <div class="bgm-menu set-menu" id="view-menu" hidden>
+          <p>表示の設定</p>
+          <div class="row"><span>文字の大きさ</span>${seg("fs", [["s", "小"], ["m", "標準"], ["l", "大"], ["xl", "特大"]], V.fs || "m")}</div>
+          <div class="row"><span>画面の色</span>${seg("theme", [["auto", "自動"], ["light", "ライト"], ["dark", "ダーク"]], V.theme || "auto")}</div>
+          <div class="row"><span>英文のハイライト</span>${seg("mark", [["on", "あり"], ["off", "なし"]], V.mark || "on")}</div>
+        </div>
+      </div>`;
+    return `<div class="toggles" id="toggles">${view}${music}${timer}${sound}</div>`;
   }
   function header() {
     return `<div class="top"><div class="lefthead"><button class="home" id="home" aria-label="トップに戻る">‹ トップ</button><span class="count">${idx + 1}<small> / ${set.length}</small></span></div>${toggles()}</div>`;
@@ -608,7 +660,31 @@
     const t = document.getElementById("toggles");
     if (t) { t.outerHTML = toggles(); bindSound(); }
   }
+  function bindView() {
+    const btn = document.getElementById("view"), menu = document.getElementById("view-menu");
+    if (!btn) return;
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      document.querySelectorAll(".bgm-menu").forEach((m) => { if (m !== menu) m.hidden = true; });
+      menu.hidden = !menu.hidden;
+    };
+    menu.onclick = (e) => e.stopPropagation();
+    menu.querySelectorAll("[data-view]").forEach((b) => (b.onclick = () => {
+      const V = window.VIEW || (window.VIEW = {});
+      V[b.dataset.view] = b.dataset.v;
+      try { localStorage.setItem("view", JSON.stringify(V)); } catch (e) {}
+      const h = document.documentElement;
+      h.dataset.fs = V.fs || "m";
+      h.dataset.mark = V.mark || "on";
+      const dark = V.theme === "dark" || (V.theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+      h.dataset.theme = dark ? "dark" : "light";
+      menu.querySelectorAll(`[data-view="${b.dataset.view}"]`).forEach((x) => x.setAttribute("aria-checked", x === b));
+      trackEvent("view_setting", { key: b.dataset.view, value: b.dataset.v });
+    }));
+  }
+
   function bindSound() {
+    bindView();
     const m = document.getElementById("bgm");
     const menu = document.getElementById("bgm-menu");
     if (m) {
@@ -662,6 +738,7 @@
 
   // ---- メニュー ----
   function renderStart() {
+    unpin();
     stopVoice();
     stopTimer();
     setSeries("blue");
@@ -721,6 +798,7 @@
 
   // ---- 問題(緑・青は2択、ピンクは読んで意味を確認) ----
   function renderItem() {
+    unpin();
     const q = set[idx];
     const s = seriesOf(q);
     setSeries(s);
@@ -755,11 +833,34 @@
 
   // 解説の下のおすすめは、出しすぎると見慣れて押されなくなる。3問に1回まで、まちがえた問題を優先して出す
   let sinceNudge = 3, streak = 0;
+  // 解説を読んでいて英文が画面の上に消えたら、完成した英文を上に小さく固定する
+  let pinObs = null;
+  function unpin() {
+    if (pinObs) pinObs.disconnect();
+    pinObs = null;
+    const el = document.getElementById("pin");
+    if (el) el.remove();
+  }
+  function pinSentence(q) {
+    unpin();
+    const target = app.querySelector(".q");
+    if (!target || !("IntersectionObserver" in window)) return;
+    const el = document.createElement("div");
+    el.className = "pin";
+    el.id = "pin";
+    el.innerHTML = `<small>No.${esc(q.no)}</small>${esc(completed(q))}`;
+    document.body.appendChild(el);
+    pinObs = new IntersectionObserver(([e]) => el.classList.toggle("show", !e.isIntersecting && e.boundingClientRect.top < 0));
+    pinObs.observe(target);
+  }
+
   function explanationBlock(q, open) {
     const show = sinceNudge >= 3 || (open && sinceNudge >= 2);
     sinceNudge = show ? 0 : sinceNudge + 1;
-    const p = show ? pickFor(q) : null;
-    const nudge = p ? `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(p.hook)}<br><b>${esc(p.item.name)}</b></span></a>${pix(p.item)}` : "";
+    const p = pickFor(q);
+    const nudge = !p ? "" : !show
+      ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small>参考書:<b>${esc(p.item.name)}</b> ›</a>${pix(p.item)}`
+      : p ? `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(p.hook)}<br><b>${esc(p.item.name)}</b></span></a>${pix(p.item)}` : "";
     return `
       <details ${open ? "open" : ""}>
         <summary>解説を見る</summary>
@@ -818,6 +919,7 @@
 
   // 区切りの瞬間に1回だけ、苦手(なければ次の一歩)に合わせた1冊を出す。押さずにそのまま続けられる
   function renderMilestone(title, lead, up) {
+    unpin();
     const done = results.filter(Boolean);
     const missed = done.filter((r) => !r.ok);
     const q = (missed[missed.length - 1] || done[done.length - 1]).q;
@@ -880,6 +982,7 @@
     if (soundOn) speak(q);
     document.getElementById("next").onclick = next;
     after.querySelector("[data-home]").onclick = renderStart;
+    pinSentence(q);
     after.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
@@ -916,11 +1019,13 @@
       after.querySelectorAll("[data-ok]").forEach((x) => x.setAttribute("aria-pressed", x === b));
     }));
     document.getElementById("next").onclick = next;
+    pinSentence(q);
     after.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   // ---- 結果 ----
   function renderResult() {
+    unpin();
     setSeries("blue");
     const done = results.filter(Boolean);  // 全問チャレンジを途中から始めた場合は、解いた分だけ数える
     const total = done.length;
