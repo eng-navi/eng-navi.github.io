@@ -80,7 +80,7 @@ work のような「動作」を表す動詞で継続を言うときは、現在
   </details>
   <a class="cta" href="/?q=109">この問題からクイズで解く</a>
   
-  <nav class="pager"><a href="/q/108/">‹ No.108</a><span></span></nav>
+  <nav class="pager"><a href="/q/108/">‹ No.108</a><a href="/q/110/">No.110 ›</a></nav>
 
   <p class="foot">
     Instagram <a href="https://www.instagram.com/eng_navi/" target="_blank" rel="noopener">@eng_navi</a> のリールの問題をまとめたサイトです。<br>
@@ -101,7 +101,7 @@ work のような「動作」を表す動詞で継続を言うときは、現在
     const pool = (box.dataset.category && PICKS.CATEGORY[box.dataset.category]) || PICKS.SERIES[box.dataset.series] || [];
     const key = pool[Math.floor(Number(box.dataset.no) / 3) % pool.length];
     const it = key && ITEMS[key];
-    if (it) box.outerHTML = `<a class="nudge" href="${it.url}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${HOOKS[key] || ""}<br><b>${it.name}</b></span></a>` +
+    if (it) box.outerHTML = `<a class="nudge" href="${it.url}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${nb(HOOKS[key] || "")}<br><b>${nb(it.name)}</b></span></a>` +
       (it.pixel ? `<img src="${it.pixel}" width="1" height="1" alt="" style="position:absolute;opacity:0">` : "");
   }
   document.addEventListener("click", (ev) => {

@@ -101,7 +101,7 @@ if 節には過去形の助動詞 could を使い、「〜できたら」とい�
     const pool = (box.dataset.category && PICKS.CATEGORY[box.dataset.category]) || PICKS.SERIES[box.dataset.series] || [];
     const key = pool[Math.floor(Number(box.dataset.no) / 3) % pool.length];
     const it = key && ITEMS[key];
-    if (it) box.outerHTML = `<a class="nudge" href="${it.url}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${HOOKS[key] || ""}<br><b>${it.name}</b></span></a>` +
+    if (it) box.outerHTML = `<a class="nudge" href="${it.url}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${nb(HOOKS[key] || "")}<br><b>${nb(it.name)}</b></span></a>` +
       (it.pixel ? `<img src="${it.pixel}" width="1" height="1" alt="" style="position:absolute;opacity:0">` : "");
   }
   document.addEventListener("click", (ev) => {

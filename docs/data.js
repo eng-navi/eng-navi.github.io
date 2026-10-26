@@ -2129,5 +2129,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 110,
+    "category": "時制",
+    "question": "My friend called me while I ( ) dinner.",
+    "options": [
+      "have cooked",
+      "was cooking"
+    ],
+    "answer": 2,
+    "translation": "夕食を作っていたときに、友だちから電話があった。",
+    "explanation": "「電話があった」という過去のある時点で、「夕食を作る」動作がちょうど進行中でした。\n過去のある時点で進行中の動作は、過去進行形で表します。\n\nしたがって、②was cooking が正解。",
+    "audio": "audio/q110.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
