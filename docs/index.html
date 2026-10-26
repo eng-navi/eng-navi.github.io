@@ -328,7 +328,7 @@
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a[href]");
     if (!a) return;
-    const place = a.classList.contains("nudge") ? "explanation" : a.classList.contains("reel") ? "reel" : a.closest(".rec") ? "result" : a.closest(".foot") ? "footer" : "other";
+    const place = a.dataset.place || (a.classList.contains("nudge") ? "explanation" : a.classList.contains("reel") ? "reel" : a.closest(".rec") ? "result" : a.closest(".foot") ? "footer" : "other");
     const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
     trackEvent("link_click", { place, label, link_domain: new URL(a.href, location.href).hostname });
   });
@@ -571,6 +571,8 @@
     set = allMode ? quizzes : quizzes.slice(0, 10);
     idx = opt.start || 0;
     results = [];
+    sinceNudge = 3;
+    streak = 0;
     bgmPlay();
     renderItem();
   }
@@ -751,8 +753,12 @@
     window.scrollTo({ top: 0 });
   }
 
+  // 解説の下のおすすめは、出しすぎると見慣れて押されなくなる。3問に1回まで、まちがえた問題を優先して出す
+  let sinceNudge = 3, streak = 0;
   function explanationBlock(q, open) {
-    const p = pickFor(q);
+    const show = sinceNudge >= 3 || (open && sinceNudge >= 2);
+    sinceNudge = show ? 0 : sinceNudge + 1;
+    const p = show ? pickFor(q) : null;
     const nudge = p ? `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(p.hook)}<br><b>${esc(p.item.name)}</b></span></a>${pix(p.item)}` : "";
     return `
       <details ${open ? "open" : ""}>
@@ -800,9 +806,44 @@
 
   function next() {
     stopVoice();
+    const last = results[idx];
+    streak = last && last.ok ? streak + 1 : 0;
     idx++;
     if (allMode) saveAllIdx(idx >= set.length ? 0 : idx);
-    idx >= set.length ? renderResult() : renderItem();
+    if (idx >= set.length) return renderResult();
+    if (allMode && idx % 10 === 0) return renderMilestone(`${idx}問クリア!`, "ここまでの苦手に合わせた1冊");
+    if (streak === 5) return renderMilestone("5問連続正解!", "この調子で、もう一段上へ", true);
+    renderItem();
+  }
+
+  // 区切りの瞬間に1回だけ、苦手(なければ次の一歩)に合わせた1冊を出す。押さずにそのまま続けられる
+  function renderMilestone(title, lead, up) {
+    const done = results.filter(Boolean);
+    const missed = done.filter((r) => !r.ok);
+    const q = (missed[missed.length - 1] || done[done.length - 1]).q;
+    const base = REC[SERIES[seriesOf(q)].name];
+    const p = !up && pickFor(q);
+    const item = p ? p.item : (base && base.up ? base.up.items[0] : (recFor(q) || {}).items?.[0]);
+    trackEvent("milestone_view", { kind: up ? "streak" : "progress", at: idx });
+    stopTimer();
+    app.innerHTML = `
+      ${header()}
+      <p class="num">✓</p>
+      <h2 class="title">${esc(title)}</h2>
+      <p class="msg">${done.filter((r) => r.ok).length} / ${done.length} 問正解。ひと休みして、続けましょう。</p>
+      ${item ? `
+        <p class="h">${esc(lead)}</p>
+        <div class="rec"><span class="pr">PR</span>
+          ${recLink(item).replace("<a ", '<a data-place="milestone" ')}
+        </div>` : ""}
+      <button class="primary" id="go">続きをとく</button>
+      <button class="ghost" data-home>トップに戻る</button>`;
+    bindSound();
+    window.scrollTo({ top: 0 });
+    document.getElementById("go").onclick = renderItem;
+    app.querySelector("[data-home]").onclick = renderStart;
+    const h = document.getElementById("home");
+    if (h) h.onclick = renderStart;
   }
 
   function answer(q, choice) {
@@ -903,7 +944,9 @@
     if (missed.length) {
       const seen = new Set(), items = [];
       missed.forEach((r) => { const p = pickFor(r.q); if (p && !seen.has(p.key)) { seen.add(p.key); items.push(p.item); } });
-      rec = items.length ? { title: "間違えた問題に合わせたおすすめ", items: items.slice(0, 3) } : recFor(sample.q);
+      const p = pickFor(sample.q);
+      rec = p ? { title: `${worst}を${counts[worst]}問まちがえた人へ`, items: [p.item] } : recFor(sample.q);
+      if (rec && !p) rec = { ...rec, items: rec.items.slice(0, 1) };
     } else {
       rec = (base && base.up) || recFor(set[0]);
     }
@@ -931,7 +974,7 @@
         <div class="rec">
           <span class="pr">PR</span>
           <h3>${esc(rec.title)}</h3>
-          ${rec.items.map(recLink).join("")}
+          ${rec.items.map((it) => recLink(it).replace("<a ", '<a data-place="result_weak" ')).join("")}
         </div>` : ""}
       ${SPEAK ? `
         <div class="rec">
