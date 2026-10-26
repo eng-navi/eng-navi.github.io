@@ -126,7 +126,10 @@ def explain_card(sc):
         d.line([(x, 0), (x, m.H)], fill=(225, 220, 212), width=2)
     for y in range(0, m.H, 54):
         d.line([(0, y), (m.W, y)], fill=(225, 220, 212), width=2)
-    d.text((m.W // 2, 200), sc["word"], font=m.EN(118), fill=m.INK, anchor="mm")
+    f = m.EN(118)
+    while f.getlength(sc["word"]) > m.W - 140:
+        f = m.EN(f.size - 4)
+    d.text((m.W // 2, 200), sc["word"], font=f, fill=m.INK, anchor="mm")
     d.line(m.wob([(200, 270), (880, 264)], amp=2), fill=(200, 52, 48), width=7)
     d.text((m.W // 2, 350), f"= {sc['meaning']}", font=m.JP(52), fill=(200, 52, 48), anchor="mm")
     d.text((m.W // 2, 450), sc["level"], font=m.JP(30), fill=(130, 120, 110), anchor="mm")
@@ -224,6 +227,35 @@ SCRIPTS = {
         explain=[("navi", "Reluctant."), ("pen", "He was reluctant to admit his mistake.")],
     ),
 }
+
+
+# 紙芝居版で作った4コマを、同じ絵のままテンポの速い版にする(1コマ1セリフ)
+def _from_reel(name, **kw):
+    import manga_reel as mr
+    old = mr.SCRIPTS[name]
+    return dict(draw=getattr(m, name), panels=[[line] for line in old["lines"]], explain=old["explain"], **kw)
+
+
+SCRIPTS.update({
+    "from_time_to_time": _from_reel(
+        "from_time_to_time", word="from time to time", hook="「ときどき」って英語で?",
+        meaning="ときどき", level="英検3級〜準2級レベル",
+        ex_en="We still meet for coffee from time to time.", ex_ja="今でもときどきお茶をする",
+        words=[("exercise", "運動する"), ("workout", "運動、トレーニング"), ("slide", "すべる"),
+               ("just", "ただ〜だけ"), ("still", "今でも")]),
+    "lead_a_workshop": _from_reel(
+        "lead_a_workshop", word="lead a workshop", hook="研修の担当、英語で?",
+        meaning="研修を担当する", level="TOEIC頻出",
+        ex_en="I'll lead a short workshop for new staff.", ex_ja="新人向けに短い研修を担当する",
+        words=[("lead", "率いる、担当する"), ("workshop", "研修、講習会"), ("topic", "テーマ、話題"),
+               ("step one", "その1、最初の手順"), ("staff", "職員、スタッフ")]),
+    "make_an_appointment": _from_reel(
+        "make_an_appointment", word="make an appointment", hook="「アポを取る」英語で?",
+        meaning="(人と会う)約束をする", level="TOEIC頻出",
+        ex_en="I need to make an appointment with my dentist.", ex_ja="歯医者さんの予約を取らないと",
+        words=[("appointment", "(人と会う)約束、予約"), ("at three", "3時に"), ("Sunday", "日曜日"),
+               ("need to ~", "〜する必要がある"), ("dentist", "歯医者")]),
+})
 
 
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
