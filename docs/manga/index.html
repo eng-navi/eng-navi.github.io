@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4コマで覚える英語|キャラの声で聞ける英語フレーズ|eng_navi</title>
+<meta name="description" content="ゆるい4コマ漫画で、英語フレーズを覚える。セリフをキャラの声で何回でも聞けて、聞き流しとクイズもできます。">
+<link rel="canonical" href="https://eng-navi.github.io/manga/">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f3ef; background-image: linear-gradient(#dedcd7 1px, transparent 1px), linear-gradient(90deg, #dedcd7 1px, transparent 1px); background-size: 27px 27px; color: #282828; font-family: "Noto Sans JP", system-ui, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 24px 16px 48px; }
+  .crumb { font-size: 12px; color: #888; } .crumb a { color: inherit; }
+  h1 { margin-top: 14px; font-size: 22px; line-height: 1.5; }
+  .lead { margin-top: 8px; font-size: 13px; color: #666; line-height: 1.8; }
+  .player { position: sticky; top: 8px; z-index: 2; margin-top: 14px; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: #282828; color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.15); }
+  .player button { flex: none; border: 0; border-radius: 999px; padding: 9px 14px; background: #c83430; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
+  .player span { font-size: 12px; opacity: .85; line-height: 1.5; }
+  ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  li a { display: block; background: #fff; border-radius: 14px; overflow: hidden; text-decoration: none; color: #282828; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: box-shadow .2s; }
+  li a.now { box-shadow: 0 0 0 3px #c83430; }
+  li img { display: block; width: 100%; height: auto; aspect-ratio: 720 / 600; object-fit: cover; object-position: top; }
+  li b { display: block; padding: 8px 10px 0; font-family: "Kalam", cursive; font-size: 18px; line-height: 1.3; }
+  li span { display: block; padding: 0 10px 10px; font-size: 11px; color: #c83430; }
+  .cta { display: block; margin-top: 18px; padding: 14px; border-radius: 14px; background: #282828; color: #fff; text-align: center; text-decoration: none; font-weight: 500; }
+  .sub { display: block; margin-top: 10px; padding: 13px; border-radius: 14px; border: 1px solid #ccc; background: #fff; text-align: center; text-decoration: none; color: #555; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › 4コマで覚える英語</p>
+  <h1>4コマで覚える英語</h1>
+  <p class="lead">ナビ・ペン・部長のゆるい4コマで、英語フレーズを覚えよう。どの4コマも、セリフをキャラの声で何回でも聞けます。</p>
+  <div class="player"><button id="all">▶ 全部聞き流し</button><span id="now">12本の4コマのセリフとフレーズを、順番に流します</span></div>
+  <ul id="list"><li><a href="the_thing_is/"><img src="the_thing_is/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>the thing is</b><span>実はね、要するに</span></a></li><li><a href="company_cafeteria/"><img src="company_cafeteria/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>the company cafeteria</b><span>社員食堂</span></a></li><li><a href="procrastinate/"><img src="procrastinate/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>procrastinate</b><span>(やるべきことを)先延ばしにする</span></a></li><li><a href="by_far/"><img src="by_far/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>by far</b><span>断然、ずば抜けて</span></a></li><li><a href="reluctant/"><img src="reluctant/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>reluctant</b><span>気が進まない、しぶしぶの</span></a></li><li><a href="from_time_to_time/"><img src="from_time_to_time/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>from time to time</b><span>ときどき</span></a></li><li><a href="lead_a_workshop/"><img src="lead_a_workshop/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>lead a workshop</b><span>研修を担当する</span></a></li><li><a href="make_an_appointment/"><img src="make_an_appointment/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>make an appointment</b><span>(人と会う)約束をする</span></a></li><li><a href="baggage_claim/"><img src="baggage_claim/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>baggage claim</b><span>手荷物受取所</span></a></li><li><a href="run_out_of/"><img src="run_out_of/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>run out of</b><span>〜を切らす、使い果たす</span></a></li><li><a href="wet_to_the_skin/"><img src="wet_to_the_skin/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>wet to the skin</b><span>ずぶぬれ</span></a></li><li><a href="inside_out/"><img src="inside_out/comic.jpg" width="720" height="900" alt="" loading="lazy"><b>inside out</b><span>裏返しに</span></a></li></ul>
+  <a class="cta" href="/">英文法クイズに挑戦する</a>
+  <a class="sub" href="https://www.instagram.com/yonkoma_eigo/" target="_blank" rel="noopener">Instagram で毎日4コマ @yonkoma_eigo</a>
+</main>
+<script src="/recommend.js"></script>
+<script>
+  const ALL = [{"key": "the_thing_is", "word": "the thing is", "meaning": "実はね、要するに", "panels": 4}, {"key": "company_cafeteria", "word": "the company cafeteria", "meaning": "社員食堂", "panels": 4}, {"key": "procrastinate", "word": "procrastinate", "meaning": "(やるべきことを)先延ばしにする", "panels": 4}, {"key": "by_far", "word": "by far", "meaning": "断然、ずば抜けて", "panels": 4}, {"key": "reluctant", "word": "reluctant", "meaning": "気が進まない、しぶしぶの", "panels": 4}, {"key": "from_time_to_time", "word": "from time to time", "meaning": "ときどき", "panels": 4}, {"key": "lead_a_workshop", "word": "lead a workshop", "meaning": "研修を担当する", "panels": 4}, {"key": "make_an_appointment", "word": "make an appointment", "meaning": "(人と会う)約束をする", "panels": 4}, {"key": "baggage_claim", "word": "baggage claim", "meaning": "手荷物受取所", "panels": 4}, {"key": "run_out_of", "word": "run out of", "meaning": "〜を切らす、使い果たす", "panels": 4}, {"key": "wet_to_the_skin", "word": "wet to the skin", "meaning": "ずぶぬれ", "panels": 4}, {"key": "inside_out", "word": "inside out", "meaning": "裏返しに", "panels": 4}];
+  if (window.ANALYTICS_ID) {
+    const t = document.createElement("script"); t.async = true;
+    t.src = "https://www.googletagmanager.com/gtag/js?id=" + window.ANALYTICS_ID; document.head.appendChild(t);
+    window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
+  }
+  let voice = "us_f";
+  try { voice = localStorage.getItem("voice") || "us_f"; } catch (e) {}
+  let player = null, run = 0;
+  const cards = document.querySelectorAll("#list a"), btn = document.getElementById("all"), now = document.getElementById("now");
+  const play = (src) => new Promise((done) => { player = new Audio(src); player.onended = () => done(true); player.onerror = () => done(false); player.play().catch(() => done(false)); });
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  btn.onclick = async () => {
+    if (btn.dataset.on) { run++; if (player) player.pause(); btn.textContent = "▶ 全部聞き流し"; delete btn.dataset.on; cards.forEach((c) => c.classList.remove("now")); return; }
+    btn.dataset.on = 1; btn.textContent = "■ 止める"; const id = ++run;
+    if (window.gtag) gtag("event", "manga_play", { key: "all", part: "loop" });
+    for (let i = 0; id === run; i = (i + 1) % ALL.length) {
+      const c = ALL[i];
+      cards.forEach((x, j) => x.classList.toggle("now", j === i));
+      cards[i].scrollIntoView({ behavior: "smooth", block: "nearest" });
+      now.textContent = `${c.word}(${c.meaning})`;
+      for (let p = 1; p <= c.panels && id === run; p++) { await play(`${c.key}/p${p}.mp3`); await wait(250); }
+      if (id === run) { await wait(400); await play(`${c.key}/word_${voice}.mp3`); }
+      if (id === run) { await wait(400); await play(`${c.key}/ex_${voice}.mp3`); }
+      await wait(1500);
+    }
+  };
+</script>
+</body>
+</html>

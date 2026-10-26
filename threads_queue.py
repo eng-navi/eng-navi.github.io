@@ -103,7 +103,12 @@ def post(item, log):
         ids = [th.api("POST", f"{user}/threads_publish", creation_id=cid)["id"]]
         if item.get("reply"):
             time.sleep(5)
-            ids.append(publish(item["reply"], reply_to=ids[0]))
+            reply = item["reply"]
+            # 4コマなら、キャラの声で聞けるページへのリンクを返信に入れる(Threads はリンクを押せる)
+            page = item["key"].removeprefix("manga_")
+            if item["key"].startswith("manga_") and (ROOT / "docs" / "manga" / page / "index.html").exists():
+                reply += f"\n\n🔊 キャラの声で何回でも聞けるページ👉 {SITE_URL}/manga/{page}/"
+            ids.append(publish(reply, reply_to=ids[0]))
     elif t == "image":
         user = th.os.environ["THREADS_USER_ID"]
         cid = th.api("POST", f"{user}/threads", media_type="IMAGE", image_url=f"{SITE_URL}/{item['image']}",

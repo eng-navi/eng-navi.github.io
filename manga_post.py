@@ -58,6 +58,20 @@ def add(key, at, caption):
     print(f"✓ {key} を {at} に予約しました")
 
 
+PAGE_NOTE = "🔊 セリフを何回でも聞ける音声ページは、プロフィールのリンクから"
+
+
+def with_page_note(item):
+    """サイトに4コマのページ(docs/manga/<key>/)があれば、Music の行の前に案内を1行入れる"""
+    cap = item["caption"]
+    if not (ROOT / "docs" / "manga" / item["key"] / "index.html").exists() or PAGE_NOTE in cap:
+        return cap
+    if "\nMusic:" in cap:
+        head, tail = cap.split("\nMusic:", 1)
+        return f"{head.rstrip()}\n\n{PAGE_NOTE}\n\nMusic:{tail}"
+    return f"{cap.rstrip()}\n\n{PAGE_NOTE}"
+
+
 def publish(item):
     url = f"{os.environ.get('SITE_URL', 'https://eng-navi.github.io').rstrip('/')}/manga/{item['key']}_reel.mp4"
     for _ in range(40):  # 公開URLに反映されるまで待つ
@@ -69,7 +83,7 @@ def publish(item):
         time.sleep(15)
     user = os.environ["IG_USER_ID"]
     c = post.api("POST", f"{user}/media", media_type="REELS", video_url=url,
-                 caption=post.keep_blank_lines(item["caption"]), share_to_feed="true")["id"]
+                 caption=post.keep_blank_lines(with_page_note(item)), share_to_feed="true")["id"]
     post.wait_until_ready(c)
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
     story = post.post_story(url)

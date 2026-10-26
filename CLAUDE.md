@@ -152,3 +152,12 @@ work could wait：仕事は後回しにできる
 ## 変更の履歴(git)
 - ファイルを変えたら、**作業のひと区切りごとに必ず commit して push** する(メッセージは日本語で、何を変えたか一目でわかるように)。まとめて最後に、ではなく、その都度。
 - ユーザーが「◯日前に戻したい」「前のデザインに戻して」と言ったら、`git log` で該当の commit を探し、`git revert` か該当ファイルだけ `git checkout <commit> -- <file>` で戻す(履歴は消さない。`reset --hard` や force push はしない)。
+
+## 4コマのページ(サイト)
+- `build_manga.py`(`.venv-tts/bin/python build_manga.py`)で docs/manga/<key>/ に1本ずつページを作る。コマをタップでキャラの声、通して聞く、聞き流し、意味クイズ、最後にマイクロコピーつきのおすすめ。一覧は docs/manga/。
+- **4コマを新しく予約したら、build_manga.py も実行して push**(キャラの声は voice_cache から作るのでクレジットは使わない)。ページがある4コマは、Instagram の投稿文に「音声ページはプロフィールのリンクから」が自動で入り、Threads の4コマの返信にはページのURLが入る。
+- @yonkoma_eigo のプロフィールのリンクは https://eng-navi.github.io/manga/ にしてもらう。
+
+## マイクロコピーのA/Bテスト
+- `docs/recommend.js` の `window.PERKS` は [A案, B案]。見る人ごとに A/B を固定で出し分け、GA4 の link_click に copy(A/B/sale)と copy_text を送る。label の末尾にも [A] [B] がつく。
+- 1〜2週間ごとに押された数を比べ、強い案を残して、新しいB案を試す。

@@ -141,9 +141,18 @@
     gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
   }
   const L = window.LISTEN;
-  const perk = L && ((window.PERKS || {})[Object.keys(ITEMS).find((k) => ITEMS[k] === L.item)] || L.item.note.split("。").pop());
-  if (L) document.getElementById("listen-pr").outerHTML = `<a class="sub lp" href="${L.item.url}" target="_blank" rel="noopener sponsored nofollow"><small>PR ${nb(L.lead)}</small><b>${nb(L.item.name)}</b>${perk ? `<em>${nb(perk)}</em>` : ""}</a>` +
+  const pr = L && window.promo ? window.promo(L.item) : null;
+  const perk = pr ? pr.text : L && L.item.note.split("。").pop();
+  if (L) document.getElementById("listen-pr").outerHTML = `<a class="sub lp" href="${L.item.url}" target="_blank" rel="noopener sponsored nofollow"><small>PR ${nb(L.lead)}</small><b>${nb(L.item.name)}</b>${perk ? `<em data-copy="${pr ? pr.copy : "none"}">${nb(perk)}</em>` : ""}</a>` +
     (L.item.pixel ? `<img src="${L.item.pixel}" width="1" height="1" alt="" style="position:absolute;opacity:0">` : "");
+  document.addEventListener("click", (ev) => {
+    const a = ev.target.closest("a[href]");
+    if (!a || !window.gtag) return;
+    const tip = a.querySelector("[data-copy]");
+    const copy = tip ? tip.dataset.copy : "none";
+    const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
+    gtag("event", "link_click", { place: a.closest(".book") ? "list_book" : a.classList.contains("lp") ? "list_listen" : "list_other", label: tip ? `${label} [${copy}]` : label, copy });
+  });
   let voice = "us_f";
   try { voice = localStorage.getItem("voice") || "us_f"; } catch (e) {}
   const btns = document.querySelectorAll("[data-v]");

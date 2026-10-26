@@ -440,7 +440,11 @@
     if (!a) return;
     const place = a.dataset.place || (a.classList.contains("nudge") ? "explanation" : a.classList.contains("reel") ? "reel" : a.closest(".rec") ? "result" : a.closest(".foot") ? "footer" : "other");
     const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
-    trackEvent("link_click", { place, label, link_domain: new URL(a.href, location.href).hostname });
+    // ボタンの上の吹き出し(セール・無料体験)のどの言い方だったか
+    const prev = a.previousElementSibling;
+    const tip = a.querySelector(".tip") || (prev && prev.classList.contains("tip") ? prev : null);
+    const copy = tip ? tip.dataset.copy : "none";
+    trackEvent("link_click", { place, label: tip ? `${label} [${copy}]` : label, copy, copy_text: tip ? tip.textContent.trim().slice(0, 60) : "", link_domain: new URL(a.href, location.href).hostname });
   });
 
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -663,25 +667,8 @@
   // A8 は表示回数の計測用に 1×1 の画像をリンクと一緒に置く決まり
   const pix = (it) => (it.pixel ? `<img src="${esc(it.pixel)}" width="1" height="1" alt="" style="position:absolute;width:1px;height:1px;opacity:0">` : "");
   // セール(期限内のもの)や無料体験の一言。本で何もなければ「Kindleで試し読みできる」
-  const keyOf = (it) => Object.keys(window.ITEMS || {}).find((k) => window.ITEMS[k] === it);
-  function promo(it) {
-    const k = keyOf(it);
-    const sale = k && (window.SALES || {})[k];
-    const today = new Date().toISOString().slice(0, 10);
-    if (sale && today <= sale.until) {
-      const [, mm, dd] = sale.until.split("-");
-      const [, cm, cd] = sale.checked.split("-");
-      return { hot: true, text: `${sale.text}・${+mm}/${+dd}まで`, note: `${+cm}/${+cd}時点` };
-    }
-    const perk = k && (window.PERKS || {})[k];
-    if (perk) return { hot: false, text: perk };
-    if (/amazon|amzn/.test(it.url)) return { hot: false, text: "Kindleなら、すぐ試し読みできる" };
-    return null;
-  }
-  const promoTip = (it) => {
-    const p = promo(it);
-    return p ? `<span class="tip ${p.hot ? "hot" : ""}">${p.hot ? "＼ " : ""}${nb(p.text)}${p.hot ? " ／" : ""}${p.note ? `<small>${esc(p.note)}</small>` : ""}</span>` : "";
-  };
+  const promo = window.promo || (() => null);
+  const promoTip = window.promoTip || (() => "");
   const nb = window.nb || esc;
   const recLink = (it) => `${promoTip(it)}<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${nb(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
 
@@ -881,6 +868,7 @@
       </div>
       <nav class="links">
         <a href="list/"><span>フレーズ集<small>音声つき</small></span><i>→</i></a>
+        <a href="manga/"><span>4コマで覚える英語<small>キャラの声つき</small></span><i>→</i></a>
         <a href="q/"><span>問題一覧<small>答えと解説つき</small></span><i>→</i></a>
       </nav>
       <div class="spacer"></div>

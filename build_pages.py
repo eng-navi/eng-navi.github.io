@@ -221,6 +221,11 @@ def build(site, quizzes):
     (site / "q" / "index.html").write_text(index_page(quizzes))
     today = date.today().isoformat()
     urls = [f"{SITE_URL}/", f"{SITE_URL}/q/"] + [f"{SITE_URL}/q/{n}/" for n in nos]
+    # フレーズ集・4コマのページも載せる
+    for sub in ("list", "manga"):
+        if (site / sub / "index.html").exists():
+            urls.append(f"{SITE_URL}/{sub}/")
+        urls += [f"{SITE_URL}/{sub}/{d.name}/" for d in sorted((site / sub).glob("*/")) if (d / "index.html").exists()]
     (site / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls) + "</urlset>\n")

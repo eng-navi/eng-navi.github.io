@@ -1,3 +1,9 @@
+// 長い商品名・説明は、言葉の切れ目(空白・読点・句点・中黒・かっこの前)でだけ改行する。スマホで「フレー/ズ」のように切れないように
+window.nb = (s) => String(s || "")
+  .replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))
+  .replace(/[(（]?[^ 、。・(（]+[、。・]*|[(（]/g, (w) => `<span class="nb">${w}</span>`);
+document.head.insertAdjacentHTML("beforeend", "<style>.nb{display:inline-block!important;margin:0!important;padding:0!important;font-size:inherit!important;font-weight:inherit!important;color:inherit!important;background:none!important;line-height:inherit!important}</style>");
+
 // サイトに出すおすすめ(元データと選定理由は affiliates.md)。
 // キーはシリーズ名(TOEIC / 英検2級 / 読解・イディオム)。文法の項目名(時制など)をキーにすると、その項目だけ出し分けられる。
 //   title / items … 間違えた・読めなかった人向け(items[0] は解説の下にも1行で出る)
@@ -109,13 +115,43 @@ window.SALES = {
   brushup: { text: "Kindle版が今だけ26%OFF", until: "2026-10-31", checked: "2026-10-25" },
 };
 // いつも使えるキャンペーン(無料体験など)。セールがない日はこちらを出す
+// [A, B] の2案を、見る人ごとにランダムで出し分ける(端末ごとに固定)。GA4 の link_click の copy(A/B)で、押されやすい言い方を比べる
 window.PERKS = {
-  studysapuri: "7日間無料で試せる",
-  speak: "7日間無料で試せる",
-  nativecamp: "7日間無料・予約なしですぐ話せる",
-  sankei: "無料体験レッスン4回つき",
-  audible: "30日間無料で聞き放題",
-  torabit: "まずは無料で試せる",
+  studysapuri: ["7日間無料で試せる", "7日間無料。スマホですぐ始められる"],
+  speak: ["7日間無料で試せる", "AI相手だから、はずかしくない。7日間無料"],
+  nativecamp: ["7日間無料・予約なしですぐ話せる", "7日間無料。今日このあと、すぐ話せる"],
+  sankei: ["無料体験レッスン4回つき", "日本人講師も選べる。無料体験4回"],
+  audible: ["30日間無料で聞き放題", "30日間無料。通勤時間が英語の時間に"],
+  torabit: ["まずは無料で試せる", "1日5分から。まずは無料で"],
+  _amazon: ["Kindleなら、すぐ試し読みできる", "無料サンプルで、中身を見てから決められる"],
+};
+window.AB = (() => {
+  try {
+    let v = localStorage.getItem("ab");
+    if (v !== "A" && v !== "B") localStorage.setItem("ab", (v = Math.random() < 0.5 ? "A" : "B"));
+    return v;
+  } catch (e) { return "A"; }
+})();
+// ボタンの上の一言を決める。セール中(until まで)> 無料体験などの A/B > なし
+window.promo = (it) => {
+  const k = it && Object.keys(ITEMS).find((x) => ITEMS[x] === it);
+  const sale = k && window.SALES[k];
+  const today = new Date().toISOString().slice(0, 10);
+  if (sale && today <= sale.until) {
+    const [, mm, dd] = sale.until.split("-");
+    const [, cm, cd] = sale.checked.split("-");
+    return { hot: true, copy: "sale", text: `${sale.text}・${+mm}/${+dd}まで`, note: `${+cm}/${+cd}時点` };
+  }
+  const perk = (k && window.PERKS[k]) || (it && /amazon|amzn/.test(it.url) ? window.PERKS._amazon : null);
+  if (!perk) return null;
+  const pair = Array.isArray(perk) ? perk : [perk, perk];
+  return { hot: false, copy: window.AB, text: pair[window.AB === "B" ? 1 : 0] };
+};
+// 吹き出しの HTML(クリック計測用に data-copy をつける)
+window.promoTip = (it) => {
+  const p = window.promo(it);
+  if (!p) return "";
+  return `<span class="tip ${p.hot ? "hot" : ""}" data-copy="${p.copy}">${p.hot ? "＼ " : ""}${window.nb(p.text)}${p.hot ? " ／" : ""}${p.note ? `<small>${window.nb(p.note)}</small>` : ""}</span>`;
 };
 
 // 結果画面で、どのシリーズでも出す「次は話せる英語へ」
@@ -140,9 +176,3 @@ window.ANALYTICS_ID = "G-3FH38ZQJDF";
 window.LINKS = {
   instagram: "https://www.instagram.com/eng_navi/",
 };
-
-// 長い商品名・説明は、言葉の切れ目(空白・読点・句点・中黒・かっこの前)でだけ改行する。スマホで「フレー/ズ」のように切れないように
-window.nb = (s) => String(s || "")
-  .replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))
-  .replace(/[(（]?[^ 、。・(（]+[、。・]*|[(（]/g, (w) => `<span class="nb">${w}</span>`);
-document.head.insertAdjacentHTML("beforeend", "<style>.nb{display:inline-block!important;margin:0!important;padding:0!important;font-size:inherit!important;font-weight:inherit!important;color:inherit!important;background:none!important;line-height:inherit!important}</style>");
