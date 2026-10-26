@@ -3,7 +3,7 @@
     .venv-tts/bin/python manga_reel.py inside_out            # out/manga/inside_out_reel.mp4(やわらかい効果音)
     .venv-tts/bin/python manga_reel.py inside_out --no-sfx   # out/manga/inside_out_reel_nosfx.mp4(効果音なし)
 
-声:ElevenLabs(ナビ=Teddy・ペン=Mia・部長=Gappu。ELEVEN 参照)。--kokoro で無料の Kokoro に戻す。後ろにかすかなBGM(--bgm cozy-places などで指定)。
+声:ElevenLabs(ナビ=Teddy・ペン=Candy・部長=Gappu。ELEVEN 参照)。--kokoro で無料の Kokoro に戻す。後ろにかすかなBGM(--bgm cozy-places などで指定)。
 コマの切り替えにやわらかい効果音、ズームはしない。投稿はリールのみ(カルーセルはなし)
 """
 import subprocess
@@ -71,7 +71,7 @@ SCRIPTS = {
 # ElevenLabs の声(ボイスライブラリ・商用可)。.env に ELEVENLABS_API_KEY があれば使う。--kokoro で無料の声に戻す
 ELEVEN = {
     "navi": "XjGYkUkzth8BPs29fmcV",  # Teddy Twinkle(かわいい男の子)
-    "pen": "NCXuWNJQQvNzPsNoESwl",   # Mia(若くてかわいい、落ち着いた声)
+    "pen": "Nggzl2QAXh3OijoXD116",   # Candy(若くてかわいい女性)
     "boss": "tBPQ3sUKpdLEVpyeCHyk",  # Gappu ka Bhai(のんびりした声)
 }
 ELEVEN_CACHE = ROOT / "out" / "voice_cache"
