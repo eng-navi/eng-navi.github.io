@@ -133,3 +133,8 @@ work could wait：仕事は後回しにできる
 - 4コマは manga_post.py(予約表 manga_schedule.json、トークンは MANGA_IG_*)。@yonkoma_eigo に投稿し、同じ動画をストーリーにも流す
 - Threads の5選:threads_lists.json(items は [表現, 意味, 例文, 和訳, 絵文字])。一覧の頭に hook(つかみの一言)、絵文字つき。音声ページは build_lists.py
 - フレーズのストーリー(eng_navi):story_phrase.py。1枚目「この英語、わかる?」→ 2枚目 答えと例文の動画(🇬🇧女性・男性)。スタンプなしで自動投稿。予約は story_queue.json(毎日18:00)
+
+## アフィリエイトの運用
+- 元データとメモは affiliates.md、サイトに出すものは docs/recommend.js(リンク集ページ docs/links/ も自動で同じ内容)
+- 「話せない」枠は4候補(スピーク・ネイティブキャンプ・産経・TORAbit)から毎回2つ。GA4 の link_click(label)で比べ、押されないものは入れ替える
+- キャンペーン確認:3日に1回の cloud routine(https://claude.ai/code/routines/trig_01FsPKuKzzuTDpM4XSCa8S4F)がスマホに通知。「キャンペーンの素材を作って」と言われたら、Book Review 系のストーリーと Threads の #PR 投稿を作る
