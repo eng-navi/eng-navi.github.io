@@ -2110,5 +2110,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 109,
+    "category": "時制",
+    "question": "Ms. Rivera ( ) for the company since 2018.",
+    "options": [
+      "has been working",
+      "is working"
+    ],
+    "answer": 1,
+    "translation": "リベラさんは2018年からその会社で働いている。",
+    "explanation": "since 2018（2018年から）があるので、過去から今まで続いていることを表します。\nwork のような「動作」を表す動詞で継続を言うときは、現在完了進行形を使います。\n\nしたがって、①has been working が正解。",
+    "audio": "audio/q109.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
