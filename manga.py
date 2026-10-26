@@ -221,6 +221,15 @@ def face_eyes(d, cx, cy, s, expr, white=True):
 
 def bubble(d, box, tail, en, ja, seed=0):
     x0, y0, x1, y1 = box
+    # 文字が楕円の線にかからないよう、足りなければ縦に広げる(しっぽも同じだけ下げる)
+    tw = max([EN(40).getlength(l) for l in en.split("\n")] + [JP(24).getlength(ja) if ja else 0]) + 24
+    th = len(en.split("\n")) * 46 + (34 if ja else 0) + 16
+    a = (x1 - x0) / 2
+    need = th / 2 / math.sqrt(max(0.05, 1 - min(0.95, tw / 2 / a) ** 2)) * 2
+    if need > y1 - y0:
+        grow = need - (y1 - y0)
+        y1 += grow
+        tail = (tail[0], tail[1] + grow)
     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
     pts = [(cx + (x1 - x0) / 2 * math.cos(a), cy + (y1 - y0) / 2 * math.sin(a)) for a in (i * math.pi / 24 for i in range(49))]
     base = min(pts, key=lambda p: math.hypot(p[0] - tail[0], p[1] - tail[1]))
@@ -396,8 +405,8 @@ def wet_to_the_skin():
     x0, y0, x1, y1 = boxes[0]
     d = panel(img, boxes[0], 21)
     rain(d, boxes[0], seed=71)
-    umbrella(d, x0 + pw * 0.7, y0 + ph * 0.4, 150)
-    owl(d, x0 + pw * 0.7, y0 + ph * 0.76, 125, "normal")
+    umbrella(d, x0 + pw * 0.7, y0 + ph * 0.47, 150)
+    owl(d, x0 + pw * 0.7, y0 + ph * 0.8, 125, "normal")
     penguin(d, x0 + pw * 0.26, y0 + ph * 0.74, 120, "normal", hat_on=False)
     bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 164), (x0 + pw * 0.62, y0 + 196),
            "It's raining!\nTake an umbrella.", "雨だよ!傘持っていきな", 1)
@@ -406,9 +415,9 @@ def wet_to_the_skin():
     d = panel(img, boxes[1], 22)
     rain(d, boxes[1], seed=72)
     penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 190, "smug", hat_on=False)
-    bubble(d, (x0 + 18, y0 + 16, x0 + pw - 18, y0 + 166), (x0 + pw * 0.5, y0 + 205),
+    bubble(d, (x0 + 10, y0 + 12, x0 + pw - 10, y0 + 190), (x0 + pw * 0.5, y0 + 225),
            "No need.\nI'm a penguin.", "いらない。ペンギンだし", 2)
-    sfx(img, (x0 + pw * 0.86, y0 + ph * 0.88), "*waddle*", 32, (110, 150, 200), 8)
+    sfx(img, (x0 + pw * 0.8, y0 + ph * 0.88), "*waddle*", 32, (110, 150, 200), 8)
     # 3:ずぶぬれで震えるペンに、ナビがツッコむ
     x0, y0, x1, y1 = boxes[2]
     d = panel(img, boxes[2], 23)
@@ -418,7 +427,7 @@ def wet_to_the_skin():
     owl(d, x0 + pw * 0.76, y0 + ph * 0.7, 135, "shock")
     bubble(d, (x0 + pw * 0.3, y0 + 16, x0 + pw - 14, y0 + 166), (x0 + pw * 0.72, y0 + 210),
            "You're wet\nto the skin!", "ずぶぬれじゃん!", 3)
-    sfx(img, (x0 + pw * 0.14, y0 + ph * 0.22), "*shiver*", 34, (110, 150, 200), -10)
+    sfx(img, (x0 + pw * 0.2, y0 + ph * 0.22), "*shiver*", 34, (110, 150, 200), -10)
     # 4:タオルにくるまって、言い訳
     x0, y0, x1, y1 = boxes[3]
     d = panel(img, boxes[3], 24)
@@ -481,8 +490,8 @@ def baggage_claim():
     d = panel(img, boxes[0], 31)
     owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 140, "happy")
     penguin(d, x0 + pw * 0.72, y0 + ph * 0.66, 135, "normal", hat_on=False)
-    d.rounded_rectangle([x0 + pw * 0.56, y0 + ph * 0.3, x0 + pw * 0.95, y0 + ph * 0.4], radius=6, fill=(255, 215, 90), outline=INK, width=3)
-    d.text((x0 + pw * 0.755, y0 + ph * 0.35), "BAGGAGE CLAIM", font=EN(22), fill=INK, anchor="mm")
+    d.rounded_rectangle([x0 + pw * 0.56, y0 + ph * 0.37, x0 + pw * 0.95, y0 + ph * 0.47], radius=6, fill=(255, 215, 90), outline=INK, width=3)
+    d.text((x0 + pw * 0.755, y0 + ph * 0.42), "BAGGAGE CLAIM", font=EN(22), fill=INK, anchor="mm")
     bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.3, y0 + 200),
            "Let's go to\nbaggage claim.", "手荷物受取所に行こう", 1)
     # 2:ペンがベルトの前で待つ
@@ -491,9 +500,9 @@ def baggage_claim():
     conveyor(d, boxes[1], y0 + ph * 0.8)
     suitcase(d, x0 + pw * 0.2, y0 + ph * 0.8 - 32, 70, (230, 150, 120), seed=96)
     penguin(d, x0 + pw * 0.62, y0 + ph * 0.56, 140, "normal", hat_on=False)
-    bubble(d, (x0 + 14, y0 + 14, x0 + pw - 14, y0 + 166), (x0 + pw * 0.62, y0 + 200),
+    bubble(d, (x0 + 10, y0 + 12, x0 + pw - 10, y0 + 190), (x0 + pw * 0.62, y0 + 222),
            "Where's my\nsuitcase...?", "ぼくのスーツケース、どこ…?", 2)
-    sfx(img, (x0 + pw * 0.86, y0 + ph * 0.68), "*stare*", 30, (110, 120, 140), 6)
+    sfx(img, (x0 + pw * 0.8, y0 + ph * 0.68), "*stare*", 30, (110, 120, 140), 6)
     # 3:部長がペンのスーツケースに乗って回ってくる
     x0, y0, x1, y1 = boxes[2]
     d = panel(img, boxes[2], 33)

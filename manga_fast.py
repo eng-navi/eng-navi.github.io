@@ -201,6 +201,63 @@ def reluctant():
     return img
 
 
+def fish_box(d, cx, bottom, w=150, h=90, seed=330):
+    """空っぽの魚の箱(FISH と書いた木箱)。"""
+    m.shape(d, m.rrect_pts(cx - w / 2, bottom - h, cx + w / 2, bottom, 6), (214, 170, 120), w=4, seed=seed)
+    d.line([(cx - w / 2 + 8, bottom - h + 22), (cx + w / 2 - 8, bottom - h + 22)], fill=(150, 110, 70), width=3)
+    d.text((cx, bottom - h / 2 + 10), "FISH", font=m.EN(30), fill=(120, 80, 50), anchor="mm")
+
+
+def fish_bones(d, cx, cy, w=90):
+    d.line([(cx - w / 2, cy), (cx + w / 2, cy)], fill=(120, 120, 130), width=4)
+    for i in range(4):
+        x = cx - w * 0.3 + i * w * 0.18
+        d.line([(x, cy - w * 0.16), (x + w * 0.06, cy), (x, cy + w * 0.16)], fill=(120, 120, 130), width=3)
+    d.ellipse([cx - w / 2 - 16, cy - 13, cx - w / 2 + 8, cy + 13], outline=(120, 120, 130), width=4)
+    d.polygon([(cx + w / 2, cy), (cx + w / 2 + 18, cy - 14), (cx + w / 2 + 18, cy + 14)], outline=(120, 120, 130))
+
+
+def run_out_of():
+    img, boxes, pw, ph = m.comic("run out of")
+    # 1:おやつにしよう
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 61)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.64, 150, "happy")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.68, 125, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 190),
+                 "Let's have a snack!", "おやつにしよう!", 1)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.42), "♪", 44, (220, 120, 120), 8)
+    # 2:魚の箱が空っぽ(ターゲット)
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 62)
+    fish_box(d, x0 + pw * 0.7, y0 + ph * 0.9)
+    m.penguin(d, x0 + pw * 0.32, y0 + ph * 0.64, 160, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.5, y0 + ph * 0.44)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.32, y0 + 225),
+                 "Oh no!\nWe ran out of fish!", "えっ!魚、切らしてる!", 2)
+    m.sfx(img, (x0 + pw * 0.72, y0 + ph * 0.6), "empty...", 30, (110, 120, 140), -6)
+    # 3:誰が食べたの?
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 63)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.64, 150, "shock")
+    m.penguin(d, x0 + pw * 0.72, y0 + ph * 0.7, 115, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 190),
+                 "Who ate them all?", "全部食べたの、誰?", 3)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.4), "?!", 50, (220, 80, 70), 10)
+    # 4:骨の山の横で、部長がしれっと
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 64)
+    m.capybara(d, x0 + pw * 0.6, y0 + ph * 0.64, 200, "calm")
+    fish_bones(d, x0 + pw * 0.2, y0 + ph * 0.92, 80)
+    fish_bones(d, x0 + pw * 0.16, y0 + ph * 0.84, 70)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.46, y0 + 190),
+                 "...Not me.", "…私じゃないよ", 4)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.52), "*munch*", 30, (200, 140, 60), 8)
+    d = ImageDraw.Draw(img)
+    d.text((m.W - 50, m.H - 30), "@yonkoma_eigo", font=m.EN(30), fill=(160, 150, 140), anchor="rm")
+    return img
+
+
 SCRIPTS = {
     "procrastinate": dict(
         draw=procrastinate, word="procrastinate", hook="先延ばしグセ、ある?",
@@ -237,6 +294,28 @@ def _from_reel(name, **kw):
 
 
 SCRIPTS.update({
+    "run_out_of": dict(
+        draw=run_out_of, word="run out of", hook="「切らしちゃった」英語で?",
+        meaning="〜を切らす、使い果たす", level="英検準2級〜2級レベル",
+        ex_en="We ran out of milk, so I went to the store.", ex_ja="牛乳を切らしたので、お店に行った",
+        words=[("snack", "おやつ、軽食"), ("ran", "run の過去形"), ("ate", "eat(食べる)の過去形"),
+               ("them all", "それらを全部"), ("Not me.", "私じゃないよ")],
+        panels=[[("navi", "Let's have a snack!")], [("pen", "Oh no! We ran out of fish!")],
+                [("navi", "Who ate them all?")], [("boss", "...Not me.")]],
+        explain=[("navi", "Run out of."), ("pen", "We ran out of milk, so I went to the store.")],
+    ),
+    "baggage_claim": _from_reel(
+        "baggage_claim", word="baggage claim", hook="空港の「荷物の受取所」は?",
+        meaning="手荷物受取所", level="TOEIC頻出",
+        ex_en="I waited at baggage claim for twenty minutes.", ex_ja="手荷物受取所で20分待った",
+        words=[("baggage", "手荷物"), ("claim", "(自分の物として)受け取る"), ("suitcase", "スーツケース"),
+               ("ride", "乗り物"), ("Let's go to ~", "〜へ行こう")]),
+    "wet_to_the_skin": _from_reel(
+        "wet_to_the_skin", word="wet to the skin", hook="「ずぶぬれ」って英語で?",
+        meaning="ずぶぬれ", level="英検2級レベル",
+        ex_en="I forgot my umbrella and got wet to the skin.", ex_ja="傘を忘れて、ずぶぬれになった",
+        words=[("umbrella", "傘"), ("No need.", "必要ないよ"), ("penguin", "ペンギン"),
+               ("sea", "海"), ("forgot", "forget(忘れる)の過去形")]),
     "from_time_to_time": _from_reel(
         "from_time_to_time", word="from time to time", hook="「ときどき」って英語で?",
         meaning="ときどき", level="英検3級〜準2級レベル",
