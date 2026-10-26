@@ -3,7 +3,7 @@
     .venv-tts/bin/python manga_reel.py inside_out            # out/manga/inside_out_reel.mp4(やわらかい効果音)
     .venv-tts/bin/python manga_reel.py inside_out --no-sfx   # out/manga/inside_out_reel_nosfx.mp4(効果音なし)
 
-声:ElevenLabs(ナビ=Teddy・ペン=Candy・部長=Gappu。ELEVEN 参照)。--kokoro で無料の Kokoro に戻す。後ろにかすかなBGM(--bgm cozy-places などで指定)。
+声:ElevenLabs(ナビ=Teddy・ペン=Mia・部長=Gappu。ELEVEN 参照)。--kokoro で無料の Kokoro に戻す。後ろにかすかなBGM(--bgm cozy-places などで指定)。
 コマの切り替えにやわらかい効果音、ズームはしない。投稿はリールのみ(カルーセルはなし)
 """
 import subprocess
@@ -71,13 +71,13 @@ SCRIPTS = {
 # ElevenLabs の声(ボイスライブラリ・商用可)。.env に ELEVENLABS_API_KEY があれば使う。--kokoro で無料の声に戻す
 ELEVEN = {
     "navi": "XjGYkUkzth8BPs29fmcV",  # Teddy Twinkle(かわいい男の子)
-    "pen": "Nggzl2QAXh3OijoXD116",   # Candy(若くてかわいい女性)
+    "pen": "NCXuWNJQQvNzPsNoESwl",   # Mia(若くてかわいい、落ち着いた声)
     "boss": "tBPQ3sUKpdLEVpyeCHyk",  # Gappu ka Bhai(のんびりした声)
 }
 ELEVEN_CACHE = ROOT / "out" / "voice_cache"
 
 
-def eleven(who, text):
+def eleven(who, text, speed=1.0):
     """ElevenLabs で読み上げ、24kHz の波形を返す。同じセリフはキャッシュして、クレジットを使い直さない。"""
     import hashlib
     import json
@@ -85,11 +85,12 @@ def eleven(who, text):
     import urllib.request
     vid = ELEVEN[who]
     ELEVEN_CACHE.mkdir(parents=True, exist_ok=True)
-    mp3 = ELEVEN_CACHE / f"{vid}_{hashlib.sha1(text.encode()).hexdigest()[:12]}.mp3"
+    mp3 = ELEVEN_CACHE / f"{vid}_{hashlib.sha1(f'{text}|{speed}'.encode()).hexdigest()[:12]}.mp3"
     if not mp3.exists():
         req = urllib.request.Request(
             f"https://api.elevenlabs.io/v1/text-to-speech/{vid}?output_format=mp3_44100_128",
-            data=json.dumps({"text": text, "model_id": "eleven_multilingual_v2"}).encode(),
+            data=json.dumps({"text": text, "model_id": "eleven_multilingual_v2",
+                             "voice_settings": {"stability": 0.55, "similarity_boost": 0.75, "style": 0.25, "speed": speed}}).encode(),
             headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"], "Content-Type": "application/json", "Accept": "audio/mpeg"})
         mp3.write_bytes(urllib.request.urlopen(req).read())
     raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(mp3), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
