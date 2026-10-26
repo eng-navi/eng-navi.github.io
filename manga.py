@@ -327,7 +327,7 @@ def explain(phrase, meaning, en, ja, visual):
     for y in range(0, H, 54):
         d.line([(0, y), (W, y)], fill=(225, 220, 212), width=2)
     size = 130  # 長い表現は、画面に収まるまで文字を小さくする
-    while EN(size).getlength(phrase) > W - 120:
+    while EN(size).getlength(phrase) > W - 2 * SAFE:
         size -= 6
     d.text((W // 2, 230), phrase, font=EN(size), fill=INK, anchor="mm")
     d.line(wob([(220, 310), (860, 304)], amp=2), fill=(200, 52, 48), width=7)

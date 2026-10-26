@@ -57,7 +57,7 @@ def card(phrase, top, mid, bottom, accent=False):
         d.line([(0, y), (W, y)], fill=sb.GRID, width=2)
     d.text((W // 2, 360), top, font=sb.JP(64), fill=sb.RED, anchor="ms")
     size = 150
-    while sb.EN(size).getlength(phrase) > W - 140:
+    while sb.EN(size).getlength(phrase) > W - 2 * 120:
         size -= 6
     d.text((W // 2, 760), phrase, font=sb.EN(size), fill=sb.INK, anchor="ms")
     lw = sb.EN(size).getlength(phrase) / 2
