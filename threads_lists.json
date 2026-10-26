@@ -622,5 +622,725 @@
       "note": "TOEICによく出る会社・生活の英語を、音声つきで",
       "url": "https://link.amazon/B09qOB6Ou"
     }
+  },
+  {
+    "id": 13,
+    "title": "恋愛・人間関係の英語5選",
+    "hook": "ドラマでよく聞くやつ、まとめました💞",
+    "items": [
+      [
+        "have a crush on",
+        "〜のことが好き",
+        "I think he has a crush on you.",
+        "彼、あなたのこと好きだと思うよ",
+        "💘"
+      ],
+      [
+        "ask 人 out",
+        "デートに誘う",
+        "She finally asked him out.",
+        "彼女、ついに彼をデートに誘った",
+        "💌"
+      ],
+      [
+        "hit it off",
+        "すぐ意気投合する",
+        "We hit it off at the party.",
+        "パーティーですぐ意気投合した",
+        "🤝"
+      ],
+      [
+        "get along with",
+        "〜と仲良くやる",
+        "I get along with my roommate.",
+        "ルームメイトとはうまくやってる",
+        "😊"
+      ],
+      [
+        "make up",
+        "仲直りする",
+        "They had a fight but made up the next day.",
+        "けんかしたけど次の日に仲直りした",
+        "🫂"
+      ]
+    ],
+    "closing": "どれか1つ、推しのドラマで探してみてね📺",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 14,
+    "title": "TOEICで出る「採用・面接」英語5選",
+    "hook": "求人の話はTOEICで毎回のように出るよ👔",
+    "items": [
+      [
+        "a job interview",
+        "就職面接",
+        "I have a job interview tomorrow morning.",
+        "明日の朝、面接がある",
+        "🗣️"
+      ],
+      [
+        "a job opening",
+        "求人、空きポスト",
+        "There's a job opening in the sales team.",
+        "営業チームで求人が出ている",
+        "📢"
+      ],
+      [
+        "a résumé",
+        "履歴書",
+        "Please attach your résumé to the email.",
+        "メールに履歴書を添付してください",
+        "🧾"
+      ],
+      [
+        "be hired as",
+        "〜として採用される",
+        "He was hired as a designer.",
+        "彼はデザイナーとして採用された",
+        "🎉"
+      ],
+      [
+        "a letter of recommendation",
+        "推薦状",
+        "My professor wrote me a letter of recommendation.",
+        "教授が推薦状を書いてくれた",
+        "✉️"
+      ]
+    ],
+    "closing": "résumé は「レジュメ(要約)」じゃなく「履歴書」の意味📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 15,
+    "title": "朝に使えるひとこと英語5選",
+    "hook": "明日の朝、さっそく使ってみて☀️",
+    "items": [
+      [
+        "I overslept.",
+        "寝坊した",
+        "Sorry, I overslept!",
+        "ごめん、寝坊した!",
+        "⏰"
+      ],
+      [
+        "I'm running late.",
+        "ちょっと遅れてる",
+        "I'm running late. Start without me.",
+        "遅れてる。先に始めてて",
+        "🏃"
+      ],
+      [
+        "grab a bite",
+        "さっと食べる",
+        "Let's grab a bite before work.",
+        "仕事の前にさっと何か食べよう",
+        "🥐"
+      ],
+      [
+        "I'm not a morning person.",
+        "朝が苦手",
+        "Don't talk to me yet. I'm not a morning person.",
+        "まだ話しかけないで。朝弱いの",
+        "😴"
+      ],
+      [
+        "I'm on my way.",
+        "今向かってる",
+        "I'm on my way! Be there in five.",
+        "今向かってる!5分で着く",
+        "🚶"
+      ]
+    ],
+    "closing": "「I'm on my way」は待ち合わせの神フレーズ📍",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 16,
+    "title": "TOEICで出る「買い物・お店」英語5選",
+    "hook": "お店の英語、ぜんぶわかる?🛍️",
+    "items": [
+      [
+        "out of stock",
+        "在庫切れ",
+        "Sorry, that size is out of stock.",
+        "すみません、そのサイズは在庫切れです",
+        "📦"
+      ],
+      [
+        "on sale",
+        "セール中",
+        "These shoes are on sale this week.",
+        "この靴は今週セール中",
+        "🏷️"
+      ],
+      [
+        "get a refund",
+        "返金してもらう",
+        "Can I get a refund for this?",
+        "これ、返金してもらえますか",
+        "💳"
+      ],
+      [
+        "keep the receipt",
+        "レシートをとっておく",
+        "Please keep the receipt for returns.",
+        "返品用にレシートはとっておいて",
+        "🧾"
+      ],
+      [
+        "business hours",
+        "営業時間",
+        "Our business hours are 10 to 8.",
+        "営業時間は10時から8時です",
+        "🕘"
+      ]
+    ],
+    "closing": "on sale は「売り出し中」の意味でも出るので注意📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 17,
+    "title": "SNSでよく見る英語5選",
+    "hook": "ネイティブの投稿によく出てくるやつ📱",
+    "items": [
+      [
+        "go viral",
+        "バズる",
+        "Her cat video went viral overnight.",
+        "彼女の猫動画、一晩でバズった",
+        "🔥"
+      ],
+      [
+        "I'm obsessed with",
+        "〜にハマってる",
+        "I'm obsessed with this song.",
+        "この曲にハマってる",
+        "🤩"
+      ],
+      [
+        "No way!",
+        "うそでしょ!",
+        "No way! You met him?",
+        "うそ!彼に会ったの?",
+        "😳"
+      ],
+      [
+        "I can't wait",
+        "楽しみすぎる",
+        "I can't wait for the weekend!",
+        "週末が楽しみすぎる!",
+        "⏳"
+      ],
+      [
+        "I feel you.",
+        "わかる〜",
+        "Mondays are hard. I feel you.",
+        "月曜はしんどいよね。わかる",
+        "💯"
+      ]
+    ],
+    "closing": "コメント欄で使ってみてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 18,
+    "title": "TOEICで出る「オフィスの困りごと」英語5選",
+    "hook": "オフィスあるある、英語で言える?🖨️",
+    "items": [
+      [
+        "out of order",
+        "故障中",
+        "The copy machine is out of order again.",
+        "コピー機がまた故障中",
+        "🛠️"
+      ],
+      [
+        "run out of paper",
+        "紙が切れる",
+        "The printer ran out of paper.",
+        "プリンターの紙が切れた",
+        "📄"
+      ],
+      [
+        "a power outage",
+        "停電",
+        "A power outage stopped all the computers.",
+        "停電でパソコンが全部止まった",
+        "🔌"
+      ],
+      [
+        "fix the problem",
+        "問題を直す",
+        "The IT team fixed the problem quickly.",
+        "ITチームがすぐ直してくれた",
+        "🔧"
+      ],
+      [
+        "contact the help desk",
+        "ヘルプデスクに連絡する",
+        "If your laptop freezes, contact the help desk.",
+        "パソコンが固まったらヘルプデスクへ",
+        "📞"
+      ]
+    ],
+    "closing": "out of order は「順番が違う」じゃなく「故障中」📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 19,
+    "title": "仕事がしんどい日の英語5選",
+    "hook": "がんばってる人ほど保存して💼",
+    "items": [
+      [
+        "be swamped",
+        "手いっぱい",
+        "I'm swamped with work this week.",
+        "今週は仕事で手いっぱい",
+        "😵"
+      ],
+      [
+        "work overtime",
+        "残業する",
+        "I had to work overtime again.",
+        "また残業だった",
+        "🌙"
+      ],
+      [
+        "take a day off",
+        "1日休みをとる",
+        "I'm taking a day off on Friday.",
+        "金曜は休みをとる",
+        "🛌"
+      ],
+      [
+        "burn out",
+        "燃え尽きる",
+        "Take breaks so you don't burn out.",
+        "燃え尽きないように休憩してね",
+        "🔋"
+      ],
+      [
+        "call it a day",
+        "今日はここまでにする",
+        "It's late. Let's call it a day.",
+        "遅いし、今日はここまでにしよう",
+        "🏁"
+      ]
+    ],
+    "closing": "今日もおつかれさま🍵",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 20,
+    "title": "TOEICで出る「天気・交通」英語5選",
+    "hook": "アナウンス問題の定番だよ🌧️",
+    "items": [
+      [
+        "due to bad weather",
+        "悪天候のため",
+        "The flight was canceled due to bad weather.",
+        "悪天候のため便が欠航した",
+        "🌀"
+      ],
+      [
+        "be delayed",
+        "遅れる",
+        "The train is delayed by 20 minutes.",
+        "電車が20分遅れている",
+        "⏱️"
+      ],
+      [
+        "a weather forecast",
+        "天気予報",
+        "The weather forecast says it'll snow.",
+        "天気予報では雪らしい",
+        "📺"
+      ],
+      [
+        "a road closure",
+        "通行止め",
+        "There's a road closure near the station.",
+        "駅の近くが通行止めになっている",
+        "🚧"
+      ],
+      [
+        "an alternative route",
+        "別のルート",
+        "Please take an alternative route.",
+        "別のルートをご利用ください",
+        "🔁"
+      ]
+    ],
+    "closing": "due to は because of と同じ意味📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 21,
+    "title": "食べ物が出てくる英語イディオム5選",
+    "hook": "直訳するとおいしそうなのに、意味は全然ちがう🍰",
+    "items": [
+      [
+        "a piece of cake",
+        "楽勝",
+        "The test was a piece of cake.",
+        "テストは楽勝だった",
+        "🍰"
+      ],
+      [
+        "spill the beans",
+        "秘密をもらす",
+        "Who spilled the beans about the party?",
+        "パーティーのこと、誰がばらしたの?",
+        "🫘"
+      ],
+      [
+        "in a nutshell",
+        "ひとことで言うと",
+        "In a nutshell, we need more time.",
+        "ひとことで言うと、時間が足りない",
+        "🥜"
+      ],
+      [
+        "not my cup of tea",
+        "好みじゃない",
+        "Horror movies are not my cup of tea.",
+        "ホラー映画は好みじゃない",
+        "🍵"
+      ],
+      [
+        "a couch potato",
+        "家でゴロゴロする人",
+        "On weekends, I'm a total couch potato.",
+        "週末は完全にゴロゴロしてる",
+        "🥔"
+      ]
+    ],
+    "closing": "どれが一番好き?コメントで教えてね🍽️",
+    "book": {
+      "name": "大学入試 飛躍のフレーズ IDIOMATIC 300",
+      "note": "よくある言い回しを、英文ごと覚えられる。問題300問つき",
+      "url": "https://link.amazon/B0eHBRPkB"
+    }
+  },
+  {
+    "id": 22,
+    "title": "TOEICで出る「ホテル・レストラン」英語5選",
+    "hook": "旅行でもそのまま使えるよ🏨",
+    "items": [
+      [
+        "make a reservation",
+        "予約する",
+        "I'd like to make a reservation for two.",
+        "2名で予約したいのですが",
+        "📅"
+      ],
+      [
+        "the front desk",
+        "フロント",
+        "Please leave your key at the front desk.",
+        "鍵はフロントに預けてください",
+        "🛎️"
+      ],
+      [
+        "check out",
+        "チェックアウトする",
+        "Check-out time is 11 a.m.",
+        "チェックアウトは11時です",
+        "🧳"
+      ],
+      [
+        "a table for two",
+        "2名席",
+        "Can we have a table for two by the window?",
+        "窓際の2名席はありますか",
+        "🍽️"
+      ],
+      [
+        "housekeeping",
+        "客室清掃",
+        "Housekeeping will clean your room at noon.",
+        "お昼に客室清掃が入ります",
+        "🧹"
+      ]
+    ],
+    "closing": "人と会う約束は appointment、お店の予約は reservation📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 23,
+    "title": "人をほめる英語5選",
+    "hook": "言われたらうれしいやつ👏",
+    "items": [
+      [
+        "You nailed it!",
+        "完ぺき!",
+        "Your speech was great. You nailed it!",
+        "スピーチ最高。完ぺき!",
+        "🎯"
+      ],
+      [
+        "You made my day.",
+        "おかげで最高の一日",
+        "Thanks for the card. You made my day!",
+        "カードありがとう。最高の一日になった!",
+        "🌟"
+      ],
+      [
+        "Way to go!",
+        "やったね!",
+        "You passed the test? Way to go!",
+        "テスト受かったの?やったね!",
+        "🙌"
+      ],
+      [
+        "I'm proud of you.",
+        "誇りに思うよ",
+        "You worked so hard. I'm proud of you.",
+        "すごくがんばったね。誇りに思う",
+        "🥹"
+      ],
+      [
+        "Good for you!",
+        "よかったね!",
+        "You got the job? Good for you!",
+        "仕事決まったの?よかったね!",
+        "👍"
+      ]
+    ],
+    "closing": "今日だれかに1つ言ってみよう😊",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 24,
+    "title": "TOEICで出る「お知らせ」英語5選",
+    "hook": "Part 4 でよく聞くフレーズ📢",
+    "items": [
+      [
+        "May I have your attention?",
+        "お知らせいたします",
+        "May I have your attention, please?",
+        "皆さまにお知らせいたします",
+        "📣"
+      ],
+      [
+        "until further notice",
+        "追ってお知らせするまで",
+        "The pool is closed until further notice.",
+        "プールは当面の間休業です",
+        "🔒"
+      ],
+      [
+        "closed for renovation",
+        "改装のため休業",
+        "The café is closed for renovation.",
+        "カフェは改装のため休業中",
+        "🏗️"
+      ],
+      [
+        "Please note that",
+        "ご注意ください",
+        "Please note that the office closes early today.",
+        "本日は早めに閉まりますのでご注意ください",
+        "📝"
+      ],
+      [
+        "for more information",
+        "詳しくは",
+        "For more information, visit our website.",
+        "詳しくはウェブサイトをご覧ください",
+        "ℹ️"
+      ]
+    ],
+    "closing": "until further notice は TOEIC の超定番📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 25,
+    "title": "やわらかく断る英語5選",
+    "hook": "No だけだとキツいときに🙅‍♀️",
+    "items": [
+      [
+        "I'll pass.",
+        "やめとく",
+        "Karaoke tonight? I think I'll pass.",
+        "今夜カラオケ?やめとこうかな",
+        "🙏"
+      ],
+      [
+        "take a rain check",
+        "また今度にする",
+        "Can I take a rain check on dinner?",
+        "夕食、また今度にしてもいい?",
+        "☔"
+      ],
+      [
+        "Maybe next time.",
+        "また次回ね",
+        "I'm busy today. Maybe next time!",
+        "今日は忙しいんだ。また次回ね!",
+        "😌"
+      ],
+      [
+        "I'm afraid I can't.",
+        "残念ながらできない",
+        "I'm afraid I can't make it on Friday.",
+        "残念ながら金曜は行けません",
+        "🙇"
+      ],
+      [
+        "I'd rather not.",
+        "できれば遠慮したい",
+        "I'd rather not talk about it.",
+        "その話はできればしたくない",
+        "🤚"
+      ]
+    ],
+    "closing": "rain check は「雨で中止になった試合の振替券」が由来☔",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 26,
+    "title": "TOEICで出る「社内イベント」英語5選",
+    "hook": "会社のイベント、英語でなんて言う?🎉",
+    "items": [
+      [
+        "a farewell party",
+        "送別会",
+        "We're having a farewell party for Ken.",
+        "ケンの送別会をする予定",
+        "👋"
+      ],
+      [
+        "a company picnic",
+        "社内ピクニック",
+        "The company picnic is next Saturday.",
+        "社内ピクニックは来週の土曜",
+        "🧺"
+      ],
+      [
+        "an awards ceremony",
+        "表彰式",
+        "She received a prize at the awards ceremony.",
+        "彼女は表彰式で賞をもらった",
+        "🏆"
+      ],
+      [
+        "a retirement party",
+        "退職記念パーティー",
+        "Everyone came to his retirement party.",
+        "みんな彼の退職パーティーに来た",
+        "🎂"
+      ],
+      [
+        "volunteer to",
+        "進んで〜する",
+        "I volunteered to plan the event.",
+        "イベントの企画を自分から引き受けた",
+        "🙋"
+      ]
+    ],
+    "closing": "farewell(さよなら)と fare(運賃)、似てるけど別物📝",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 27,
+    "title": "動物が出てくる英語イディオム5選",
+    "hook": "直訳するとかわいいのに、意味はまじめ🐱",
+    "items": [
+      [
+        "let the cat out of the bag",
+        "秘密をうっかりもらす",
+        "He let the cat out of the bag about the gift.",
+        "彼がプレゼントのことをうっかりばらした",
+        "🐈"
+      ],
+      [
+        "the elephant in the room",
+        "みんな気づいてるのに触れない問題",
+        "No one talked about the elephant in the room.",
+        "誰もその問題に触れなかった",
+        "🐘"
+      ],
+      [
+        "Hold your horses.",
+        "ちょっと落ち着いて",
+        "Hold your horses! We haven't decided yet.",
+        "落ち着いて!まだ決めてないよ",
+        "🐴"
+      ],
+      [
+        "A little bird told me.",
+        "うわさで聞いたよ",
+        "A little bird told me it's your birthday.",
+        "今日誕生日だって、うわさで聞いたよ",
+        "🐦"
+      ],
+      [
+        "be like a bear with a sore head",
+        "不機嫌である",
+        "He's like a bear with a sore head today.",
+        "今日の彼、すごく不機嫌",
+        "🐻"
+      ]
+    ],
+    "closing": "どの動物がお気に入り?🐾",
+    "book": {
+      "name": "大学入試 飛躍のフレーズ IDIOMATIC 300",
+      "note": "よくある言い回しを、英文ごと覚えられる。問題300問つき",
+      "url": "https://link.amazon/B0eHBRPkB"
+    }
   }
 ]
