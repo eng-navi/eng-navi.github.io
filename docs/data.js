@@ -2091,5 +2091,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 108,
+    "text": "Her curiosity about space knows no bounds; she reads every article she can find.",
+    "target": "knows no bounds",
+    "glossary": [
+      "curiosity：好奇心",
+      "X know no bounds：Xには際限がない",
+      "every article she can find：見つけられる記事は全部"
+    ],
+    "translation": "彼女の宇宙への好奇心は果てしない。見つけた記事は全部読んでしまう。",
+    "explanation": "「X know no bounds」は「Xには際限がない、とどまるところを知らない」という意味です。\nbounds は「限界、境界」のことで、好奇心や欲など、人の気持ちや性質に使われることが多い表現です。",
+    "audio": "audio/q108.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
