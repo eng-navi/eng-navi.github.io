@@ -118,7 +118,7 @@ def procrastinate():
     return img
 
 
-def explain_card():
+def explain_card(sc):
     """解説:ターゲット単語+例文+今回出てきた単語。"""
     img = Image.new("RGB", (m.W, m.H), BG)
     d = ImageDraw.Draw(img)
@@ -126,16 +126,14 @@ def explain_card():
         d.line([(x, 0), (x, m.H)], fill=(225, 220, 212), width=2)
     for y in range(0, m.H, 54):
         d.line([(0, y), (m.W, y)], fill=(225, 220, 212), width=2)
-    d.text((m.W // 2, 200), "procrastinate", font=m.EN(118), fill=m.INK, anchor="mm")
+    d.text((m.W // 2, 200), sc["word"], font=m.EN(118), fill=m.INK, anchor="mm")
     d.line(m.wob([(200, 270), (880, 264)], amp=2), fill=(200, 52, 48), width=7)
-    d.text((m.W // 2, 350), "= (やるべきことを)先延ばしにする", font=m.JP(52), fill=(200, 52, 48), anchor="mm")
-    d.text((m.W // 2, 450), "英検準1級レベル", font=m.JP(30), fill=(130, 120, 110), anchor="mm")
-    d.text((m.W // 2, 560), "I always procrastinate on my taxes.", font=m.EN(42), fill=m.INK, anchor="mm")
-    d.text((m.W // 2, 615), "(税金の手続きを、いつも後回しにしてしまう)", font=m.JP(30), fill=(120, 110, 105), anchor="mm")
+    d.text((m.W // 2, 350), f"= {sc['meaning']}", font=m.JP(52), fill=(200, 52, 48), anchor="mm")
+    d.text((m.W // 2, 450), sc["level"], font=m.JP(30), fill=(130, 120, 110), anchor="mm")
+    d.text((m.W // 2, 560), sc["ex_en"], font=m.EN(42), fill=m.INK, anchor="mm")
+    d.text((m.W // 2, 615), f"({sc['ex_ja']})", font=m.JP(30), fill=(120, 110, 105), anchor="mm")
     d.text((140, 740), "今回出てきた単語", font=m.JP(36), fill=m.INK, anchor="lm")
-    words = [("due", "(提出物などが)期限の"), ("under pressure", "追い込まれて、プレッシャーの中で"),
-             ("priorities", "優先順位、優先事項"), ("merely", "ただ〜にすぎない"), ("deadline", "締め切り")]
-    for i, (en, ja) in enumerate(words):
+    for i, (en, ja) in enumerate(sc["words"]):
         y = 820 + i * 78
         d.text((160, y), en, font=m.EN(44), fill=m.INK, anchor="lm")
         d.text((560, y), ja, font=m.JP(30), fill=(110, 100, 95), anchor="lm")
@@ -144,14 +142,86 @@ def explain_card():
     return img
 
 
+def mic(d, x, y, s=1.0):
+    d.line([(x, y), (x + 34 * s, y + 70 * s)], fill=(60, 60, 70), width=int(10 * s))
+    d.ellipse([x - 18 * s, y - 22 * s, x + 18 * s, y + 14 * s], fill=(190, 190, 200), outline=m.INK, width=3)
+
+
+def sparkle(d, x, y, r=14, col=(240, 190, 60)):
+    d.polygon([(x, y - r), (x + r * 0.3, y - r * 0.3), (x + r, y), (x + r * 0.3, y + r * 0.3), (x, y + r),
+               (x - r * 0.3, y + r * 0.3), (x - r, y), (x - r * 0.3, y - r * 0.3)], fill=col)
+
+
+def reluctant():
+    img, boxes, pw, ph = m.comic("reluctant")
+    # 1:部長のカラオケに誘われる
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 51)
+    m.owl(d, x0 + pw * 0.28, y0 + ph * 0.76, 110, "happy")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.76, 110, "normal", hat_on=False)
+    bot = small_bubble(d, (x0 + 12, y0 + 12, x0 + pw - 12, 0), (x0 + pw * 0.28, y0 + ph * 0.6),
+                       "The boss invited us to his\nkaraoke party tonight.\nAre you coming?", "部長が今夜カラオケに誘ってくれたよ", 1)
+    small_bubble(d, (x0 + 12, bot + 10, x0 + pw - 12, 0), (x0 + pw * 0.74, y0 + ph * 0.6),
+                 "Hmm... I'm a bit reluctant.", "うーん…ちょっと気が進まない", 2)
+    # 2:理由
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 52)
+    m.owl(d, x0 + pw * 0.26, y0 + ph * 0.78, 110, "shock")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.76, 120, "smug", hat_on=False)
+    m.sweat(d, x0 + pw * 0.88, y0 + ph * 0.56)
+    bot = small_bubble(d, (x0 + 12, y0 + 14, x0 + pw * 0.75, 0), (x0 + pw * 0.26, y0 + ph * 0.62),
+                       "Why? You love singing!", "なんで?歌うの好きじゃん!", 3)
+    small_bubble(d, (x0 + pw * 0.2, bot + 10, x0 + pw - 12, 0), (x0 + pw * 0.74, y0 + ph * 0.6),
+                 "He always sings for\nthree hours straight.", "部長、毎回3時間ぶっ通しで歌うの", 4)
+    # 3:部長、やる気満々
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 53)
+    m.capybara(d, x0 + pw * 0.56, y0 + ph * 0.74, 175, "calm")
+    mic(d, x0 + pw * 0.26, y0 + ph * 0.66, 1.2)
+    for sx, sy in ((0.14, 0.5), (0.86, 0.52), (0.78, 0.9)):
+        sparkle(d, x0 + pw * sx, y0 + ph * sy)
+    small_bubble(d, (x0 + 12, y0 + 14, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + ph * 0.56),
+                 "Tonight's set list: 42 songs.\nAttendance is mandatory.", "今夜は42曲。出席は必須だ", 5)
+    m.sfx(img, (x0 + pw * 0.82, y0 + ph * 0.42), "*sparkle*", 28, (200, 140, 60), 8)
+    # 4:二人とも
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 54)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.76, 115, "smug")
+    m.penguin(d, x0 + pw * 0.72, y0 + ph * 0.76, 115, "smug", hat_on=False)
+    bot = small_bubble(d, (x0 + 12, y0 + 12, x0 + pw * 0.8, 0), (x0 + pw * 0.3, y0 + ph * 0.6),
+                       "Now I'm reluctant, too.", "…ぼくも気が進まなくなった", 6)
+    small_bubble(d, (x0 + pw * 0.2, bot + 10, x0 + pw - 12, 0), (x0 + pw * 0.72, y0 + ph * 0.6),
+                 "...Let's pretend\nwe have a cold.", "…風邪ってことにしよう", 7)
+    m.sfx(img, (x0 + pw * 0.52, y0 + ph * 0.6), "*cough*", 28, (110, 120, 140), -6)
+    d = ImageDraw.Draw(img)
+    d.text((m.W - 50, m.H - 30), "@yonkoma_eigo", font=m.EN(30), fill=(160, 150, 140), anchor="rm")
+    return img
+
+
 SCRIPTS = {
     "procrastinate": dict(
         draw=procrastinate, word="procrastinate", hook="先延ばしグセ、ある?",
+        meaning="(やるべきことを)先延ばしにする", level="英検準1級レベル",
+        ex_en="I always procrastinate on my taxes.", ex_ja="税金の手続きを、いつも後回しにしてしまう",
+        words=[("due", "(提出物などが)期限の"), ("under pressure", "追い込まれて、プレッシャーの中で"),
+               ("priorities", "優先順位、優先事項"), ("merely", "ただ〜にすぎない"), ("deadline", "締め切り")],
         panels=[[("navi", "Your report is due tomorrow. Shouldn't you get started?"), ("pen", "Relax. I work better under pressure.")],
                 [("navi", "You said that yesterday! Stop procrastinating!")],
                 [("pen", "I'm not procrastinating. I'm just reorganizing my priorities.")],
                 [("boss", "Zzz... deadlines are merely suggestions."), ("navi", "Not you too, Boss!")]],
         explain=[("navi", "Procrastinate."), ("pen", "I always procrastinate on my taxes.")],
+    ),
+    "reluctant": dict(
+        draw=reluctant, word="reluctant", hook="行きたくない誘い、ある?",
+        meaning="気が進まない、しぶしぶの", level="英検2級〜準1級レベル",
+        ex_en="He was reluctant to admit his mistake.", ex_ja="彼は自分のミスを認めるのに気が進まなかった",
+        words=[("invite", "招待する、誘う"), ("~ straight", "〜ぶっ通しで、連続で"), ("attendance", "出席"),
+               ("mandatory", "必須の、義務の"), ("pretend", "〜のふりをする")],
+        panels=[[("navi", "The boss invited us to his karaoke party tonight. Are you coming?"), ("pen", "Hmm... I'm a bit reluctant.")],
+                [("navi", "Why? You love singing!"), ("pen", "He always sings for three hours straight.")],
+                [("boss", "Tonight's set list: forty-two songs. Attendance is mandatory.")],
+                [("navi", "Now I'm reluctant, too."), ("pen", "...Let's pretend we have a cold.")]],
+        explain=[("navi", "Reluctant."), ("pen", "He was reluctant to admit his mistake.")],
     ),
 }
 
@@ -198,7 +268,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     comic = sc["draw"]()
     boxes = comic.info["boxes"]
-    card = explain_card()
+    card = explain_card(sc)
     comic.save(OUT / f"{name}_1.png")
     card.save(OUT / f"{name}_2.png")
     mr.load_env()
