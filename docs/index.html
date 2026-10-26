@@ -349,6 +349,12 @@
   .homepage .foot { margin-top: 40px; }
 
   /* セール・無料体験の一言(吹き出し) */
+  /* 長押しで並べかえ */
+  .reveal [data-block] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+  .reveal [data-block].dragging { position: relative; z-index: 2; border-radius: 12px; background: var(--bg); box-shadow: 0 10px 28px rgba(0,0,0,.18); transform: scale(1.02); transition: transform .15s, box-shadow .15s; }
+  .reveal.sorting [data-block]:not(.dragging) { opacity: .55; }
+  /* 段落の最後に1〜2文字だけ残る改行を避ける */
+  p, h3, .rec a small, .nudge span { text-wrap: pretty; }
   .tip { position: relative; display: block; width: fit-content; max-width: 100%; margin: 10px 0 9px; padding: 6px 12px; border-radius: 10px;
     background: var(--hl); color: var(--accent-ink); font-size: 12px; font-weight: 700; font-style: normal; line-height: 1.5; }
   .tip::after { content: ""; position: absolute; left: 22px; bottom: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: var(--hl); }
@@ -664,9 +670,10 @@
   }
   const promoTip = (it) => {
     const p = promo(it);
-    return p ? `<span class="tip ${p.hot ? "hot" : ""}">${p.hot ? "＼ " : ""}${esc(p.text)}${p.hot ? " ／" : ""}${p.note ? `<small>${esc(p.note)}</small>` : ""}</span>` : "";
+    return p ? `<span class="tip ${p.hot ? "hot" : ""}">${p.hot ? "＼ " : ""}${nb(p.text)}${p.hot ? " ／" : ""}${p.note ? `<small>${esc(p.note)}</small>` : ""}</span>` : "";
   };
-  const recLink = (it) => `${promoTip(it)}<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${esc(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
+  const nb = window.nb || esc;
+  const recLink = (it) => `${promoTip(it)}<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${nb(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
 
   // 全問チャレンジは、どこまで進んだかを端末に記録して続きから再開できる
   let allMode = false;
@@ -726,7 +733,7 @@
           <div class="row"><span>答え・解説の位置</span>${seg("pos", [["below", "選択肢の下"], ["top", "英文のすぐ下"]], V.pos || "below")}</div>
           <div class="row"><span>答えのあとの並び</span>${seg("order", [["std", "訳→解説"], ["exp", "解説を先に"]], V.order || "std")}</div>
           <div class="row"><span>解説</span>${seg("open", [["auto", "まちがえた時だけ開く"], ["always", "いつも開く"]], V.open || "auto")}</div>
-          <p style="padding:2px 10px 6px;font-size:10px;letter-spacing:0">並びは次の問題から反映されます</p>
+          <p style="padding:2px 10px 6px;font-size:10px;letter-spacing:0;line-height:1.6">並びは次の問題から反映されます。<br>答えのあとの訳・音声・解説は、長押ししてドラッグでも並べかえられます</p>
         </div>
       </div>`;
     return `<div class="toggles" id="toggles">${view}${music}${timer}${sound}</div>`;
@@ -750,6 +757,7 @@
     menu.querySelectorAll("[data-view]").forEach((b) => (b.onclick = () => {
       const V = window.VIEW || (window.VIEW = {});
       V[b.dataset.view] = b.dataset.v;
+      if (b.dataset.view === "order") delete V.blocks;
       try { localStorage.setItem("view", JSON.stringify(V)); } catch (e) {}
       const h = document.documentElement;
       h.dataset.fs = V.fs || "m";
@@ -950,9 +958,9 @@
     sinceNudge = show ? 0 : sinceNudge + 1;
     const p = pickFor(q);
     const nudge = !p ? "" : !show
-      ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>この分野の参考書${(promo(p.item) || {}).hot ? `<em class="hot-badge">${esc(promo(p.item).text)}</em>` : ""}<b>${esc(p.item.name)}</b></span><i>›</i></a>${pix(p.item)}`
+      ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>この分野の参考書${(promo(p.item) || {}).hot ? `<em class="hot-badge">${nb(promo(p.item).text)}</em>` : ""}<b>${nb(p.item.name)}</b></span><i>›</i></a>${pix(p.item)}`
       : `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow">
-          <small>PR</small><em>${esc(p.hook)}</em><b>${esc(p.item.name)}</b>${p.item.note ? `<span>${esc(p.item.note)}</span>` : ""}
+          <small>PR</small><em>${nb(p.hook)}</em><b>${nb(p.item.name)}</b>${p.item.note ? `<span>${esc(p.item.note)}</span>` : ""}
           <span class="cta-row">${promoTip(p.item)}<i>${/amazon|amzn/.test(p.item.url) ? (promo(p.item) || {}).hot ? "セール価格を見る" : "Amazonで中身を見る" : "無料で試してみる"} →</i></span></a>${pix(p.item)}`;
     const V = window.VIEW || {};
     return `<div data-block="exp">
@@ -1048,17 +1056,75 @@
   }
 
   // 答えのあとの並び(表示の設定)。order: std=訳→音声→解説 / exp=解説を先に。pos: below=選択肢の下 / top=英文のすぐ下
+  // blocks: 長押しで並べかえた順(["ja", "listen", "exp"] など)。あれば order より優先する
+  const blockOf = (el) => el.dataset.block || (el.classList.contains("ja") ? "ja" : el.matches(".listen, .listen-grid") ? "listen" : el.classList.contains("gloss") ? "gloss" : "");
   function arrange(after) {
     const V = window.VIEW || {};
     const box = after.querySelector(".reveal");
-    const exp = box && box.querySelector('[data-block="exp"]');
-    if (exp && V.order === "exp") {
-      const head = box.querySelector(".verdict") || box.firstElementChild;
-      if (head && head.classList.contains("verdict")) head.after(exp);
-      else box.prepend(exp);
+    if (box) {
+      const els = [...box.children].filter((el) => (el.dataset.block = blockOf(el)));
+      if (Array.isArray(V.blocks) && els.length > 1) {
+        const rank = (el) => { const i = V.blocks.indexOf(el.dataset.block); return i < 0 ? 99 : i; };
+        let prev = els[0].previousElementSibling;
+        els.slice().sort((a, b) => rank(a) - rank(b)).forEach((el) => { prev ? prev.after(el) : box.prepend(el); prev = el; });
+      } else {
+        const exp = box.querySelector('[data-block="exp"]');
+        if (exp && V.order === "exp") {
+          const head = box.querySelector(".verdict") || box.firstElementChild;
+          if (head && head.classList.contains("verdict")) head.after(exp);
+          else box.prepend(exp);
+        }
+      }
+      bindSort(box);
     }
     const q = app.querySelector(".q");
     if (q && V.pos === "top") q.after(after);
+  }
+
+  // 訳・音声・解説を長押し(0.4秒)して、上下にドラッグで並べかえる。並びは端末に保存して次の問題でも使う
+  let sorting = null, dropped = false;
+  document.addEventListener("touchmove", (e) => { if (sorting) e.preventDefault(); }, { passive: false });
+  document.addEventListener("click", (e) => { if (dropped) { e.preventDefault(); e.stopPropagation(); dropped = false; } }, true);
+  function bindSort(box) {
+    let timer = null, y0 = 0;
+    const blocks = () => [...box.children].filter((el) => el.dataset.block);
+    const cancel = () => { clearTimeout(timer); timer = null; };
+    box.addEventListener("pointerdown", (e) => {
+      const el = e.target.closest("[data-block]");
+      if (!el || el.parentElement !== box || blocks().length < 2 || e.button > 0) return;
+      y0 = e.clientY;
+      timer = setTimeout(() => {
+        sorting = el;
+        el.classList.add("dragging");
+        box.classList.add("sorting");
+        if (navigator.vibrate) navigator.vibrate(15);
+      }, 400);
+    });
+    box.addEventListener("pointermove", (e) => {
+      if (!sorting) { if (timer && Math.abs(e.clientY - y0) > 8) cancel(); return; }
+      e.preventDefault();
+      const others = blocks().filter((b) => b !== sorting);
+      const below = others.find((b) => { const r = b.getBoundingClientRect(); return e.clientY < r.top + r.height / 2; });
+      if (below) { if (below.previousElementSibling !== sorting) below.before(sorting); }
+      else if (others.length) others[others.length - 1].after(sorting);
+    });
+    const end = () => {
+      cancel();
+      if (!sorting) return;
+      sorting.classList.remove("dragging");
+      box.classList.remove("sorting");
+      sorting = null;
+      dropped = true;
+      setTimeout(() => (dropped = false), 300);
+      const V = window.VIEW || (window.VIEW = {});
+      const now = blocks().map((b) => b.dataset.block);
+      V.blocks = [...now, ...(V.blocks || []).filter((k) => !now.includes(k))];
+      try { localStorage.setItem("view", JSON.stringify(V)); } catch (e) {}
+      trackEvent("view_setting", { key: "blocks", value: now.join(">") });
+    };
+    box.addEventListener("pointerup", end);
+    box.addEventListener("pointercancel", end);
+    box.addEventListener("contextmenu", (e) => { if (timer || sorting) e.preventDefault(); });
   }
 
   function answer(q, choice) {
@@ -1195,20 +1261,20 @@
         <p class="h">${missed.length ? "あなたへのおすすめ" : "さらに上を目指すなら"}</p>
         <div class="rec">
           <span class="pr">PR</span>
-          <h3>${esc(rec.title)}</h3>
+          <h3>${nb(rec.title)}</h3>
           ${rec.items.map((it) => recLink(it).replace("<a ", '<a data-place="result_weak" ')).join("")}
         </div>` : ""}
       ${SPEAK ? `
         <div class="rec">
           <span class="pr">PR</span>
-          <h3>${esc(SPEAK.title)}</h3>
+          <h3>${nb(SPEAK.title)}</h3>
           <p class="rec-lead">文法で正解できても、会話ではとっさに出てこない…という人は多いです。声に出す練習を足すと、知っている英文が使える英文に変わります。</p>
           ${SPEAK.items.map(recLink).join("")}
         </div>` : ""}
       ${ABROAD ? `
         <div class="rec">
           <span class="pr">PR</span>
-          <h3>✈️ 海外で英語を使ってみたい人へ</h3>
+          <h3>✈️ <span class="nb">海外で英語を使ってみたい人へ</span></h3>
           <p class="rec-lead">${esc(ABROAD.lead)}</p>
           ${recLink(ABROAD.item)}
         </div>` : ""}

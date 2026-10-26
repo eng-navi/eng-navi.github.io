@@ -5,6 +5,7 @@
 """
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -12,6 +13,11 @@ ROOT = Path(__file__).parent
 SITE = ROOT / "docs"
 SITE_URL = "https://eng-navi.github.io"
 VOICES = {"us_f": "🇺🇸 女性", "us_m": "🇺🇸 男性", "uk_f": "🇬🇧 女性", "uk_m": "🇬🇧 男性"}
+
+
+def nb(s):
+    """言葉の切れ目(空白・読点・かっこの前)でだけ改行する"""
+    return re.sub(r"[(（]?[^ 、。・(（]+[、。・]*|[(（]", lambda m: f'<span class="nb">{m.group(0)}</span>', e(s or ""))
 
 
 def e(s):
@@ -50,7 +56,7 @@ def page(lst):
     book = f"""
   <section class="book">
     <p class="bk-h">このフレーズをもっと覚えるなら <span>PR</span></p>
-    <a href="{e(b['url'])}" target="_blank" rel="noopener sponsored nofollow"><b>{e(b['name'])}</b><small>{e(b['note'])}</small></a>
+    <a href="{e(b['url'])}" target="_blank" rel="noopener sponsored nofollow"><b>{nb(b['name'])}</b><small>{e(b['note'])}</small></a>
   </section>""" if b else ""
     voices = "".join(f'<button data-v="{k}">{v}</button>' for k, v in VOICES.items())
     title = f"{lst['title']}|音声つき|eng_navi"
@@ -100,7 +106,11 @@ def page(lst):
   .play {{ margin-top: 10px; border: 0; background: #282828; color: #fff; border-radius: 999px; padding: 7px 16px; font-size: 13px; cursor: pointer; }}
   .all {{ display: block; width: 100%; margin-top: 18px; padding: 14px; border: 0; border-radius: 14px; background: #c83430; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }}
   .cta {{ display: block; margin-top: 12px; padding: 14px; border-radius: 14px; background: #282828; color: #fff; text-align: center; text-decoration: none; font-weight: 500; }}
+  .cta small {{ display: block; margin-top: 2px; font-size: 11px; font-weight: 400; opacity: .7; }}
   .sub {{ display: block; margin-top: 10px; padding: 13px; border-radius: 14px; border: 1px solid #ccc; background: #fff; text-align: center; text-decoration: none; color: #555; font-size: 14px; }}
+  .nb {{ display: inline-block; }}
+  .lp small {{ display: block; font-size: 12px; color: #888; }} .lp b {{ display: block; margin-top: 2px; font-size: 15px; color: #282828; }}
+  .lp em {{ display: inline-block; margin-top: 8px; padding: 3px 12px; border-radius: 999px; background: #c83430; color: #fff; font-style: normal; font-size: 12px; font-weight: 700; }}
   .foot {{ margin-top: 26px; font-size: 10px; color: #aaa; text-align: center; line-height: 1.7; }} .foot a {{ color: inherit; }}
 </style>
 </head>
@@ -117,7 +127,7 @@ def page(lst):
   <button class="all" id="all">▶ {len(lst['items'])}個まとめて聞く</button>
   {book}
   <div id="listen-pr"></div>
-  <a class="cta" href="/">英文法クイズに挑戦する(無料・100問以上)</a>
+  <a class="cta" href="/">英文法クイズに挑戦する<small>無料・100問以上</small></a>
   <a class="sub" href="https://www.threads.net/@eng_navi" target="_blank" rel="noopener">Threads で毎日1つ @eng_navi</a>
   <p class="foot">Instagram・Threads <a href="https://www.instagram.com/eng_navi/" target="_blank" rel="noopener">@eng_navi</a></p>
 </main>
@@ -130,7 +140,8 @@ def page(lst):
     gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
   }}
   const L = window.LISTEN;
-  if (L) document.getElementById("listen-pr").outerHTML = `<a class="sub" href="${{L.item.url}}" target="_blank" rel="noopener sponsored nofollow">PR ${{L.lead}}:<b>${{L.item.name}}</b>(${{L.item.note.split("。").pop()}})</a>` +
+  const perk = L && ((window.PERKS || {{}})[Object.keys(ITEMS).find((k) => ITEMS[k] === L.item)] || L.item.note.split("。").pop());
+  if (L) document.getElementById("listen-pr").outerHTML = `<a class="sub lp" href="${{L.item.url}}" target="_blank" rel="noopener sponsored nofollow"><small>PR ${{nb(L.lead)}}</small><b>${{nb(L.item.name)}}</b>${{perk ? `<em>${{nb(perk)}}</em>` : ""}}</a>` +
     (L.item.pixel ? `<img src="${{L.item.pixel}}" width="1" height="1" alt="" style="position:absolute;opacity:0">` : "");
   let voice = "us_f";
   try {{ voice = localStorage.getItem("voice") || "us_f"; }} catch (e) {{}}

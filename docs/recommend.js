@@ -140,3 +140,9 @@ window.ANALYTICS_ID = "G-3FH38ZQJDF";
 window.LINKS = {
   instagram: "https://www.instagram.com/eng_navi/",
 };
+
+// 長い商品名・説明は、言葉の切れ目(空白・読点・句点・中黒・かっこの前)でだけ改行する。スマホで「フレー/ズ」のように切れないように
+window.nb = (s) => String(s || "")
+  .replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))
+  .replace(/[(（]?[^ 、。・(（]+[、。・]*|[(（]/g, (w) => `<span class="nb">${w}</span>`);
+document.head.insertAdjacentHTML("beforeend", "<style>.nb{display:inline-block}</style>");
