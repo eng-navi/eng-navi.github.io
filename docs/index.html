@@ -202,19 +202,25 @@
   [data-series="green"] .tag { color: #fff; background: var(--accent); }
 
   /* ピンク:読めた？(任意) */
-  .self { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--sub); }
+  .self { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; font-size: 11px; color: var(--sub); }
+  .self span { flex-basis: 100%; }
   .self button { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); font-size: 13px; color: var(--sub); }
   .self button[aria-pressed="true"] { background: var(--hl); border-color: var(--hl); color: var(--accent-ink); font-weight: 500; }
 
   /* 解説の下のさりげないおすすめ */
   .nudge {
-    display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 12px 14px; border-radius: 12px;
-    background: color-mix(in srgb, var(--hl) 45%, transparent); text-decoration: none; color: var(--ink); font-size: 13px; line-height: 1.5;
+    position: relative; display: block; margin-top: 18px; padding: 16px 16px 14px 18px; border-radius: 14px;
+    background: var(--card); border: 1.5px solid var(--accent); text-decoration: none; color: var(--ink);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .05);
   }
-  .nudge small { font-size: 10px; color: #9a9a9a; letter-spacing: .1em; flex: none; }
-  .nudge span { flex: 1; }
-  .nudge b { font-weight: 500; }
-  .nudge::after { content: "›"; font-size: 20px; color: var(--accent-ink); }
+  .nudge::before { content: ""; position: absolute; inset: 12px auto 12px 0; width: 4px; border-radius: 0 4px 4px 0; background: var(--accent-ink); }
+  .nudge small { position: absolute; top: 10px; right: 12px; font-size: 10px; color: #9a9a9a; letter-spacing: .1em; }
+  .nudge em { display: block; font-style: normal; font-size: 12px; color: var(--accent-ink); font-weight: 500; padding-right: 30px; }
+  .nudge b { display: block; margin-top: 4px; font-size: calc(16px * var(--fs, 1)); font-weight: 700; line-height: 1.5; }
+  .nudge span { display: block; margin-top: 4px; font-size: 12px; color: var(--sub); line-height: 1.6; }
+  .nudge i { display: inline-block; margin-top: 12px; padding: 8px 16px; border-radius: 999px; font-style: normal; font-size: 13px; font-weight: 700;
+    background: var(--ink); color: var(--bg); }
+  .nudge:active { transform: scale(.99); }
 
   .primary {
     display: block; width: 100%; margin-top: 24px; padding: 16px; border-radius: 14px;
@@ -309,9 +315,14 @@
   .pin.show { transform: translate(-50%, 0); }
   .pin small { display: block; font-family: var(--sans); font-size: 11px; color: var(--sub); margin-bottom: 2px; }
   /* 3問に1回のカード以外の問題に出す、1行だけの控えめなリンク */
-  .slim { display: block; margin-top: 12px; font-size: 12px; color: var(--sub); text-decoration: none; }
-  .slim b { font-weight: 500; color: var(--accent-ink); }
-  .slim small { font-size: 10px; color: #9a9a9a; margin-right: 4px; }
+  .slim { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 11px 14px; border-radius: 12px;
+    background: color-mix(in srgb, var(--hl) 55%, transparent); text-decoration: none; color: var(--ink); font-size: 12px; }
+  .slim span { flex: 1; color: var(--sub); }
+  .slim b { display: block; font-size: 14px; font-weight: 700; color: var(--ink); margin-top: 1px; }
+  .slim i { font-style: normal; font-size: 20px; color: var(--accent-ink); }
+  .slim small { font-size: 10px; color: #9a9a9a; }
+  .extras { margin-top: 26px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .extras .reel { margin: 0; font-size: 11px; color: var(--sub); }
 
   /* ---- トップページ:余白を広めに、すっきり ---- */
   .homepage { display: flex; flex-direction: column; flex: 1; }
@@ -907,15 +918,22 @@
     sinceNudge = show ? 0 : sinceNudge + 1;
     const p = pickFor(q);
     const nudge = !p ? "" : !show
-      ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small>参考書:<b>${esc(p.item.name)}</b> ›</a>${pix(p.item)}`
-      : p ? `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(p.hook)}<br><b>${esc(p.item.name)}</b></span></a>${pix(p.item)}` : "";
+      ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>この分野の参考書<b>${esc(p.item.name)}</b></span><i>›</i></a>${pix(p.item)}`
+      : `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow">
+          <small>PR</small><em>${esc(p.hook)}</em><b>${esc(p.item.name)}</b>${p.item.note ? `<span>${esc(p.item.note)}</span>` : ""}
+          <i>${/amazon|amzn/.test(p.item.url) ? "Amazonで中身を見る" : "詳しく見る"} →</i></a>${pix(p.item)}`;
     const V = window.VIEW || {};
     return `<div data-block="exp">
       <details ${open || V.open === "always" ? "open" : ""}>
         <summary>解説を見る</summary>
         <div class="exp">${q.category ? `<span class="tag">${esc(q.category)}</span>\n` : ""}${esc(q.explanation || "")}</div>
       </details>
-      ${nudge}
+      ${nudge}</div>`;
+  }
+
+  // 一番下に小さく置く、補足のリンク
+  function extrasBlock(q) {
+    return `<div class="extras">
       ${q.permalink ? `<a class="reel" href="${esc(q.permalink)}" target="_blank" rel="noopener">このリールを Instagram で見る</a>` : ""}
       <a class="reel" href="q/${q.no}/">この問題の解説ページ(共有用)</a></div>`;
   }
@@ -1040,6 +1058,7 @@
         ${explanationBlock(q, !ok)}
         <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
         <button class="ghost" data-home>トップに戻る</button>
+        ${extrasBlock(q)}
       </div>`;
     arrange(after);
     bindListen(q);
@@ -1063,13 +1082,14 @@
         ${listenBlock(q)}
         ${gloss ? `<ul class="gloss">${gloss}</ul>` : ""}
         ${explanationBlock(q, true)}
+        <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
+        <button class="ghost" data-home>トップに戻る</button>
         <div class="self">
-          <span>読めた？</span>
+          <span>読めた?(むずかしかったものは復習リストへ)</span>
           <button data-ok="1" aria-pressed="false">読めた</button>
           <button data-ok="0" aria-pressed="false">むずかしかった</button>
         </div>
-        <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
-        <button class="ghost" data-home>トップに戻る</button>
+        ${extrasBlock(q)}
       </div>`;
     after.querySelector("[data-home]").onclick = renderStart;
     arrange(after);

@@ -18,7 +18,7 @@ const ITEMS = {
   hanon: { name: "英語のハノン 初級", note: "わかる文法を「口から出る」ところまで落とし込むドリル", url: AMAZON("B09NY53725", "aaa9fc05b00ffc5bcfd72de9d08bdca0") },
   progrit: { name: "PROGRIT(プログリット)", note: "何をどれだけやるかを一緒に決めてくれる英語コーチング", ...A8("3H5XC5+AUKF5U+3NP4+60OXE", "www19") },
   liberty: { name: "LIBERTY ENGLISH", note: "TOEIC・TOEFL・大学受験のハイスコアを目指す人向けの英語スクール", ...A8("3Z6RWJ+CTF05E+4MWC+5YRHE", "www11") },
-  scramble: { name: "スクランブル英文法・語法 5th Edition", note: "eng_navi の文法クイズは、この本の出題ポイントをもとに作っています", url: AMAZON("B0G47KNCKX", "0ce4d1d04fdd489440ff1dce4f987caf") },
+  scramble: { name: "スクランブル英文法・語法 5th Edition", note: "入試頻出の文法・語法を1冊で。解説が簡潔で、音声つき", url: AMAZON("B0G47KNCKX", "0ce4d1d04fdd489440ff1dce4f987caf") },
   eureka: { name: "大学入試 英文法 Eureka!", note: "暗記だけでは解けない「差がつく」文法問題を約250問", url: AMAZON("B09MTFCF6W", "ba588e8cadb139770f883ff2963f9530") },
   idiomatic: { name: "飛躍のフレーズ IDIOMATIC 300", note: "よくある言い回しを、英文ごと覚えられる。問題300問つき", url: "https://link.amazon/B0eHBRPkB" },
   reading: { name: "基本文法から学ぶ 英語リーディング教本", note: "文法を土台に、英文を正確に読めるようになる定番の1冊", url: AMAZON("B0B2VJ8BL5", "d769300620a82fda9aee29d46db9f42e") },
