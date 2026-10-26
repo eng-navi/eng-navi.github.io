@@ -84,7 +84,8 @@
   .sound { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--accent-ink); padding: 8px 0 8px 6px; white-space: nowrap; }
   .sound svg { width: 18px; height: 18px; }
   .sound[aria-pressed="false"] { color: #b9b9b9; }
-  .bgm-wrap { position: relative; }
+  .bgm-wrap { position: static; }
+  .toggles { position: relative; }
   /* 問題画面の狭い画面では、右上はアイコンだけにして「トップ」と重ならないようにする */
   @media (max-width: 420px) {
     .lefthead ~ .toggles .lbl { display: none; }
@@ -179,6 +180,10 @@
   .verdict { font-size: calc(22px * var(--fs, 1)); font-weight: 700; letter-spacing: .06em; color: var(--accent-ink); }
   .verdict.ng { color: var(--ng); }
   .ja { margin-top: 10px; font-size: calc(15px * var(--fs, 1)); line-height: 1.8; color: var(--sub); }
+  .ig { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 12px 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); text-decoration: none; color: var(--ink); font-size: 13px; line-height: 1.5; }
+  .ig svg { width: 30px; height: 30px; flex: none; color: #c13584; }
+  .ig b { font-weight: 700; }
+  .ig small { display: block; font-size: 11px; color: var(--sub); }
   .ja-tag { display: inline-block; margin-right: 8px; padding: 0 7px; border-radius: 4px; font-size: 11px; line-height: 1.8; vertical-align: 1px;
     color: var(--accent-ink); background: var(--hl); font-weight: 500; }
   .gloss { margin-top: 14px; display: grid; gap: 6px; font-size: calc(14px * var(--fs, 1)); line-height: 1.6; }
@@ -651,6 +656,10 @@
           <div class="row"><span>文字の大きさ</span>${seg("fs", [["s", "小"], ["m", "標準"], ["l", "大"], ["xl", "特大"]], V.fs || "m")}</div>
           <div class="row"><span>画面の色</span>${seg("theme", [["auto", "自動"], ["light", "ライト"], ["dark", "ダーク"]], V.theme || "auto")}</div>
           <div class="row"><span>英文のハイライト</span>${seg("mark", [["on", "あり"], ["off", "なし"]], V.mark || "on")}</div>
+          <div class="row"><span>答え・解説の位置</span>${seg("pos", [["below", "選択肢の下"], ["top", "英文のすぐ下"]], V.pos || "below")}</div>
+          <div class="row"><span>答えのあとの並び</span>${seg("order", [["std", "訳→解説"], ["exp", "解説を先に"]], V.order || "std")}</div>
+          <div class="row"><span>解説</span>${seg("open", [["auto", "まちがえた時だけ開く"], ["always", "いつも開く"]], V.open || "auto")}</div>
+          <p style="padding:2px 10px 6px;font-size:10px;letter-spacing:0">並びは次の問題から反映されます</p>
         </div>
       </div>`;
     return `<div class="toggles" id="toggles">${view}${music}${timer}${sound}</div>`;
@@ -763,6 +772,10 @@
       <div class="top"><span></span>${toggles()}</div>
       <p class="num">${sorted.length}</p>
       <h1 class="title">eng_navi<br>英語クイズ</h1>
+      <a class="ig" href="${esc(LINKS.instagram || "https://www.instagram.com/eng_navi/")}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        <span><b>Instagram @eng_navi</b>と連動しています<small>リールで出た問題が、毎日ここに追加されます</small></span>
+      </a>
       <p class="lead">リールで出している問題の<b>続き</b>です。過去の問題も<b>すべて無料・登録不要</b>。<br>タップで答え合わせ、<b>音声つき</b>で解説も読めます。</p>
       <button class="primary" id="latest">最新の問題をとく</button>
       <button class="ghost strong" id="all">${loadAllIdx() > 0 && loadAllIdx() < sorted.length ? `全問チャレンジの続きから(${loadAllIdx() + 1}問目〜)` : `全問チャレンジ(${sorted.length}問を1番から)`}</button>
@@ -863,14 +876,15 @@
     const nudge = !p ? "" : !show
       ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small>参考書:<b>${esc(p.item.name)}</b> ›</a>${pix(p.item)}`
       : p ? `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>${esc(p.hook)}<br><b>${esc(p.item.name)}</b></span></a>${pix(p.item)}` : "";
-    return `
-      <details ${open ? "open" : ""}>
+    const V = window.VIEW || {};
+    return `<div data-block="exp">
+      <details ${open || V.open === "always" ? "open" : ""}>
         <summary>解説を見る</summary>
         <div class="exp">${q.category ? `<span class="tag">${esc(q.category)}</span>\n` : ""}${esc(q.explanation || "")}</div>
       </details>
       ${nudge}
       ${q.permalink ? `<a class="reel" href="${esc(q.permalink)}" target="_blank" rel="noopener">このリールを Instagram で見る</a>` : ""}
-      <a class="reel" href="q/${q.no}/">この問題の解説ページ(共有用)</a>`;
+      <a class="reel" href="q/${q.no}/">この問題の解説ページ(共有用)</a></div>`;
   }
 
   // ---- 制限時間(右上でON/OFF。時間が来ても答えは開かず、そのまま考えてよい) ----
@@ -950,6 +964,20 @@
     if (h) h.onclick = renderStart;
   }
 
+  // 答えのあとの並び(表示の設定)。order: std=訳→音声→解説 / exp=解説を先に。pos: below=選択肢の下 / top=英文のすぐ下
+  function arrange(after) {
+    const V = window.VIEW || {};
+    const box = after.querySelector(".reveal");
+    const exp = box && box.querySelector('[data-block="exp"]');
+    if (exp && V.order === "exp") {
+      const head = box.querySelector(".verdict") || box.firstElementChild;
+      if (head && head.classList.contains("verdict")) head.after(exp);
+      else box.prepend(exp);
+    }
+    const q = app.querySelector(".q");
+    if (q && V.pos === "top") q.after(after);
+  }
+
   function answer(q, choice) {
     stopTimer();
     const timer = document.getElementById("timer");
@@ -980,6 +1008,7 @@
         <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
         <button class="ghost" data-home>トップに戻る</button>
       </div>`;
+    arrange(after);
     bindListen(q);
     if (soundOn) speak(q);
     document.getElementById("next").onclick = next;
@@ -1010,6 +1039,7 @@
         <button class="ghost" data-home>トップに戻る</button>
       </div>`;
     after.querySelector("[data-home]").onclick = renderStart;
+    arrange(after);
     bindListen(q);
     if (soundOn) speak(q);
     // 「読めた？」は答えなくても進める。選んだ場合だけ復習リストに反映する
