@@ -31,6 +31,18 @@ STORIES = [
     ("stuck_in_traffic", "get stuck in traffic", "渋滞につかまる", "Sorry I'm late. I got stuck in traffic.", "遅れてごめん、渋滞にはまってた", "遅刻の言い訳の定番"),
     ("keep_me_awake", "keep me awake", "目がさえる", "Coffee at night keeps me awake.", "夜にコーヒー飲むと眠れなくなる", "keep+人+状態=〜のままにする"),
     ("free_of_charge", "free of charge", "無料で", "Parking is free of charge after 6 p.m.", "18時以降は駐車無料", "TOEICの定番。free だけでもOK"),
+    ("might_as_well", "might as well", "(どうせなら)〜しようか", "The bus is late. We might as well walk.", "バス来ないね。歩いちゃおうか", "「どっちでもいいけど」くらいの軽い提案"),
+    ("bring_myself", "can't bring myself to", "〜する気になれない", "I can't bring myself to clean my room.", "部屋を片づける気になれない", "bring myself=自分を連れていく"),
+    ("hit_it_off", "hit it off", "すぐ意気投合する", "We hit it off at the party.", "パーティーですぐ意気投合した", "初対面で気が合ったときに"),
+    ("on_my_way", "I'm on my way.", "今向かってる", "I'm on my way! Be there in five.", "今向かってる!5分で着く", "待ち合わせの神フレーズ"),
+    ("go_viral", "go viral", "バズる", "Her cat video went viral overnight.", "彼女の猫動画、一晩でバズった", "viral=ウイルスのように広がる"),
+    ("call_it_a_day", "call it a day", "今日はここまでにする", "It's late. Let's call it a day.", "遅いし、今日はここまでにしよう", "仕事の終わりにひとこと"),
+    ("rain_check", "take a rain check", "また今度にする", "Can I take a rain check on dinner?", "夕食、また今度にしてもいい?", "雨で中止の試合の振替券が由来"),
+    ("piece_of_cake", "a piece of cake", "楽勝", "The test was a piece of cake.", "テストは楽勝だった", "ケーキ1切れくらい簡単"),
+    ("hold_your_horses", "Hold your horses!", "ちょっと落ち着いて", "Hold your horses! We haven't decided yet.", "落ち着いて!まだ決めてないよ", "馬をおさえて=はやる気持ちを抑えて"),
+    ("nailed_it", "You nailed it!", "完ぺき!", "Your speech was great. You nailed it!", "スピーチ最高。完ぺき!", "nail=くぎを一発で打ち込む"),
+    ("from_what_i_hear", "from what I hear", "聞いたところでは", "From what I hear, the new cafe is great.", "聞いた話だと、新しいカフェすごくいいらしい", "うわさ話の前置きに"),
+    ("stay_fit", "stay fit", "健康を保つ", "I walk to work to stay fit.", "健康のために歩いて通勤してる", "fit=体の調子がいい"),
 ]
 
 
@@ -50,8 +62,13 @@ def card(phrase, top, mid, bottom, accent=False):
     d.text((W // 2, 760), phrase, font=sb.EN(size), fill=sb.INK, anchor="ms")
     lw = sb.EN(size).getlength(phrase) / 2
     sb.underline(d, W // 2 - lw, W // 2 + lw, 800, w=8)
+    import manga as m
+    y = 1000
     for i, line in enumerate(mid):
-        d.text((W // 2, 1000 + i * 90), line, font=(sb.JP(70) if i == 0 and accent else sb.JP(48)), fill=(sb.RED if i == 0 and accent else sb.INK), anchor="ms")
+        f = sb.JP(70) if i == 0 and accent else sb.JP(48)
+        jp = any(ord(c) > 0x3000 for c in line)
+        h = m.draw_fit(d, (W // 2, y), line, f, sb.RED if i == 0 and accent else sb.INK, width=W - 240, jp=jp) if line else 60
+        y += h + 20
     d.text((W // 2, 1620), bottom, font=sb.JP(40), fill=(120, 120, 120), anchor="ms")
     d.text((W // 2, 1780), "@eng_navi", font=sb.EN(46), fill=(150, 150, 150), anchor="ms")
     sb.star(d, 150, 260, 26)

@@ -31,6 +31,35 @@ JP = lambda s: ImageFont.truetype(str(F / "KleeOne-SemiBold.ttf"), s)
 SFX = lambda s: ImageFont.truetype(str(F / "PermanentMarker-Regular.ttf"), s)
 
 
+SAFE = 120  # 左右の余白。小さい画面(iPhone SE など)や Instagram の表示でも欠けないように
+
+
+def fit_lines(text, font, max_w, jp=False):
+    """max_w に収まるよう改行する(英語は単語の区切り、日本語は文字ごと)。"""
+    lines, cur = [], ""
+    tokens = list(text) if jp else text.split(" ")
+    for t in tokens:
+        trial = cur + t if jp else f"{cur} {t}".strip()
+        if font.getlength(trial) <= max_w or not cur:
+            cur = trial
+        else:
+            lines.append(cur)
+            cur = t
+    return lines + [cur]
+
+
+def draw_fit(d, xy, text, font, fill, width=None, jp=False, gap=1.25):
+    """中央そろえで、はみ出す場合は改行して描く。描いた高さを返す。"""
+    width = width or (W - SAFE * 2)
+    lines = fit_lines(text, font, width, jp)
+    step = font.size * gap
+    y = xy[1] - step * (len(lines) - 1) / 2
+    for line in lines:
+        d.text((xy[0], y), line, font=font, fill=fill, anchor="mm")
+        y += step
+    return step * len(lines)
+
+
 def wob(pts, amp=1.6, seed=0):
     """手描き風に、線を少しだけ揺らす。"""
     r = random.Random(seed)
@@ -303,8 +332,8 @@ def explain(phrase, meaning, en, ja, visual):
     d.text((W // 2, 230), phrase, font=EN(size), fill=INK, anchor="mm")
     d.line(wob([(220, 310), (860, 304)], amp=2), fill=(200, 52, 48), width=7)
     d.text((W // 2, 400), f"= {meaning}", font=JP(70), fill=(200, 52, 48), anchor="mm")
-    d.text((W // 2, 590), en, font=EN(46), fill=INK, anchor="mm")
-    d.text((W // 2, 650), f"({ja})", font=JP(34), fill=(120, 110, 105), anchor="mm")
+    h = draw_fit(d, (W // 2, 580), en, EN(46), INK)
+    draw_fit(d, (W // 2, 580 + h / 2 + 40), f"({ja})", JP(34), (120, 110, 105), jp=True)
     visual(d)
     d.text((W // 2, 1200), "🔊 音声つきの10選は、プロフィールのリンクから".replace("🔊 ", ""), font=JP(36), fill=INK, anchor="mm")
     d.text((W // 2, 1255), "保存して、使ってみてね", font=JP(32), fill=(200, 52, 48), anchor="mm")
