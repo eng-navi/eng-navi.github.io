@@ -313,6 +313,30 @@
   .slim b { font-weight: 500; color: var(--accent-ink); }
   .slim small { font-size: 10px; color: #9a9a9a; margin-right: 4px; }
 
+  /* ---- トップページ:余白を広めに、すっきり ---- */
+  .homepage { display: flex; flex-direction: column; flex: 1; }
+  .homepage .num { margin-top: 28px; }
+  .homepage .title { margin-top: 18px; font-size: 30px; letter-spacing: .08em; line-height: 1.4; }
+  .homepage .lead { margin-top: 18px; font-size: 14px; line-height: 2; color: var(--sub); letter-spacing: .02em; }
+  .homepage .cta { margin-top: 40px; display: grid; gap: 12px; }
+  .homepage .cta .primary, .home .cta .ghost { margin: 0; }
+  .homepage .h { margin-top: 64px; font-size: 11px; letter-spacing: .2em; color: var(--sub); font-weight: 500; }
+  .homepage .goals { gap: 12px; margin-top: 16px; }
+  .homepage .goal { min-height: 112px; padding: 18px 16px 16px 24px; border-color: var(--line); }
+  .homepage .more-wrap { margin-top: 48px; border-top: 1px solid var(--line); }
+  .homepage .more { margin: 0; border-top: 0; }
+  .homepage .more summary { padding: 18px 2px; font-size: 13px; color: var(--ink); font-weight: 400; letter-spacing: .04em; }
+  .homepage .links { border-top: 1px solid var(--line); }
+  .homepage .links a { display: flex; justify-content: space-between; align-items: center; padding: 18px 2px; border-bottom: 1px solid var(--line);
+    color: var(--ink); text-decoration: none; font-size: 13px; letter-spacing: .04em; }
+  .homepage .links small { margin-left: 10px; font-size: 11px; color: var(--sub); }
+  .homepage .links i { font-style: normal; color: var(--sub); }
+  .homepage .follow { margin-top: 88px; text-align: center; }
+  .homepage .follow a { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); text-decoration: none; font-size: 13px; letter-spacing: .08em; }
+  .homepage .follow svg { width: 18px; height: 18px; }
+  .homepage .follow p { margin-top: 8px; font-size: 11px; color: var(--sub); letter-spacing: .04em; }
+  .homepage .foot { margin-top: 40px; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
   }
@@ -768,36 +792,45 @@
         <b>${SERIES[key].goal}</b><span>${SERIES[key].desc}</span><small>${bySeries[key].length}問</small>
       </button>` : "";
 
-    app.innerHTML = `
+    app.innerHTML = `<div class="homepage">
       <div class="top"><span></span>${toggles()}</div>
       <p class="num">${sorted.length}</p>
       <h1 class="title">eng_navi<br>英語クイズ</h1>
-      <a class="ig" href="${esc(LINKS.instagram || "https://www.instagram.com/eng_navi/")}" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-        <span><b>Instagram @eng_navi</b>と連動しています<small>リールで出た問題が、毎日ここに追加されます</small></span>
-      </a>
-      <p class="lead">リールで出している問題の<b>続き</b>です。過去の問題も<b>すべて無料・登録不要</b>。<br>タップで答え合わせ、<b>音声つき</b>で解説も読めます。</p>
-      <button class="primary" id="latest">最新の問題をとく</button>
-      <button class="ghost strong" id="all">${loadAllIdx() > 0 && loadAllIdx() < sorted.length ? `全問チャレンジの続きから(${loadAllIdx() + 1}問目〜)` : `全問チャレンジ(${sorted.length}問を1番から)`}</button>
-      ${missed.length ? `<button class="ghost strong" id="missed">前に間違えた問題を復習する(${missed.length}問)</button>` : ""}
+      <p class="lead">リールで出している問題の続き。<br>過去の問題もすべて無料・登録不要、音声つき。</p>
+      <div class="cta">
+        <button class="primary" id="latest">最新の問題をとく</button>
+        <button class="ghost strong" id="all">${loadAllIdx() > 0 && loadAllIdx() < sorted.length ? `全問チャレンジの続きから(${loadAllIdx() + 1}問目〜)` : `全問チャレンジ(${sorted.length}問を1番から)`}</button>
+        ${missed.length ? `<button class="ghost strong" id="missed">前に間違えた問題を復習する(${missed.length}問)</button>` : ""}
+      </div>
       <p class="h">目的からえらぶ</p>
       <div class="goals">
         ${goal("blue")}${goal("green")}${goal("pink")}
         <button class="goal random" id="random"><b>実力試し</b><span>全シリーズからランダムに10問</span><small>シャッフル</small></button>
       </div>
+      <div class="more-wrap">
       ${Object.keys(cats).length ? `
         <details class="more">
           <summary>文法の項目からえらぶ</summary>
           <div class="chips">${Object.keys(cats).map((c) => `<button class="chip" data-cat="${esc(c)}">${esc(c)}<small>${cats[c].length}</small></button>`).join("")}</div>
         </details>` : ""}
-      <details class="more" style="margin-top:0;border-top:0">
+      <details class="more">
         <summary>番号からえらぶ</summary>
         <div class="chips">${ranges.map((r, i) => `<button class="chip" data-range="${i}">No.${r[0].no}〜${r[r.length - 1].no}</button>`).join("")}</div>
       </details>
-      <a class="ghost strong" href="list/">🔊 今週のフレーズ10選(音声つき)</a>
-      <a class="ghost" href="q/">問題一覧(答えと解説つき)</a>
+      </div>
+      <nav class="links">
+        <a href="list/"><span>フレーズ10選<small>音声つき</small></span><i>→</i></a>
+        <a href="q/"><span>問題一覧<small>答えと解説つき</small></span><i>→</i></a>
+      </nav>
       <div class="spacer"></div>
-      ${footer()}`;
+      <div class="follow">
+        <a href="${esc(LINKS.instagram || "https://www.instagram.com/eng_navi/")}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor"/></svg>
+          @eng_navi
+        </a>
+        <p>新しい問題は、Instagram のリールから毎日。</p>
+      </div>
+      ${footer()}</div>`;
     bindSound();
     window.scrollTo({ top: 0 });
 
