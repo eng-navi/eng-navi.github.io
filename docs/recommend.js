@@ -27,6 +27,10 @@ const ITEMS = {
   speak: { name: "スピーク(AI英会話アプリ)", note: "AIを相手に、声に出して英会話の練習。7日間無料で試せます", ...A8("45KI4S+B1PKVM+5PZU+5YRHE", "www10") },
   torabit: { name: "TORAbit(トラビット)", note: "シャドーイングと瞬間英作文を、AIの採点つきで1日5分から", ...A8("3ZI1Y9+3LSK76+3N0O+TS3OI", "www11") },
   yumekana: { name: "夢カナ留学", note: "ワーホリ・留学の無料カウンセリング(18〜30歳が対象)", ...A8("3Z2Q3B+AL1HHE+4Q46+5YJRM", "www19") },
+  nativecamp: { name: "ネイティブキャンプ(オンライン英会話)", note: "予約なしで、話したいときにすぐレッスン。7日間無料で試せます", ...A8("3BDOYJ+6NCBIA+35VG+64JTE", "www13") },
+  sankei: { name: "産経オンライン英会話Plus", note: "日本人講師も選べる。無料体験レッスン4回つき", ...A8("3H3U53+6W9TKY+2TV8+HWXLE", "www15") },
+  audible: { name: "Audible(オーディオブック)", note: "洋書の朗読を聞き流して、英語の耳をつくる。30日間無料体験", ...A8("4B1K5S+AJUM9U+5TB0+5YRHE", "www10") },
+  dive: { name: "リゾートバイト ダイブ", note: "住み込みで働きながら、英語を使う職場もさがせる", ...A8("4BEOXU+8C4SI+4Z92+626XU", "www15") },
   oversight: { name: "大学入試英単語 OVERSIGHT", note: "「見たことはあるのに訳せない」300語をクイズ形式で", url: AMAZON("B0H2BMN624", "c9b5d7da796b8d08904c91469500b648") },
 };
 
@@ -85,10 +89,14 @@ window.PICKS = {
 window.ITEMS = ITEMS;
 
 // 結果画面で、どのシリーズでも出す「次は話せる英語へ」
+// 候補(pool)から毎回2つを選んで出す。GA4 の link_click(label)で、どれが押されているかを比べる
 window.SPEAK = {
   title: "「わかるのに、話せない」を卒業するなら",
-  items: [ITEMS.speak, ITEMS.torabit],
+  pool: [ITEMS.speak, ITEMS.nativecamp, ITEMS.sankei, ITEMS.torabit],
 };
+window.SPEAK.items = window.SPEAK.pool.map((it) => [Math.random(), it]).sort((a, b) => a[0] - b[0]).slice(0, 2).map((x) => x[1]);
+// フレーズ集のページの下に出す「聞き流し」の一言
+window.LISTEN = { lead: "移動中に英語を聞き流すなら", item: ITEMS.audible };
 // 結果画面のいちばん下に、さりげなく1行
 window.ABROAD = {
   lead: "ワーホリや留学にちょっとでも興味があるなら、話を聞いてみるだけでも。どんな選択肢があるかがわかります。",

@@ -116,6 +116,7 @@ def page(lst):
   </ol>
   <button class="all" id="all">▶ {len(lst['items'])}個まとめて聞く</button>
   {book}
+  <div id="listen-pr"></div>
   <a class="cta" href="/">英文法クイズに挑戦する(無料・100問以上)</a>
   <a class="sub" href="https://www.threads.net/@eng_navi" target="_blank" rel="noopener">Threads で毎日1つ @eng_navi</a>
   <p class="foot">Instagram・Threads <a href="https://www.instagram.com/eng_navi/" target="_blank" rel="noopener">@eng_navi</a></p>
@@ -128,6 +129,9 @@ def page(lst):
     window.dataLayer = window.dataLayer || []; window.gtag = function () {{ dataLayer.push(arguments); }};
     gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
   }}
+  const L = window.LISTEN;
+  if (L) document.getElementById("listen-pr").outerHTML = `<a class="sub" href="${{L.item.url}}" target="_blank" rel="noopener sponsored nofollow">PR ${{L.lead}}:<b>${{L.item.name}}</b>(${{L.item.note.split("。").pop()}})</a>` +
+    (L.item.pixel ? `<img src="${{L.item.pixel}}" width="1" height="1" alt="" style="position:absolute;opacity:0">` : "");
   let voice = "us_f";
   try {{ voice = localStorage.getItem("voice") || "us_f"; }} catch (e) {{}}
   const btns = document.querySelectorAll("[data-v]");
