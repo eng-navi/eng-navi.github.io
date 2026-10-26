@@ -66,6 +66,7 @@ STYLE = """
   .ans { font-size: 20px; font-weight: 700; color: var(--ink-accent); }
   .full { font-family: "EB Garamond", serif; font-size: 20px; line-height: 1.6; margin-top: 10px; }
   .ja { color: #6b6b6b; line-height: 1.8; margin-top: 8px; font-size: 15px; }
+  .ja-tag { display: inline-block; margin-right: 8px; padding: 0 7px; border-radius: 4px; font-size: 11px; line-height: 1.8; color: var(--ink-accent); background: var(--hl); font-weight: 500; }
   .gloss { margin-top: 12px; display: grid; gap: 6px; font-size: 14px; line-height: 1.6; }
   .gloss li { list-style: none; padding-left: 12px; border-left: 3px solid var(--hl); }
   .exp { margin: 14px 0 18px; line-height: 1.9; white-space: pre-line; font-size: 15px; }
@@ -175,7 +176,7 @@ def question_page(q, prev_no, next_no, has_audio):
     <summary>{summary}</summary>
     {answer}
     <p class="full">{e(completed(q))}</p>
-    <p class="ja">{e(q.get('translation', ''))}</p>
+    <p class="ja"><span class="ja-tag">訳</span>{e(q.get('translation', ''))}</p>
     {audio}
     {f'<ul class="gloss">{gloss}</ul>' if gloss else ''}
     <div class="exp">{tag}

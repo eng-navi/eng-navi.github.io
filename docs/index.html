@@ -179,6 +179,8 @@
   .verdict { font-size: calc(22px * var(--fs, 1)); font-weight: 700; letter-spacing: .06em; color: var(--accent-ink); }
   .verdict.ng { color: var(--ng); }
   .ja { margin-top: 10px; font-size: calc(15px * var(--fs, 1)); line-height: 1.8; color: var(--sub); }
+  .ja-tag { display: inline-block; margin-right: 8px; padding: 0 7px; border-radius: 4px; font-size: 11px; line-height: 1.8; vertical-align: 1px;
+    color: var(--accent-ink); background: var(--hl); font-weight: 500; }
   .gloss { margin-top: 14px; display: grid; gap: 6px; font-size: calc(14px * var(--fs, 1)); line-height: 1.6; }
   .gloss li { list-style: none; padding-left: 12px; border-left: 3px solid var(--hl); }
   .gloss b { font-family: var(--serif); font-size: 17px; font-weight: 500; }
@@ -972,7 +974,7 @@
     after.innerHTML = `
       <div class="reveal">
         <p class="verdict ${ok ? "" : "ng"}">${ok ? "正解！" : `不正解… 正解は ${CIRCLED[q.answer - 1]}`}</p>
-        <p class="ja">${esc(q.translation || "")}</p>
+        ${q.translation ? `<p class="ja"><span class="ja-tag">訳</span>${esc(q.translation)}</p>` : ""}
         ${listenBlock(q)}
         ${explanationBlock(q, !ok)}
         <button class="primary" id="next">${idx === set.length - 1 ? "結果を見る" : "次の問題へ"}</button>
@@ -995,7 +997,7 @@
     }).join("");
     after.innerHTML = `
       <div class="reveal">
-        <p class="ja" style="margin-top:0">${esc(q.translation || "")}</p>
+        ${q.translation ? `<p class="ja" style="margin-top:0"><span class="ja-tag">訳</span>${esc(q.translation)}</p>` : ""}
         ${listenBlock(q)}
         ${gloss ? `<ul class="gloss">${gloss}</ul>` : ""}
         ${explanationBlock(q, true)}
