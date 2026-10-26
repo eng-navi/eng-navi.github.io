@@ -10,6 +10,15 @@ const A8 = (id, host) => ({
 const AMAZON = (asin, linkId) => `https://www.amazon.co.jp/dp/${asin}?tag=mokumoku70e-22&linkCode=ll2&linkId=${linkId}&language=ja_JP&ref_=as_li_ss_tl`;
 
 const ITEMS = {
+  crack10: { name: "難関大に合格する 英語長文 Crack10", note: "長文を「文と文の流れ」で読む10のルール。難関大の設問の解き方まで", url: "https://link.amazon/B0imP6GsX" },
+  shortcuts: { name: "大学受験 英文法・語法SHORTCUTS", note: "よく出る良問だけの254問。全問に正解率つきで、苦手の見極めがしやすい", url: "https://link.amazon/B0bwqM40M" },
+  takeoka_drill: { name: "読むため書くための英文法ドリル Advanced", note: "約1200問の短い記述で、文法の抜けを1つずつ確認できる", url: "https://link.amazon/B05lGU2Kg" },
+  classic_basic: { name: "基礎からの英文解釈クラシック", note: "品詞・文型・句と節を固めて、英文を「自動で」正しく読めるように", url: "https://link.amazon/B0iALvSYs" },
+  basic_lecture: { name: "Basic Lecture 動画でわかる英文法[読解入門編]", note: "いちばん最初の英文解釈に。短期間で読み切れて、動画つき", url: "https://link.amazon/B0ba1uAVC" },
+  takeoka_handbook: { name: "読むため書くための英文法ハンドブック", note: "1ポイント1ページ。竹岡先生の音声講義つきで、辞書のように引ける", url: "https://link.amazon/B00KjCWDz" },
+  jokyu: { name: "読解のための上級英文法", note: "ふつうの参考書では見落としがちな文法・語法168項目を入試の実例で", url: "https://link.amazon/B01CRYH2s" },
+  oni100: { name: "英語リーディングの鬼100則", note: "構造を論理的に読み解く100のルール。最難関・原書レベルを目指す人に", url: "https://link.amazon/B0cLN35ZV" },
+  hanon_phrase: { name: "英語のハノン フレーズ編", note: "会話劇の中のフレーズを、くり返しの口頭練習で身につける", url: "https://link.amazon/B02PMFSik" },
   setphrase: { name: "英語の壁を乗り越えるセットフレーズ1000", note: "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで", url: "https://link.amazon/B0159dCGh" },
   kikufure: { name: "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ", note: "TOEICによく出るフレーズを、音声つきで", url: "https://link.amazon/B09qOB6Ou" },
   horikoshi: { name: "堀越先生の 英文読解ガチ講義", note: "英文を「カタマリ」で読む。授業動画つき", url: "https://link.amazon/B01zLDQpI" },
@@ -42,17 +51,17 @@ window.RECOMMEND = {
   },
   英検2級: {
     title: "この文法を1冊で体系的に固めるなら",
-    items: [ITEMS.scramble],
-    up: { title: "標準レベルから一歩抜け出したい人へ", items: [ITEMS.eureka, ITEMS.scramble] },
+    items: [ITEMS.scramble, ITEMS.shortcuts],
+    up: { title: "標準レベルから一歩抜け出したい人へ", items: [ITEMS.eureka, ITEMS.takeoka_drill] },
   },
   "読解・イディオム": {
     title: "こういう表現を、もっと読めるようになるなら",
-    items: [ITEMS.idiomatic, ITEMS.reading, ITEMS.pinnacle],
-    up: { title: "難しい英文も読み切りたい人へ", items: [ITEMS.realize, ITEMS.oversight] },
+    items: [ITEMS.idiomatic, ITEMS.basic_lecture, ITEMS.classic_basic],
+    up: { title: "難しい英文も読み切りたい人へ", items: [ITEMS.crack10, ITEMS.oni100] },
   },
   default: {
     title: "英文法をまとめて固めるなら",
-    items: [ITEMS.scramble, ITEMS.studysapuri],
+    items: [ITEMS.scramble, ITEMS.shortcuts],
   },
 };
 
@@ -73,17 +82,19 @@ window.HOOKS = {
 };
 window.PICKS = {
   SERIES: {
-    TOEIC: ["studysapuri", "scramble", "hanon"],
-    英検2級: ["scramble", "hanon", "scramble", "eureka"],
-    "読解・イディオム": ["idiomatic", "reading", "idiomatic", "pinnacle", "realize", "oversight"],
+    TOEIC: ["studysapuri", "shortcuts", "scramble", "hanon", "takeoka_handbook"],
+    英検2級: ["scramble", "shortcuts", "takeoka_drill", "eureka", "takeoka_handbook"],
+    "読解・イディオム": ["idiomatic", "basic_lecture", "classic_basic", "reading", "crack10", "realize", "oni100", "jokyu", "pinnacle", "oversight"],
   },
   CATEGORY: {
-    イディオム: ["idiomatic"],
-    名詞: ["oversight", "scramble"],
-    品詞: ["scramble", "oversight"],
-    倒置: ["eureka", "scramble"],
-    関係詞: ["scramble", "eureka"],
-    仮定法: ["scramble", "hanon"],
+    イディオム: ["idiomatic", "hanon_phrase"],
+    名詞: ["oversight", "takeoka_handbook"],
+    品詞: ["classic_basic", "scramble"],
+    倒置: ["eureka", "jokyu"],
+    関係詞: ["shortcuts", "takeoka_handbook"],
+    仮定法: ["takeoka_handbook", "shortcuts"],
+    時制: ["shortcuts", "takeoka_drill"],
+    比較: ["takeoka_drill", "eureka"],
   },
 };
 window.ITEMS = ITEMS;
