@@ -10,6 +10,8 @@ const A8 = (id, host) => ({
 const AMAZON = (asin, linkId) => `https://www.amazon.co.jp/dp/${asin}?tag=mokumoku70e-22&linkCode=ll2&linkId=${linkId}&language=ja_JP&ref_=as_li_ss_tl`;
 
 const ITEMS = {
+  speak141: { name: "改訂版 英語で話す力。141のサンプル・スピーチで鍛える!", note: "賛成・反対・中立の3つの立場で、意見を英語で言う練習。スピーキング試験対策にも", url: "https://link.amazon/B0f7iQMGg" },
+  chiteki: { name: "知的な英語ネイティブが日常会話で使う表現", note: "堅苦しくない、でも幼稚でない大人の言い回し。音声つき", url: "https://link.amazon/B0aEJLNfS" },
   crack10: { name: "難関大に合格する 英語長文 Crack10", note: "長文を「文と文の流れ」で読む10のルール。難関大の設問の解き方まで", url: "https://link.amazon/B0imP6GsX" },
   shortcuts: { name: "大学受験 英文法・語法SHORTCUTS", note: "よく出る良問だけの254問。全問に正解率つきで、苦手の見極めがしやすい", url: "https://link.amazon/B0bwqM40M" },
   takeoka_drill: { name: "読むため書くための英文法ドリル Advanced", note: "約1200問の短い記述で、文法の抜けを1つずつ確認できる", url: "https://link.amazon/B05lGU2Kg" },
@@ -87,7 +89,7 @@ window.PICKS = {
     "読解・イディオム": ["idiomatic", "basic_lecture", "classic_basic", "reading", "crack10", "realize", "oni100", "jokyu", "pinnacle", "oversight"],
   },
   CATEGORY: {
-    イディオム: ["idiomatic", "hanon_phrase"],
+    イディオム: ["idiomatic", "chiteki", "hanon_phrase"],
     名詞: ["oversight", "takeoka_handbook"],
     品詞: ["classic_basic", "scramble"],
     倒置: ["eureka", "jokyu"],
@@ -103,7 +105,7 @@ window.ITEMS = ITEMS;
 // 候補(pool)から毎回2つを選んで出す。GA4 の link_click(label)で、どれが押されているかを比べる
 window.SPEAK = {
   title: "「わかるのに、話せない」を卒業するなら",
-  pool: [ITEMS.speak, ITEMS.nativecamp, ITEMS.sankei, ITEMS.torabit],
+  pool: [ITEMS.speak, ITEMS.nativecamp, ITEMS.sankei, ITEMS.torabit, ITEMS.speak141],
 };
 window.SPEAK.items = window.SPEAK.pool.map((it) => [Math.random(), it]).sort((a, b) => a[0] - b[0]).slice(0, 2).map((x) => x[1]);
 // フレーズ集のページの下に出す「聞き流し」の一言

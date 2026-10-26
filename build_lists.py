@@ -46,7 +46,7 @@ def page(lst):
       <p class="ja hide">{e(en_ja)}</p>
       <div class="btns"><button class="reveal">意味を見る</button><button class="play" data-n="{n}">▶ 聞く</button></div>
     </li>"""
-    b = lst.get("book")
+    b = lst.get("book") or DEFAULT_BOOK.get(group_of(lst))
     book = f"""
   <section class="book">
     <p class="bk-h">このフレーズをもっと覚えるなら <span>PR</span></p>
@@ -185,6 +185,14 @@ def page(lst):
 
 # フレーズ集の分類(タイトルから決める)。並びはタブの順
 GROUPS = [("daily", "日常会話"), ("toeic", "TOEIC"), ("idiom", "イディオム"), ("words", "単語")]
+
+# 本が決まっていないページに出す、分類ごとの本(リンクは docs/recommend.js と同じ)
+DEFAULT_BOOK = {
+    "daily": {"name": "知的な英語ネイティブが日常会話で使う表現", "note": "堅苦しくない、でも幼稚でない大人の言い回し。音声つき", "url": "https://link.amazon/B0aEJLNfS"},
+    "toeic": {"name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ", "note": "TOEICによく出るフレーズを、音声つきで", "url": "https://link.amazon/B09qOB6Ou"},
+    "idiom": {"name": "大学入試 飛躍のフレーズ IDIOMATIC 300", "note": "よくある言い回しを、英文ごと覚えられる。問題300問つき", "url": "https://link.amazon/B0eHBRPkB"},
+    "words": {"name": "大学入試英単語 OVERSIGHT", "note": "「見たことはあるのに訳せない」300語をクイズ形式で", "url": "https://www.amazon.co.jp/dp/B0H2BMN624?tag=mokumoku70e-22&linkCode=ll2&linkId=c9b5d7da796b8d08904c91469500b648&language=ja_JP&ref_=as_li_ss_tl"},
+}
 
 
 def group_of(lst):
