@@ -183,6 +183,97 @@ def page(lst):
 """
 
 
+# フレーズ集の分類(タイトルから決める)。並びはタブの順
+GROUPS = [("daily", "日常会話"), ("toeic", "TOEIC"), ("idiom", "イディオム"), ("words", "単語")]
+
+
+def group_of(lst):
+    t = lst["title"]
+    if "選" not in t and any(k in t for k in ("単語", "の壁", "必須", "意外な意味", "言いかえ")):
+        return "words"
+    if "イディオム" in t:
+        return "idiom"
+    if "TOEIC" in t:
+        return "toeic"
+    return "daily"
+
+
+def index_page(lists):
+    """フレーズ集の一覧。最新の1本を上に、その下は分類のタブで切り替える(増えても長くならない)。"""
+    lists = sorted(lists, key=lambda l: -l["id"])
+    newest = lists[0]
+    names = dict(GROUPS)
+    tabs = "".join(f'<button data-g="{k}">{v}<small>{sum(1 for l in lists if group_of(l) == k)}</small></button>' for k, v in GROUPS)
+    rows = "".join(
+        f'<a class="row" data-g="{group_of(l)}" href="{l["id"]}/"><span>{e(l["title"])}<small>{len(l["items"])}個・音声つき</small></span><i>→</i></a>'
+        for l in lists)
+    return f"""<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>フレーズ集(音声つき)|eng_navi</title>
+<meta name="description" content="日常会話・TOEIC・イディオム・単語のフレーズを、例文とネイティブ音声で。{len(lists)}テーマ。">
+<link rel="canonical" href="{SITE_URL}/list/">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{ background: #f5f3ef; background-image: linear-gradient(#e2e0db 1px, transparent 1px), linear-gradient(90deg, #e2e0db 1px, transparent 1px); background-size: 27px 27px; color: #282828; font-family: "Noto Sans JP", system-ui, sans-serif; }}
+  main {{ max-width: 560px; margin: 0 auto; padding: 28px 20px 56px; }}
+  .crumb {{ font-size: 12px; color: #888; }} .crumb a {{ color: inherit; }}
+  h1 {{ margin-top: 22px; font-size: 26px; letter-spacing: .06em; }}
+  .lead {{ margin-top: 10px; font-size: 13px; color: #777; line-height: 1.9; }}
+  .new {{ display: block; margin-top: 28px; padding: 18px 18px 16px; border-radius: 16px; background: #fff; text-decoration: none; color: inherit; box-shadow: 0 2px 10px rgba(0,0,0,.05); }}
+  .new em {{ font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .12em; color: #c83430; }}
+  .new b {{ display: block; margin-top: 6px; font-size: 17px; line-height: 1.5; }}
+  .new span {{ display: block; margin-top: 6px; font-family: "Kalam", cursive; font-size: 15px; color: #666; }}
+  .tabs {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 36px; padding: 4px; border-radius: 12px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.05); }}
+  .tabs button {{ border: 0; background: none; padding: 10px 0 8px; border-radius: 9px; font: inherit; font-size: 13px; color: #666; cursor: pointer; }}
+  .tabs button small {{ display: block; font-size: 10px; color: #aaa; margin-top: 1px; }}
+  .tabs button[aria-pressed="true"] {{ background: #282828; color: #fff; }}
+  .tabs button[aria-pressed="true"] small {{ color: #bbb; }}
+  .rows {{ margin-top: 14px; border-top: 1px solid #ddd9d2; }}
+  .row {{ display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 4px; border-bottom: 1px solid #ddd9d2; text-decoration: none; color: inherit; font-size: 14px; line-height: 1.5; }}
+  .row[hidden] {{ display: none; }}
+  .row small {{ display: block; font-size: 11px; color: #999; margin-top: 2px; }}
+  .row i {{ font-style: normal; color: #aaa; }}
+  .back {{ display: block; margin-top: 40px; text-align: center; font-size: 13px; color: #666; }}
+</style>
+</head>
+<body>
+<main>
+  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › フレーズ集</p>
+  <h1>フレーズ集</h1>
+  <p class="lead">Threads・ストーリーで紹介したフレーズを、例文と音声でまとめています。</p>
+  <a class="new" href="{newest['id']}/"><em>NEW</em><b>{e(newest['title'])}</b><span>{e(" / ".join(i[0] for i in newest['items'][:3]))} …</span></a>
+  <div class="tabs">{tabs}</div>
+  <nav class="rows">{rows}</nav>
+  <a class="back" href="/">英文法クイズへ →</a>
+</main>
+<script src="/recommend.js"></script>
+<script>
+  if (window.ANALYTICS_ID) {{
+    const t = document.createElement("script"); t.async = true;
+    t.src = "https://www.googletagmanager.com/gtag/js?id=" + window.ANALYTICS_ID; document.head.appendChild(t);
+    window.dataLayer = window.dataLayer || []; window.gtag = function () {{ dataLayer.push(arguments); }};
+    gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
+  }}
+  const tabs = document.querySelectorAll("[data-g]:not(.row)"), rows = document.querySelectorAll(".row");
+  function show(g) {{
+    tabs.forEach((b) => b.setAttribute("aria-pressed", b.dataset.g === g));
+    rows.forEach((r) => (r.hidden = r.dataset.g !== g));
+    try {{ localStorage.setItem("listTab", g); }} catch (e) {{}}
+  }}
+  tabs.forEach((b) => (b.onclick = () => show(b.dataset.g)));
+  let g = "{group_of(newest)}";
+  try {{ g = localStorage.getItem("listTab") || g; }} catch (e) {{}}
+  show(g);
+</script>
+</body>
+</html>
+"""
+
+
 def main():
     lists = json.loads((ROOT / "threads_lists.json").read_text())
     if "--pages" not in sys.argv:
@@ -191,14 +282,7 @@ def main():
         d = SITE / "list" / str(lst["id"])
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(page(lst))
-    # docs/list/ は最新の10選へ(ストーリーの「プロフィールのリンクから」の行き先)
-    stories = ROOT / "stories.json"
-    latest = max(int(x["key"].split("_")[0]) for x in json.loads(stories.read_text())) if stories.exists() else max(l["id"] for l in lists)
-    items = "".join(f'<li><a href="{l["id"]}/">{e(l["title"])}</a></li>' for l in sorted(lists, key=lambda l: -l["id"]))
-    (SITE / "list" / "index.html").write_text(f"""<!doctype html><html lang="ja"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>フレーズ10選|eng_navi</title>
-<meta http-equiv="refresh" content="0; url={latest}/"><link rel="canonical" href="{SITE_URL}/list/{latest}/"></head>
-<body><p>最新の10選へ移動します…</p><ul>{items}</ul></body></html>""")
+    (SITE / "list" / "index.html").write_text(index_page(lists))
     print(f"✓ 10選のページ {len(lists)} 件")
 
 
