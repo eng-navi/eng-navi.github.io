@@ -1342,5 +1342,362 @@
       "note": "よくある言い回しを、英文ごと覚えられる。問題300問つき",
       "url": "https://link.amazon/B0eHBRPkB"
     }
+  },
+  {
+    "id": 28,
+    "reveal": true,
+    "hook": "この3つ知らないと TOEIC 600点はきつい👀",
+    "title": "TOEIC 600点の壁 単語",
+    "items": [
+      [
+        "itinerary",
+        "旅程表",
+        "I emailed you the itinerary for the trip.",
+        "出張の旅程表をメールで送りました",
+        "1️⃣"
+      ],
+      [
+        "reimburse",
+        "(経費などを)払い戻す",
+        "The company will reimburse your taxi fare.",
+        "タクシー代は会社が払い戻します",
+        "2️⃣"
+      ],
+      [
+        "tentative",
+        "仮の",
+        "We set a tentative date for the meeting.",
+        "会議の仮の日程を決めた",
+        "3️⃣"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 29,
+    "reveal": true,
+    "hook": "この3つ知らないと 英検2級はまずい😳",
+    "title": "英検2級の必須単語",
+    "items": [
+      [
+        "abandon",
+        "捨てる、あきらめる",
+        "They had to abandon the plan because of the rain.",
+        "雨のせいで計画をあきらめるしかなかった",
+        "1️⃣"
+      ],
+      [
+        "abundant",
+        "豊富な",
+        "The region has abundant fresh water.",
+        "その地域は真水が豊富だ",
+        "2️⃣"
+      ],
+      [
+        "reluctant",
+        "気が進まない",
+        "She was reluctant to speak in front of the class.",
+        "彼女はクラスの前で話すのに気が進まなかった",
+        "3️⃣"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "大学入試 無敵の難単語 PINNACLE 420",
+      "note": "難しい単語で読む手が止まる人に",
+      "url": "https://link.amazon/B0CK4HSRZN"
+    }
+  },
+  {
+    "id": 30,
+    "reveal": true,
+    "hook": "TOEIC 500→600→700→800点の壁になる単語📈",
+    "title": "TOEIC スコア別の壁単語",
+    "items": [
+      [
+        "receipt",
+        "レシート、領収書",
+        "Can I have a receipt, please?",
+        "レシートをもらえますか",
+        "500"
+      ],
+      [
+        "estimate",
+        "見積もり",
+        "We asked three companies for an estimate.",
+        "3社に見積もりを頼んだ",
+        "600"
+      ],
+      [
+        "reimbursement",
+        "払い戻し",
+        "Submit the form to get reimbursement.",
+        "払い戻しには書類を出してください",
+        "700"
+      ],
+      [
+        "audit",
+        "会計監査",
+        "The annual audit starts next week.",
+        "年に一度の監査が来週始まる",
+        "800"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 31,
+    "reveal": true,
+    "hook": "fine に「罰金」の意味があるの知ってた?🤔",
+    "title": "知ってる単語の意外な意味",
+    "items": [
+      [
+        "fine",
+        "罰金",
+        "He got a fine for parking there.",
+        "そこに駐車して罰金をとられた",
+        "💴"
+      ],
+      [
+        "book",
+        "予約する",
+        "I booked a table for six.",
+        "6人で席を予約した",
+        "📚"
+      ],
+      [
+        "run",
+        "経営する",
+        "Her parents run a small bakery.",
+        "彼女の両親は小さなパン屋を経営している",
+        "🏃"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "大学入試英単語 OVERSIGHT",
+      "note": "「見たことはあるのに訳せない」単語をクイズ形式で",
+      "url": "https://link.amazon/B0H2BMN624"
+    }
+  },
+  {
+    "id": 32,
+    "reveal": true,
+    "hook": "この3つ知らないと TOEIC 700点はきつい👀",
+    "title": "TOEIC 700点の壁 単語",
+    "items": [
+      [
+        "commence",
+        "始まる、開始する",
+        "The ceremony will commence at 10 a.m.",
+        "式典は午前10時に始まります",
+        "1️⃣"
+      ],
+      [
+        "expedite",
+        "(手続きを)早める",
+        "Can you expedite the shipping?",
+        "発送を早めてもらえますか",
+        "2️⃣"
+      ],
+      [
+        "comply with",
+        "(規則に)従う",
+        "All staff must comply with the new rules.",
+        "全スタッフは新しい規則に従う必要がある",
+        "3️⃣"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 33,
+    "reveal": true,
+    "hook": "英検2級と準1級の差は、この言いかえ✍️",
+    "title": "英検2級 → 準1級の言いかえ",
+    "items": [
+      [
+        "increase → escalate",
+        "(状況が)悪化・激化する",
+        "The argument quickly escalated.",
+        "口論はすぐにヒートアップした",
+        "↗️"
+      ],
+      [
+        "important → crucial",
+        "きわめて重要な",
+        "Sleep is crucial for memory.",
+        "睡眠は記憶にとってきわめて重要だ",
+        "⭐"
+      ],
+      [
+        "problem → dilemma",
+        "板ばさみ、難しい選択",
+        "I'm in a dilemma about which job to take.",
+        "どっちの仕事にするか板ばさみになってる",
+        "🤯"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "大学入試 無敵の難単語 PINNACLE 420",
+      "note": "難しい単語で読む手が止まる人に",
+      "url": "https://link.amazon/B0CK4HSRZN"
+    }
+  },
+  {
+    "id": 34,
+    "reveal": true,
+    "hook": "address に「取り組む」の意味があるの知ってた?🤔",
+    "title": "知ってる単語の意外な意味②",
+    "items": [
+      [
+        "address",
+        "(問題に)取り組む",
+        "We need to address this issue soon.",
+        "この問題に早く取り組まないと",
+        "📮"
+      ],
+      [
+        "express",
+        "急行の",
+        "Take the express train to save time.",
+        "時間を節約するなら急行に乗って",
+        "🚄"
+      ],
+      [
+        "novel",
+        "斬新な",
+        "That's a novel idea!",
+        "それは斬新なアイデアだね!",
+        "💡"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "大学入試英単語 OVERSIGHT",
+      "note": "「見たことはあるのに訳せない」単語をクイズ形式で",
+      "url": "https://link.amazon/B0H2BMN624"
+    }
+  },
+  {
+    "id": 35,
+    "reveal": true,
+    "hook": "この3つ知らないと 英検準1級はまずい😳",
+    "title": "英検準1級の必須単語",
+    "items": [
+      [
+        "deteriorate",
+        "悪化する",
+        "His health deteriorated over the winter.",
+        "冬の間に彼の体調は悪化した",
+        "1️⃣"
+      ],
+      [
+        "meticulous",
+        "とても細かくて丁寧な",
+        "She is meticulous about her notes.",
+        "彼女はノートの取り方がとても丁寧だ",
+        "2️⃣"
+      ],
+      [
+        "alleviate",
+        "(痛み・不安を)やわらげる",
+        "A short walk can alleviate stress.",
+        "少し歩くだけでストレスがやわらぐ",
+        "3️⃣"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "大学入試 無敵の難単語 PINNACLE 420",
+      "note": "難しい単語で読む手が止まる人に",
+      "url": "https://link.amazon/B0CK4HSRZN"
+    }
+  },
+  {
+    "id": 36,
+    "reveal": true,
+    "hook": "この3つ知らないと TOEIC 500点もあやしい👀",
+    "title": "TOEIC 500点の基本単語",
+    "items": [
+      [
+        "invoice",
+        "請求書",
+        "I'll send the invoice by email.",
+        "請求書はメールで送ります",
+        "1️⃣"
+      ],
+      [
+        "venue",
+        "(イベントの)会場",
+        "The venue for the party has changed.",
+        "パーティーの会場が変わりました",
+        "2️⃣"
+      ],
+      [
+        "refund",
+        "返金",
+        "You can get a full refund within 30 days.",
+        "30日以内なら全額返金されます",
+        "3️⃣"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 37,
+    "reveal": true,
+    "hook": "patient に「患者」の意味があるの知ってた?🤔",
+    "title": "知ってる単語の意外な意味③",
+    "items": [
+      [
+        "patient",
+        "患者",
+        "The doctor sees forty patients a day.",
+        "その医者は1日に40人の患者を診る",
+        "🏥"
+      ],
+      [
+        "present",
+        "出席している",
+        "Everyone was present at the meeting.",
+        "会議には全員出席していた",
+        "🙋"
+      ],
+      [
+        "sound",
+        "しっかりした、的確な",
+        "She gave me some sound advice.",
+        "彼女は的確なアドバイスをくれた",
+        "💪"
+      ]
+    ],
+    "closing": "いくつわかった?コメントで教えてね💬",
+    "book": {
+      "name": "大学入試英単語 OVERSIGHT",
+      "note": "「見たことはあるのに訳せない」単語をクイズ形式で",
+      "url": "https://link.amazon/B0H2BMN624"
+    }
   }
 ]

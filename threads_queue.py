@@ -33,10 +33,16 @@ def list_posts(list_id):
     lst = next(l for l in json.loads(LISTS.read_text()) if l["id"] == list_id)
     items = lst["items"]
     mark = lambda i: items[i][4] if len(items[i]) > 4 else CIRCLED[i]
-    head = (f"{lst['hook']}\n\n" if lst.get("hook") else "") + f"【{lst['title']}】\n\n" + \
-        "\n".join(f"{mark(i)} {it[0]} = {it[1]}" for i, it in enumerate(items))
-    blocks = [f"{mark(i)} {it[0]}\n{it[2]}\n({it[3]})" for i, it in enumerate(items)]
-    posts, cur = [], "例文で覚えよう✍️"
+    if lst.get("reveal"):  # 「知らないとまずい」型:最初は単語だけ見せ、意味はツリーで
+        head = f"{lst['hook']}\n\n" + "\n".join(f"{mark(i)} {it[0]}" for i, it in enumerate(items)) + "\n\n意味、ぜんぶわかる?答えはツリーへ👇"
+        blocks = [f"{mark(i)} {it[0]} = {it[1]}\n{it[2]}\n({it[3]})" for i, it in enumerate(items)]
+        cur = "答え合わせ✅"
+    else:
+        head = (f"{lst['hook']}\n\n" if lst.get("hook") else "") + f"【{lst['title']}】\n\n" + \
+            "\n".join(f"{mark(i)} {it[0]} = {it[1]}" for i, it in enumerate(items))
+        blocks = [f"{mark(i)} {it[0]}\n{it[2]}\n({it[3]})" for i, it in enumerate(items)]
+        cur = "例文で覚えよう✍️"
+    posts = []
     for b in blocks:
         if len(cur) + len(b) + 2 > LIMIT:
             posts.append(cur)

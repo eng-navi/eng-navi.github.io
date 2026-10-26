@@ -138,3 +138,4 @@ work could wait：仕事は後回しにできる
 - 元データとメモは affiliates.md、サイトに出すものは docs/recommend.js(リンク集ページ docs/links/ も自動で同じ内容)
 - 「話せない」枠は4候補(スピーク・ネイティブキャンプ・産経・TORAbit)から毎回2つ。GA4 の link_click(label)で比べ、押されないものは入れ替える
 - キャンペーン確認:3日に1回の cloud routine(https://claude.ai/code/routines/trig_01FsPKuKzzuTDpM4XSCa8S4F)がスマホに通知。「キャンペーンの素材を作って」と言われたら、Book Review 系のストーリーと Threads の #PR 投稿を作る
+- Threads の型:5選・10選(list)/「知らないとまずい」「スコアの壁」「意外な意味」(list の reveal:最初は単語だけ、意味はツリーで)/投票クイズ/イディオム画像/4コマ。同じ型を続けない
