@@ -216,7 +216,7 @@
   .nudge::before { content: ""; position: absolute; inset: 12px auto 12px 0; width: 4px; border-radius: 0 4px 4px 0; background: var(--accent-ink); }
   .nudge small { position: absolute; top: 10px; right: 12px; font-size: 10px; color: #9a9a9a; letter-spacing: .1em; }
   .nudge em { display: block; font-style: normal; font-size: 12px; color: var(--accent-ink); font-weight: 500; padding-right: 30px; }
-  .nudge b { display: block; margin-top: 4px; font-size: calc(16px * var(--fs, 1)); font-weight: 700; line-height: 1.5; }
+  .nudge b { display: block; margin-top: 4px; padding-right: 24px; font-size: calc(16px * var(--fs, 1)); font-weight: 700; line-height: 1.5; }
   .nudge span { display: block; margin-top: 4px; font-size: 12px; color: var(--sub); line-height: 1.6; }
   .nudge i { display: inline-block; margin-top: 12px; padding: 8px 16px; border-radius: 999px; font-style: normal; font-size: 13px; font-weight: 700;
     background: var(--ink); color: var(--bg); }
@@ -349,10 +349,20 @@
   .homepage .foot { margin-top: 40px; }
 
   /* セール・無料体験の一言(吹き出し) */
-  /* 長押しで並べかえ */
-  .reveal [data-block] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
-  .reveal [data-block].dragging { position: relative; z-index: 2; border-radius: 12px; background: var(--bg); box-shadow: 0 10px 28px rgba(0,0,0,.18); transform: scale(1.02); transition: transform .15s, box-shadow .15s; }
-  .reveal.sorting [data-block]:not(.dragging) { opacity: .55; }
+  /* 長押しで並べかえ。指についてくるように動き、まわりはなめらかに場所をゆずる */
+  .reveal [data-block] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; position: relative; border-radius: 12px; transition: opacity .2s, transform .35s cubic-bezier(.2,.8,.2,1); }
+  .reveal [data-block].pressing { transform: scale(.985); }
+  .reveal [data-block].dragging { z-index: 2; background: var(--bg); box-shadow: 0 14px 34px rgba(0,0,0,.2); transition: box-shadow .2s; will-change: transform; }
+  .reveal.sorting [data-block]:not(.dragging) { opacity: .6; }
+  .reveal [data-block].peek { animation: peek 1.4s cubic-bezier(.3,.7,.3,1) 2; }
+  @keyframes peek { 0%, 100% { transform: none; box-shadow: none; } 30%, 55% { transform: translateY(-6px) scale(1.01); box-shadow: 0 10px 24px rgba(0,0,0,.14); } }
+  .sort-hint { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 9px 12px; border-radius: 12px; background: var(--hl); color: var(--accent-ink); font-size: 12px; line-height: 1.6; animation: hintIn .5s ease both; }
+  .sort-hint b { font-weight: 700; }
+  .sort-hint .hand { font-size: 16px; animation: hold 1.6s ease-in-out infinite; }
+  .sort-hint button { margin-left: auto; border: 0; background: none; color: inherit; font-size: 16px; padding: 0 2px; opacity: .6; cursor: pointer; }
+  @keyframes hold { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(2px) scale(.9); } 70% { transform: translateY(-5px); } }
+  @keyframes hintIn { from { opacity: 0; transform: translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) { .reveal [data-block], .reveal [data-block].peek, .sort-hint, .sort-hint .hand { animation: none; transition: none; } }
   /* 段落の最後に1〜2文字だけ残る改行を避ける */
   p, h3, .rec a small, .nudge span { text-wrap: pretty; }
   .tip { position: relative; display: block; width: fit-content; max-width: 100%; margin: 10px 0 9px; padding: 6px 12px; border-radius: 10px;
@@ -1081,50 +1091,98 @@
     if (q && V.pos === "top") q.after(after);
   }
 
-  // 訳・音声・解説を長押し(0.4秒)して、上下にドラッグで並べかえる。並びは端末に保存して次の問題でも使う
+  // 訳・音声・解説を長押し(0.35秒)して、上下にドラッグで並べかえる。並びは端末に保存して次の問題でも使う
   let sorting = null, dropped = false;
   document.addEventListener("touchmove", (e) => { if (sorting) e.preventDefault(); }, { passive: false });
   document.addEventListener("click", (e) => { if (dropped) { e.preventDefault(); e.stopPropagation(); dropped = false; } }, true);
+  const EASE = "transform .3s cubic-bezier(.2,.8,.2,1)";
+  // 入れかえで動いたブロックを、元の位置からすっと移動させる(FLIP)
+  function glide(els, before) {
+    els.forEach((el) => {
+      const dy = before.get(el) - el.getBoundingClientRect().top;
+      if (!dy) return;
+      el.style.transition = "none";
+      el.style.transform = `translateY(${dy}px)`;
+      el.getBoundingClientRect();
+      el.style.transition = EASE;
+      el.style.transform = "";
+    });
+  }
   function bindSort(box) {
-    let timer = null, y0 = 0;
+    let timer = null, y0 = 0, shift = 0;
     const blocks = () => [...box.children].filter((el) => el.dataset.block);
-    const cancel = () => { clearTimeout(timer); timer = null; };
+    const cancel = () => { clearTimeout(timer); timer = null; box.querySelectorAll(".pressing").forEach((el) => el.classList.remove("pressing")); };
     box.addEventListener("pointerdown", (e) => {
       const el = e.target.closest("[data-block]");
       if (!el || el.parentElement !== box || blocks().length < 2 || e.button > 0) return;
       y0 = e.clientY;
+      el.classList.add("pressing");
       timer = setTimeout(() => {
+        el.classList.remove("pressing", "peek");
         sorting = el;
+        shift = 0;
+        el.style.transition = "none";
+        el.style.transform = "scale(1.03)";
         el.classList.add("dragging");
         box.classList.add("sorting");
-        if (navigator.vibrate) navigator.vibrate(15);
-      }, 400);
+        if (navigator.vibrate) navigator.vibrate(12);
+      }, 350);
     });
     box.addEventListener("pointermove", (e) => {
       if (!sorting) { if (timer && Math.abs(e.clientY - y0) > 8) cancel(); return; }
       e.preventDefault();
+      sorting.style.transform = `translateY(${e.clientY - y0 - shift}px) scale(1.03)`;
+      const r = sorting.getBoundingClientRect();
+      const mid = r.top + r.height / 2;
       const others = blocks().filter((b) => b !== sorting);
-      const below = others.find((b) => { const r = b.getBoundingClientRect(); return e.clientY < r.top + r.height / 2; });
-      if (below) { if (below.previousElementSibling !== sorting) below.before(sorting); }
-      else if (others.length) others[others.length - 1].after(sorting);
+      const below = others.find((b) => { const br = b.getBoundingClientRect(); return mid < br.top + br.height / 2; });
+      const last = others[others.length - 1];
+      if (below ? sorting.nextElementSibling === below : sorting.previousElementSibling === last) return;
+      const before = new Map(others.map((b) => [b, b.getBoundingClientRect().top]));
+      const top0 = sorting.offsetTop;
+      below ? below.before(sorting) : last.after(sorting);
+      shift += sorting.offsetTop - top0;
+      sorting.style.transform = `translateY(${e.clientY - y0 - shift}px) scale(1.03)`;
+      glide(others, before);
     });
     const end = () => {
       cancel();
       if (!sorting) return;
-      sorting.classList.remove("dragging");
-      box.classList.remove("sorting");
+      const el = sorting;
       sorting = null;
+      el.style.transition = `${EASE}, box-shadow .3s`;
+      el.style.transform = "";
+      box.classList.remove("sorting");
+      setTimeout(() => { el.classList.remove("dragging"); el.style.transition = ""; }, 300);
       dropped = true;
       setTimeout(() => (dropped = false), 300);
       const V = window.VIEW || (window.VIEW = {});
       const now = blocks().map((b) => b.dataset.block);
       V.blocks = [...now, ...(V.blocks || []).filter((k) => !now.includes(k))];
-      try { localStorage.setItem("view", JSON.stringify(V)); } catch (e) {}
+      try { localStorage.setItem("view", JSON.stringify(V)); localStorage.setItem("sortHint", "99"); } catch (e) {}
+      const hint = box.querySelector(".sort-hint");
+      if (hint) hint.remove();
       trackEvent("view_setting", { key: "blocks", value: now.join(">") });
     };
     box.addEventListener("pointerup", end);
     box.addEventListener("pointercancel", end);
     box.addEventListener("contextmenu", (e) => { if (timer || sorting) e.preventDefault(); });
+    sortHint(box);
+  }
+  // まだ並べかえたことがない人に、最初の3回だけ「長押しで動かせる」をそっと見せる
+  function sortHint(box) {
+    const els = [...box.children].filter((el) => el.dataset.block);
+    let n = 0;
+    try { n = Number(localStorage.getItem("sortHint") || 0); } catch (e) {}
+    if (els.length < 2 || n >= 3) return;
+    try { localStorage.setItem("sortHint", String(n + 1)); } catch (e) {}
+    const hint = document.createElement("p");
+    hint.className = "sort-hint";
+    hint.innerHTML = `<span class="hand">☝️</span><span><b class="nb">長押しして動かすと、</b><span class="nb">訳・音声・解説を</span><span class="nb">好きな順に並べかえられます</span></span><button aria-label="閉じる">×</button>`;
+    els[els.length - 1].after(hint);
+    hint.querySelector("button").onclick = () => { hint.remove(); try { localStorage.setItem("sortHint", "99"); } catch (e) {} };
+    setTimeout(() => els[0].classList.add("peek"), 700);
+    els[0].addEventListener("animationend", () => els[0].classList.remove("peek"));
   }
 
   function answer(q, choice) {

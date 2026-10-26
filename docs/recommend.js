@@ -145,4 +145,4 @@ window.LINKS = {
 window.nb = (s) => String(s || "")
   .replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))
   .replace(/[(（]?[^ 、。・(（]+[、。・]*|[(（]/g, (w) => `<span class="nb">${w}</span>`);
-document.head.insertAdjacentHTML("beforeend", "<style>.nb{display:inline-block}</style>");
+document.head.insertAdjacentHTML("beforeend", "<style>.nb{display:inline-block!important;margin:0!important;padding:0!important;font-size:inherit!important;font-weight:inherit!important;color:inherit!important;background:none!important;line-height:inherit!important}</style>");
