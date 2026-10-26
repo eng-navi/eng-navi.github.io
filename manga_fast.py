@@ -3,7 +3,7 @@
     .venv-tts/bin/python manga_fast.py procrastinate      # out/manga/procrastinate_fast.mp4 と 4コマ・解説の画像
 
 ・最初の約1秒でターゲット単語を見せる(つかみ)。コマの切り替えは「パッ」と寄って止まる
-・1秒12コマで、絵がわずかに揺れる(語呂合わせリールと同じ手作り感)
+・画面は揺らさない。声の大きさはそろえ、後ろにかすかなBGM
 ・セリフはコマごとに1〜2つ。ElevenLabs の声を少し速め(speed 1.1)で
 """
 import random
@@ -22,6 +22,9 @@ ROOT = Path(__file__).parent
 OUT = ROOT / "out" / "manga"
 W, H, FPS, SR = 1080, 1920, 12, 24000
 SPEED = 1.1
+# 後ろでかすかに流す曲(Uppbeat の Cozy Places / Yokonap。クレジットはキャプションに)
+BGM = ROOT / "assets" / "manga_bgm" / "cozy-places.mp3"
+BGM_VOLUME = 0.06
 BG = (244, 241, 234)
 
 
@@ -157,10 +160,10 @@ def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)
     th = int(src.height * tw / src.width)
-    im = src.resize((tw, th), Image.LANCZOS).rotate(rng.uniform(-0.6, 0.6), resample=Image.BICUBIC, fillcolor=BG)
+    im = src.resize((tw, th), Image.LANCZOS)
     img = Image.new("RGB", (W, H), BG)
-    x = (W - tw) // 2 + int(rng.uniform(-4, 4))
-    y = top + (area[1] - th) // 2 + int(rng.uniform(-4, 4))
+    x = (W - tw) // 2
+    y = top + (area[1] - th) // 2
     img.paste(im, (x, y))
     return img
 
@@ -172,8 +175,8 @@ def title_frame(word, hook, t, rng):
     f = m.EN(int(120 * s))
     while f.getlength(word) > W - 160:
         f = m.EN(f.size - 4)
-    d.text((W // 2 + rng.uniform(-3, 3), 820 + rng.uniform(-3, 3)), word, font=f, fill=m.INK, anchor="mm")
-    d.line(m.wob([(200, 900), (880, 894)], amp=2, seed=int(t * 12)), fill=(200, 52, 48), width=8)
+    d.text((W // 2, 820), word, font=f, fill=m.INK, anchor="mm")
+    d.line(m.wob([(200, 900), (880, 894)], amp=2, seed=1), fill=(200, 52, 48), width=8)
     d.text((W // 2, 1010), hook, font=m.JP(58), fill=(200, 52, 48), anchor="mm")
     d.text((W // 2, 1100), "4コマで覚える英語", font=m.JP(34), fill=(150, 140, 130), anchor="mm")
     return img
@@ -199,7 +202,13 @@ def main():
     comic.save(OUT / f"{name}_1.png")
     card.save(OUT / f"{name}_2.png")
     mr.load_env()
-    voice = lambda who, text: mr.eleven(who, text, SPEED)
+    def voice(who, text):
+        # 声ごとの大きさの差をなくす(RMS をそろえ、ピークは0.95まで)
+        a = mr.eleven(who, text, SPEED)
+        rms = float(np.sqrt(np.mean(a ** 2))) or 1.0
+        a = a * (0.09 / rms)
+        peak = float(np.max(np.abs(a))) or 1.0
+        return (a * min(1.0, 0.95 / peak)).astype(np.float32)
 
     scenes, audio = [], []  # (種類, 画像, 秒)
     hook_len = 1.1
@@ -235,7 +244,10 @@ def main():
         import soundfile as sf
         sf.write(wav.name, np.concatenate(audio), SR)
         cmd = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-               "-i", wav.name, "-map", "0:v", "-map", "1:a", "-af", "volume=1.5", "-t", f"{total:.2f}",
+               "-i", wav.name, "-stream_loop", "-1", "-i", str(BGM),
+               "-filter_complex", f"[2:a]volume={BGM_VOLUME},afade=t=in:d=1,afade=t=out:st={total - 1.5}:d=1.5[b];"
+               "[1:a]aresample=44100,volume=1.5[v];[v][b]amix=inputs=2:duration=first:normalize=0[a]",
+               "-map", "0:v", "-map", "[a]", "-t", f"{total:.2f}",
                "-r", "30", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-c:a", "aac", "-movflags", "+faststart", str(out)]
         proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
         for kind, src, dur in scenes:
@@ -245,8 +257,7 @@ def main():
                     f = title_frame(sc["word"], sc["hook"], t, rng)
                 elif kind == "explain":
                     f = grid_bg.copy()
-                    im = src.rotate(rng.uniform(-0.5, 0.5), resample=Image.BICUBIC, fillcolor=BG)
-                    f.paste(im, (int(rng.uniform(-4, 4)), 285 + int(rng.uniform(-4, 4))))
+                    f.paste(src, (0, 285))
                 else:
                     f = panel_frame(src, t, rng, sc["word"])
                 proc.stdin.write(f.tobytes())
