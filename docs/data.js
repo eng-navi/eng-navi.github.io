@@ -2148,5 +2148,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 111,
+    "text": "We're running short of time, so let's skip the coffee break today.",
+    "target": "running short of",
+    "glossary": [
+      "run short of X：Xが足りなくなる",
+      "skip：省く、飛ばす",
+      "coffee break：休憩"
+    ],
+    "translation": "時間が足りなくなってきたので、今日はコーヒー休憩をなしにしよう。",
+    "explanation": "「run short of X」は「Xが足りなくなる、Xを切らしかけている」という意味です。\n進行形で「だんだん足りなくなってきている」という感じを出すことが多い表現です。\n\nX run short（Xが不足する）の形でも使います。",
+    "audio": "audio/q111.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
