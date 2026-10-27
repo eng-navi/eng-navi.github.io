@@ -317,6 +317,37 @@ def scene_bury_meaning(i):
     return img
 
 
+def scene_bury_goro(i):
+    """最後:「ベリーを うめる」を大きく出して、声に出して2回。"""
+    img = stage(390 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([90, 640, W - 90, 1060], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    s = 1.0 + max(0, 0.25 - i / FPS) * 0.6  # 出た瞬間だけ少し大きく
+    f = m.JP(int(118 * s))
+    parts = [("ベリーを", (230, 120, 110)), ("うめる", (110, 160, 210))]
+    x = W / 2 - (sum(f.getlength(p) for p, _ in parts) + 36) / 2
+    for p, c in parts:
+        d.text((x, 860), p, font=f, fill=c, anchor="ls")
+        x += f.getlength(p) + 36
+    d.text((W / 2, 985), "= bury(埋める)", font=m.JP(52), fill=INK, anchor="ms")
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1240, 210, "happy", hat_on=False, seed=51 + i % 3)
+    shadow(d, 790, 1440, 200)
+    m.owl(d, 790, 1240, 200, "happy", seed=41 + i % 3)
+    jsfx(img, (545, 1180), "せーの!", 70, (220, 90, 70), 6)
+    caption(d, "声に出して、もう1回!", 1640, 58)
+    d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+    return img
+
+
+def voice(who, text, speed=1.0):
+    """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
+    import manga_reel as mr
+    a = mr.eleven(who, text, speed)
+    a = a * (0.07 / (float(np.sqrt(np.mean(a ** 2))) or 1.0))
+    return (a * min(1.0, 0.95 / (float(np.max(np.abs(a))) or 1.0))).astype(np.float32)
+
+
 def say(pipe, text, voice):
     return np.concatenate([a for _, _, a in pipe(text, voice=voice, speed=0.9)])
 
@@ -324,6 +355,11 @@ def say(pipe, text, voice):
 def tone(freq, dur, vol=0.06, decay=14):
     t = np.arange(int(SR * dur)) / SR
     return (vol * np.sin(2 * np.pi * freq * t) * np.exp(-t * decay)).astype(np.float32)
+
+
+def mr_env():
+    import manga_reel as mr
+    mr.load_env()
 
 
 def plans(pipe):
@@ -341,8 +377,9 @@ def plans(pipe):
             (1.3, lambda i: scene_bury_hook(i), [tone(660, 0.15), gap(0.2)]),
             (1.8, lambda i: scene_bury_pick(i), [tone(880, 0.12, 0.04)]),
             (2.0, lambda i: scene_bury_dig(i, int(2.0 * FPS)), [tone(1100, 0.1, 0.04)]),
-            (2.6, lambda i: scene_bury_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), say(pipe, "bury", "bf_emma"), gap(0.3), say(pipe, "berry", "bm_george")]),
-            (4.4, lambda i: scene_bury_meaning(i), [gap(0.2), say(pipe, "Bury.", "bm_george"), gap(0.4), say(pipe, "The dog buried a bone in the yard.", "bf_emma")]),
+            (2.6, lambda i: scene_bury_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("pen", "Bury."), gap(0.3), voice("navi", "Berry!")]),
+            (4.4, lambda i: scene_bury_meaning(i), [gap(0.2), voice("navi", "Bury."), gap(0.4), voice("pen", "The dog buried a bone in the yard.")]),
+            (3.2, lambda i: scene_bury_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "ベリーを、うめる!"), gap(0.35), voice("navi", "ベリーを、うめる!"), gap(0.6)]),
         ],
     }
 
@@ -353,14 +390,14 @@ def main():
     name = sys.argv[1] if len(sys.argv) > 1 else "abandon"
     pipe = KPipeline(lang_code="b", repo_id="hexgrad/Kokoro-82M")
     gap = lambda s: np.zeros(int(SR * s), dtype=np.float32)
+    mr_env()
     plan = plans(pipe)[name]
     OUT.mkdir(parents=True, exist_ok=True)
     frames, audio = [], []
     for dur, draw, sounds in plan:
-        n = int(dur * FPS)
         clip = np.concatenate(sounds)
-        need = int(dur * SR)
-        audio.append(np.concatenate([clip, gap(max(0, need - len(clip)) / SR)])[:max(need, len(clip))])
+        n = int(np.ceil(max(dur, len(clip) / SR + 0.15) * FPS))  # 音が長いときは映像ものばして、ずれないように
+        audio.append(np.concatenate([clip, gap(n / FPS - len(clip) / SR)]))
         for i in range(n):
             img = draw(i)
             frames.append(finish(img, len(frames)))
