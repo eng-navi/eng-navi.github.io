@@ -340,6 +340,129 @@ def scene_bury_goro(i):
     return img
 
 
+# ---- scold(叱る):「スコールみたいに しかるど!」 ----
+def cloud(d, cx, cy, s, seed, rain=True, t=0):
+    for dx, dy, r in ((-0.45, 0.1, 0.32), (-0.1, -0.12, 0.42), (0.3, 0.02, 0.36), (0.55, 0.15, 0.25)):
+        m.shape(d, [(cx + s * dx + s * r * math.cos(a), cy + s * dy + s * r * 0.8 * math.sin(a)) for a in (k * math.pi / 12 for k in range(25))],
+                (150, 155, 170), w=4, seed=seed)
+    if rain:
+        r = random.Random(seed + t)
+        for k in range(14):
+            x = cx - s * 0.6 + k * s * 0.09 + r.uniform(-6, 6)
+            y = cy + s * 0.35 + r.uniform(0, s * 0.6)
+            d.line([(x, y), (x - 10, y + 46)], fill=(120, 160, 210), width=5)
+
+
+def anger(d, x, y, s=26):
+    """怒りマーク(💢)"""
+    for a in (45, 135, 225, 315):
+        r = math.radians(a)
+        cx, cy = x + s * 0.55 * math.cos(r), y + s * 0.55 * math.sin(r)
+        d.arc([cx - s * 0.5, cy - s * 0.5, cx + s * 0.5, cy + s * 0.5], a + 90, a + 270, fill=(220, 60, 50), width=6)
+
+
+def scene_scold_hook(i):
+    img = stage(400 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 540, 1400, 260)
+    m.penguin(d, 540, 1150, 300, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 700, 1000, 30)
+    caption(d, "scold、", 820, 96, box=False)
+    caption(d, "1秒で覚えられる?", 950, 80, color=(200, 52, 48), box=False)
+    return img
+
+
+def scene_scold_eat(i):
+    img = stage(410 + i % 3)
+    d = ImageDraw.Draw(img)
+    table(d, 420 + i % 3)
+    for k, x in enumerate((420, 520, 620)):  # 食べつくした魚の骨
+        d.line([(x - 40, 1150), (x + 40, 1150)], fill=(120, 120, 130), width=5)
+        for j in range(3):
+            d.line([(x - 20 + j * 18, 1135), (x - 14 + j * 18, 1150), (x - 20 + j * 18, 1165)], fill=(120, 120, 130), width=4)
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1230, 210, "happy", hat_on=False, seed=51 + i % 3)
+    jsfx(img, (560, 1000), "ペロリ", 80, (220, 90, 70), 8)
+    caption(d, "部長のおやつ、ぜんぶ食べちゃった", 1640, 54)
+    return img
+
+
+def scene_scold_rain(i, n):
+    img = stage(430 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 330, 1440, 200)
+    m.penguin(d, 330, 1240, 200, "shock", hat_on=False, seed=51 + i % 3)
+    cloud(d, 330, 820, 260, 440, rain=True, t=i)
+    shadow(d, 790, 1440, 200)
+    m.owl(d, 790, 1230, 210, "shock", seed=41 + i % 3)
+    anger(d, 900, 1030, 46)
+    jsfx(img, (560, 700), "ザーッ!", 90, (90, 130, 200), -6)
+    caption(d, "ナビのお説教が、スコール級!", 1640, 58)
+    return img
+
+
+def scene_scold_word(i):
+    img = stage(450 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 300, 1440, 220)
+    m.penguin(d, 300, 1230, 230, "shock", hat_on=False, seed=51 + i % 3)
+    jsfx(img, (720, 1150), "ドン!", 110, (220, 60, 50), -8)
+    d.rounded_rectangle([90, 600, W - 90, 1020], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    step = min(3, 1 + i // 4)
+    parts = [("スコール", (110, 160, 210)), ("ど!", (230, 120, 110))]
+    f = m.JP(110)
+    x = W / 2 - (sum(f.getlength(p) for p, _ in parts) + 24) / 2
+    for k, (p, c) in enumerate(parts):
+        d.text((x, 740), p, font=f, fill=c if k < step else (215, 210, 205), anchor="ls")
+        x += f.getlength(p) + 24
+    if step >= 3:
+        line = [("scold", (110, 160, 210)), (" = ", INK), ("叱る", (230, 120, 110))]
+        fonts = [m.EN(120), m.EN(90), m.JP(84)]
+        x = W / 2 - sum(ff.getlength(t) for (t, _), ff in zip(line, fonts)) / 2
+        for (t, c), ff in zip(line, fonts):
+            d.text((x, 885), t, font=ff, fill=c, anchor="ls")
+            x += ff.getlength(t)
+    d.text((W / 2, 975), "発音は「スコウルド」", font=m.JP(44), fill=(110, 110, 110), anchor="ms")
+    return img
+
+
+def scene_scold_meaning(i):
+    img = stage(470 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([110, 640, W - 110, 1180], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    d.text((W / 2, 800), "scold", font=m.EN(150), fill=INK, anchor="ms")
+    d.text((W / 2, 920), "= 叱る", font=m.JP(66), fill=(200, 52, 48), anchor="ms")
+    m.draw_fit(d, (W / 2, 1010), "My mom scolded me for coming home late.", m.EN(50), INK, width=W - 300)
+    m.draw_fit(d, (W / 2, 1100), "(帰りが遅くて、母に叱られた)", m.JP(38), (110, 110, 110), width=W - 300, jp=True)
+    shadow(d, 260, 1440, 180)
+    m.owl(d, 260, 1260, 180, "smug", seed=41 + i % 3)
+    shadow(d, 820, 1440, 180)
+    m.penguin(d, 820, 1260, 170, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 900, 1180, 22)
+    caption(d, "スコールど! で scold!", 1640, 58)
+    return img
+
+
+def scene_scold_goro(i):
+    img = stage(490 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([90, 640, W - 90, 1060], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    s = 1.0 + max(0, 0.25 - i / FPS) * 0.6
+    f = m.JP(int(96 * s))
+    parts = [("スコールみたいに", (110, 160, 210)), ("しかるど!", (230, 120, 110))]
+    for k, (p, c) in enumerate(parts):
+        d.text((W / 2, 800 + k * 120), p, font=f, fill=c, anchor="ms")
+    d.text((W / 2, 1025), "= scold(叱る)", font=m.JP(48), fill=INK, anchor="ms")
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1240, 210, "happy", hat_on=False, seed=51 + i % 3)
+    shadow(d, 790, 1440, 200)
+    m.owl(d, 790, 1240, 200, "happy", seed=41 + i % 3)
+    jsfx(img, (545, 1180), "せーの!", 70, (220, 90, 70), 6)
+    caption(d, "声に出して、もう1回!", 1640, 58)
+    d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+    return img
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr
@@ -372,6 +495,14 @@ def plans(pipe):
             (1.8, lambda i: scene_toss(i, int(1.8 * FPS)), [tone(1100, 0.1, 0.04)]),
             (2.4, lambda i: scene_don(i), [tone(90, 0.4, 0.25, 6), gap(0.3), say(pipe, "abandon", "bf_emma")]),
             (4.2, lambda i: scene_meaning(i), [gap(0.2), say(pipe, "Abandon.", "bm_george"), gap(0.4), say(pipe, "They abandoned the old boat.", "bf_emma")]),
+        ],
+        "scold": [
+            (1.3, lambda i: scene_scold_hook(i), [tone(660, 0.15), gap(0.2)]),
+            (1.8, lambda i: scene_scold_eat(i), [tone(880, 0.12, 0.04)]),
+            (2.0, lambda i: scene_scold_rain(i, int(2.0 * FPS)), [tone(1100, 0.1, 0.04)]),
+            (2.6, lambda i: scene_scold_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", "Scold!"), gap(0.3), voice("pen", "Scold...")]),
+            (4.4, lambda i: scene_scold_meaning(i), [gap(0.2), voice("navi", "Scold."), gap(0.4), voice("pen", "My mom scolded me for coming home late.")]),
+            (3.2, lambda i: scene_scold_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "スコールみたいに、しかるど!"), gap(0.35), voice("navi", "スコールみたいに、しかるど!"), gap(0.6)]),
         ],
         "bury": [
             (1.3, lambda i: scene_bury_hook(i), [tone(660, 0.15), gap(0.2)]),
