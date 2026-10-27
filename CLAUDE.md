@@ -82,6 +82,7 @@ work could wait：仕事は後回しにできる
 ## 予約投稿(GitHub Actions)
 - 予約: `python3 schedule.py add <no> "YYYY-MM-DD HH:MM"`(日本時間)。動画を docs/videos に公開してから schedule.json に追加する
 - `.github/workflows/post.yml` が15分おきに `schedule.py run` を実行し、時間になった予約を1件投稿 → posted.json とサイトを更新して push
+- GitHub の定期実行は数時間遅れることがあるので、cron-job.org(ジョブ 8732172「eng_navi 予約投稿」)が毎時1・16・31・46分に post.yml を workflow_dispatch で起動する。キーは .env の CRONJOB_API_KEY(cron-job.org)と GH_DISPATCH_TOKEN(GitHub の fine-grained トークン「cron-job」、eng-navi.github.io の Actions: Read and write のみ)。失敗するとメール通知
 - 前の番号が未投稿なら投稿しない(色のローテーション保護)
 - Secrets: IG_USER_ID, IG_ACCESS_TOKEN。トークンは refresh-token.yml が毎週延長(GH_PAT が必要)
 - Instagram は空行を詰めるため、コメント・キャプションの空行には全角スペースを1文字入れる(post.py の keep_blank_lines で自動)。
