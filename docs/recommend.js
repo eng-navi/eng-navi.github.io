@@ -41,7 +41,7 @@ const ITEMS = {
   reading: { name: "基本文法から学ぶ 英語リーディング教本", note: "文法を土台に、英文を正確に読めるようになる定番の1冊", url: AMAZON("B0B2VJ8BL5", "d769300620a82fda9aee29d46db9f42e") },
   realize: { name: "Realize 英文「解釈」演習99 発展レベル", note: "難関大の和訳問題で、意味を正確につかむ練習", url: AMAZON("B0FYMTW7XT", "0962d322f17bca5063631e367e0dd55a") },
   pinnacle: { name: "大学入試 無敵の難単語 PINNACLE 420", note: "難しい単語で読む手が止まる人に", url: AMAZON("B0CK4HSRZN", "8ecd3ddef08dd6642b8ef647882ce7d7") },
-  speak: { name: "スピーク(AI英会話アプリ)", note: "AIを相手に、声に出して英会話の練習。7日間無料で試せます", ...A8("45KI4S+B1PKVM+5PZU+5YRHE", "www10") },
+  speak: { name: "スピーク(AI英会話アプリ)", note: "AIを相手に、声に出して英会話の練習。24時間・予約なしで、1日5分から", ...A8("45KI4S+B1PKVM+5PZU+5YRHE", "www10") },
   torabit: { name: "TORAbit(トラビット)", note: "シャドーイングと瞬間英作文を、AIの採点つきで1日5分から", ...A8("3ZI1Y9+3LSK76+3N0O+TS3OI", "www11") },
   yumekana: { name: "夢カナ留学", note: "ワーホリ・留学の無料カウンセリング(18〜30歳が対象)", ...A8("3Z2Q3B+AL1HHE+4Q46+5YJRM", "www19") },
   nativecamp: { name: "ネイティブキャンプ(オンライン英会話)", note: "予約なしで、話したいときにすぐレッスン。7日間無料で試せます", ...A8("3BDOYJ+6NCBIA+35VG+64JTE", "www13") },
@@ -113,12 +113,14 @@ window.ITEMS = ITEMS;
 window.SALES = {
   horikoshi: { text: "Kindle版が今だけ半額", until: "2026-11-05", checked: "2026-10-25" },
   brushup: { text: "Kindle版が今だけ26%OFF", until: "2026-10-31", checked: "2026-10-25" },
+  // 終了日の発表がないキャンペーンは until: null(日付は出さない)。fine は吹き出しの下に小さく出す注意書き
+  speak: { text: "今なら1ヶ月180円で使い放題", until: null, checked: "2026-10-27", fine: "お試し後は年額プランに自動更新(終了24時間前まで解約OK)" },
 };
 // いつも使えるキャンペーン(無料体験など)。セールがない日はこちらを出す
 // [A, B] の2案を、見る人ごとにランダムで出し分ける(端末ごとに固定)。GA4 の link_click の copy(A/B)で、押されやすい言い方を比べる
 window.PERKS = {
   studysapuri: ["7日間無料で試せる", "7日間無料。スマホですぐ始められる"],
-  speak: ["7日間無料で試せる", "AI相手だから、はずかしくない。7日間無料"],
+  speak: ["24時間・予約なしで話せる", "AI相手だから、はずかしくない"],
   nativecamp: ["7日間無料・予約なしですぐ話せる", "7日間無料。今日このあと、すぐ話せる"],
   sankei: ["無料体験レッスン4回つき", "日本人講師も選べる。無料体験4回"],
   audible: ["30日間無料で聞き放題", "30日間無料。通勤時間が英語の時間に"],
@@ -137,10 +139,10 @@ window.promo = (it) => {
   const k = it && Object.keys(ITEMS).find((x) => ITEMS[x] === it);
   const sale = k && window.SALES[k];
   const today = new Date().toISOString().slice(0, 10);
-  if (sale && today <= sale.until) {
-    const [, mm, dd] = sale.until.split("-");
+  if (sale && (!sale.until || today <= sale.until)) {
     const [, cm, cd] = sale.checked.split("-");
-    return { hot: true, copy: "sale", text: `${sale.text}・${+mm}/${+dd}まで`, note: `${+cm}/${+cd}時点` };
+    const end = sale.until ? `・${+sale.until.split("-")[1]}/${+sale.until.split("-")[2]}まで` : "";
+    return { hot: true, copy: "sale", text: sale.text + end, note: `${+cm}/${+cd}時点`, fine: sale.fine };
   }
   const perk = (k && window.PERKS[k]) || (it && /amazon|amzn/.test(it.url) ? window.PERKS._amazon : null);
   if (!perk) return null;
@@ -151,7 +153,7 @@ window.promo = (it) => {
 window.promoTip = (it) => {
   const p = window.promo(it);
   if (!p) return "";
-  return `<span class="tip ${p.hot ? "hot" : ""}" data-copy="${p.copy}">${p.hot ? "＼ " : ""}${window.nb(p.text)}${p.hot ? " ／" : ""}${p.note ? `<small>${window.nb(p.note)}</small>` : ""}</span>`;
+  return `<span class="tip ${p.hot ? "hot" : ""}" data-copy="${p.copy}">${p.hot ? "＼ " : ""}${window.nb(p.text)}${p.hot ? " ／" : ""}${p.note ? `<small>${window.nb(p.note)}</small>` : ""}${p.fine ? `<small class="fine">${window.nb(p.fine)}</small>` : ""}</span>`;
 };
 
 // 結果画面で、どのシリーズでも出す「次は話せる英語へ」
@@ -160,7 +162,8 @@ window.SPEAK = {
   title: "「わかるのに、話せない」を卒業するなら",
   pool: [ITEMS.speak, ITEMS.nativecamp, ITEMS.sankei, ITEMS.torabit, ITEMS.speak141],
 };
-window.SPEAK.items = window.SPEAK.pool.map((it) => [Math.random(), it]).sort((a, b) => a[0] - b[0]).slice(0, 2).map((x) => x[1]);
+// スピークは成約しやすいので、いつも1つ目に出す。2つ目は残りからランダム
+window.SPEAK.items = [ITEMS.speak, ...window.SPEAK.pool.filter((it) => it !== ITEMS.speak).map((it) => [Math.random(), it]).sort((a, b) => a[0] - b[0]).slice(0, 1).map((x) => x[1])];
 // フレーズ集のページの下に出す「聞き流し」の一言
 window.LISTEN = { lead: "移動中に英語を聞き流すなら", item: ITEMS.audible };
 // 結果画面のいちばん下に、さりげなく1行

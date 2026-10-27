@@ -368,6 +368,7 @@
   .tip { position: relative; display: block; width: fit-content; max-width: 100%; margin: 10px 0 9px; padding: 6px 12px; border-radius: 10px;
     background: var(--hl); color: var(--accent-ink); font-size: 12px; font-weight: 700; font-style: normal; line-height: 1.5; }
   .tip::after { content: ""; position: absolute; left: 22px; bottom: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: var(--hl); }
+  .tip .fine { display: block; margin: 2px 0 0; font-size: 10px; font-weight: 400; opacity: .85; line-height: 1.5; }
   .tip small { margin-left: 6px; font-size: 10px; font-weight: 400; opacity: .75; }
   .tip.hot { background: #d8433b; color: #fff; }
   .tip.hot::after { border-top-color: #d8433b; }
@@ -951,6 +952,14 @@
     pinObs.observe(target);
   }
 
+  // 本のおすすめの下に、1行だけ「話す練習もするなら」(スピーク)。本と並べて2段にする
+  function speakLine(item) {
+    const sp = window.ITEMS && ITEMS.speak;
+    if (!sp || item === sp) return "";
+    const pr = promo(sp);
+    return `<a class="slim" data-place="explanation_speak" href="${esc(sp.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>話す練習もするなら${pr && pr.hot ? `<em class="hot-badge">${nb(pr.text)}</em>` : ""}<b>${nb(sp.name)}</b></span><i>›</i></a>${pix(sp)}`;
+  }
+
   function explanationBlock(q, open) {
     const show = sinceNudge >= 3 || (open && sinceNudge >= 2);
     sinceNudge = show ? 0 : sinceNudge + 1;
@@ -959,7 +968,7 @@
       ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>この分野の参考書${(promo(p.item) || {}).hot ? `<em class="hot-badge">${nb(promo(p.item).text)}</em>` : ""}<b>${nb(p.item.name)}</b></span><i>›</i></a>${pix(p.item)}`
       : `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow">
           <small>PR</small><em>${nb(p.hook)}</em><b>${nb(p.item.name)}</b>${p.item.note ? `<span>${esc(p.item.note)}</span>` : ""}
-          <span class="cta-row">${promoTip(p.item)}<i>${/amazon|amzn/.test(p.item.url) ? (promo(p.item) || {}).hot ? "セール価格を見る" : "Amazonで中身を見る" : "無料で試してみる"} →</i></span></a>${pix(p.item)}`;
+          <span class="cta-row">${promoTip(p.item)}<i>${/amazon|amzn/.test(p.item.url) ? (promo(p.item) || {}).hot ? "セール価格を見る" : "Amazonで中身を見る" : "無料で試してみる"} →</i></span></a>${pix(p.item)}${speakLine(p.item)}`;
     const V = window.VIEW || {};
     return `<div data-block="exp">
       <details ${open || V.open === "always" ? "open" : ""}>

@@ -25,10 +25,10 @@ def sale_check(now):
     js = (ROOT / "docs" / "recommend.js").read_text()
     m = re.search(r"window\.SALES = \{(.*?)\n\};", js, re.S)
     stale = []
-    for key, text, until, checked in re.findall(r'(\w+): \{ text: "([^"]+)", until: "([\d-]+)", checked: "([\d-]+)" \}', m.group(1) if m else ""):
-        u = datetime.strptime(until, "%Y-%m-%d").replace(tzinfo=JST)
+    for key, text, until, checked in re.findall(r'(\w+): \{ text: "([^"]+)", until: (?:"([\d-]+)"|null), checked: "([\d-]+)"', m.group(1) if m else ""):
+        u = datetime.strptime(until, "%Y-%m-%d").replace(tzinfo=JST) if until else None
         c = datetime.strptime(checked, "%Y-%m-%d").replace(tzinfo=JST)
-        if u < now:
+        if u and u < now:
             stale.append(f"- {key}「{text}」:{until} で終了(サイトでは自動で非表示。SALES から消してOK)")
         elif (now - c).days >= 3:
             stale.append(f"- {key}「{text}」:最終確認 {checked}。まだセール中か Amazon で確認してください")

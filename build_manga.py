@@ -28,7 +28,7 @@ SITE_URL = "https://eng-navi.github.io"
 VOICES = {"us_f": "🇺🇸 女性", "us_m": "🇺🇸 男性", "uk_f": "🇬🇧 女性", "uk_m": "🇬🇧 男性"}
 NAMES = {"navi": "ナビ", "pen": "ペン", "boss": "部長"}
 # 分類ごとのおすすめ(本, サービス)。キーは docs/recommend.js の ITEMS
-PICKS = {"toeic": ("kikufure", "studysapuri"), "daily": ("setphrase", "nativecamp")}
+PICKS = {"toeic": ("kikufure", "studysapuri"), "daily": ("setphrase", "speak")}
 SPEED = 1.1  # テンポの速い版と同じ速さ
 
 
@@ -196,6 +196,7 @@ TEMPLATE = """<!doctype html>
   .tip { position: relative; display: block; width: fit-content; max-width: 100%; margin: 12px 0 9px; padding: 5px 12px; border-radius: 10px; background: #f3e3c8; color: #8a5a14; font-size: 12px; font-weight: 700; line-height: 1.5; }
   .tip::after { content: ""; position: absolute; left: 22px; bottom: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: #f3e3c8; }
   .tip small { margin-left: 6px; font-size: 10px; font-weight: 400; opacity: .75; }
+  .tip .fine { display: block; margin: 2px 0 0; opacity: .85; line-height: 1.5; }
   .tip.hot { background: #d8433b; color: #fff; } .tip.hot::after { border-top-color: #d8433b; }
   .nav { display: flex; justify-content: space-between; gap: 8px; margin-top: 20px; font-size: 13px; }
   .nav a { color: #555; text-decoration: none; padding: 8px 4px; }
