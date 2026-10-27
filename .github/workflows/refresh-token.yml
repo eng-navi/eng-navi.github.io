@@ -1,4 +1,4 @@
-# Instagram のトークン(有効期限60日)を毎週延長し、Secret を更新する
+# Instagram のトークン(有効期限60日)を毎週延長し、Secret を更新する(eng_navi・4コマ・quizify_english)
 name: トークン更新
 on:
   schedule:
@@ -7,13 +7,17 @@ on:
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        name: [IG, MANGA_IG, QUIZIFY_IG]
     steps:
       - uses: actions/checkout@v4
       - run: python3 post.py --refresh-token
         env:
-          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_ACCESS_TOKEN: ${{ secrets[format('{0}_ACCESS_TOKEN', matrix.name)] }}
           TOKEN_OUT: ${{ runner.temp }}/token
-      - run: gh secret set IG_ACCESS_TOKEN < "$RUNNER_TEMP/token"
+      - run: gh secret set ${{ matrix.name }}_ACCESS_TOKEN < "$RUNNER_TEMP/token"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           GH_REPO: ${{ github.repository }}
