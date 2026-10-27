@@ -1,6 +1,7 @@
 """語呂合わせ英単語の、ストップモーション風リール(試作)。
 
     .venv-tts/bin/python goro.py abandon     # out/goro/abandon.mp4
+    .venv-tts/bin/python goro.py bury        # out/goro/bury.mp4
 
 見た目:左右対称の舞台・パステルカラー・フェルト/紙の質感・1秒12コマのわずかなカクつき(手作り感)。
 キャラは 4コマと同じ ナビ(フクロウ)とペン(ペンギン)。語呂合わせと例文はオリジナル。
@@ -201,6 +202,121 @@ def scene_meaning(i):
     return img
 
 
+# ---- bury(埋める):発音は berry と同じ。「ベリーを うめる」 ----
+def berry(d, cx, cy, r, seed):
+    m.shape(d, [(cx + r * math.cos(a), cy + r * 1.1 * math.sin(a) + (r * 0.25 if math.sin(a) > 0 else 0))
+                for a in (k * math.pi / 12 for k in range(25))], (220, 70, 80), w=3, seed=seed)
+    for k in range(5):
+        a = k * 1.3
+        d.ellipse([cx + r * 0.45 * math.cos(a) - 3, cy + r * 0.45 * math.sin(a) - 2, cx + r * 0.45 * math.cos(a) + 3, cy + r * 0.45 * math.sin(a) + 2], fill=(250, 220, 120))
+    d.polygon([(cx - r * 0.6, cy - r * 0.95), (cx, cy - r * 0.6), (cx + r * 0.6, cy - r * 0.95), (cx, cy - r * 1.25)], fill=(110, 170, 100))
+
+
+def basket(d, cx, cy, s, seed, n=5):
+    for k in range(n):
+        berry(d, cx - s * 0.45 + k * s * 0.22, cy - s * 0.18 - (k % 2) * 14, s * 0.13, seed + k)
+    m.shape(d, [(cx - s * 0.6, cy - s * 0.15), (cx + s * 0.6, cy - s * 0.15), (cx + s * 0.45, cy + s * 0.35), (cx - s * 0.45, cy + s * 0.35)], (205, 160, 105), seed=seed)
+    for k in range(1, 4):
+        y = cy - s * 0.15 + k * s * 0.125
+        d.line([(cx - s * 0.55 + k * 6, y), (cx + s * 0.55 - k * 6, y)], fill=(170, 125, 80), width=3)
+
+
+def mound(d, cx, cy, w, seed, h=0.35):
+    m.shape(d, [(cx + w / 2 * math.cos(a), cy - w * h * math.sin(a)) for a in (k * math.pi / 16 for k in range(17))], (150, 110, 80), seed=seed)
+
+
+def shovel(d, x, y, angle):
+    a = math.radians(angle)
+    x2, y2 = x + 150 * math.sin(a), y + 150 * math.cos(a)
+    d.line([(x, y), (x2, y2)], fill=(150, 100, 60), width=10)
+    m.shape(d, [(x2 - 24, y2 - 6), (x2 + 24, y2 - 6), (x2 + 16, y2 + 50), (x2 - 16, y2 + 50)], (170, 180, 190), w=4)
+
+
+def scene_bury_hook(i):
+    img = stage(300 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 540, 1400, 260)
+    m.penguin(d, 540, 1150, 300, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 700, 1000, 30)
+    caption(d, "bury、", 820, 96, box=False)
+    caption(d, "1秒で覚えられる?", 950, 80, color=(200, 52, 48), box=False)
+    return img
+
+
+def scene_bury_pick(i):
+    img = stage(310 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 380, 1440, 220)
+    m.penguin(d, 380, 1230, 220, "happy", hat_on=False, seed=51 + i % 3)
+    basket(d, 690, 1330, 260, 320 + i % 3)
+    jsfx(img, (690, 1060), "どっさり", 70, (220, 90, 70), 8)
+    caption(d, "ベリー、たくさん取れた〜", 1640, 58)
+    return img
+
+
+def scene_bury_dig(i, n):
+    img = stage(330 + i % 3)
+    d = ImageDraw.Draw(img)
+    t = min(1, i / max(1, n - 4))
+    # ベリーが1つずつ土の山にうまっていく
+    mound(d, 640, 1330, 300, 340 + i % 3, h=0.2 + 0.25 * t)
+    for k in range(max(0, 4 - int(t * 4))):
+        berry(d, 560 + k * 55, 1290 - k % 2 * 10, 26, 350 + k)
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1230, 210, "smug", hat_on=False, seed=51 + i % 3)
+    shovel(d, 400, 1060, 35 + 12 * math.sin(i * 1.2))
+    shadow(d, 880, 1440, 160)
+    m.owl(d, 880, 1250, 160, "shock", seed=41 + i % 3)
+    jsfx(img, (620, 1060), "ザクザク", 80, (150, 100, 60), -8)
+    caption(d, "えっ、ベリーを うめてる!?", 1640, 58)
+    return img
+
+
+def scene_bury_word(i):
+    img = stage(360 + i % 3)
+    d = ImageDraw.Draw(img)
+    mound(d, 830, 1330, 260, 340)
+    shadow(d, 300, 1440, 220)
+    m.penguin(d, 300, 1230, 230, "happy", hat_on=False, seed=51 + i % 3)
+    jsfx(img, (700, 1130), "ポン!", 110, (220, 60, 50), -8)
+    d.rounded_rectangle([90, 600, W - 90, 1020], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    # 上:「ベリー を うめる」を順に色づけ / 下:bury = 埋める
+    step = min(3, 1 + i // 4)
+    parts = [("ベリー", (230, 120, 110)), ("を", (150, 140, 130)), ("うめる", (110, 160, 210))]
+    f = m.JP(104)
+    x = W / 2 - (sum(f.getlength(p) for p, _ in parts) + 30 * 2) / 2
+    for k, (p, c) in enumerate(parts):
+        d.text((x, 740), p, font=f, fill=c if k < step else (215, 210, 205), anchor="ls")
+        x += f.getlength(p) + 30
+    if step >= 3:
+        fe = m.EN(120)
+        line = [("bury", (230, 120, 110)), (" = ", INK), ("埋める", (110, 160, 210))]
+        fonts = [fe, m.EN(90), m.JP(84)]
+        x = W / 2 - sum(ff.getlength(t) for (t, _), ff in zip(line, fonts)) / 2
+        for (t, c), ff in zip(line, fonts):
+            d.text((x, 885), t, font=ff, fill=c, anchor="ls")
+            x += ff.getlength(t)
+    d.text((W / 2, 975), "発音は berry(ベリー)と同じ!", font=m.JP(44), fill=(110, 110, 110), anchor="ms")
+    return img
+
+
+def scene_bury_meaning(i):
+    img = stage(380 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([110, 640, W - 110, 1180], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    d.text((W / 2, 800), "bury", font=m.EN(150), fill=INK, anchor="ms")
+    d.text((W / 2, 920), "= 埋める", font=m.JP(66), fill=(200, 52, 48), anchor="ms")
+    m.draw_fit(d, (W / 2, 1010), "The dog buried a bone in the yard.", m.EN(52), INK, width=W - 300)
+    m.draw_fit(d, (W / 2, 1100), "(犬が庭に骨を埋めた)", m.JP(38), (110, 110, 110), width=W - 300, jp=True)
+    shadow(d, 260, 1440, 180)
+    m.owl(d, 260, 1260, 180, "happy", seed=41 + i % 3)
+    shadow(d, 820, 1440, 180)
+    m.penguin(d, 820, 1260, 170, "smug", hat_on=False, seed=51 + i % 3)
+    caption(d, "ベリーを うめる で bury!", 1640, 58)
+    d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+    return img
+
+
 def say(pipe, text, voice):
     return np.concatenate([a for _, _, a in pipe(text, voice=voice, speed=0.9)])
 
@@ -210,20 +326,34 @@ def tone(freq, dur, vol=0.06, decay=14):
     return (vol * np.sin(2 * np.pi * freq * t) * np.exp(-t * decay)).astype(np.float32)
 
 
+def plans(pipe):
+    gap = lambda s: np.zeros(int(SR * s), dtype=np.float32)
+    # 単語ごとの (秒, シーン, その場面の音)
+    return {
+        "abandon": [
+            (1.3, lambda i: scene_hook(i), [tone(660, 0.15), gap(0.2)]),
+            (1.8, lambda i: scene_dinner(i), [tone(880, 0.12, 0.04)]),
+            (1.8, lambda i: scene_toss(i, int(1.8 * FPS)), [tone(1100, 0.1, 0.04)]),
+            (2.4, lambda i: scene_don(i), [tone(90, 0.4, 0.25, 6), gap(0.3), say(pipe, "abandon", "bf_emma")]),
+            (4.2, lambda i: scene_meaning(i), [gap(0.2), say(pipe, "Abandon.", "bm_george"), gap(0.4), say(pipe, "They abandoned the old boat.", "bf_emma")]),
+        ],
+        "bury": [
+            (1.3, lambda i: scene_bury_hook(i), [tone(660, 0.15), gap(0.2)]),
+            (1.8, lambda i: scene_bury_pick(i), [tone(880, 0.12, 0.04)]),
+            (2.0, lambda i: scene_bury_dig(i, int(2.0 * FPS)), [tone(1100, 0.1, 0.04)]),
+            (2.6, lambda i: scene_bury_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), say(pipe, "bury", "bf_emma"), gap(0.3), say(pipe, "berry", "bm_george")]),
+            (4.4, lambda i: scene_bury_meaning(i), [gap(0.2), say(pipe, "Bury.", "bm_george"), gap(0.4), say(pipe, "The dog buried a bone in the yard.", "bf_emma")]),
+        ],
+    }
+
+
 def main():
     from kokoro import KPipeline
     import soundfile as sf
+    name = sys.argv[1] if len(sys.argv) > 1 else "abandon"
     pipe = KPipeline(lang_code="b", repo_id="hexgrad/Kokoro-82M")
     gap = lambda s: np.zeros(int(SR * s), dtype=np.float32)
-
-    # (秒, シーン, その場面の音)
-    plan = [
-        (1.3, lambda i: scene_hook(i), [tone(660, 0.15), gap(0.2)]),
-        (1.8, lambda i: scene_dinner(i), [tone(880, 0.12, 0.04)]),
-        (1.8, lambda i: scene_toss(i, int(1.8 * FPS)), [tone(1100, 0.1, 0.04)]),
-        (2.4, lambda i: scene_don(i), [tone(90, 0.4, 0.25, 6), gap(0.3), say(pipe, "abandon", "bf_emma")]),
-        (4.2, lambda i: scene_meaning(i), [gap(0.2), say(pipe, "Abandon.", "bm_george"), gap(0.4), say(pipe, "They abandoned the old boat.", "bf_emma")]),
-    ]
+    plan = plans(pipe)[name]
     OUT.mkdir(parents=True, exist_ok=True)
     frames, audio = [], []
     for dur, draw, sounds in plan:
@@ -235,7 +365,7 @@ def main():
             img = draw(i)
             frames.append(finish(img, len(frames)))
     total = len(frames) / FPS
-    out = OUT / "abandon.mp4"
+    out = OUT / f"{name}.mp4"
     with tempfile.NamedTemporaryFile(suffix=".wav") as wav:
         sf.write(wav.name, np.concatenate(audio), SR)
         cmd = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
