@@ -2186,5 +2186,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 113,
+    "category": "時制",
+    "question": "The bus ( ), so we'll have to wait for the next one.",
+    "options": [
+      "has just left",
+      "just leaves"
+    ],
+    "answer": 1,
+    "translation": "バスはちょうど出てしまったので、次のバスを待たなければならない。",
+    "explanation": "just（たった今）と一緒に使い、「〜したところだ」という完了を表すのは現在完了です。\n「出てしまったので、今は乗れない」という今の状況につながっています。\n\nしたがって、①has just left が正解。",
+    "audio": "audio/q113.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
