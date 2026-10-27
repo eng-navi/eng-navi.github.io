@@ -197,7 +197,8 @@ TEMPLATE = """<!doctype html>
   .tip::after { content: ""; position: absolute; left: 22px; bottom: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: #f3e3c8; }
   .tip small { margin-left: 6px; font-size: 10px; font-weight: 400; opacity: .75; }
   .tip .fine { display: block; margin: 2px 0 0; opacity: .85; line-height: 1.5; }
-  .tip.hot { background: #d8433b; color: #fff; } .tip.hot::after { border-top-color: #d8433b; }
+  .tip.hot { background: #d8433b; color: #fff; font-size: 14px; padding: 7px 13px; }
+  .tip.hot small { display: block; margin: 1px 0 0; } .tip.hot::after { border-top-color: #d8433b; }
   .nav { display: flex; justify-content: space-between; gap: 8px; margin-top: 20px; font-size: 13px; }
   .nav a { color: #555; text-decoration: none; padding: 8px 4px; }
   .cta { display: block; margin-top: 14px; padding: 14px; border-radius: 14px; background: #282828; color: #fff; text-align: center; text-decoration: none; font-weight: 500; }

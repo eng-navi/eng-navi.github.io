@@ -370,12 +370,15 @@
   .tip::after { content: ""; position: absolute; left: 22px; bottom: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: var(--hl); }
   .tip .fine { display: block; margin: 2px 0 0; font-size: 10px; font-weight: 400; opacity: .85; line-height: 1.5; }
   .tip small { margin-left: 6px; font-size: 10px; font-weight: 400; opacity: .75; }
-  .tip.hot { background: #d8433b; color: #fff; }
+  .tip.hot { background: #d8433b; color: #fff; font-size: 14px; padding: 7px 13px; }
+  .tip.hot small { display: block; margin: 1px 0 0; }
   .tip.hot::after { border-top-color: #d8433b; }
   .nudge .cta-row { display: block; margin-top: 4px; }
   .nudge .cta-row i { margin-top: 0; }
   .rec .tip { margin-top: 14px; }
   .hot-badge { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; background: #d8433b; color: #fff; font-style: normal; font-size: 10px; font-weight: 700; }
+  /* 1行リンクの中では、バッジを独立した行にして左をそろえる */
+  .slim .hot-badge { display: table; margin: 4px 0 3px; padding: 1px 8px; font-size: 12px; line-height: 1.6; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
