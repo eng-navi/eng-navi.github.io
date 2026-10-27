@@ -28,7 +28,8 @@ W, H, FPS = 720, 1280, 30
 
 # 声(ElevenLabs)。元動画にいちばん近かったもの。速さは元の読む長さに合わせた
 EN_VOICE, EN_SPEED = "pFZP5JQG7iQjIQuC4Bku", 1.07  # Lily(イギリス英語・女性)
-JA_VOICE, JA_SPEED = "fUjY9K2nAIwlALOwSiwc", 1.08  # Yui(日本語・女性)
+# 日本語は音読さんの「ななみ(案内)」= Microsoft の Nanami。元は速度 ×1.3 だが、長さを測ると 1.22 倍が同じになる
+JA_VOICE, JA_SPEED = "ja-JP-NanamiNeural", 1.22
 
 # 間(秒)。声が聞こえ始める・聞こえなくなる瞬間どうしの間隔
 LEAD = 0.63        # 動画の頭 → 英単語
@@ -79,6 +80,9 @@ LEVEL = {EN_VOICE: 0.092, JA_VOICE: 0.163}
 def tts(vid, text, speed):
     CACHE.mkdir(parents=True, exist_ok=True)
     mp3 = CACHE / f"{vid}_{hashlib.sha1(f'{text}|{speed}'.encode()).hexdigest()[:12]}.mp3"
+    if not mp3.exists() and vid.startswith("ja-JP-"):
+        subprocess.run([str(ROOT / ".venv-tts" / "bin" / "edge-tts"), "--voice", vid, f"--rate=+{round((speed - 1) * 100)}%",
+                        "--text", text, "--write-media", str(mp3)], check=True, capture_output=True)
     if not mp3.exists():
         req = urllib.request.Request(
             f"https://api.elevenlabs.io/v1/text-to-speech/{vid}?output_format=mp3_44100_128",
