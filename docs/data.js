@@ -2167,5 +2167,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 112,
+    "category": "時制",
+    "question": "By next Friday, the marketing team ( ) the final report.",
+    "options": [
+      "has completed",
+      "will have completed"
+    ],
+    "answer": 2,
+    "translation": "来週の金曜日までには、マーケティングチームは最終報告書を仕上げているだろう。",
+    "explanation": "By next Friday（来週の金曜日までに）は未来の時点です。\n「未来のある時点までに完了している」ことは未来完了形で表します。\n\nしたがって、②will have completed が正解。",
+    "audio": "audio/q112.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
