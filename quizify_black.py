@@ -6,6 +6,7 @@
   .venv-tts/bin/python quizify_black.py      → out/quizify/black_<最初の番号>.mp4
 """
 import hashlib
+import re
 import json
 import os
 import subprocess
@@ -135,9 +136,32 @@ def spaced_width(d, text, f, track):
     return sum(d.textlength(ch, font=f) + track for ch in text) - track
 
 
+def ja_chunks(text):
+    """日本語を文節のまとまりに分ける。漢字・カタカナのあとの助詞と「、」で区切り、「。」は前にくっつける。"""
+    return [c for c in re.split(r"(?<=[一-龯ァ-ヶーA-Za-z0-9][はがをにでとものへな])(?![すしたあ関対つよ])|(?<=、)", text) if c]
+
+
+def wrap_ja(d, text, f, width, track):
+    """日本語は文節のまとまりで、行の長さがなるべくそろうように折り返す。"""
+    from itertools import combinations
+    chunks = ja_chunks(text)
+    size = lambda t: spaced_width(d, t, f, track)
+    for n in range(1, len(chunks) + 1):
+        best = None
+        for cut in combinations(range(1, len(chunks)), n - 1):
+            idx = (0, *cut, len(chunks))
+            lines = ["".join(chunks[a:b]) for a, b in zip(idx, idx[1:])]
+            widest = max(size(l) for l in lines)
+            if widest <= width and (best is None or widest < best[0]):
+                best = (widest, lines)
+        if best:
+            return best[1]
+    return chunks
+
+
 def wrap(d, text, f, width, track=0, words=True):
     lines, cur = [], ""
-    for tok in (text.split(" ") if words else list(text)):
+    for tok in (text.split(" ") if words else ja_chunks(text)):
         nxt = (cur + " " + tok).strip() if words else cur + tok
         w = d.textlength(nxt, font=f) if words else spaced_width(d, nxt, f, track)
         if cur and w > width:
@@ -160,7 +184,7 @@ def frame(item, stage):
         if stage == "mean":
             spaced(d, (104, 786), mean, MEAN, MINT, 3)
         return im
-    for i, line in enumerate(wrap(d, ja, JA, 430, 3, words=False)):
+    for i, line in enumerate(wrap_ja(d, ja, JA, 430, 3)):
         spaced(d, (104, 777 + i * 58), line, JA, MINT, 3)
     if stage == "en":
         lines = wrap(d, en, EN, 440)
