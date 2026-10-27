@@ -1,4 +1,4 @@
-# Instagram のトークン(有効期限60日)を毎週延長し、Secret を更新する(eng_navi・4コマ・quizify_english)
+# Instagram・Threads のトークン(有効期限60日)を毎週延長し、Secret を更新する(eng_navi・4コマ・quizify_english・Threads)
 name: トークン更新
 on:
   schedule:
@@ -18,6 +18,20 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets[format('{0}_ACCESS_TOKEN', matrix.name)] }}
           TOKEN_OUT: ${{ runner.temp }}/token
       - run: gh secret set ${{ matrix.name }}_ACCESS_TOKEN < "$RUNNER_TEMP/token"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_REPO: ${{ github.repository }}
+  threads:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Threads のトークンを延長(ログに出さずファイルへ)
+        run: |
+          curl -sf "https://graph.threads.net/refresh_access_token?grant_type=th_refresh_token&access_token=$THREADS_ACCESS_TOKEN" \
+            | python3 -c "import json,sys,os; d=json.load(sys.stdin); open(os.environ['TOKEN_OUT'],'w').write(d['access_token']); print('✓ 残り', d['expires_in'] // 86400, '日')"
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          TOKEN_OUT: ${{ runner.temp }}/token
+      - run: gh secret set THREADS_ACCESS_TOKEN < "$RUNNER_TEMP/token"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           GH_REPO: ${{ github.repository }}
