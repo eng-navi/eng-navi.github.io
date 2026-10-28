@@ -2205,5 +2205,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 114,
+    "text": "In retrospect, quitting that job was the best decision I ever made.",
+    "target": "In retrospect",
+    "glossary": [
+      "in retrospect：振り返ってみると",
+      "quit：辞める",
+      "the best decision I ever made：今までで一番いい決断"
+    ],
+    "translation": "振り返ってみると、あの仕事を辞めたのは今までで一番いい決断だった。",
+    "explanation": "「in retrospect」は「振り返ってみると、今思えば」という意味です。\n当時はわからなかったことを、あとから考えて評価するときに使います。\n\nlooking back や in hindsight（あとから考えると）もほぼ同じ意味です。",
+    "audio": "audio/q114.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
