@@ -3,7 +3,7 @@
     .venv-tts/bin/python manga_fast.py procrastinate      # out/manga/procrastinate_fast.mp4 と 4コマ・解説の画像
     .venv-tts/bin/python manga_fast.py procrastinate --hook   # 冒頭を変えた版(procrastinate_fast_hook.mp4)
 
-・--hook:文字だけのタイトル画面をやめて、0秒目から絵。オチを0.6秒ちらっと見せてから1コマ目へ。問いかけは1コマ目まで上に大きく重ねる
+・--hook:文字だけのタイトル画面をやめて、0秒目から1コマ目。問いかけは1コマ目のあいだ上に大きく重ねる
 
 ・最初の約1秒でターゲット単語を見せる(つかみ)。コマの切り替えは「パッ」と寄って止まる
 ・画面は揺らさない。声の大きさはそろえ、後ろにかすかなBGM
@@ -406,11 +406,7 @@ def main():
 
     scenes, audio = [], []  # (種類, 画像, 秒)
     crops = [comic.crop(tuple(int(v) for v in box)) for box in boxes]
-    if hook:
-        # オチを0.6秒だけ見せて「なんでこうなった?」と思わせる
-        scenes.append(("tease", crops[3], 0.6))
-        audio += [mr.pop(), mr.silence(0.6 - len(mr.pop()) / SR)]
-    else:
+    if not hook:
         hook_len = 1.1
         scenes.append(("title", None, hook_len))
         audio += [mr.pop(), mr.silence(hook_len - len(mr.pop()) / SR)]
@@ -459,7 +455,7 @@ def main():
                     f = grid_bg.copy()
                     f.paste(src, (0, 285))
                 else:
-                    f = panel_frame(src, t, rng, sc["word"], sc["hook"] if kind in ("tease", "hooked") else None)
+                    f = panel_frame(src, t, rng, sc["word"], sc["hook"] if kind == "hooked" else None)
                 proc.stdin.write(f.tobytes())
         proc.stdin.close()
         proc.wait()
