@@ -2243,5 +2243,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 116,
+    "category": "時制",
+    "question": "Emma isn't at home now. She ( ) to the library.",
+    "options": [
+      "has been",
+      "has gone"
+    ],
+    "answer": 2,
+    "translation": "エマは今家にいない。図書館に行ってしまった。",
+    "explanation": "have gone to 〜 は「〜へ行ってしまった（今ここにいない）」という結果を表します。\nhave been to 〜 は「〜へ行ったことがある」「〜へ行ってきたところだ」という意味です。\n\n今家にいないので、②has gone が正解。",
+    "audio": "audio/q116.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
