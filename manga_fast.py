@@ -23,7 +23,7 @@ import manga_reel as mr
 
 ROOT = Path(__file__).parent
 OUT = ROOT / "out" / "manga"
-W, H, FPS, SR = 1080, 1920, 12, 24000
+W, H, FPS, SR = 1080, 1920, 30, 24000  # 帯のアニメを滑らかにするため30コマ(絵は止まっているので見た目は同じ)
 SPEED = 1.1
 # 後ろでかすかに流す曲(Uppbeat の Cozy Places / Yokonap。クレジットはキャプションに)
 BGM = ROOT / "assets" / "manga_bgm" / "cozy-places.mp3"
