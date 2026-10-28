@@ -1,6 +1,9 @@
 """テンポの速い4コマ(ストップモーション風の揺れつき)。1本につきターゲット単語は1つ、ほかにも使える単語を数個。
 
     .venv-tts/bin/python manga_fast.py procrastinate      # out/manga/procrastinate_fast.mp4 と 4コマ・解説の画像
+    .venv-tts/bin/python manga_fast.py procrastinate --hook   # 冒頭を変えた版(procrastinate_fast_hook.mp4)
+
+・--hook:文字だけのタイトル画面をやめて、0秒目から絵。オチを0.6秒ちらっと見せてから1コマ目へ。問いかけは1コマ目まで上に大きく重ねる
 
 ・最初の約1秒でターゲット単語を見せる(つかみ)。コマの切り替えは「パッ」と寄って止まる
 ・画面は揺らさない。声の大きさはそろえ、後ろにかすかなBGM
@@ -363,18 +366,28 @@ def title_frame(word, hook, t, rng):
     return img
 
 
-def panel_frame(src, t, rng, label):
+def panel_frame(src, t, rng, label, hook=None):
     # 切り替えた瞬間は少し寄って、0.15秒で止まる
     scale = 1.06 if t < 0.15 else 1.0
     img = jitter(src, rng, scale)
     d = ImageDraw.Draw(img)
+    if hook:
+        # 問いかけを上に大きく(タイトル画面のかわり)
+        f = m.JP(76)
+        while f.getlength(hook) > W - 100:
+            f = m.JP(f.size - 4)
+        d.rounded_rectangle((40, 95, W - 40, 285), radius=28, fill=(200, 52, 48))
+        d.text((W // 2, 190), hook, font=f, fill=(255, 255, 255), anchor="mm")
+        return img
     d.text((W // 2, 170), label, font=m.EN(80), fill=m.INK, anchor="mm")
     d.text((W // 2, 245), "4コマで覚える英語", font=m.JP(36), fill=(150, 140, 130), anchor="mm")
     return img
 
 
 def main():
-    name = sys.argv[1] if len(sys.argv) > 1 else "procrastinate"
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    name = args[0] if args else "procrastinate"
+    hook = "--hook" in sys.argv
     sc = SCRIPTS[name]
     OUT.mkdir(parents=True, exist_ok=True)
     comic = sc["draw"]()
@@ -392,15 +405,21 @@ def main():
         return (a * min(1.0, 0.95 / peak)).astype(np.float32)
 
     scenes, audio = [], []  # (種類, 画像, 秒)
-    hook_len = 1.1
-    scenes.append(("title", None, hook_len))
-    audio += [mr.pop(), mr.silence(hook_len - len(mr.pop()) / SR)]
-    for box, lines in zip(boxes, sc["panels"]):
+    crops = [comic.crop(tuple(int(v) for v in box)) for box in boxes]
+    if hook:
+        # オチを0.6秒だけ見せて「なんでこうなった?」と思わせる
+        scenes.append(("tease", crops[3], 0.6))
+        audio += [mr.pop(), mr.silence(0.6 - len(mr.pop()) / SR)]
+    else:
+        hook_len = 1.1
+        scenes.append(("title", None, hook_len))
+        audio += [mr.pop(), mr.silence(hook_len - len(mr.pop()) / SR)]
+    for i, (src, lines) in enumerate(zip(crops, sc["panels"])):
         clips = []
         for who, text in lines:
             clips += [voice(who, text), mr.silence(0.18)]
         clip = np.concatenate([mr.pop(), mr.silence(0.12)] + clips)
-        scenes.append(("panel", comic.crop(tuple(int(v) for v in box)), len(clip) / SR))
+        scenes.append(("hooked" if hook and i == 0 else "panel", src, len(clip) / SR))
         audio.append(clip)
     scenes.append(("panel_all", comic, 1.0))
     audio.append(mr.silence(1.0))
@@ -413,7 +432,7 @@ def main():
     audio.append(ex)
     total = sum(s[2] for s in scenes)
 
-    out = OUT / f"{name}_fast.mp4"
+    out = OUT / f"{name}_fast{'_hook' if hook else ''}.mp4"
     rng = random.Random(7)
     grid_bg = Image.new("RGB", (W, H), BG)
     g = ImageDraw.Draw(grid_bg)
@@ -440,7 +459,7 @@ def main():
                     f = grid_bg.copy()
                     f.paste(src, (0, 285))
                 else:
-                    f = panel_frame(src, t, rng, sc["word"])
+                    f = panel_frame(src, t, rng, sc["word"], sc["hook"] if kind in ("tease", "hooked") else None)
                 proc.stdin.write(f.tobytes())
         proc.stdin.close()
         proc.wait()
