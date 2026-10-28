@@ -340,6 +340,180 @@ SCRIPTS.update({
 })
 
 
+def sweater(d, cx, cy, w, seed=340):
+    """しましまのセーター。cy は胴の中心。"""
+    h = w * 0.8
+    for k in (-1, 1):  # そで
+        m.shape(d, [(cx + k * w * 0.42, cy - h * 0.42), (cx + k * w * 0.78, cy + h * 0.1), (cx + k * w * 0.6, cy + h * 0.22),
+                    (cx + k * w * 0.4, cy - h * 0.05)], (230, 120, 110), w=3, seed=seed + 1 + k)
+    m.shape(d, m.rrect_pts(cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2, w * 0.14), (230, 120, 110), w=4, seed=seed)
+    for i in (1, 2):
+        y = cy - h / 2 + i * h / 3
+        d.line([(cx - w / 2 + 6, y), (cx + w / 2 - 6, y)], fill=(255, 225, 200), width=max(4, int(w * 0.06)))
+
+
+def outgrow():
+    img, boxes, pw, ph = m.comic("outgrow")
+    # 1:お気に入りのセーター
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 71)
+    m.penguin(d, x0 + pw * 0.34, y0 + ph * 0.66, 150, "happy", hat_on=False)
+    sweater(d, x0 + pw * 0.74, y0 + ph * 0.7, 120)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.34, y0 + 210),
+                 "Look! My favorite\nsweater!", "見て!お気に入りのセーター!", 1)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.46), "♪", 44, (220, 120, 120), 8)
+    # 2:着てみたら、きつい
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 72)
+    cx, cy, s = x0 + pw * 0.5, y0 + ph * 0.64, 175
+    m.penguin(d, cx, cy, s, "shock", hat_on=False)
+    sweater(d, cx, cy + s * 0.12, s * 0.62, 341)
+    m.sweat(d, cx + s * 0.5, cy - s * 0.3)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (cx, y0 + 190), "Huh?\nIt's so tight...", "あれ?きつい…", 2)
+    m.sfx(img, (x0 + pw * 0.2, y0 + ph * 0.9), "*squeeze*", 28, (200, 140, 60), 8)
+    # 3:大きくなって着られなくなった(ターゲット)
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 73)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "smug")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 120, "shock", hat_on=False)
+    sweater(d, x0 + pw * 0.74, y0 + ph * 0.7 + 14, 74, 342)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 190),
+                 "You've outgrown it.", "大きくなって、着られなくなったね", 3)
+    # 4:部長がぴったり着ている
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 74)
+    cx, cy, s = x0 + pw * 0.62, y0 + ph * 0.66, 200
+    m.capybara(d, cx, cy, s, "calm")
+    m.shape(d, m.rrect_pts(cx - s * 0.12, cy - s * 0.24, cx + s * 0.5, cy + s * 0.38, s * 0.12), (230, 120, 110), w=4, seed=343)
+    for i in (1, 2):
+        y = cy - s * 0.24 + i * s * 0.62 / 3
+        d.line([(cx - s * 0.1, y), (cx + s * 0.48, y)], fill=(255, 225, 200), width=8)
+    m.owl(d, x0 + pw * 0.16, y0 + ph * 0.84, 90, "shock")
+    bot = small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (cx, y0 + ph * 0.5), "Fits perfectly.", "ぴったりだ", 4)
+    small_bubble(d, (x0 + 12, bot + 14, x0 + pw * 0.5, 0), (x0 + pw * 0.16, y0 + ph * 0.72), "Boss?!", "部長!?", 5)
+    m.sfx(img, (x0 + pw * 0.88, y0 + ph * 0.92), "*snug*", 30, (200, 140, 60), 8)
+    return m._end(img)
+
+
+def kotatsu(d, cx, top, w, seed=350):
+    """コタツ(天板+ふとん)。キャラを描いたあとに描くと、下半身がふとんに隠れる。"""
+    m.shape(d, m.rrect_pts(cx - w / 2, top + 14, cx + w / 2, top + w * 0.42, 18), (240, 180, 120), seed=seed)
+    for k in (-0.25, 0, 0.25):
+        d.line([(cx + k * w, top + 30), (cx + k * w, top + w * 0.4)], fill=(225, 150, 100), width=3)
+    m.shape(d, m.rrect_pts(cx - w * 0.56, top, cx + w * 0.56, top + 22, 6), (190, 140, 95), seed=seed + 1)
+
+
+def cant_bring_myself_to():
+    img, boxes, pw, ph = m.comic("can't bring myself to")
+    # 1:勉強の時間だよ
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 75)
+    m.owl(d, x0 + pw * 0.24, y0 + ph * 0.66, 140, "normal")
+    m.penguin(d, x0 + pw * 0.68, y0 + ph * 0.62, 120, "happy", hat_on=False)
+    kotatsu(d, x0 + pw * 0.68, y0 + ph * 0.7, 250)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.24, y0 + 190), "Time to study!", "勉強の時間だよ!", 1)
+    # 2:コタツから出る気になれない(ターゲット)
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 76)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.6, 170, "happy", hat_on=False)
+    kotatsu(d, x0 + pw * 0.5, y0 + ph * 0.72, 330, 351)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 220),
+                 "I can't bring myself\nto leave the kotatsu.", "コタツから出る気になれない…", 2)
+    m.sfx(img, (x0 + pw * 0.84, y0 + ph * 0.5), "*cozy*", 30, (220, 120, 90), 8)
+    # 3:ほら、出て!
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 77)
+    m.owl(d, x0 + pw * 0.26, y0 + ph * 0.66, 140, "shock")
+    m.penguin(d, x0 + pw * 0.7, y0 + ph * 0.62, 120, "shock", hat_on=False)
+    kotatsu(d, x0 + pw * 0.7, y0 + ph * 0.7, 240, 352)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.26, y0 + 190), "Come on! Get out!", "ほら、出て!", 3)
+    m.sfx(img, (x0 + pw * 0.48, y0 + ph * 0.5), "*tug*", 34, (200, 140, 60), -8)
+    # 4:ナビも入って、あと5分
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 78)
+    m.owl(d, x0 + pw * 0.32, y0 + ph * 0.6, 130, "happy")
+    m.penguin(d, x0 + pw * 0.7, y0 + ph * 0.62, 120, "happy", hat_on=False)
+    kotatsu(d, x0 + pw * 0.5, y0 + ph * 0.72, 380, 353)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.32, y0 + 210),
+                 "...Okay.\nFive more minutes.", "…あと5分だけね", 4)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.5), "*warm*", 30, (220, 120, 90), 8)
+    return m._end(img)
+
+
+def get_stuck_in_traffic():
+    img, boxes, pw, ph = m.comic("get stuck in traffic", series="toeic")
+    # 1:会議なのに部長がいない
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 85)
+    m.clock(d, x0 + pw * 0.8, y0 + ph * 0.5, 42)
+    m.owl(d, x0 + pw * 0.34, y0 + ph * 0.68, 150, "normal")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.34, y0 + 220),
+                 "The meeting starts at 10.\nWhere's the boss?", "会議は10時から。部長は?", 1)
+    # 2:渋滞にはまったって(ターゲット)
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 86)
+    m.penguin(d, x0 + pw * 0.44, y0 + ph * 0.66, 165, "normal", hat_on=False)
+    phone(d, x0 + pw * 0.62, y0 + ph * 0.58)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.44, y0 + 220),
+                 "He says he got stuck\nin traffic.", "渋滞にはまったって", 2)
+    m.sfx(img, (x0 + pw * 0.84, y0 + ph * 0.5), "*ring*", 30, (110, 120, 140), 8)
+    # 3:徒歩通勤なのに?
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 87)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "shock")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 115, "normal", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 220),
+                 "Again?\nHe walks to work!", "また?歩いて通勤なのに!", 3)
+    m.sfx(img, (x0 + pw * 0.56, y0 + ph * 0.46), "?!", 50, (220, 80, 70), 10)
+    # 4:カピバラの行列で、道が渋滞
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 88)
+    d.rectangle([x0 + 6, y0 + ph * 0.6, x1 - 6, y0 + ph * 0.94], fill=(185, 185, 190))
+    for k in range(5):
+        xx = x0 + 20 + k * pw / 5
+        d.line([(xx, y0 + ph * 0.77), (xx + pw / 10, y0 + ph * 0.77)], fill=(255, 255, 255), width=6)
+    for k, fx in enumerate((0.2, 0.5, 0.8)):
+        m.capybara(d, x0 + pw * fx, y0 + ph * 0.72, 125, "calm", seed=91 + k * 7)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + ph * 0.6),
+                 "Heavy traffic today.", "今日は混んでるねぇ", 4)
+    m.sfx(img, (x0 + pw * 0.5, y0 + ph * 0.5), "*slow*", 30, (110, 120, 140), -6)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "outgrow": dict(
+        draw=outgrow, word="outgrow", hook="「服が着られなくなった」英語で?",
+        meaning="(成長して)〜が合わなくなる", level="英検2級レベル",
+        ex_en="Kids outgrow their shoes so fast.", ex_ja="子どもはすぐに靴が合わなくなる",
+        words=[("favorite", "お気に入りの"), ("tight", "きつい"), ("outgrown", "outgrow の過去分詞"),
+               ("fit", "(サイズが)合う"), ("perfectly", "ぴったり、完璧に")],
+        panels=[[("pen", "Look! My favorite sweater!")], [("pen", "Huh? It's so tight...")],
+                [("navi", "You've outgrown it.")], [("boss", "Fits perfectly."), ("navi", "Boss?!")]],
+        explain=[("navi", "Outgrow."), ("pen", "Kids outgrow their shoes so fast.")],
+    ),
+    "cant_bring_myself_to": dict(
+        draw=cant_bring_myself_to, word="can't bring myself to", hook="「コタツから出られない」英語で?",
+        meaning="どうしても〜する気になれない", level="英検準1級レベル",
+        ex_en="I can't bring myself to delete old photos.", ex_ja="昔の写真を、どうしても消す気になれない",
+        words=[("Time to ~", "〜の時間だ"), ("leave", "〜から出る、離れる"), ("Come on!", "ほら、さあ"),
+               ("get out", "外に出る"), ("five more minutes", "あと5分")],
+        panels=[[("navi", "Time to study!")], [("pen", "I can't bring myself to leave the kotatsu.")],
+                [("navi", "Come on! Get out!")], [("navi", "...Okay. Five more minutes.")]],
+        explain=[("navi", "Can't bring myself to."), ("pen", "I can't bring myself to delete old photos.")],
+    ),
+    "get_stuck_in_traffic": dict(
+        draw=get_stuck_in_traffic, word="get stuck in traffic", hook="「渋滞にはまる」英語で?",
+        meaning="渋滞にはまる", level="TOEIC頻出",
+        ex_en="I got stuck in traffic this morning.", ex_ja="今朝、渋滞にはまった",
+        words=[("meeting", "会議"), ("start at ~", "〜時に始まる"), ("He says ~", "〜だって(伝え聞き)"),
+               ("walk to work", "歩いて通勤する"), ("heavy traffic", "ひどい渋滞")],
+        panels=[[("navi", "The meeting starts at ten. Where's the boss?")], [("pen", "He says he got stuck in traffic.")],
+                [("navi", "Again? He walks to work!")], [("boss", "Heavy traffic today.")]],
+        explain=[("navi", "Get stuck in traffic."), ("pen", "I got stuck in traffic this morning.")],
+    ),
+})
+
+
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)
