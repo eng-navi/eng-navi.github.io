@@ -2224,5 +2224,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 115,
+    "category": "時制",
+    "question": "The company ( ) its new headquarters in Osaka three years ago.",
+    "options": [
+      "opened",
+      "has opened"
+    ],
+    "answer": 1,
+    "translation": "その会社は3年前に大阪に新しい本社を開設した。",
+    "explanation": "three years ago（3年前に）は、はっきりと過去を示す語句です。\n現在完了は、こうした過去を示す語句と一緒には使えません。\n\nしたがって、過去形の①opened が正解。",
+    "audio": "audio/q115.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
