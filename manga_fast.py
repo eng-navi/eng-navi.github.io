@@ -376,8 +376,16 @@ def panel_frame(src, t, rng, label, hook=None):
         f = m.JP(76)
         while f.getlength(hook) > W - 100:
             f = m.JP(f.size - 4)
-        d.rounded_rectangle((40, 95, W - 40, 285), radius=28, fill=(200, 52, 48))
-        d.text((W // 2, 190), hook, font=f, fill=(255, 255, 255), anchor="mm")
+        # 0.5秒かけて下からふわっと浮き上がる(少し行きすぎて戻る)
+        k = min(1.0, t / 0.5)
+        ease = 1 + 2.2 * (k - 1) ** 3 + 1.2 * (k - 1) ** 2
+        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        ld = ImageDraw.Draw(layer)
+        dy = int((1 - ease) * 90)
+        ld.rounded_rectangle((40, 95 + dy, W - 40, 285 + dy), radius=28, fill=(200, 52, 48, 255))
+        ld.text((W // 2, 190 + dy), hook, font=f, fill=(255, 255, 255, 255), anchor="mm")
+        layer.putalpha(layer.getchannel("A").point(lambda a: int(a * min(1.0, t / 0.3))))
+        img.paste(layer, (0, 0), layer)
         return img
     d.text((W // 2, 170), label, font=m.EN(80), fill=m.INK, anchor="mm")
     d.text((W // 2, 245), "4コマで覚える英語", font=m.JP(36), fill=(150, 140, 130), anchor="mm")
