@@ -574,6 +574,121 @@ def scene_flee_goro(i):
     return img
 
 
+# ---- doubt(疑う):「ダウト!って、うたがう!」 ----
+def cards(d, cx, cy, n, seed):
+    r = random.Random(seed)
+    for k in range(n):
+        x, y, a = cx + r.uniform(-30, 30), cy + r.uniform(-8, 8), r.uniform(-0.3, 0.3)
+        w, h = 46, 66
+        pts = [(x + px * math.cos(a) - py * math.sin(a), y + px * math.sin(a) + py * math.cos(a))
+               for px, py in ((-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2))]
+        d.polygon(pts, fill=(255, 255, 255), outline=INK)
+        d.line(pts + [pts[0]], fill=INK, width=3)
+
+
+def scene_doubt_hook(i):
+    img = stage(600 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 540, 1400, 260)
+    m.penguin(d, 540, 1150, 300, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 700, 1000, 30)
+    caption(d, "doubt、", 820, 96, box=False)
+    caption(d, "1秒で覚えられる?", 950, 80, color=(200, 52, 48), box=False)
+    return img
+
+
+def scene_doubt_play(i):
+    img = stage(610 + i % 3)
+    d = ImageDraw.Draw(img)
+    table(d, 620 + i % 3)
+    cards(d, 540, 1150, 6, 630)
+    shadow(d, 230, 1440, 200)
+    m.penguin(d, 230, 1230, 210, "smug", hat_on=False, seed=51 + i % 3)
+    shadow(d, 850, 1440, 200)
+    m.owl(d, 850, 1230, 210, "normal", seed=41 + i % 3)
+    jsfx(img, (380, 900), "4です", 80, (90, 130, 200), -6)
+    caption(d, "トランプの「ダウト」で遊んでたら…", 1640, 54)
+    return img
+
+
+def scene_doubt_call(i):
+    img = stage(640 + i % 3)
+    d = ImageDraw.Draw(img)
+    table(d, 620 + i % 3)
+    cards(d, 540, 1150, 6, 630)
+    shadow(d, 230, 1440, 200)
+    m.penguin(d, 230, 1230, 210, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 340, 1080, 26)
+    shadow(d, 850, 1440, 200)
+    s = 210 * (1.08 if i < 3 else 1.0)
+    m.owl(d, 850, 1230, s, "smug", seed=41 + i % 3)
+    jsfx(img, (600, 860), "ダウト!", 120, (220, 60, 50), -8)
+    caption(d, "ナビ「うそでしょ!」と疑う", 1640, 58)
+    return img
+
+
+def scene_doubt_word(i):
+    img = stage(650 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 780, 1440, 220)
+    m.owl(d, 780, 1230, 230, "smug", seed=41 + i % 3)
+    jsfx(img, (300, 1150), "ドン!", 110, (220, 60, 50), -8)
+    d.rounded_rectangle([90, 600, W - 90, 1020], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    step = min(3, 1 + i // 4)
+    parts = [("ダウト!", (110, 160, 210)), ("って疑う", (230, 120, 110))]
+    f = m.JP(110)
+    x = W / 2 - (sum(f.getlength(p) for p, _ in parts) + 24) / 2
+    for k, (p, c) in enumerate(parts):
+        d.text((x, 740), p, font=f, fill=c if k < step else (215, 210, 205), anchor="ls")
+        x += f.getlength(p) + 24
+    if step >= 3:
+        line = [("doubt", (110, 160, 210)), (" = ", INK), ("疑う", (230, 120, 110))]
+        fonts = [m.EN(120), m.EN(90), m.JP(84)]
+        x = W / 2 - sum(ff.getlength(t) for (t, _), ff in zip(line, fonts)) / 2
+        for (t, c), ff in zip(line, fonts):
+            d.text((x, 885), t, font=ff, fill=c, anchor="ls")
+            x += ff.getlength(t)
+    d.text((W / 2, 975), "発音は「ダウト」(b は読まない)", font=m.JP(44), fill=(110, 110, 110), anchor="ms")
+    return img
+
+
+def scene_doubt_meaning(i):
+    img = stage(670 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([110, 640, W - 110, 1180], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    d.text((W / 2, 800), "doubt", font=m.EN(150), fill=INK, anchor="ms")
+    d.text((W / 2, 920), "= 疑う、〜ではないと思う", font=m.JP(58), fill=(200, 52, 48), anchor="ms")
+    m.draw_fit(d, (W / 2, 1010), "I doubt that's true.", m.EN(54), INK, width=W - 300)
+    m.draw_fit(d, (W / 2, 1100), "(それ、本当じゃないと思うな)", m.JP(38), (110, 110, 110), width=W - 300, jp=True)
+    shadow(d, 260, 1440, 180)
+    m.owl(d, 260, 1260, 180, "smug", seed=41 + i % 3)
+    shadow(d, 820, 1440, 180)
+    m.penguin(d, 820, 1260, 170, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 900, 1180, 22)
+    caption(d, "ダウト!って疑う で doubt!", 1640, 58)
+    return img
+
+
+def scene_doubt_goro(i):
+    img = stage(690 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([90, 640, W - 90, 1060], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    s = 1.0 + max(0, 0.25 - i / FPS) * 0.6
+    f = m.JP(int(96 * s))
+    parts = [("ダウト!って", (110, 160, 210)), ("うたがう!", (230, 120, 110))]
+    for k, (p, c) in enumerate(parts):
+        d.text((W / 2, 800 + k * 120), p, font=f, fill=c, anchor="ms")
+    d.text((W / 2, 1025), "= doubt(疑う)", font=m.JP(48), fill=INK, anchor="ms")
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1240, 210, "happy", hat_on=False, seed=51 + i % 3)
+    shadow(d, 790, 1440, 200)
+    m.owl(d, 790, 1240, 200, "happy", seed=41 + i % 3)
+    jsfx(img, (545, 1180), "せーの!", 70, (220, 90, 70), 6)
+    caption(d, "声に出して、もう1回!", 1640, 58)
+    d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+    return img
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr
@@ -622,6 +737,14 @@ def plans(pipe):
             (2.6, lambda i: scene_flee_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", "Flee!"), gap(0.3), voice("pen", "Flee!")]),
             (4.4, lambda i: scene_flee_meaning(i), [gap(0.2), voice("navi", "Flee."), gap(0.4), voice("pen", "The birds fled when the dog barked.")]),
             (3.2, lambda i: scene_flee_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "フリーで、にげる!"), gap(0.35), voice("navi", "フリーで、にげる!"), gap(0.6)]),
+        ],
+        "doubt": [
+            (1.3, lambda i: scene_doubt_hook(i), [tone(660, 0.15), gap(0.2)]),
+            (1.8, lambda i: scene_doubt_play(i), [tone(880, 0.12, 0.04), gap(0.2), voice("pen", "Four.")]),
+            (2.0, lambda i: scene_doubt_call(i), [tone(1100, 0.1, 0.04), gap(0.1), voice("navi", "ダウト!")]),
+            (2.6, lambda i: scene_doubt_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", "Doubt!"), gap(0.3), voice("pen", "Doubt...")]),
+            (4.4, lambda i: scene_doubt_meaning(i), [gap(0.2), voice("navi", "Doubt."), gap(0.4), voice("pen", "I doubt that's true.")]),
+            (3.2, lambda i: scene_doubt_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "ダウト!って、うたがう!"), gap(0.35), voice("navi", "ダウト!って、うたがう!"), gap(0.6)]),
         ],
         "bury": [
             (1.3, lambda i: scene_bury_hook(i), [tone(660, 0.15), gap(0.2)]),

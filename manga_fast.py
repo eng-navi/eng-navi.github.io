@@ -514,6 +514,182 @@ SCRIPTS.update({
 })
 
 
+def backpack(d, cx, cy, s, seed=360):
+    """大荷物のリュック(傘と浮き輪つき)。ペンより先に描く。"""
+    m.umbrella(d, cx + s * 0.2, cy - s * 0.95, s * 0.5)
+    m.shape(d, m.rrect_pts(cx - s * 0.45, cy - s * 0.6, cx + s * 0.45, cy + s * 0.55, s * 0.18), (150, 120, 90), seed=seed)
+    d.line([(cx - s * 0.3, cy - s * 0.1), (cx + s * 0.3, cy - s * 0.1)], fill=(110, 85, 60), width=4)
+    r = s * 0.3
+    d.ellipse([cx + s * 0.25 - r, cy + s * 0.15 - r, cx + s * 0.25 + r, cy + s * 0.15 + r], fill=(240, 110, 100), outline=m.INK, width=4)
+    d.ellipse([cx + s * 0.25 - r * 0.45, cy + s * 0.15 - r * 0.45, cx + s * 0.25 + r * 0.45, cy + s * 0.15 + r * 0.45], fill=(150, 120, 90), outline=m.INK, width=3)
+
+
+def shop(d, cx, bottom, w, seed=370):
+    h = w * 0.8
+    m.shape(d, m.rrect_pts(cx - w / 2, bottom - h, cx + w / 2, bottom, 6), (250, 246, 236), seed=seed)
+    for k in range(6):  # しましまのひさし
+        x = cx - w / 2 + k * w / 6
+        d.rectangle([x, bottom - h, x + w / 6, bottom - h + w * 0.16], fill=(120, 180, 140) if k % 2 else (255, 255, 255), outline=m.INK, width=2)
+    d.text((cx, bottom - h + w * 0.3), "STORE", font=m.EN(int(w * 0.16)), fill=(70, 110, 170), anchor="mm")
+    d.rectangle([cx - w * 0.16, bottom - h * 0.48, cx + w * 0.16, bottom], fill=(190, 220, 235), outline=m.INK, width=3)
+
+
+def just_in_case():
+    img, boxes, pw, ph = m.comic("just in case")
+    # 1:準備できた!
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 91)
+    backpack(d, x0 + pw * 0.62, y0 + ph * 0.66, 170)
+    m.penguin(d, x0 + pw * 0.42, y0 + ph * 0.68, 140, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.42, y0 + 170), "I'm ready to go!", "準備できた!", 1)
+    # 2:なんで大荷物?念のため(ターゲット)
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 92)
+    m.owl(d, x0 + pw * 0.22, y0 + ph * 0.76, 110, "shock")
+    backpack(d, x0 + pw * 0.74, y0 + ph * 0.74, 130, 361)
+    m.penguin(d, x0 + pw * 0.6, y0 + ph * 0.76, 110, "smug", hat_on=False)
+    bot = small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.22, y0 + 140),
+                       "Why is your bag so big?", "なんでそんなに大荷物?", 2)
+    small_bubble(d, (x0 + pw * 0.3, bot + 10, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.6), "Just in case.", "念のため", 3)
+    # 3:どこに行くの?
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 93)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "normal")
+    backpack(d, x0 + pw * 0.8, y0 + ph * 0.72, 120, 362)
+    m.penguin(d, x0 + pw * 0.68, y0 + ph * 0.74, 105, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 190), "Where are you going?", "どこに行くの?", 4)
+    # 4:隣のお店まで
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 94)
+    shop(d, x0 + pw * 0.74, y0 + ph * 0.92, 210)
+    backpack(d, x0 + pw * 0.4, y0 + ph * 0.72, 120, 363)
+    m.penguin(d, x0 + pw * 0.28, y0 + ph * 0.74, 105, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.28, y0 + 160), "To the store next door.", "隣のお店まで", 5)
+    m.sfx(img, (x0 + pw * 0.56, y0 + ph * 0.94), "5 m", 30, (110, 120, 140), 0)
+    return m._end(img)
+
+
+def hearts(img, x, y):
+    d = ImageDraw.Draw(img)
+    for dx, dy, r in ((0, 0, 16), (44, -36, 12), (-36, -50, 10)):
+        cx, cy = x + dx, y + dy
+        d.ellipse([cx - r * 2, cy - r, cx, cy + r], fill=(235, 110, 140))
+        d.ellipse([cx, cy - r, cx + r * 2, cy + r], fill=(235, 110, 140))
+        d.polygon([(cx - r * 1.95, cy + r * 0.3), (cx + r * 1.95, cy + r * 0.3), (cx, cy + r * 2.4)], fill=(235, 110, 140))
+
+
+def have_a_crush_on():
+    img, boxes, pw, ph = m.comic("have a crush on")
+    # 1:好きな人がいるの(ターゲット)
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 95)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "happy", hat_on=False)
+    hearts(img, x0 + pw * 0.8, y0 + ph * 0.5)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200),
+                 "I have a crush\non someone...", "好きな人がいるの…", 1)
+    # 2:えっ、誰?
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 96)
+    m.owl(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "shock")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "Really? Who?", "えっ、誰?", 2)
+    m.sfx(img, (x0 + pw * 0.84, y0 + ph * 0.44), "!?", 50, (220, 80, 70), 10)
+    # 3:クールで、つやつやで、銀色で…
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 97)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.68, 160, "happy", hat_on=False)
+    hearts(img, x0 + pw * 0.18, y0 + ph * 0.52)
+    hearts(img, x0 + pw * 0.84, y0 + ph * 0.56)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 220),
+                 "He's cool, shiny,\nand silver...", "クールで、つやつやで、銀色で…", 3)
+    # 4:正体はマグロ
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 98)
+    m.fish(d, x0 + pw * 0.62, y0 + ph * 0.7, 220)
+    m.penguin(d, x0 + pw * 0.46, y0 + ph * 0.68, 120, "happy", hat_on=False)
+    m.owl(d, x0 + pw * 0.16, y0 + ph * 0.8, 90, "shock")
+    hearts(img, x0 + pw * 0.8, y0 + ph * 0.5)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.2, y0 + ph * 0.64), "That's your lunch!", "それ、お昼ごはん!", 4)
+    return m._end(img)
+
+
+def controller(d, cx, cy, w, seed=380):
+    m.shape(d, m.rrect_pts(cx - w / 2, cy - w * 0.25, cx + w / 2, cy + w * 0.25, w * 0.22), (90, 95, 110), w=3, seed=seed)
+    d.line([(cx - w * 0.3, cy), (cx - w * 0.14, cy)], fill=(240, 240, 240), width=5)
+    d.line([(cx - w * 0.22, cy - w * 0.08), (cx - w * 0.22, cy + w * 0.08)], fill=(240, 240, 240), width=5)
+    for dx, col in ((0.18, (230, 90, 80)), (0.3, (90, 170, 220))):
+        d.ellipse([cx + w * dx - 6, cy - 6, cx + w * dx + 6, cy + 6], fill=col)
+
+
+def stay_up_all_night():
+    img, boxes, pw, ph = m.comic("stay up all night")
+    # 1:眠そうだね
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 101)
+    m.owl(d, x0 + pw * 0.28, y0 + ph * 0.68, 140, "normal")
+    m.penguin(d, x0 + pw * 0.72, y0 + ph * 0.7, 125, "smug", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.28, y0 + 170), "You look tired.", "眠そうだね", 1)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.48), "*yawn*", 30, (110, 120, 160), 8)
+    # 2:徹夜したんだ(ターゲット)
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 102)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 175, "smug", hat_on=False)
+    m.sweat(d, x0 + pw * 0.72, y0 + ph * 0.48)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "I stayed up all night.", "徹夜したんだ", 2)
+    # 3:テスト勉強?えらい!
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 103)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "happy")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 115, "smug", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 180),
+                 "Studying for the test?", "テスト勉強?えらい!", 3)
+    sparkle(d, x0 + pw * 0.56, y0 + ph * 0.46)
+    sparkle(d, x0 + pw * 0.6, y0 + ph * 0.56, 9)
+    # 4:ゲームしてた。部長も
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 104)
+    m.penguin(d, x0 + pw * 0.3, y0 + ph * 0.66, 125, "smug", hat_on=False)
+    controller(d, x0 + pw * 0.3, y0 + ph * 0.84, 90)
+    m.capybara(d, x0 + pw * 0.74, y0 + ph * 0.72, 150, "calm")
+    controller(d, x0 + pw * 0.66, y0 + ph * 0.9, 80, 381)
+    bot = small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + ph * 0.48), "...Playing games.", "…ゲームしてた", 4)
+    small_bubble(d, (x0 + pw * 0.4, bot + 10, x0 + pw - 12, 0), (x0 + pw * 0.74, y0 + ph * 0.6), "Rematch tonight.", "今夜もリベンジな", 5)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "just_in_case": dict(
+        draw=just_in_case, word="just in case", hook="「念のため」って英語で?",
+        meaning="念のため、万一に備えて", level="英検準2級〜2級レベル",
+        ex_en="I saved the file twice, just in case.", ex_ja="念のため、ファイルを2回保存した",
+        words=[("be ready to ~", "〜する準備ができた"), ("so big", "そんなに大きい"), ("Where are you going?", "どこに行くの?"),
+               ("next door", "隣の"), ("store", "お店")],
+        panels=[[("pen", "I'm ready to go!")], [("navi", "Why is your bag so big?"), ("pen", "Just in case.")],
+                [("navi", "Where are you going?")], [("pen", "To the store next door.")]],
+        explain=[("navi", "Just in case."), ("pen", "I saved the file twice, just in case.")],
+    ),
+    "have_a_crush_on": dict(
+        draw=have_a_crush_on, word="have a crush on", hook="「片思い」って英語で?",
+        meaning="〜に片思いしている、〜が好き", level="英検2級レベル",
+        ex_en="She has a crush on her classmate.", ex_ja="彼女はクラスメートに片思いしている",
+        words=[("someone", "だれか"), ("Really?", "本当?"), ("cool", "かっこいい、冷たい"),
+               ("shiny", "つやつやした"), ("silver", "銀色の")],
+        panels=[[("pen", "I have a crush on someone...")], [("navi", "Really? Who?")],
+                [("pen", "He's cool, shiny, and silver...")], [("navi", "That's your lunch!")]],
+        explain=[("navi", "Have a crush on."), ("pen", "She has a crush on her classmate.")],
+    ),
+    "stay_up_all_night": dict(
+        draw=stay_up_all_night, word="stay up all night", hook="「徹夜した」って英語で?",
+        meaning="徹夜する", level="英検準2級レベル",
+        ex_en="I stayed up all night finishing my report.", ex_ja="レポートを仕上げるために徹夜した",
+        words=[("look tired", "疲れて見える"), ("stayed", "stay の過去形"), ("study for ~", "〜の勉強をする"),
+               ("play games", "ゲームをする"), ("rematch", "再試合、リベンジ")],
+        panels=[[("navi", "You look tired.")], [("pen", "I stayed up all night.")],
+                [("navi", "Studying for the test?")], [("pen", "...Playing games."), ("boss", "Rematch tonight.")]],
+        explain=[("navi", "Stay up all night."), ("pen", "I stayed up all night finishing my report.")],
+    ),
+})
+
+
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)
