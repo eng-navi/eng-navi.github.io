@@ -2262,5 +2262,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 117,
+    "text": "The small café exploded in popularity after a famous singer posted about it.",
+    "target": "exploded in popularity",
+    "glossary": [
+      "explode in popularity：人気が爆発する",
+      "post about X：Xについて投稿する"
+    ],
+    "translation": "有名な歌手が投稿してから、その小さなカフェは一気に人気になった。",
+    "explanation": "「explode in popularity」は「人気が爆発する、一気に人気が出る」という意味です。\nexplode（爆発する）を人気の急上昇にたとえています。\n\ngrow in popularity（だんだん人気が出る）とセットで覚えておくと便利です。",
+    "audio": "audio/q117.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
