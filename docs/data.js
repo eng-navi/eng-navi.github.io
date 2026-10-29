@@ -2280,5 +2280,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 118,
+    "category": "時制",
+    "question": "The technicians ( ) on the system for hours before they found the problem.",
+    "options": [
+      "have been working",
+      "had been working"
+    ],
+    "answer": 2,
+    "translation": "技術者たちは、問題を見つけるまで何時間もシステムの作業をしていた。",
+    "explanation": "「問題を見つけた」という過去の時点まで、作業がずっと続いていました。\n過去のある時点までの動作の継続は、過去完了進行形で表します。\n\nしたがって、②had been working が正解。",
+    "audio": "audio/q118.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
