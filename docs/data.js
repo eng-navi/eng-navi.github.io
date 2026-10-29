@@ -2299,5 +2299,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 119,
+    "category": "時制",
+    "question": "Listen! I ( ) someone knocking on the door.",
+    "options": [
+      "hear",
+      "am hearing"
+    ],
+    "answer": 1,
+    "translation": "ほら！誰かがドアをノックしているのが聞こえる。",
+    "explanation": "hear（聞こえる）や see（見える）は、自然に感じとる「知覚」を表す動詞で、ふつう進行形にしません。\nlisten to（耳をすます）のような意識的な動作なら進行形にできます。\n\nしたがって、①hear が正解。",
+    "audio": "audio/q119.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
