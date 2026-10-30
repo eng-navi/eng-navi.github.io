@@ -2318,5 +2318,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 120,
+    "text": "“Was the test easy?”\n“Far from it. I barely finished in time.”",
+    "target": "Far from it.",
+    "glossary": [
+      "Far from it.：とんでもない、全然そんなことない",
+      "barely：かろうじて",
+      "in time：時間内に"
+    ],
+    "translation": "「テスト簡単だった？」「とんでもない。ギリギリで終わったよ」",
+    "explanation": "「Far from it.」は相手の言ったことを強く否定して「とんでもない、全くそうではない」と返す表現です。\nfar from X（Xとは程遠い）から来ていて、Not at all. に近い意味になります。",
+    "audio": "audio/q120.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
