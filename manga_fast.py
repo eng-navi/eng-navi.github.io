@@ -869,6 +869,163 @@ SCRIPTS.update({
 })
 
 
+def cake(d, cx, bottom, w, burnt=False, seed=400):
+    sponge, cream = ((70, 55, 50), (90, 75, 70)) if burnt else ((240, 210, 150), (255, 250, 245))
+    m.shape(d, m.rrect_pts(cx - w / 2, bottom - w * 0.5, cx + w / 2, bottom, 10), sponge, seed=seed)
+    m.shape(d, m.rrect_pts(cx - w / 2, bottom - w * 0.56, cx + w / 2, bottom - w * 0.4, 10), cream, w=3, seed=seed + 1)
+    if burnt:
+        for k in (-0.25, 0.05, 0.3):  # けむり
+            x = cx + k * w
+            d.line(m.wob([(x, bottom - w * 0.62), (x - 12, bottom - w * 0.8), (x + 8, bottom - w * 0.98)], amp=3, seed=seed + 2),
+                   fill=(150, 150, 160), width=5, joint="curve")
+    else:
+        d.ellipse([cx - 12, bottom - w * 0.66, cx + 12, bottom - w * 0.54], fill=(230, 80, 80), outline=m.INK, width=3)
+
+
+def turn_out_fine():
+    img, boxes, pw, ph = m.comic("turn out fine")
+    # 1:ケーキ焼くよ!
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 131)
+    m.penguin(d, x0 + pw * 0.36, y0 + ph * 0.66, 160, "happy", hat_on=False)
+    cake(d, x0 + pw * 0.76, y0 + ph * 0.92, 130)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.36, y0 + 190), "I'm baking a cake!", "ケーキ焼くよ!", 1)
+    # 2:真っ黒に
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 132)
+    m.penguin(d, x0 + pw * 0.32, y0 + ph * 0.66, 160, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.5, y0 + ph * 0.44)
+    cake(d, x0 + pw * 0.74, y0 + ph * 0.92, 140, burnt=True, seed=401)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.32, y0 + 180), "Oh no... it's burnt!", "あっ…焦げた!", 2)
+    m.sfx(img, (x0 + pw * 0.8, y0 + ph * 0.5), "*smoke*", 28, (110, 120, 140), 8)
+    # 3:大丈夫、うまくいくよ(ターゲット)
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 133)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "happy")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 115, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 200),
+                 "Don't worry.\nIt'll turn out fine.", "大丈夫、うまくいくよ", 3)
+    # 4:部長「カリカリで好き」
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 134)
+    cake(d, x0 + pw * 0.28, y0 + ph * 0.92, 120, burnt=True, seed=402)
+    m.capybara(d, x0 + pw * 0.66, y0 + ph * 0.68, 180, "calm")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.5),
+                 "Crunchy. I like it.", "カリカリだ。好きだな", 4)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.92), "*crunch*", 28, (200, 140, 60), 8)
+    return m._end(img)
+
+
+def drive_me_crazy():
+    img, boxes, pw, ph = m.comic("drive me crazy")
+    # 1:眠れない
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 135)
+    m.owl(d, x0 + pw * 0.4, y0 + ph * 0.68, 150, "smug")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.4, y0 + 180), "I can't sleep...", "眠れない…", 1)
+    m.sfx(img, (x0 + pw * 0.8, y0 + ph * 0.44), "GOOO...", 34, (110, 120, 160), 8)
+    # 2:この音、イライラする!(ターゲット)
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 136)
+    m.owl(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "shock")
+    m.sweat(d, x0 + pw * 0.72, y0 + ph * 0.44)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200),
+                 "That noise is\ndriving me crazy!", "あの音、イライラする!", 2)
+    m.sfx(img, (x0 + pw * 0.16, y0 + ph * 0.5), "GOOO...", 30, (110, 120, 160), -8)
+    # 3:どこから?
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 137)
+    m.penguin(d, x0 + pw * 0.3, y0 + ph * 0.68, 130, "shock", hat_on=False)
+    m.owl(d, x0 + pw * 0.72, y0 + ph * 0.68, 130, "shock")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 190), "Where's it coming from?", "どこから聞こえるの?", 3)
+    # 4:部長のいびき
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 138)
+    m.capybara(d, x0 + pw * 0.56, y0 + ph * 0.7, 200, "calm")
+    m.zzz(img, x0 + pw * 0.3, y0 + ph * 0.46)
+    m.sfx(img, (x0 + pw * 0.56, y0 + ph * 0.42), "GOOOOO!", 46, (110, 120, 160), -6)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + ph * 0.36),
+                 "Zzz... too quiet...", "Zzz…静かすぎるな…", 4)
+    return m._end(img)
+
+
+def trophy(d, cx, bottom, s, seed=410):
+    gold = (235, 195, 70)
+    m.shape(d, m.rrect_pts(cx - s * 0.4, bottom - s * 0.16, cx + s * 0.4, bottom, 4), (150, 110, 70), w=3, seed=seed)
+    d.rectangle([cx - s * 0.08, bottom - s * 0.45, cx + s * 0.08, bottom - s * 0.16], fill=gold, outline=m.INK, width=3)
+    m.shape(d, [(cx - s * 0.45, bottom - s * 1.1), (cx + s * 0.45, bottom - s * 1.1), (cx + s * 0.3, bottom - s * 0.6),
+                (cx, bottom - s * 0.45), (cx - s * 0.3, bottom - s * 0.6)], gold, seed=seed + 1)
+    for k in (-1, 1):
+        d.arc([cx + k * s * 0.42 - s * 0.18, bottom - s * 1.05, cx + k * s * 0.42 + s * 0.18, bottom - s * 0.75],
+              270 if k > 0 else 90, 90 if k > 0 else 270, fill=m.INK, width=5)
+
+
+def win_an_award():
+    img, boxes, pw, ph = m.comic("win an award", series="toeic")
+    # 1:部長が賞を取った!(ターゲット)
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 141)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "The boss won an award!", "部長が賞を取ったよ!", 1)
+    sparkle(d, x0 + pw * 0.84, y0 + ph * 0.5)
+    sparkle(d, x0 + pw * 0.16, y0 + ph * 0.56, 10)
+    # 2:すごい!何の賞?
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 142)
+    m.owl(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "shock")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "Wow! For what?", "すごい!何の賞?", 2)
+    # 3:賞状を読む
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 143)
+    m.board(d, x0 + pw * 0.12, y0 + ph * 0.48, x0 + pw * 0.62, y0 + ph * 0.78, "AWARD")
+    m.penguin(d, x0 + pw * 0.8, y0 + ph * 0.7, 115, "normal", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + 200),
+                 "\"Best Sleeper\nof the Year.\"", "「今年いちばんよく寝た人賞」", 3)
+    # 4:寝ながら受賞
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 144)
+    trophy(d, x0 + pw * 0.24, y0 + ph * 0.92, 130)
+    m.capybara(d, x0 + pw * 0.66, y0 + ph * 0.7, 180, "calm")
+    m.zzz(img, x0 + pw * 0.8, y0 + ph * 0.44)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.48),
+                 "Zzz... thank you...", "Zzz…ありがとう…", 4)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "turn_out_fine": dict(
+        draw=turn_out_fine, word="turn out fine", hook="「結局うまくいく」英語で?",
+        meaning="結局うまくいく、なんとかなる", level="英検2級レベル",
+        ex_en="I was nervous, but everything turned out fine.", ex_ja="緊張したけど、全部うまくいった",
+        words=[("bake", "(オーブンで)焼く"), ("burnt", "焦げた"), ("Don't worry.", "心配しないで"),
+               ("crunchy", "カリカリした"), ("I like it.", "気に入った")],
+        panels=[[("pen", "I'm baking a cake!")], [("pen", "Oh no... it's burnt!")],
+                [("navi", "Don't worry. It'll turn out fine.")], [("boss", "Crunchy. I like it.")]],
+        explain=[("navi", "Turn out fine."), ("pen", "I was nervous, but everything turned out fine.")],
+    ),
+    "drive_me_crazy": dict(
+        draw=drive_me_crazy, word="drive me crazy", hook="「イライラする!」英語で?",
+        meaning="(人を)イライラさせる、おかしくさせる", level="英検2級レベル",
+        ex_en="This slow Wi-Fi is driving me crazy.", ex_ja="このWi-Fiの遅さに、イライラする",
+        words=[("can't sleep", "眠れない"), ("noise", "(不快な)音"), ("come from ~", "〜から来る"),
+               ("quiet", "静かな"), ("too ~", "〜すぎる")],
+        panels=[[("navi", "I can't sleep...")], [("navi", "That noise is driving me crazy!")],
+                [("pen", "Where's it coming from?")], [("boss", "Zzz... too quiet...")]],
+        explain=[("navi", "Drive me crazy."), ("pen", "This slow Wi-Fi is driving me crazy.")],
+    ),
+    "win_an_award": dict(
+        draw=win_an_award, word="win an award", hook="「賞を取る」って英語で?",
+        meaning="賞を取る、受賞する", level="TOEIC頻出",
+        ex_en="Our design team won an award last year.", ex_ja="うちのデザインチームは去年、賞を取った",
+        words=[("award", "賞"), ("won", "win の過去形"), ("For what?", "何に対して?"),
+               ("the best ~ of the year", "今年いちばんの〜"), ("sleeper", "眠る人")],
+        panels=[[("pen", "The boss won an award!")], [("navi", "Wow! For what?")],
+                [("pen", "Best Sleeper of the Year.")], [("boss", "Zzz... thank you...")]],
+        explain=[("navi", "Win an award."), ("pen", "Our design team won an award last year.")],
+    ),
+})
+
+
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)

@@ -807,6 +807,129 @@ def scene_scare_goro(i):
     return img
 
 
+# ---- grab(つかむ):「グラブで、つかむ!」 ----
+def glove(d, cx, cy, s, seed=800):
+    """野球のグラブ。"""
+    brown = (190, 120, 60)
+    for k in range(4):  # 指
+        x = cx - s * 0.36 + k * s * 0.22
+        m.shape(d, m.rrect_pts(x - s * 0.1, cy - s * 0.62, x + s * 0.1, cy, s * 0.1), brown, w=4, seed=seed + k)
+    m.shape(d, [(cx - s * 0.5 + s * 0.5 * math.cos(a) * 1.0 + s * 0.45, cy + s * 0.45 * math.sin(a)) for a in (k * math.pi / 12 for k in range(25))],
+            brown, w=4, seed=seed + 5)
+    m.shape(d, [(cx - s * 0.5, cy - s * 0.1), (cx - s * 0.75, cy - s * 0.45), (cx - s * 0.55, cy + s * 0.25)], brown, w=4, seed=seed + 6)
+    d.arc([cx - s * 0.25, cy - s * 0.15, cx + s * 0.25, cy + s * 0.3], 20, 160, fill=(120, 70, 30), width=5)
+
+
+def ball(d, cx, cy, r):
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 255, 255), outline=INK, width=4)
+    for k in (-1, 1):
+        d.arc([cx + k * r * 0.55 - r * 0.6, cy - r * 0.8, cx + k * r * 0.55 + r * 0.6, cy + r * 0.8], 100 if k > 0 else 280, 260 if k > 0 else 80, fill=(220, 60, 50), width=3)
+
+
+def scene_grab_hook(i):
+    img = stage(800 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 540, 1400, 260)
+    m.penguin(d, 540, 1150, 300, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 700, 1000, 30)
+    caption(d, "grab、", 820, 96, box=False)
+    caption(d, "1秒で覚えられる?", 950, 80, color=(200, 52, 48), box=False)
+    return img
+
+
+def scene_grab_throw(i, n):
+    img = stage(810 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 830, 1440, 200)
+    m.owl(d, 830, 1230, 200, "happy", seed=41 + i % 3)
+    shadow(d, 250, 1440, 200)
+    m.penguin(d, 250, 1230, 200, "shock", hat_on=False, seed=51 + i % 3)
+    glove(d, 400, 1170, 90)
+    k = i / max(1, n - 1)
+    ball(d, 760 - k * 330, 1000 - math.sin(k * math.pi) * 220, 26)
+    jsfx(img, (560, 760), "ビュン!", 80, (90, 130, 200), -6)
+    caption(d, "ナビが、ボールを投げた!", 1640, 58)
+    return img
+
+
+def scene_grab_catch(i):
+    img = stage(820 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 830, 1440, 200)
+    m.owl(d, 830, 1230, 200, "shock", seed=41 + i % 3)
+    shadow(d, 250, 1440, 200)
+    m.penguin(d, 250, 1230, 200, "happy", hat_on=False, seed=51 + i % 3)
+    glove(d, 420, 1150, 110 * (1.1 if i < 3 else 1.0))
+    ball(d, 420, 1110, 26)
+    jsfx(img, (540, 880), "パシッ!", 110, (220, 60, 50), -8)
+    caption(d, "グラブで、ガシッとつかむ!", 1640, 58)
+    return img
+
+
+def scene_grab_word(i):
+    img = stage(830 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 300, 1440, 220)
+    m.penguin(d, 300, 1230, 230, "happy", hat_on=False, seed=51 + i % 3)
+    glove(d, 470, 1160, 100)
+    jsfx(img, (800, 1150), "ドン!", 110, (220, 60, 50), -8)
+    d.rounded_rectangle([90, 600, W - 90, 1020], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    step = min(3, 1 + i // 4)
+    parts = [("グラブで", (110, 160, 210)), ("つかむ!", (230, 120, 110))]
+    f = m.JP(110)
+    while sum(f.getlength(p) for p, _ in parts) + 24 > W - 260:
+        f = m.JP(f.size - 4)
+    x = W / 2 - (sum(f.getlength(p) for p, _ in parts) + 24) / 2
+    for k, (p, c) in enumerate(parts):
+        d.text((x, 740), p, font=f, fill=c if k < step else (215, 210, 205), anchor="ls")
+        x += f.getlength(p) + 24
+    if step >= 3:
+        line = [("grab", (110, 160, 210)), (" = ", INK), ("つかむ", (230, 120, 110))]
+        fonts = [m.EN(120), m.EN(90), m.JP(84)]
+        x = W / 2 - sum(ff.getlength(t) for (t, _), ff in zip(line, fonts)) / 2
+        for (t, c), ff in zip(line, fonts):
+            d.text((x, 885), t, font=ff, fill=c, anchor="ls")
+            x += ff.getlength(t)
+    d.text((W / 2, 975), "発音は「グラブ」(glove とは別の単語)", font=m.JP(40), fill=(110, 110, 110), anchor="ms")
+    return img
+
+
+def scene_grab_meaning(i):
+    img = stage(850 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([110, 640, W - 110, 1180], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    d.text((W / 2, 800), "grab", font=m.EN(150), fill=INK, anchor="ms")
+    d.text((W / 2, 920), "= (さっと)つかむ", font=m.JP(60), fill=(200, 52, 48), anchor="ms")
+    m.draw_fit(d, (W / 2, 1010), "Let's grab a coffee before work.", m.EN(50), INK, width=W - 300)
+    m.draw_fit(d, (W / 2, 1100), "(仕事の前に、さっとコーヒーを買おう)", m.JP(38), (110, 110, 110), width=W - 300, jp=True)
+    shadow(d, 260, 1440, 180)
+    m.owl(d, 260, 1260, 180, "happy", seed=41 + i % 3)
+    shadow(d, 820, 1440, 180)
+    m.penguin(d, 820, 1260, 170, "happy", hat_on=False, seed=51 + i % 3)
+    caption(d, "グラブでつかむ! で grab!", 1640, 58)
+    return img
+
+
+def scene_grab_goro(i):
+    img = stage(870 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([90, 640, W - 90, 1060], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    s = 1.0 + max(0, 0.25 - i / FPS) * 0.6
+    f = m.JP(int(96 * s))
+    parts = [("グラブで", (110, 160, 210)), ("つかむ!", (230, 120, 110))]
+    for k, (p, c) in enumerate(parts):
+        d.text((W / 2, 800 + k * 120), p, font=f, fill=c, anchor="ms")
+    d.text((W / 2, 1025), "= grab(つかむ)", font=m.JP(48), fill=INK, anchor="ms")
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1240, 210, "happy", hat_on=False, seed=51 + i % 3)
+    shadow(d, 790, 1440, 200)
+    m.owl(d, 790, 1240, 200, "happy", seed=41 + i % 3)
+    jsfx(img, (545, 1180), "せーの!", 70, (220, 90, 70), 6)
+    caption(d, "声に出して、もう1回!", 1640, 58)
+    d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+    return img
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr
@@ -871,6 +994,14 @@ def plans(pipe):
             (2.6, lambda i: scene_scare_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", "Scare!"), gap(0.3), voice("pen", "Scare...")]),
             (4.4, lambda i: scene_scare_meaning(i), [gap(0.2), voice("navi", "Scare."), gap(0.4), voice("pen", "The loud noise scared the cat.")]),
             (3.2, lambda i: scene_scare_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "すけあ〜って、こわがらせる!"), gap(0.35), voice("navi", "すけあ〜って、こわがらせる!"), gap(0.6)]),
+        ],
+        "grab": [
+            (1.3, lambda i: scene_grab_hook(i), [tone(660, 0.15), gap(0.2)]),
+            (1.8, lambda i: scene_grab_throw(i, int(1.8 * FPS)), [tone(880, 0.12, 0.04)]),
+            (2.0, lambda i: scene_grab_catch(i), [tone(1100, 0.1, 0.04), gap(0.1), voice("pen", "グラブで、つかむ!")]),
+            (2.6, lambda i: scene_grab_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", "Grab!"), gap(0.3), voice("pen", "Grab!")]),
+            (4.4, lambda i: scene_grab_meaning(i), [gap(0.2), voice("navi", "Grab."), gap(0.4), voice("pen", "Let's grab a coffee before work.")]),
+            (3.2, lambda i: scene_grab_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "グラブで、つかむ!"), gap(0.35), voice("navi", "グラブで、つかむ!"), gap(0.6)]),
         ],
         "bury": [
             (1.3, lambda i: scene_bury_hook(i), [tone(660, 0.15), gap(0.2)]),
