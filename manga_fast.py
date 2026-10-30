@@ -9,6 +9,7 @@
 ・画面は揺らさない。声の大きさはそろえ、後ろにかすかなBGM
 ・セリフはコマごとに1〜2つ。ElevenLabs の声を少し速め(speed 1.1)で
 """
+import math
 import random
 import subprocess
 import sys
@@ -686,6 +687,184 @@ SCRIPTS.update({
         panels=[[("navi", "You look tired.")], [("pen", "I stayed up all night.")],
                 [("navi", "Studying for the test?")], [("pen", "...Playing games."), ("boss", "Rematch tonight.")]],
         explain=[("navi", "Stay up all night."), ("pen", "I stayed up all night finishing my report.")],
+    ),
+})
+
+
+def pumpkin(d, cx, cy, r, face=True, seed=390):
+    """ハロウィンのカボチャ(ジャック・オー・ランタン)。"""
+    for dx in (-0.45, 0.45, 0):
+        m.shape(d, [(cx + r * dx + r * 0.62 * math.cos(a), cy + r * 0.8 * math.sin(a)) for a in (k * math.pi / 12 for k in range(25))],
+                (240, 150, 60), w=4, seed=seed + int(dx * 10))
+    m.shape(d, m.rrect_pts(cx - r * 0.1, cy - r * 1.0, cx + r * 0.1, cy - r * 0.7, 4), (110, 140, 70), w=3, seed=seed + 5)
+    if face:
+        for k in (-1, 1):
+            d.polygon([(cx + k * r * 0.35, cy - r * 0.3), (cx + k * r * 0.18, cy - r * 0.02), (cx + k * r * 0.52, cy - r * 0.02)], fill=(70, 50, 40))
+        d.chord([cx - r * 0.5, cy - r * 0.2, cx + r * 0.5, cy + r * 0.5], 0, 180, fill=(70, 50, 40))
+
+
+def witch_hat(d, cx, top, w, seed=395):
+    m.shape(d, [(cx - w * 0.3, top + w * 0.7), (cx + w * 0.05, top), (cx + w * 0.3, top + w * 0.7)], (120, 80, 160), w=4, seed=seed)
+    m.shape(d, m.rrect_pts(cx - w * 0.55, top + w * 0.66, cx + w * 0.55, top + w * 0.8, 6), (120, 80, 160), w=4, seed=seed + 1)
+
+
+def candy(d, cx, cy, s, col, seed=0):
+    d.ellipse([cx - s, cy - s * 0.7, cx + s, cy + s * 0.7], fill=col, outline=m.INK, width=3)
+    for k in (-1, 1):
+        d.polygon([(cx + k * s, cy), (cx + k * s * 1.7, cy - s * 0.6), (cx + k * s * 1.7, cy + s * 0.6)], fill=col, outline=m.INK)
+
+
+def dumbbell(d, cx, cy, w):
+    d.line([(cx - w / 2, cy), (cx + w / 2, cy)], fill=(120, 120, 130), width=8)
+    for k in (-1, 1):
+        d.rounded_rectangle([cx + k * w / 2 - 12, cy - 22, cx + k * w / 2 + 12, cy + 22], radius=5, fill=(80, 85, 95), outline=m.INK, width=3)
+
+
+def might_as_well():
+    img, boxes, pw, ph = m.comic("might as well")
+    # 1:ハロウィンだよ!仮装は?
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 111)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.68, 140, "happy")
+    witch_hat(d, x0 + pw * 0.3, y0 + ph * 0.68 - 170, 120)
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.72, 115, "normal", hat_on=False)
+    pumpkin(d, x0 + pw * 0.12, y0 + ph * 0.9, 34)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 200),
+                 "It's Halloween!\nWhere's your costume?", "ハロウィンだよ!仮装は?", 1)
+    # 2:買うの忘れた
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 112)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.7, y0 + ph * 0.46)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "I forgot to buy one...", "買うの忘れた…", 2)
+    # 3:どうせなら、ペンギンの仮装で(ターゲット)
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 113)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "smug", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200),
+                 "I might as well\ngo as a penguin.", "どうせなら、ペンギンの仮装で行こう", 3)
+    m.sfx(img, (x0 + pw * 0.84, y0 + ph * 0.5), "*idea*", 30, (200, 160, 60), 8)
+    # 4:部長「本物みたい!」
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 114)
+    m.penguin(d, x0 + pw * 0.28, y0 + ph * 0.7, 125, "happy", hat_on=False)
+    m.capybara(d, x0 + pw * 0.72, y0 + ph * 0.72, 160, "calm")
+    pumpkin(d, x0 + pw * 0.72, y0 + ph * 0.72 - 90, 40)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.72, y0 + ph * 0.5),
+                 "Great costume!\nSo real!", "本物みたい!よくできてる!", 4)
+    m.sfx(img, (x0 + pw * 0.2, y0 + ph * 0.46), "*proud*", 28, (200, 160, 60), 8)
+    return m._end(img)
+
+
+def stay_fit():
+    img, boxes, pw, ph = m.comic("stay fit")
+    # 1:体型をキープしてるんだ(ターゲット)
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 115)
+    m.owl(d, x0 + pw * 0.5, y0 + ph * 0.66, 160, "smug")
+    dumbbell(d, x0 + pw * 0.5, y0 + ph * 0.66 + 60, 220)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "I'm trying to stay fit.", "体型をキープしてるんだ", 1)
+    m.sfx(img, (x0 + pw * 0.86, y0 + ph * 0.5), "*huff*", 30, (110, 120, 140), 8)
+    # 2:お菓子いる?
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 116)
+    m.penguin(d, x0 + pw * 0.4, y0 + ph * 0.66, 160, "happy", hat_on=False)
+    pumpkin(d, x0 + pw * 0.76, y0 + ph * 0.8, 60, seed=391)
+    for k, col in enumerate(((230, 90, 80), (90, 170, 220), (240, 200, 70))):
+        candy(d, x0 + pw * (0.66 + k * 0.1), y0 + ph * 0.62 - k * 10, 16, col)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.4, y0 + 200),
+                 "Want some\nHalloween candy?", "ハロウィンのお菓子いる?", 2)
+    # 3:遠慮しとく
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 117)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "smug")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 115, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 180), "No thanks. I'll pass.", "遠慮しとく", 3)
+    # 4:部長「私もキープ中。お菓子がプロテイン」
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 118)
+    import random as _r
+    rr = _r.Random(5)
+    for k in range(9):
+        candy(d, x0 + pw * rr.uniform(0.35, 0.95), y0 + ph * rr.uniform(0.84, 0.95), 14,
+              ((230, 90, 80), (90, 170, 220), (240, 200, 70))[k % 3])
+    m.capybara(d, x0 + pw * 0.64, y0 + ph * 0.68, 170, "calm")
+    m.owl(d, x0 + pw * 0.16, y0 + ph * 0.8, 90, "shock")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.5),
+                 "Me too.\nCandy is my protein.", "私もだ。お菓子が私のプロテイン", 4)
+    m.sfx(img, (x0 + pw * 0.88, y0 + ph * 0.56), "*munch*", 28, (200, 140, 60), 8)
+    return m._end(img)
+
+
+def on_display():
+    img, boxes, pw, ph = m.comic("on display", series="toeic")
+    # 1:ロビーにハロウィンの飾り(ターゲット)
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 121)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.7, 140, "happy")
+    pumpkin(d, x0 + pw * 0.76, y0 + ph * 0.8, 50, seed=392)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 240),
+                 "Halloween decorations\nare on display\nin the lobby.", "ロビーにハロウィンの飾りが展示されてるよ", 1)
+    # 2:カボチャがいっぱい!
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 122)
+    d.rectangle([x0 + 20, y0 + ph * 0.8, x1 - 20, y0 + ph * 0.86], fill=(206, 160, 110), outline=m.INK, width=3)
+    for k, fx in enumerate((0.2, 0.42, 0.64)):
+        pumpkin(d, x0 + pw * fx, y0 + ph * 0.8 - 36, 38, seed=393 + k)
+    m.penguin(d, x0 + pw * 0.84, y0 + ph * 0.66, 110, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + 180), "Wow! So many pumpkins!", "わあ、カボチャがいっぱい!", 2)
+    # 3:これ部長にそっくり
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 123)
+    d.rectangle([x0 + 20, y0 + ph * 0.8, x1 - 20, y0 + ph * 0.86], fill=(206, 160, 110), outline=m.INK, width=3)
+    pumpkin(d, x0 + pw * 0.2, y0 + ph * 0.8 - 36, 38, seed=396)
+    m.capybara(d, x0 + pw * 0.56, y0 + ph * 0.8 - 50, 120, "calm")
+    m.penguin(d, x0 + pw * 0.86, y0 + ph * 0.66, 100, "normal", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + 200),
+                 "This one looks\njust like the boss.", "これ、部長にそっくり", 3)
+    # 4:部長本人も展示中
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 124)
+    d.rectangle([x0 + 20, y0 + ph * 0.8, x1 - 20, y0 + ph * 0.86], fill=(206, 160, 110), outline=m.INK, width=3)
+    m.capybara(d, x0 + pw * 0.5, y0 + ph * 0.8 - 56, 130, "calm")
+    pumpkin(d, x0 + pw * 0.5 - 20, y0 + ph * 0.8 - 128, 30, face=False, seed=397)
+    m.penguin(d, x0 + pw * 0.86, y0 + ph * 0.66, 100, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.46, y0 + ph * 0.5),
+                 "I'm on display, too.", "私も展示中だ", 4)
+    m.sfx(img, (x0 + pw * 0.18, y0 + ph * 0.6), "?!", 50, (220, 80, 70), 10)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "might_as_well": dict(
+        draw=might_as_well, word="might as well", hook="「どうせなら〜しよう」英語で?",
+        meaning="どうせなら〜した方がいい", level="英検準1級レベル",
+        ex_en="It's raining, so we might as well stay home.", ex_ja="雨だし、家にいた方がいいね",
+        words=[("costume", "仮装、衣装"), ("forgot to ~", "〜し忘れた"), ("go as ~", "〜の仮装で行く"),
+               ("real", "本物の"), ("Halloween", "ハロウィン")],
+        panels=[[("navi", "It's Halloween! Where's your costume?")], [("pen", "I forgot to buy one...")],
+                [("pen", "I might as well go as a penguin.")], [("boss", "Great costume! So real!")]],
+        explain=[("navi", "Might as well."), ("pen", "It's raining, so we might as well stay home.")],
+    ),
+    "stay_fit": dict(
+        draw=stay_fit, word="stay fit", hook="「体型キープ」って英語で?",
+        meaning="体を鍛えておく、健康を保つ", level="英検準2級レベル",
+        ex_en="I swim twice a week to stay fit.", ex_ja="体を鍛えるために、週2回泳いでいる",
+        words=[("try to ~", "〜しようとする"), ("candy", "お菓子、あめ"), ("No thanks.", "けっこうです"),
+               ("I'll pass.", "やめておく"), ("protein", "プロテイン、たんぱく質")],
+        panels=[[("navi", "I'm trying to stay fit.")], [("pen", "Want some Halloween candy?")],
+                [("navi", "No thanks. I'll pass.")], [("boss", "Me too. Candy is my protein.")]],
+        explain=[("navi", "Stay fit."), ("pen", "I swim twice a week to stay fit.")],
+    ),
+    "on_display": dict(
+        draw=on_display, word="on display", hook="「展示されている」英語で?",
+        meaning="展示されて、飾られて", level="TOEIC頻出",
+        ex_en="Her paintings are on display at the museum.", ex_ja="彼女の絵が美術館に展示されている",
+        words=[("decoration", "飾り"), ("lobby", "ロビー"), ("pumpkin", "カボチャ"),
+               ("look just like ~", "〜にそっくり"), ("too", "〜も")],
+        panels=[[("navi", "Halloween decorations are on display in the lobby.")], [("pen", "Wow! So many pumpkins!")],
+                [("pen", "This one looks just like the boss.")], [("boss", "I'm on display, too.")]],
+        explain=[("navi", "On display."), ("pen", "Her paintings are on display at the museum.")],
     ),
 })
 

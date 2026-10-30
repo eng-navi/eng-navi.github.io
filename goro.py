@@ -689,6 +689,124 @@ def scene_doubt_goro(i):
     return img
 
 
+# ---- scare(怖がらせる):「透けあ〜って、こわがらせる!」 ----
+def ghost(img, cx, cy, s, alpha=150, t=0):
+    """透けているおばけ(半透明)。t でふわふわ上下する。"""
+    cy = cy + math.sin(t * 0.6) * 12
+    layer = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    pts = [(cx + s * 0.5 * math.cos(a), cy - s * 0.1 + s * 0.5 * math.sin(a)) for a in (k * math.pi / 16 for k in range(16, 33))]
+    for k in range(7):  # すそのギザギザ
+        x = cx + s * 0.5 - k * s / 6
+        pts.append((x, cy + s * 0.75 + (0 if k % 2 else s * 0.1)))
+    d.polygon(pts, fill=(255, 255, 255, alpha), outline=(120, 130, 160, alpha))
+    for k in (-1, 1):
+        d.ellipse([cx + k * s * 0.17 - s * 0.06, cy - s * 0.2, cx + k * s * 0.17 + s * 0.06, cy - s * 0.04], fill=(40, 40, 60, alpha + 60))
+    d.ellipse([cx - s * 0.08, cy + s * 0.04, cx + s * 0.08, cy + s * 0.22], fill=(40, 40, 60, alpha + 60))
+    img.paste(layer, (0, 0), layer)
+
+
+def scene_scare_hook(i):
+    img = stage(700 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 540, 1400, 260)
+    m.penguin(d, 540, 1150, 300, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 700, 1000, 30)
+    caption(d, "scare、", 820, 96, box=False)
+    caption(d, "1秒で覚えられる?", 950, 80, color=(200, 52, 48), box=False)
+    return img
+
+
+def scene_scare_night(i):
+    img = stage(710 + i % 3)
+    dark = Image.new("RGB", img.size, (40, 40, 70))
+    img = Image.blend(img, dark, 0.45)
+    d = ImageDraw.Draw(img)
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1230, 210, "normal", hat_on=False, seed=51 + i % 3)
+    ghost(img, 780, 1050, 300, alpha=min(150, 30 + i * 12), t=i)
+    caption(d, "夜、うしろに 透けてる何かが…", 1640, 56)
+    return img
+
+
+def scene_scare_boo(i):
+    img = stage(720 + i % 3)
+    dark = Image.new("RGB", img.size, (40, 40, 70))
+    img = Image.blend(img, dark, 0.45)
+    d = ImageDraw.Draw(img)
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300 - (i % 2) * 6, 1230, 210, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 420, 1080, 28)
+    ghost(img, 720, 1000, 380, alpha=160, t=i)
+    jsfx(img, (560, 760), "ばあっ!", 110, (220, 60, 50), -8)
+    caption(d, "透けあ〜! ペン、びっくり!", 1640, 58)
+    return img
+
+
+def scene_scare_word(i):
+    img = stage(730 + i % 3)
+    d = ImageDraw.Draw(img)
+    shadow(d, 300, 1440, 220)
+    m.penguin(d, 300, 1230, 230, "shock", hat_on=False, seed=51 + i % 3)
+    ghost(img, 800, 1220, 240, alpha=150, t=i)
+    d.rounded_rectangle([90, 600, W - 90, 1020], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    step = min(3, 1 + i // 4)
+    parts = [("透けあ〜", (110, 160, 210)), ("で怖がらせる", (230, 120, 110))]
+    f = m.JP(96)
+    while sum(f.getlength(p) for p, _ in parts) + 24 > W - 260:
+        f = m.JP(f.size - 4)
+    x = W / 2 - (sum(f.getlength(p) for p, _ in parts) + 24) / 2
+    for k, (p, c) in enumerate(parts):
+        d.text((x, 740), p, font=f, fill=c if k < step else (215, 210, 205), anchor="ls")
+        x += f.getlength(p) + 24
+    if step >= 3:
+        line = [("scare", (110, 160, 210)), (" = ", INK), ("怖がらせる", (230, 120, 110))]
+        fonts = [m.EN(120), m.EN(90), m.JP(76)]
+        x = W / 2 - sum(ff.getlength(t) for (t, _), ff in zip(line, fonts)) / 2
+        for (t, c), ff in zip(line, fonts):
+            d.text((x, 885), t, font=ff, fill=c, anchor="ls")
+            x += ff.getlength(t)
+    d.text((W / 2, 975), "発音は「スケア」(scary の仲間)", font=m.JP(44), fill=(110, 110, 110), anchor="ms")
+    return img
+
+
+def scene_scare_meaning(i):
+    img = stage(750 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([110, 640, W - 110, 1180], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    d.text((W / 2, 800), "scare", font=m.EN(150), fill=INK, anchor="ms")
+    d.text((W / 2, 920), "= 怖がらせる、びっくりさせる", font=m.JP(56), fill=(200, 52, 48), anchor="ms")
+    m.draw_fit(d, (W / 2, 1010), "The loud noise scared the cat.", m.EN(52), INK, width=W - 300)
+    m.draw_fit(d, (W / 2, 1100), "(大きな音に、ネコがびっくりした)", m.JP(38), (110, 110, 110), width=W - 300, jp=True)
+    shadow(d, 260, 1440, 180)
+    m.owl(d, 260, 1260, 180, "smug", seed=41 + i % 3)
+    shadow(d, 820, 1440, 180)
+    m.penguin(d, 820, 1260, 170, "shock", hat_on=False, seed=51 + i % 3)
+    m.sweat(d, 900, 1180, 22)
+    caption(d, "透けあ〜で怖がらせる で scare!", 1640, 56)
+    return img
+
+
+def scene_scare_goro(i):
+    img = stage(770 + i % 3)
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle([90, 640, W - 90, 1060], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    s = 1.0 + max(0, 0.25 - i / FPS) * 0.6
+    f = m.JP(int(96 * s))
+    parts = [("透けあ〜って", (110, 160, 210)), ("こわがらせる!", (230, 120, 110))]
+    for k, (p, c) in enumerate(parts):
+        d.text((W / 2, 800 + k * 120), p, font=f, fill=c, anchor="ms")
+    d.text((W / 2, 1025), "= scare(怖がらせる)", font=m.JP(48), fill=INK, anchor="ms")
+    shadow(d, 300, 1440, 200)
+    m.penguin(d, 300, 1240, 210, "happy", hat_on=False, seed=51 + i % 3)
+    shadow(d, 790, 1440, 200)
+    m.owl(d, 790, 1240, 200, "happy", seed=41 + i % 3)
+    jsfx(img, (545, 1180), "せーの!", 70, (220, 90, 70), 6)
+    caption(d, "声に出して、もう1回!", 1640, 58)
+    d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+    return img
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr
@@ -745,6 +863,14 @@ def plans(pipe):
             (2.6, lambda i: scene_doubt_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", "Doubt!"), gap(0.3), voice("pen", "Doubt...")]),
             (4.4, lambda i: scene_doubt_meaning(i), [gap(0.2), voice("navi", "Doubt."), gap(0.4), voice("pen", "I doubt that's true.")]),
             (3.2, lambda i: scene_doubt_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "ダウト!って、うたがう!"), gap(0.35), voice("navi", "ダウト!って、うたがう!"), gap(0.6)]),
+        ],
+        "scare": [
+            (1.3, lambda i: scene_scare_hook(i), [tone(660, 0.15), gap(0.2)]),
+            (1.8, lambda i: scene_scare_night(i), [tone(440, 0.3, 0.05, 4)]),
+            (2.0, lambda i: scene_scare_boo(i), [tone(1100, 0.1, 0.04), gap(0.1), voice("navi", "すけあ〜!")]),
+            (2.6, lambda i: scene_scare_word(i), [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", "Scare!"), gap(0.3), voice("pen", "Scare...")]),
+            (4.4, lambda i: scene_scare_meaning(i), [gap(0.2), voice("navi", "Scare."), gap(0.4), voice("pen", "The loud noise scared the cat.")]),
+            (3.2, lambda i: scene_scare_goro(i), [tone(660, 0.15), gap(0.15), voice("pen", "すけあ〜って、こわがらせる!"), gap(0.35), voice("navi", "すけあ〜って、こわがらせる!"), gap(0.6)]),
         ],
         "bury": [
             (1.3, lambda i: scene_bury_hook(i), [tone(660, 0.15), gap(0.2)]),
