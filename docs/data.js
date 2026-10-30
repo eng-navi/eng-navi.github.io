@@ -2337,5 +2337,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 121,
+    "category": "時制",
+    "question": "The package ( ) several samples of our new products.",
+    "options": [
+      "contains",
+      "is containing"
+    ],
+    "answer": 1,
+    "translation": "その小包には、新製品のサンプルがいくつか入っている。",
+    "explanation": "contain（〜を含んでいる）は「状態」を表す動詞なので、ふつう進行形にしません。\nhave、own、include なども同じ仲間です。\n\nしたがって、①contains が正解。",
+    "audio": "audio/q121.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
