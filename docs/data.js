@@ -2356,5 +2356,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 122,
+    "category": "時制",
+    "question": "We ( ) for Hawaii next Monday. The tickets are already booked.",
+    "options": [
+      "have left",
+      "are leaving"
+    ],
+    "answer": 2,
+    "translation": "私たちは来週の月曜日にハワイへ出発する。チケットはもう予約してある。",
+    "explanation": "準備ができている「確定した近い未来の予定」は、現在進行形で表せます。\nnext Monday（来週の月曜日）という未来の時を表す語があるので、現在完了は使えません。\n\nしたがって、②are leaving が正解。",
+    "audio": "audio/q122.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
