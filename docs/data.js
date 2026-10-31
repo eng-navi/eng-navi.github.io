@@ -2375,5 +2375,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 123,
+    "text": "Her research paved the way for a new treatment for the disease.",
+    "target": "paved the way for",
+    "glossary": [
+      "pave the way for X：Xへの道を開く、Xの下地を作る",
+      "treatment：治療法"
+    ],
+    "translation": "彼女の研究は、その病気の新しい治療法への道を開いた。",
+    "explanation": "「pave the way for X」は「Xへの道を開く、Xの準備を整える」という意味です。\npave は「道を舗装する」ことで、あとに続くものが進みやすくなるようにする、というイメージです。",
+    "audio": "audio/q123.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
