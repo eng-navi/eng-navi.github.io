@@ -2393,5 +2393,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 124,
+    "category": "時制",
+    "question": "( ) you ever attended one of our product launch events?",
+    "options": [
+      "Did",
+      "Have"
+    ],
+    "answer": 2,
+    "translation": "弊社の新製品発表会に参加されたことはありますか？",
+    "explanation": "ever（これまでに）は「経験」を表す現在完了とよく一緒に使われます。\n「今までに〜したことがあるか」をたずねるので、Have you ever 〜? の形になります。\n\nしたがって、②Have が正解。",
+    "audio": "audio/q124.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
