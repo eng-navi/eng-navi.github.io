@@ -87,7 +87,8 @@ def pages():
         nav.append(f'<button data-t="{kind}">{label}</button>')
         secs.append(f'<section id="{kind}"><p class="note">{note}</p><ol>{cards or "<li class=empty>近日公開</li>"}</ol></section>')
     SITE.mkdir(parents=True, exist_ok=True)
-    (SITE / "index.html").write_text(TEMPLATE.replace("{{nav}}", "".join(nav)).replace("{{secs}}", "".join(secs)))
+    count = len(json.loads((ROOT / "posted.json").read_text())) // 10 * 10 + 100  # トップのクイズの問題数(アーカイブ100問+投稿分)。「〇問以上」用に10の位で切り捨て
+    (SITE / "index.html").write_text(TEMPLATE.replace("{{nav}}", "".join(nav)).replace("{{secs}}", "".join(secs)).replace("{{count}}", str(count)))
     print(f"✓ quizify の復習ページ({len(keys)} 本分)")
 
 
@@ -129,6 +130,19 @@ TEMPLATE = """<!doctype html>
   .res { margin-top: 12px; font-weight: 700; }
   .empty { color: #999; font-size: 14px; text-align: center; padding: 20px; }
   .cta { display: block; margin-top: 22px; padding: 14px; border-radius: 14px; background: #282828; color: #fff; text-align: center; text-decoration: none; font-weight: 500; }
+  .toplink { display: flex; align-items: center; gap: 6px; margin-top: 16px; padding: 12px 14px; border-radius: 14px; border: 2px solid #c83430; background: #fff; color: #282828; text-decoration: none; font-size: 13px; line-height: 1.6; }
+  .toplink b { color: #c83430; } .toplink span { margin-left: auto; color: #c83430; font-weight: 700; font-size: 18px; }
+  .home { display: block; margin-top: 12px; padding: 16px; border-radius: 14px; background: #c83430; color: #fff; text-decoration: none; text-align: center; }
+  .home b { display: block; font-size: 17px; } .home small { display: block; margin-top: 4px; font-size: 12px; opacity: .9; }
+  .home span { display: inline-block; margin-top: 10px; padding: 6px 18px; border-radius: 999px; background: #fff; color: #c83430; font-weight: 700; font-size: 14px; }
+  .rec { margin-top: 22px; background: #fff; border-radius: 14px; padding: 16px; position: relative; } .rec:empty { display: none; }
+  .rec h3 { font-size: 14px; color: #c83430; padding-right: 30px; } .rec .pr { position: absolute; top: 14px; right: 14px; font-size: 10px; color: #aaa; }
+  .rec p.lead2 { margin-top: 6px; font-size: 13px; color: #666; line-height: 1.7; }
+  .rec a { display: block; margin-top: 10px; padding: 12px 14px; border-radius: 12px; background: #f5f3ef; text-decoration: none; color: #282828; }
+  .rec a b { display: block; font-size: 15px; } .rec a small { display: block; margin-top: 3px; font-size: 12px; color: #777; }
+  .tip { display: inline-block; margin-bottom: 6px; padding: 3px 10px; border-radius: 999px; background: #c83430; color: #fff; font-size: 12px; font-weight: 700; }
+  .tip small { margin-left: 6px; font-weight: 400; opacity: .8; } .tip .fine { display: block; margin: 2px 0 0; }
+  .abroad { margin-top: 14px; }
   .foot { margin-top: 26px; font-size: 10px; color: #aaa; text-align: center; } .foot a { color: inherit; }
 </style>
 </head>
@@ -137,14 +151,46 @@ TEMPLATE = """<!doctype html>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › quizify_english 復習</p>
   <h1>Instagram の問題を、音声つきでもう一度</h1>
   <p class="lead">@quizify_english に投稿した問題をまとめています。新しい順に並んでいます。</p>
+  <a class="toplink" href="/">🎯 トップには<b>英文法クイズが{{count}}問以上</b>。解くほど苦手がわかります<span>→</span></a>
   <nav>{{nav}}</nav>
   {{secs}}
+  <div class="rec" id="rec"></div>
   <a class="cta" href="https://www.instagram.com/quizify_english/">Instagram で毎日の問題を見る →</a>
+  <a class="home" href="/"><b>英文法クイズ {{count}}問以上・無料</b><small>1問30秒。英検・TOEIC・大学受験の得点アップに</small><span>トップで挑戦する →</span></a>
+  <div class="rec abroad" id="abroad"></div>
   <p class="foot"><a href="/">eng_navi 英語クイズ</a></p>
 </main>
+<script src="/recommend.js"></script>
 <script>
+if (window.ANALYTICS_ID) {
+  const t = document.createElement("script"); t.async = true;
+  t.src = "https://www.googletagmanager.com/gtag/js?id=" + window.ANALYTICS_ID; document.head.appendChild(t);
+  window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
+  gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
+}
+// タブごとのおすすめ(上:勉強の続き、下:話す・留学)。ひとことは recommend.js の promoTip(セール > 無料体験の A/B)
+const I = window.ITEMS || {};
+const RECS = {
+  listening: { title: "TOEICのリスニングをもっと伸ばすなら", items: [I.studysapuri, I.kikufure] },
+  white: { title: "受験・英検の英語をもっと固めるなら", items: [I.scramble, I.oversight] },
+  black: { title: "準1級の単語・長文にもっと強くなるなら", items: [I.pinnacle, I.speak] },
+};
+const link = (it) => it ? `<a href="${it.url}" target="_blank" rel="noopener sponsored nofollow">${window.promoTip ? window.promoTip(it) : ""}<b>${window.nb(it.name)}</b><small>${window.nb(it.note)}</small></a>` + (it.pixel ? `<img src="${it.pixel}" width="1" height="1" alt="" style="position:absolute;opacity:0">` : "") : "";
+const showRec = (t) => {
+  const r = RECS[t]; const el = document.getElementById("rec");
+  if (el && r) el.innerHTML = `<span class="pr">PR</span><h3>${r.title}</h3>${r.items.map(link).join("")}`;
+};
+if (window.ABROAD) document.getElementById("abroad").innerHTML = `<span class="pr">PR</span><h3>✈️ 海外で英語を使ってみたい人へ</h3><p class="lead2">${window.ABROAD.lead}</p>${link(window.ABROAD.item)}`;
+document.addEventListener("click", (ev) => {
+  const a = ev.target.closest("a[href]");
+  if (!a || !window.gtag) return;
+  const tip = a.querySelector("[data-copy]"), copy = tip ? tip.dataset.copy : "none";
+  const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
+  const place = a.classList.contains("toplink") ? "quizify_top" : a.classList.contains("home") ? "quizify_home" : a.closest(".abroad") ? "quizify_abroad" : a.closest(".rec") ? "quizify_rec" : "quizify_other";
+  gtag("event", "link_click", { place, label: tip ? `${label} [${copy}]` : label, copy });
+});
 const tabs = document.querySelectorAll("nav button"), secs = document.querySelectorAll("section");
-const show = (t) => { tabs.forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === t)); secs.forEach((s) => s.classList.toggle("on", s.id === t)); try { localStorage.setItem("qz-tab", t); } catch (e) {} };
+const show = (t) => { showRec(t); tabs.forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === t)); secs.forEach((s) => s.classList.toggle("on", s.id === t)); try { localStorage.setItem("qz-tab", t); } catch (e) {} };
 tabs.forEach((b) => (b.onclick = () => show(b.dataset.t)));
 let start = "listening"; try { start = localStorage.getItem("qz-tab") || start; } catch (e) {}
 show(location.hash.slice(1) || start);

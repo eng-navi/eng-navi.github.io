@@ -36,6 +36,19 @@
   .res { margin-top: 12px; font-weight: 700; }
   .empty { color: #999; font-size: 14px; text-align: center; padding: 20px; }
   .cta { display: block; margin-top: 22px; padding: 14px; border-radius: 14px; background: #282828; color: #fff; text-align: center; text-decoration: none; font-weight: 500; }
+  .toplink { display: flex; align-items: center; gap: 6px; margin-top: 16px; padding: 12px 14px; border-radius: 14px; border: 2px solid #c83430; background: #fff; color: #282828; text-decoration: none; font-size: 13px; line-height: 1.6; }
+  .toplink b { color: #c83430; } .toplink span { margin-left: auto; color: #c83430; font-weight: 700; font-size: 18px; }
+  .home { display: block; margin-top: 12px; padding: 16px; border-radius: 14px; background: #c83430; color: #fff; text-decoration: none; text-align: center; }
+  .home b { display: block; font-size: 17px; } .home small { display: block; margin-top: 4px; font-size: 12px; opacity: .9; }
+  .home span { display: inline-block; margin-top: 10px; padding: 6px 18px; border-radius: 999px; background: #fff; color: #c83430; font-weight: 700; font-size: 14px; }
+  .rec { margin-top: 22px; background: #fff; border-radius: 14px; padding: 16px; position: relative; } .rec:empty { display: none; }
+  .rec h3 { font-size: 14px; color: #c83430; padding-right: 30px; } .rec .pr { position: absolute; top: 14px; right: 14px; font-size: 10px; color: #aaa; }
+  .rec p.lead2 { margin-top: 6px; font-size: 13px; color: #666; line-height: 1.7; }
+  .rec a { display: block; margin-top: 10px; padding: 12px 14px; border-radius: 12px; background: #f5f3ef; text-decoration: none; color: #282828; }
+  .rec a b { display: block; font-size: 15px; } .rec a small { display: block; margin-top: 3px; font-size: 12px; color: #777; }
+  .tip { display: inline-block; margin-bottom: 6px; padding: 3px 10px; border-radius: 999px; background: #c83430; color: #fff; font-size: 12px; font-weight: 700; }
+  .tip small { margin-left: 6px; font-weight: 400; opacity: .8; } .tip .fine { display: block; margin: 2px 0 0; }
+  .abroad { margin-top: 14px; }
   .foot { margin-top: 26px; font-size: 10px; color: #aaa; text-align: center; } .foot a { color: inherit; }
 </style>
 </head>
@@ -44,14 +57,46 @@
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › quizify_english 復習</p>
   <h1>Instagram の問題を、音声つきでもう一度</h1>
   <p class="lead">@quizify_english に投稿した問題をまとめています。新しい順に並んでいます。</p>
+  <a class="toplink" href="/">🎯 トップには<b>英文法クイズが120問以上</b>。解くほど苦手がわかります<span>→</span></a>
   <nav><button data-t="listening">🎧 リスニング</button><button data-t="white">📗 英単語(初級)</button><button data-t="black">📕 瞬間英作文</button></nav>
   <section id="listening"><p class="note">TOEIC Part 2〜4 風。音声を聞いて、正しい訳を選ぼう</p><ol><li class="card" data-ans="A"><p class="no">145 <span>🇺🇸 アメリカ英語</span></p><button class="play" data-src="audio/nPczCjzI2devNBz1zQrb_809d8c575ce4.mp3">▶ 1回だけ聞いてみる</button><button class="opt" data-c="A">A) 事務用品の注文を担当しているのは誰ですか。</button><button class="opt" data-c="B">B) 事務用品の配達を担当しているのは誰ですか。</button><div class="ans"><p class="res"></p><p class="en">Who&#x27;s in charge of ordering office supplies?</p><ul class="tips"><li>be in charge of A：Aを担当している</li><li>order：注文する</li><li>office supplies：事務用品</li></ul></div></li><li class="card" data-ans="B"><p class="no">146 <span>🇬🇧 イギリス英語</span></p><button class="play" data-src="audio/pFZP5JQG7iQjIQuC4Bku_b041c1e6f235.mp3">▶ 1回だけ聞いてみる</button><button class="opt" data-c="A">A) トム、事故で電車が止まっていて、9時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間早めてもらえるかな？無理なら、中止にして。</button><button class="opt" data-c="B">B) トム、信号トラブルで電車が遅れていて、10時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間遅らせてもらえるかな？無理なら、僕抜きで始めて。</button><div class="ans"><p class="res"></p><p class="en">Hi, Tom. My train is delayed because of a signal problem, so I won&#x27;t get to the office by ten. Could we push the client meeting back by an hour? If that doesn&#x27;t work, please start without me.</p><ul class="tips"><li>delayed：遅れている</li><li>signal problem：信号トラブル</li><li>get to A：Aに着く</li><li>push back：(予定を)遅らせる</li><li>client：顧客</li><li>work：うまくいく、都合がつく</li><li>without A：Aなしで</li></ul></div></li></ol></section><section id="white"><p class="note">受験・英検で問われるコロケーション。日本語を見て英語で言ってみよう</p><ol><li class="card"><p class="no">163</p><p class="w">be involved in A <button class="play" data-src="audio/pFZP5JQG7iQjIQuC4Bku_36eabda4bd19.mp3">▶</button></p><p class="m">〜に関わる、〜に参加する</p><p class="ja">多くの学生がボランティア活動に関わっている。</p><button class="reveal">英語で言えたら、答えを見る</button><div class="ans"><p class="en">Many students are involved in volunteer work.</p><button class="play" data-src="audio/pFZP5JQG7iQjIQuC4Bku_796c239b9035.mp3">▶ 聞く</button><ul class="tips"><li>前置詞は in。「〜の中に入り込んでいる」イメージ</li><li>get involved in A で「〜に関わるようになる」</li><li>名詞は involvement(関与)</li></ul></div></li><li class="card"><p class="no">164</p><p class="w">be related to A <button class="play" data-src="audio/pFZP5JQG7iQjIQuC4Bku_0bd60ad56d15.mp3">▶</button></p><p class="m">〜に関係がある</p><p class="ja">健康は睡眠と深く関係している。</p><button class="reveal">英語で言えたら、答えを見る</button><div class="ans"><p class="en">Health is closely related to sleep.</p><button class="play" data-src="audio/pFZP5JQG7iQjIQuC4Bku_64c5f8a197bd.mp3">▶ 聞く</button><ul class="tips"><li>前置詞は to。with にしないよう注意</li><li>closely(密接に)と一緒によく使います</li><li>名詞は relation / relationship(関係)</li></ul></div></li></ol></section><section id="black"><p class="note">英検準1級の単語。日本語を見て、すぐ英語にしてみよう</p><ol><li class=empty>近日公開</li></ol></section>
+  <div class="rec" id="rec"></div>
   <a class="cta" href="https://www.instagram.com/quizify_english/">Instagram で毎日の問題を見る →</a>
+  <a class="home" href="/"><b>英文法クイズ 120問以上・無料</b><small>1問30秒。英検・TOEIC・大学受験の得点アップに</small><span>トップで挑戦する →</span></a>
+  <div class="rec abroad" id="abroad"></div>
   <p class="foot"><a href="/">eng_navi 英語クイズ</a></p>
 </main>
+<script src="/recommend.js"></script>
 <script>
+if (window.ANALYTICS_ID) {
+  const t = document.createElement("script"); t.async = true;
+  t.src = "https://www.googletagmanager.com/gtag/js?id=" + window.ANALYTICS_ID; document.head.appendChild(t);
+  window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
+  gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
+}
+// タブごとのおすすめ(上:勉強の続き、下:話す・留学)。ひとことは recommend.js の promoTip(セール > 無料体験の A/B)
+const I = window.ITEMS || {};
+const RECS = {
+  listening: { title: "TOEICのリスニングをもっと伸ばすなら", items: [I.studysapuri, I.kikufure] },
+  white: { title: "受験・英検の英語をもっと固めるなら", items: [I.scramble, I.oversight] },
+  black: { title: "準1級の単語・長文にもっと強くなるなら", items: [I.pinnacle, I.speak] },
+};
+const link = (it) => it ? `<a href="${it.url}" target="_blank" rel="noopener sponsored nofollow">${window.promoTip ? window.promoTip(it) : ""}<b>${window.nb(it.name)}</b><small>${window.nb(it.note)}</small></a>` + (it.pixel ? `<img src="${it.pixel}" width="1" height="1" alt="" style="position:absolute;opacity:0">` : "") : "";
+const showRec = (t) => {
+  const r = RECS[t]; const el = document.getElementById("rec");
+  if (el && r) el.innerHTML = `<span class="pr">PR</span><h3>${r.title}</h3>${r.items.map(link).join("")}`;
+};
+if (window.ABROAD) document.getElementById("abroad").innerHTML = `<span class="pr">PR</span><h3>✈️ 海外で英語を使ってみたい人へ</h3><p class="lead2">${window.ABROAD.lead}</p>${link(window.ABROAD.item)}`;
+document.addEventListener("click", (ev) => {
+  const a = ev.target.closest("a[href]");
+  if (!a || !window.gtag) return;
+  const tip = a.querySelector("[data-copy]"), copy = tip ? tip.dataset.copy : "none";
+  const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
+  const place = a.classList.contains("toplink") ? "quizify_top" : a.classList.contains("home") ? "quizify_home" : a.closest(".abroad") ? "quizify_abroad" : a.closest(".rec") ? "quizify_rec" : "quizify_other";
+  gtag("event", "link_click", { place, label: tip ? `${label} [${copy}]` : label, copy });
+});
 const tabs = document.querySelectorAll("nav button"), secs = document.querySelectorAll("section");
-const show = (t) => { tabs.forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === t)); secs.forEach((s) => s.classList.toggle("on", s.id === t)); try { localStorage.setItem("qz-tab", t); } catch (e) {} };
+const show = (t) => { showRec(t); tabs.forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === t)); secs.forEach((s) => s.classList.toggle("on", s.id === t)); try { localStorage.setItem("qz-tab", t); } catch (e) {} };
 tabs.forEach((b) => (b.onclick = () => show(b.dataset.t)));
 let start = "listening"; try { start = localStorage.getItem("qz-tab") || start; } catch (e) {}
 show(location.hash.slice(1) || start);
