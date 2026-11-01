@@ -15,6 +15,8 @@
   body { background: #f5f3ef; background-image: linear-gradient(#dedcd7 1px, transparent 1px), linear-gradient(90deg, #dedcd7 1px, transparent 1px); background-size: 27px 27px; color: #282828; font-family: "Noto Sans JP", system-ui, sans-serif; }
   main { max-width: 560px; margin: 0 auto; padding: 28px 20px 48px; }
   .crumb { font-size: 12px; color: #888; } .crumb a { color: inherit; }
+  .toplink { display: flex; align-items: center; gap: 6px; margin-top: 16px; padding: 12px 14px; border-radius: 14px; border: 2px solid #c83430; background: #fff; color: #282828; text-decoration: none; font-size: 13px; line-height: 1.6; }
+  .toplink b { color: #c83430; } .toplink span { margin-left: auto; color: #c83430; font-weight: 700; font-size: 18px; }
   h1 { font-size: 23px; line-height: 1.5; margin-top: 18px; }
   .lead { margin-top: 10px; font-size: 14px; color: #666; line-height: 1.8; }
   .voices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
@@ -59,6 +61,7 @@
   <div class="modes"><button data-m="list">一覧</button><button data-m="quiz">クイズ</button><button data-m="listen">聞き流し</button></div>
   <p class="mode-note" id="mode-note"></p>
   <div class="voices"><button data-v="us_f">🇺🇸 女性</button><button data-v="us_m">🇺🇸 男性</button><button data-v="uk_f">🇬🇧 女性</button><button data-v="uk_m">🇬🇧 男性</button></div>
+  <a class="toplink" href="/">🎯 トップでは<b>英文法クイズ(無料・100問以上)</b>に挑戦できます<span>→</span></a>
   <ol>
     <li>
       <p class="ph"><span class="n">01</span>sign a document<small class="hide">書類に署名する</small></p>
@@ -72,6 +75,13 @@
       <p class="ja hide">応募書類は金曜までに送ってください</p>
       <div class="btns"><button class="reveal">意味を見る</button><button class="play" data-n="2">▶ 聞く</button></div>
     </li>
+  </ol>
+  
+  <section class="book">
+    <p class="bk-h">このフレーズをもっと覚えるなら <span>PR</span></p>
+    <a href="https://link.amazon/B09qOB6Ou" target="_blank" rel="noopener sponsored nofollow"><b><span class="nb">TOEIC</span> <span class="nb">L&amp;Rテスト</span> <span class="nb">聞いて覚える頻出英語フレーズ</span> <span class="nb">キクフレ</span></b><small>TOEICによく出る会社・生活の英語を、音声つきで</small></a>
+  </section>
+  <ol>
     <li>
       <p class="ph"><span class="n">03</span>make a complaint<small class="hide">苦情を言う</small></p>
       <p class="ex">He made a complaint about the noise next door.</p>
@@ -92,11 +102,6 @@
     </li>
   </ol>
   <button class="all" id="all">▶ 5個まとめて聞く</button>
-  
-  <section class="book">
-    <p class="bk-h">このフレーズをもっと覚えるなら <span>PR</span></p>
-    <a href="https://link.amazon/B09qOB6Ou" target="_blank" rel="noopener sponsored nofollow"><b><span class="nb">TOEIC</span> <span class="nb">L&amp;Rテスト</span> <span class="nb">聞いて覚える頻出英語フレーズ</span> <span class="nb">キクフレ</span></b><small>TOEICによく出る会社・生活の英語を、音声つきで</small></a>
-  </section>
   <div id="listen-pr"></div>
   <a class="cta" href="/">英文法クイズに挑戦する<small>無料・100問以上</small></a>
   <a class="sub" href="https://www.threads.net/@eng_navi" target="_blank" rel="noopener">Threads で毎日1つ @eng_navi</a>
@@ -121,7 +126,7 @@
     const tip = a.querySelector("[data-copy]");
     const copy = tip ? tip.dataset.copy : "none";
     const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
-    gtag("event", "link_click", { place: a.closest(".book") ? "list_book" : a.classList.contains("lp") ? "list_listen" : "list_other", label: tip ? `${label} [${copy}]` : label, copy });
+    gtag("event", "link_click", { place: a.closest(".book") ? "list_book" : a.classList.contains("lp") ? "list_listen" : a.classList.contains("toplink") ? "list_top" : "list_other", label: tip ? `${label} [${copy}]` : label, copy });
   });
   let voice = "us_f";
   try { voice = localStorage.getItem("voice") || "us_f"; } catch (e) {}

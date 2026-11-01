@@ -43,15 +43,15 @@ def make_audio(lists):
 
 
 def page(lst):
-    rows = ""
+    rows = []
     for n, (phrase, ja, en, en_ja, *_) in enumerate(lst["items"], 1):
-        rows += f"""
+        rows.append(f"""
     <li>
       <p class="ph"><span class="n">{n:02d}</span>{e(phrase)}<small class="hide">{e(ja)}</small></p>
       <p class="ex">{e(en)}</p>
       <p class="ja hide">{e(en_ja)}</p>
       <div class="btns"><button class="reveal">意味を見る</button><button class="play" data-n="{n}">▶ 聞く</button></div>
-    </li>"""
+    </li>""")
     b = lst.get("book") or DEFAULT_BOOK.get(group_of(lst))
     book = f"""
   <section class="book">
@@ -78,6 +78,8 @@ def page(lst):
   body {{ background: #f5f3ef; background-image: linear-gradient(#dedcd7 1px, transparent 1px), linear-gradient(90deg, #dedcd7 1px, transparent 1px); background-size: 27px 27px; color: #282828; font-family: "Noto Sans JP", system-ui, sans-serif; }}
   main {{ max-width: 560px; margin: 0 auto; padding: 28px 20px 48px; }}
   .crumb {{ font-size: 12px; color: #888; }} .crumb a {{ color: inherit; }}
+  .toplink {{ display: flex; align-items: center; gap: 6px; margin-top: 16px; padding: 12px 14px; border-radius: 14px; border: 2px solid #c83430; background: #fff; color: #282828; text-decoration: none; font-size: 13px; line-height: 1.6; }}
+  .toplink b {{ color: #c83430; }} .toplink span {{ margin-left: auto; color: #c83430; font-weight: 700; font-size: 18px; }}
   h1 {{ font-size: 23px; line-height: 1.5; margin-top: 18px; }}
   .lead {{ margin-top: 10px; font-size: 14px; color: #666; line-height: 1.8; }}
   .voices {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }}
@@ -122,10 +124,13 @@ def page(lst):
   <div class="modes"><button data-m="list">一覧</button><button data-m="quiz">クイズ</button><button data-m="listen">聞き流し</button></div>
   <p class="mode-note" id="mode-note"></p>
   <div class="voices">{voices}</div>
-  <ol>{rows}
+  <a class="toplink" href="/">🎯 トップでは<b>英文法クイズ(無料・100問以上)</b>に挑戦できます<span>→</span></a>
+  <ol>{"".join(rows[:2])}
+  </ol>
+  {book}
+  <ol>{"".join(rows[2:])}
   </ol>
   <button class="all" id="all">▶ {len(lst['items'])}個まとめて聞く</button>
-  {book}
   <div id="listen-pr"></div>
   <a class="cta" href="/">英文法クイズに挑戦する<small>無料・100問以上</small></a>
   <a class="sub" href="https://www.threads.net/@eng_navi" target="_blank" rel="noopener">Threads で毎日1つ @eng_navi</a>
@@ -150,7 +155,7 @@ def page(lst):
     const tip = a.querySelector("[data-copy]");
     const copy = tip ? tip.dataset.copy : "none";
     const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
-    gtag("event", "link_click", {{ place: a.closest(".book") ? "list_book" : a.classList.contains("lp") ? "list_listen" : "list_other", label: tip ? `${{label}} [${{copy}}]` : label, copy }});
+    gtag("event", "link_click", {{ place: a.closest(".book") ? "list_book" : a.classList.contains("lp") ? "list_listen" : a.classList.contains("toplink") ? "list_top" : "list_other", label: tip ? `${{label}} [${{copy}}]` : label, copy }});
   }});
   let voice = "us_f";
   try {{ voice = localStorage.getItem("voice") || "us_f"; }} catch (e) {{}}
