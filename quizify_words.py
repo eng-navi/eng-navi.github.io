@@ -8,7 +8,7 @@
     .venv-tts/bin/python quizify_words.py scan                   # 過去の投稿の表紙を読み直して記録を作り直す(Mac の OCR)
 
 ・照合は小文字にして、A・B・SV・do・Ving・〜 などの記号を除いた形で行う(be about to do = be about to)
-・白は中心の単語でもかぶりとする(deadline を出したら meet the deadline も×)。黒は表現全体で比べ、中心の単語が同じなら注意だけ
+・表現全体が同じなら×。中心の単語が同じもの(deadline と meet the deadline)は注意(△)。白はできれば避けるが、試験で問う意義がある別の表現なら出してよい
 ・つづりの前半7文字が同じもの(deteriorate / deterioration など)は「似ている」として注意を出す
 ・作成スクリプト(quizify_black.py など)は作る前に check し、作った単語を「予定」として記録する。投稿したら「投稿済み」になる
 """
@@ -59,15 +59,15 @@ def core(k):
 
 def check(kind, words, ignore_no=None):
     """かぶり(同じ単語)と、似ている単語を返す。ignore_no はその番号の自分の予定を無視する(作り直し用)。
-    白はコロケーションで出すので、中心の単語が同じでもかぶりとする(deadline を出したら meet the deadline も×)。
-    黒は表現全体で比べ、中心の単語が同じものは「似ている」として注意だけ出す。"""
+    表現全体が同じなら×(止める)。中心の単語が同じもの(deadline と meet the deadline など)は「似ている」として注意を出す。
+    白はできれば避けるが、英検・大学受験で問う意義がある別の表現なら出してよい(本人の希望)。"""
     used = [e for e in load()[kind] if not (ignore_no is not None and e.get("no") == ignore_no and e["status"] == "予定")]
     same, similar = [], []
     for w in words:
         k = key(w)
         for e in used:
             ek = key(e["word"])
-            if ek == k or (kind == "white" and core(k) & core(ek)):
+            if ek == k:
                 same.append((w, e))
             elif core(k) & core(ek):
                 similar.append((w, e))
