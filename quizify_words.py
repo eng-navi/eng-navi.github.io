@@ -8,6 +8,7 @@
     .venv-tts/bin/python quizify_words.py scan                   # 過去の投稿の表紙を読み直して記録を作り直す(Mac の OCR)
 
 ・照合は小文字にして、A・B・SV・do・Ving・〜 などの記号を除いた形で行う(be about to do = be about to)
+・白は中心の単語でもかぶりとする(deadline を出したら meet the deadline も×)。黒は表現全体で比べ、中心の単語が同じなら注意だけ
 ・つづりの前半7文字が同じもの(deteriorate / deterioration など)は「似ている」として注意を出す
 ・作成スクリプト(quizify_black.py など)は作る前に check し、作った単語を「予定」として記録する。投稿したら「投稿済み」になる
 """
@@ -44,16 +45,32 @@ def save(data):
     FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n")
 
 
+# 中心の単語を取り出すときに無視する語(前置詞・冠詞・be など)
+FUNCTION = {"be", "a", "an", "the", "to", "of", "with", "for", "in", "on", "at", "about", "from", "into", "as",
+            "up", "out", "down", "off", "by", "it", "one", "some", "someone", "something",
+            # 基本動詞(make out と make an effort のように、中心は別の語になることが多い)
+            "make", "take", "get", "have", "give", "go", "come", "look", "turn", "fill", "put", "keep", "do"}
+
+
+def core(k):
+    """照合用の形から、中心の単語(前置詞などを除いた語)の集合を取り出す。"""
+    return {t for t in k.split() if t not in FUNCTION}
+
+
 def check(kind, words, ignore_no=None):
-    """かぶり(同じ単語)と、似ている単語を返す。ignore_no はその番号の自分の予定を無視する(作り直し用)。"""
+    """かぶり(同じ単語)と、似ている単語を返す。ignore_no はその番号の自分の予定を無視する(作り直し用)。
+    白はコロケーションで出すので、中心の単語が同じでもかぶりとする(deadline を出したら meet the deadline も×)。
+    黒は表現全体で比べ、中心の単語が同じものは「似ている」として注意だけ出す。"""
     used = [e for e in load()[kind] if not (ignore_no is not None and e.get("no") == ignore_no and e["status"] == "予定")]
     same, similar = [], []
     for w in words:
         k = key(w)
         for e in used:
             ek = key(e["word"])
-            if ek == k:
+            if ek == k or (kind == "white" and core(k) & core(ek)):
                 same.append((w, e))
+            elif core(k) & core(ek):
+                similar.append((w, e))
             elif len(k) >= 7 and len(ek) >= 7 and " " not in k and k[:7] == ek[:7]:
                 similar.append((w, e))
     return same, similar
