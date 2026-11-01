@@ -2431,5 +2431,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 126,
+    "text": "Compared with last year, far more people joined the city marathon.",
+    "target": "Compared with",
+    "glossary": [
+      "compared with [to] X：Xと比べて",
+      "far more：はるかに多くの"
+    ],
+    "translation": "去年と比べて、はるかに多くの人が市民マラソンに参加した。",
+    "explanation": "「compared with X」は「Xと比べて」という意味です。\nwith の代わりに to を使って compared to X とも言います。\n比べる対象（ここでは去年）を後ろに置いて、文の頭や終わりで使います。",
+    "audio": "audio/q126.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
