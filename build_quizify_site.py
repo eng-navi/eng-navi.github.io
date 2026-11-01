@@ -56,16 +56,18 @@ def play(src, label="▶ 聞く"):
 
 
 def word_card(it, kind):
-    tips = "".join(f"<li>{e(t)}</li>" for t in it["tips"])
-    return (f'<li class="card"><p class="no">{it["no"]}</p><p class="w">{e(it["word"])} {play(it["word_audio"], "▶")}</p>'
-            f'<p class="m">{e(it["mean"])}</p><p class="ja">{e(it["ja"])}</p>'
-            f'<button class="reveal">英語で言えたら、答えを見る</button>'
-            f'<div class="ans"><p class="en">{e(it["en"])}</p>{play(it["en_audio"])}<ul class="tips">{tips}</ul></div></li>')
+    tips = "".join(f"<li>{e(t)}</li>" for t in it.get("tips", []))
+    head = (f'<li class="card"><p class="no">{it.get("no", "")}</p><p class="w">{e(it["word"])} {play(it.get("word_audio"), "▶")}</p>'
+            f'<p class="m">{e(it.get("mean", ""))}</p>')
+    if not it.get("en"):  # 例文のない回(2023年の単語リスト)
+        return head + "</li>"
+    return (head + f'<p class="ja">{e(it.get("ja", ""))}</p><button class="reveal">英語で言えたら、答えを見る</button>'
+            f'<div class="ans"><p class="en">{e(it["en"])}</p>{play(it.get("en_audio"))}<ul class="tips">{tips}</ul></div></li>')
 
 
 def listen_card(it):
     words = "".join(f"<li>{e(w)}</li>" for w in it["words"])
-    return (f'<li class="card" data-ans="{it["ans"]}"><p class="no">{it["no"]} <span>{e(it["accent"])}</span></p>'
+    return (f'<li class="card" data-ans="{it["ans"]}"><p class="no">{it["no"]} <span>{e(it.get("accent", ""))}</span></p>'
             f'{play(it["audio"], "▶ 1回だけ聞いてみる")}'
             f'<button class="opt" data-c="A">A) {e(it["a"])}</button><button class="opt" data-c="B">B) {e(it["b"])}</button>'
             f'<div class="ans"><p class="res"></p><p class="en">{e(it["en"])}</p><ul class="tips">{words}</ul></div></li>')
@@ -79,11 +81,19 @@ TABS = [("listening", "🎧 リスニング", "TOEIC Part 2〜4 風。音声を�
 def pages():
     data = json.loads(DATA.read_text())
     posted = json.loads(POSTED.read_text()) if POSTED.exists() else {}
+    arc = ROOT / "quizify_archive.json"
+    archive = json.loads(arc.read_text()) if arc.exists() else {}
     keys = sorted((k for k in posted if k in data), key=lambda k: posted[k]["posted_at"], reverse=True)
     secs, nav = [], []
     for kind, label, note in TABS:
         cards = "".join(listen_card(it) if kind == "listening" else word_card(it, kind)
                         for k in keys if k.startswith(kind) for it in data[k])
+        # 過去の投稿(2023〜2024年)。quizify_archive.py で毎日少しずつ取り込んでいる
+        old = sorted(archive.get(kind, {}).values(), key=lambda v: v["date"], reverse=True)
+        old_items = [it for v in old for it in v.get("items", []) if kind != "listening" or (it.get("a") and it.get("b"))]
+        if old_items:
+            cards += f'<li class="era">過去の問題(2023〜2024年)・{len(old_items)}問</li>' + "".join(
+                listen_card({**it, "words": it.get("words", [])}) if kind == "listening" else word_card(it, kind) for it in old_items)
         nav.append(f'<button data-t="{kind}">{label}</button>')
         secs.append(f'<section id="{kind}"><p class="note">{note}</p><ol>{cards or "<li class=empty>近日公開</li>"}</ol></section>')
     SITE.mkdir(parents=True, exist_ok=True)
@@ -128,6 +138,7 @@ TEMPLATE = """<!doctype html>
   .opt { display: block; width: 100%; text-align: left; margin-top: 10px; border: 1px solid #ddd; background: #fafaf8; border-radius: 12px; padding: 12px; font-size: 14px; line-height: 1.6; cursor: pointer; color: #282828; }
   .opt.ok { border-color: #2e8b57; background: #eef8f1; } .opt.ng { border-color: #c83430; background: #fdf0ef; }
   .res { margin-top: 12px; font-weight: 700; }
+  .era { list-style: none; margin-top: 10px; font-size: 13px; font-weight: 700; color: #888; text-align: center; }
   .empty { color: #999; font-size: 14px; text-align: center; padding: 20px; }
   .cta { display: block; margin-top: 22px; padding: 14px; border-radius: 14px; background: #282828; color: #fff; text-align: center; text-decoration: none; font-weight: 500; }
   .toplink { display: flex; align-items: center; gap: 6px; margin-top: 16px; padding: 12px 14px; border-radius: 14px; border: 2px solid #c83430; background: #fff; color: #282828; text-decoration: none; font-size: 13px; line-height: 1.6; }
