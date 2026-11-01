@@ -91,12 +91,12 @@ def run():
     use_quizify_account()
     done = mp.load(LOG, {})
     now = datetime.now(post.JST)
-    due = [s for s in mp.load(SCHEDULE, []) if s["key"] not in done
-           and datetime.strptime(s["at"], "%Y-%m-%d %H:%M").replace(tzinfo=post.JST) <= now]
-    if not due:
+    # グリッドの色(青・白・黒)がそろうよう、必ず予約表の順に1本ずつ。前の1本が出るまで次は出さない
+    rest = sorted((s for s in mp.load(SCHEDULE, []) if s["key"] not in done), key=lambda s: s["at"])
+    if not rest or datetime.strptime(rest[0]["at"], "%Y-%m-%d %H:%M").replace(tzinfo=post.JST) > now:
         print("時間になった quizify の予約はありません")
         return
-    publish(min(due, key=lambda s: s["at"]))  # 1回に1本(連投しない)
+    publish(rest[0])
     mp.push([str(LOG), str(WORDS)], "quizify を投稿")
 
 
