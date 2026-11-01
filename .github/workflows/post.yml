@@ -39,6 +39,14 @@ jobs:
           QUIZIFY_IG_USER_ID: ${{ secrets.QUIZIFY_IG_USER_ID }}
           QUIZIFY_IG_ACCESS_TOKEN: ${{ secrets.QUIZIFY_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: quizify の Threads(Instagram の30分後)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 quizify_threads.py run
+        env:
+          QUIZIFY_THREADS_USER_ID: ${{ secrets.QUIZIFY_THREADS_USER_ID }}
+          QUIZIFY_THREADS_ACCESS_TOKEN: ${{ secrets.QUIZIFY_THREADS_ACCESS_TOKEN }}
       - name: Threads(eng_navi)
         if: always()
         run: |

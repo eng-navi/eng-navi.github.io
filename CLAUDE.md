@@ -183,6 +183,7 @@ work could wait：仕事は後回しにできる
 - リスニングの答えはコメントではなく説明欄(キャプションの後半)。元の投稿と同じ形:【番号】→英文→正しい訳→(空行)→「語句：意味」の一覧→(空行)→「Xが正解。」を ----- で区切る。空行には全角スペース(quizify_listening.py の answer_text)。黒・白には答えはない
 - 答え・解説は説明欄に加えてコメントにも置く(quizify_post.py の add_comment)
 - 復習ページは色ごとに分ける:/listening/(青・TOEIC Part 3・4/英検準1級〜2級)、/tango/(白・英検3級〜2級)、/tango-advanced/(黒・英検2級〜準1級・TOEIC高得点)。/quizify/ は3つへの案内(build_quizify_site.py)。過去の投稿は quizify_archive.py で毎日少しずつ取り込み。投稿済みの回だけ載せ、投稿のたびに自動で更新。新しい回を作ったら Mac で `.venv-tts/bin/python build_quizify_site.py` を実行して push(データと音声をそろえる)
+- Threads(@quizify_english):quizify_threads.py が Instagram に出た回を30分後に投稿(青=動画+A/B、白=前置詞の2択投票、黒=日本語→英語。答えはツリーの返信+サイトのリンク)。鍵は QUIZIFY_THREADS_*(毎週自動延長)
 - 投稿ペース:1日3本、必ず 青 → 白 → 黒 の順(3列のグリッドで色が縦にそろう)。毎日 7:30 青 / 12:30 白 / 21:00 黒。quizify_post.py は予約表の順に1本ずつしか出さない
 - 黒・白の説明欄:最初の1〜2行で何が分かるかを見せ、単語ごとに【番号】単語:意味 → 英文 → 訳 → 💡 豆知識(黒=派生語・似た語との違い・出る場面、白=一緒に使う語・入試で問われる形・間違えやすい点)。最後に「保存して、あとで復習してね📌」。紹介文とハッシュタグは毎回書き下ろし(quizify_black.py の caption_text)
 - リスニングの声は ElevenLabs の標準の声を順番に回す(米・英・豪、1本の中で男女を分け、1問目が男性の回と女性の回を交互に)。説明欄に「🔊 今回の音声:145 🇺🇸 アメリカ英語 / 146 🇬🇧 イギリス英語」を添える(quizify_listening.py の voice_for・accent_line)
