@@ -107,6 +107,58 @@ def post(key, data):
     return th.api("GET", mid, fields="permalink").get("permalink")
 
 
+# ---- 過去の投稿(アーカイブ)からの追加投稿。予約表 quizify_threads_queue.json ----
+QUEUE = ROOT / "quizify_threads_queue.json"
+ARCHIVE = ROOT / "quizify_archive.json"
+
+
+def archive_items(kind):
+    d = json.loads(ARCHIVE.read_text())
+    return [it for v in sorted(d[kind].values(), key=lambda v: v["date"]) for it in v.get("items", [])]
+
+
+def extra_posts(item):
+    """予約表の1件 {key, at, kind, idx} → [(本文, 追加パラメータ), 返信]"""
+    kind, idx = item["kind"], item["idx"]
+    its = archive_items(kind)
+    if kind == "listening":  # 文字で読む版:英文 → 正しい訳はどっち?
+        it = its[idx]
+        head = f"📖 この英文の意味はどっち?(TOEIC・英検)\n\n{it['en']}\n\n答えはツリーへ👇"
+        opts = {"option_a": "A) " + it["a"][:22], "option_b": "B) " + it["b"][:22]}
+        reply = f"✅ 正解は {it['ans']}\n\n{it['en']}\n({it['ja']})\n\n音声つきのリスニング問題はこちら🎧\n{link('listening')}"
+        return [(f"{head}\n\nA) {it['a']}\nB) {it['b']}", {"poll_attachment": json.dumps({"option_a": "A", "option_b": "B"})}), reply]
+    if kind == "black":  # 単語の意味:2択の投票
+        it = its[idx]
+        pool = [x for x in its if x.get("mean") and x["mean"] != it.get("mean") and len(x["mean"]) <= 20]
+        wrong = random.Random(it["word"]).choice(pool)["mean"]
+        right = it["mean"][:24]
+        opts = [right, wrong[:24]] if random.Random(idx).random() < 0.5 else [wrong[:24], right]
+        head = f"📕 英検準1級の単語、意味わかる?\n\n{it['word']}\n\n答えはツリーへ👇"
+        ex = f"\n{it['en']}\n({it['ja']})" if it.get("en") else ""
+        reply = f"✅ 正解は「{it['mean']}」\n\n{it['word']}:{it['mean']}{ex}\n\n準1級の単語をもっと🔊\n{link('black')}"
+        return [(head, {"poll_attachment": json.dumps({"option_a": opts[0], "option_b": opts[1]})}), reply]
+    it = its[idx]  # 白:前置詞の2択(なければ日本語→英語)
+    b = blank(it["word"])
+    if b and it.get("en"):
+        q, ans, wrong = b
+        opts = [ans, wrong] if random.Random(idx).random() < 0.5 else [wrong, ans]
+        head = f"📗 英単語クイズ(英検3級〜2級)\n\n「{it['mean']}」を英語で言うと?\n{q}\n\n( )に入るのはどっち?答えはツリーへ👇"
+        reply = f"✅ 正解は {ans}\n\n{it['word']}:{it['mean']}\n{it['en']}\n({it['ja']})\n\n例文の音声はこちら🔊\n{link('white')}"
+        return [(head, {"poll_attachment": json.dumps({"option_a": opts[0], "option_b": opts[1]})}), reply]
+    head = f"📗 この日本語、英語で言える?\n\n{it['ja']}\n(ヒント:{it['word']})\n\n答えはツリーへ👇"
+    reply = f"✅ 答え\n\n{it['en']}\n\n{it['word']}:{it['mean']}\n\n例文の音声はこちら🔊\n{link('white')}"
+    return [(head, {}), reply]
+
+
+def post_extra(item):
+    (head, extra), reply = extra_posts(item)
+    assert len(head) <= 500 and len(reply) <= 500, item
+    mid = th.publish(head, topic_tag=th.TOPIC, **extra)
+    time.sleep(5)
+    th.publish(reply, reply_to_id=mid)
+    return th.api("GET", mid, fields="permalink").get("permalink")
+
+
 def run():
     import manga_post as mp
     if os.environ.get("CI"):
@@ -120,8 +172,17 @@ def run():
     now = datetime.now(th.JST)
     due = sorted((k for k, v in ig.items() if k not in done and k in data and v["posted_at"][:10] >= START
                   and datetime.fromisoformat(v["posted_at"]) + DELAY <= now), key=lambda k: ig[k]["posted_at"])
-    if not due:
-        print("時間になった quizify の Threads はありません")
+    if not due:  # Instagram の回がなければ、アーカイブの予約を見る
+        q = [x for x in mp.load(QUEUE, []) if x["key"] not in done
+             and datetime.strptime(x["at"], "%Y-%m-%d %H:%M").replace(tzinfo=th.JST) <= now]
+        if not q:
+            print("時間になった quizify の Threads はありません")
+            return
+        x = min(q, key=lambda x: x["at"])
+        done[x["key"]] = {"permalink": post_extra(x), "posted_at": now.isoformat(timespec="seconds")}
+        LOG.write_text(json.dumps(done, ensure_ascii=False, indent=2) + "\n")
+        print(f"✓ Threads {x['key']} {done[x['key']]['permalink']}")
+        mp.push([str(LOG)], "quizify の Threads を投稿")
         return
     k = due[0]  # 1回に1本
     done[k] = {"permalink": post(k, data), "posted_at": now.isoformat(timespec="seconds")}
@@ -131,7 +192,11 @@ def run():
 
 
 if __name__ == "__main__":
-    if sys.argv[1:2] == ["show"]:
+    if sys.argv[1:2] == ["showx"]:
+        for x in json.loads(QUEUE.read_text())[: int(sys.argv[2]) if len(sys.argv) > 2 else 3]:
+            (h, e), r = extra_posts(x)
+            print("=====", x["at"], x["kind"], "\n" + h, e, "\n--- 返信 ---\n" + r)
+    elif sys.argv[1:2] == ["show"]:
         data = json.loads(DATA.read_text())
         items = [dict(x) for x in data[sys.argv[2]]]
         (head, extra), reply = posts(sys.argv[2], items)

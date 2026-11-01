@@ -98,7 +98,7 @@ def page_cards(kind, data, keys, archive):
                     for k in keys if k.startswith(kind) for it in data[k])
     # 過去の投稿(2023〜2024年)。quizify_archive.py で毎日少しずつ取り込んでいる
     old = sorted(archive.get(kind, {}).values(), key=lambda v: v["date"], reverse=True)
-    old_items = [it for v in old for it in v.get("items", []) if kind != "listening" or (it.get("a") and it.get("b"))]
+    old_items = [it for v in old for it in v.get("items", []) if kind != "listening" or (it.get("a") and it.get("b") and it.get("checked"))]  # リスニングは選択肢の読み取りを確認したものだけ
     if old_items:
         cards += f'<li class="era">過去の問題(2023〜2024年)・{len(old_items)}問</li>' + "".join(
             listen_card({**it, "words": it.get("words", [])}) if kind == "listening" else word_card(it, kind) for it in old_items)
