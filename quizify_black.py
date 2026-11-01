@@ -51,13 +51,18 @@ MINT = (160, 228, 195)
 WHITE = (251, 251, 251)
 
 ITEMS = [
-    # 番号, 英単語, 画面の意味, 読む意味, 日本語の例文, 英語の例文
+    # 番号, 英単語, 画面の意味, 読む意味, 日本語の例文, 英語の例文, 豆知識(説明欄に載せる)
     (277, "scrutinize", "精査する、詳しく調べる", "精査する",
-     "委員会は予算案を精査した。", "The committee scrutinized the budget."),
+     "委員会は予算案を精査した。", "The committee scrutinized the budget.",
+     ["名詞は scrutiny(精査)。under scrutiny で「厳しく調べられて」", "examine より「細かく・批判的に」調べる感じ",
+      "準1級の長文では、政府や企業の調査の話によく出ます"]),
     (278, "plausible", "もっともらしい", "もっともらしい",
-     "彼の説明はもっともらしい。", "His explanation sounds plausible."),
+     "彼の説明はもっともらしい。", "His explanation sounds plausible.",
+     ["反対は implausible(ありそうにない)", "a plausible excuse(もっともらしい言い訳)の形でよく使います",
+      "「本当かどうかは別として、筋は通っている」というニュアンス"]),
     (279, "deteriorate", "悪化する", "悪化する",
-     "天気が急に悪化した。", "The weather suddenly deteriorated."),
+     "天気が急に悪化した。", "The weather suddenly deteriorated.",
+     ["名詞は deterioration(悪化)", "反対は improve(よくなる)", "健康・関係・景気など、だんだん悪くなるものに幅広く使えます"]),
 ]
 
 
@@ -176,7 +181,7 @@ def wrap(d, text, f, width, track=0, words=True):
 
 def frame(item, stage):
     """stage: word / mean / ja / en"""
-    no, word, mean, _, ja, en = item
+    no, word, mean, _, ja, en = item[:6]
     im = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(im)
     spaced(d, (104, 451), "瞬間英作文クイズ", TITLE, MINT, 5)
@@ -201,7 +206,7 @@ def build(items, out):
     t = LEAD
     voice.append(np.zeros(int(SR * LEAD), np.float32))
     for k, item in enumerate(items):
-        _, word, _, said, ja, en = item
+        _, word, _, said, ja, en = item[:6]
         parts = [(tts(EN_VOICE, word, EN_SPEED), WORD_MEAN, "word"),
                  (tts(JA_VOICE, said, JA_SPEED), MEAN_JA, "mean"),
                  (tts(JA_VOICE, ja, JA_SPEED), JA_EN, "ja"),
@@ -240,6 +245,16 @@ def build(items, out):
     print(f"✓ {out.relative_to(ROOT)}({total:.2f}秒)")
     for c in cuts:
         print(f"  {c[0]:6.2f}  {c[1][0]} {c[2]}")
+
+
+def caption_text(items, intro, tags):
+    """説明欄。最初の1〜2行(intro)で何が分かるかを見せ、単語ごとに 例文・訳・豆知識。空行には全角スペースを入れる。
+    intro とハッシュタグは毎回書き下ろす(同じ文の使い回しはしない)。"""
+    sp = "\u3000\u3000"
+    out = [intro, sp, "--------------------------------------"]
+    for no, word, mean, _, ja, en, tips in items:
+        out += [f"【{no}】{word}:{mean}", en, ja, sp, "💡 豆知識", *[f"・{t}" for t in tips], "--------------------------------------"]
+    return "\n".join(out + [sp, "保存して、あとで復習してね📌", sp, tags])
 
 
 if __name__ == "__main__":

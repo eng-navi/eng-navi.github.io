@@ -21,11 +21,26 @@ import quizify_black as qb
 OUT, SR, W, H, FPS = qb.OUT, qb.SR, qb.W, qb.H, qb.FPS
 COUNTDOWN = qb.ROOT / "assets" / "quizify" / "countdown.wav"
 
-# 声(ElevenLabs)。元動画は2本とも 1問目が男性(約107Hz)、2問目が女性(約219Hz)
-SHORT_VOICE = "nPczCjzI2devNBz1zQrb"  # Brian(アメリカ・男性)
-TALK_VOICE = "Xb7hH8MSUJpSbSDYk0k2"   # Alice(イギリス・女性)
+# 声(ElevenLabs の標準の声)。本番の TOEIC と同じく国も混ぜ、順番に回す(同じ声が続かないように)。
+# 1本の中では男女を分け、1問目が男性の回と女性の回を交互にする。元動画は1問目男性・2問目女性
+MALE = [("nPczCjzI2devNBz1zQrb", "Brian", "🇺🇸", "アメリカ英語"), ("JBFqnCBsd6RMkjVDRZzb", "George", "🇬🇧", "イギリス英語"),
+        ("IKne3meq5aSn9XLyUdCD", "Charlie", "🇦🇺", "オーストラリア英語"), ("cjVigY5qzO86Huf0OWal", "Eric", "🇺🇸", "アメリカ英語"),
+        ("onwK4e9ZLuTAKqWW03F9", "Daniel", "🇬🇧", "イギリス英語"), ("iP95p4xoKVk53GoZ742B", "Chris", "🇺🇸", "アメリカ英語")]
+FEMALE = [("Xb7hH8MSUJpSbSDYk0k2", "Alice", "🇬🇧", "イギリス英語"), ("EXAVITQu4vr4xnSDxMaL", "Sarah", "🇺🇸", "アメリカ英語"),
+          ("pFZP5JQG7iQjIQuC4Bku", "Lily", "🇬🇧", "イギリス英語"), ("XrExE9yKIg1WjnnlVkGX", "Matilda", "🇺🇸", "アメリカ英語"),
+          ("hpp4J3VqNfWAUOO0d1Us", "Bella", "🇺🇸", "アメリカ英語")]
 SPEED = 1.0
-qb.LEVEL[SHORT_VOICE] = qb.LEVEL[TALK_VOICE] = 0.2  # 元動画の声は -13dB 前後と大きめ
+for v in MALE + FEMALE:
+    qb.LEVEL[v[0]] = 0.2  # 元動画の声は -13dB 前後と大きめ
+
+
+def voice_for(no, k):
+    """番号と何問目か(0・1)から声を決める。2問で1本(145・146 のように奇数から始まる)なので、何本目か = (no - 1) // 2。"""
+    reel = (no - 1) // 2
+    male_first = reel % 2 == 0
+    pool = MALE if (k == 0) == male_first else FEMALE
+    return pool[reel % len(pool)]
+
 
 # 間(秒)
 CD = 2.50          # カウントダウン → マイクの画面
@@ -44,11 +59,11 @@ FOOT = qb.font("KiwiMaru-Medium.ttf", 31)
 DIGIT = qb.font("OpenSans%5Bwdth,wght%5D.ttf", 58, [600, 100])
 
 ITEMS = [
-    # 番号, 声, 英文, 訳A, 訳B, 正解(A/B), 語句(説明欄に載せる「語句：意味」)
-    (145, SHORT_VOICE, "When is the new branch scheduled to open?",
+    # 番号, 声(None なら順番に回す), 英文, 訳A, 訳B, 正解(A/B), 語句(説明欄に載せる「語句：意味」)
+    (145, None, "When is the new branch scheduled to open?",
      "新しい支店はいつ開店予定ですか。", "新しい支店はどこに開店予定ですか。", "A",
      ["branch：支店", "be scheduled to do：…する予定である"]),
-    (146, TALK_VOICE, "Kevin, do you have a minute? I'm updating the slides for Friday's client presentation. "
+    (146, None, "Kevin, do you have a minute? I'm updating the slides for Friday's client presentation. "
      "My manager asked me to add the latest sales figures. Could you send me the report from last quarter?",
      "ケビン、ちょっといい？金曜日の社内会議のスライドを作り直しているの。部長から、最新の売上目標を加えるように言われて。先月の報告書を送ってもらえる？",
      "ケビン、ちょっといい？金曜日の顧客向けプレゼンのスライドを更新しているの。上司から、最新の売上の数字を加えるように言われて。前の四半期の報告書を送ってもらえる？",
@@ -156,7 +171,8 @@ def build(items, out):
 
     t = 0.0
     for k, item in enumerate(items):
-        voice = qb.tts(item[1], item[2], SPEED)
+        vid = item[1] or voice_for(item[0], k)[0]
+        voice = qb.tts(vid, item[2], SPEED)
         if k == 1:
             t = max(t, Q2_AT)
         put(cd, t)
@@ -198,6 +214,12 @@ def build(items, out):
         print(f"  {start:6.2f}  {item[0]} {stage}")
 
 
+def accent_line(items):
+    """説明欄の前半に添える「今回の音声」。"""
+    return "🎧 今回の音声:" + " / ".join(f"{no} {voice_for(no, k)[2]} {voice_for(no, k)[3]}" if not item[1] else str(no)
+                                      for k, item in enumerate(items) for no in [item[0]])
+
+
 def answer_text(items):
     """説明欄(キャプション)の後半に入れる答え。元の投稿と同じ形。空行には全角スペースを入れる(Instagram が空行を詰めるため)。"""
     sp = "\u3000\u3000"
@@ -211,4 +233,5 @@ def answer_text(items):
 if __name__ == "__main__":
     mr.load_env()
     build(ITEMS, OUT / f"listening_{ITEMS[0][0]}.mp4")
+    print(accent_line(ITEMS))
     print(answer_text(ITEMS))
