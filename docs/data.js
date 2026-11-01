@@ -2449,5 +2449,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 127,
+    "category": "語彙",
+    "question": "The airline offers meal ( ) to passengers whose flights are delayed.",
+    "options": [
+      "vouchers",
+      "visitors"
+    ],
+    "answer": 1,
+    "translation": "その航空会社は、フライトが遅れた乗客に食事券を提供している。",
+    "explanation": "meal voucher（食事券）は TOEIC でよく出る組み合わせです。\n遅延した乗客に「提供するもの」なので、vouchers（引換券）が自然です。\n\nしたがって、①vouchers が正解。",
+    "audio": "audio/q127.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
