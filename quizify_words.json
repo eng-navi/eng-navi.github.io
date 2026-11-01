@@ -1387,6 +1387,90 @@
    "status": "予定",
    "date": "2026-11-01",
    "source": null
+  },
+  {
+   "word": "compare A with B",
+   "no": 165,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "encourage A to do",
+   "no": 166,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "allow A to do",
+   "no": 167,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "have an effect on A",
+   "no": 168,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "play an important role in A",
+   "no": 169,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "be similar to A",
+   "no": 170,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "object to A",
+   "no": 171,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "decide to do",
+   "no": 172,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "have an interest in A",
+   "no": 173,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "reduce the risk of A",
+   "no": 174,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "be due to do",
+   "no": 175,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
+  },
+  {
+   "word": "avoid doing",
+   "no": 176,
+   "status": "予定",
+   "date": "2026-11-01",
+   "source": null
   }
  ]
 }
