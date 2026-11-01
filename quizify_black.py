@@ -3,7 +3,7 @@
 1語ごとに 英単語 → 日本語の意味 → 日本語の例文 → (考える間) → 英語の例文 の順。
 間は 2024年の元動画(274〜276)を 0.01 秒単位で測った値。声は前後の無音を切ってから、この間で並べる。
 
-  .venv-tts/bin/python quizify_black.py      → out/quizify/black_<最初の番号>.mp4
+  .venv-tts/bin/python quizify_black.py [番号...]   → out/quizify/black_<最初の番号>.mp4 と .txt(説明欄の全文)
 
 作る前に quizify_words.json(黒で使った単語)と照らし合わせ、かぶっていたら止まる。作った単語は「予定」として記録する。
 """
@@ -50,20 +50,74 @@ BG = (29, 29, 29)
 MINT = (160, 228, 195)
 WHITE = (251, 251, 251)
 
-ITEMS = [
-    # 番号, 英単語, 画面の意味, 読む意味, 日本語の例文, 英語の例文, 豆知識(説明欄に載せる)
-    (277, "scrutinize", "精査する、詳しく調べる", "精査する",
-     "委員会は予算案を精査した。", "The committee scrutinized the budget.",
-     ["名詞は scrutiny(精査)。under scrutiny で「厳しく調べられて」", "examine より「細かく・批判的に」調べる感じ",
-      "準1級の長文では、政府や企業の調査の話によく出ます"]),
-    (278, "plausible", "もっともらしい", "もっともらしい",
-     "彼の説明はもっともらしい。", "His explanation sounds plausible.",
-     ["反対は implausible(ありそうにない)", "a plausible excuse(もっともらしい言い訳)の形でよく使います",
-      "「本当かどうかは別として、筋は通っている」というニュアンス"]),
-    (279, "deteriorate", "悪化する", "悪化する",
-     "天気が急に悪化した。", "The weather suddenly deteriorated.",
-     ["名詞は deterioration(悪化)", "反対は improve(よくなる)", "健康・関係・景気など、だんだん悪くなるものに幅広く使えます"]),
+# 1本ずつ:紹介文とハッシュタグ(毎回書き下ろし)、3語。英検準1級 単熟語EX の見出し語(例文はオリジナル)
+# 単語:番号, 英単語, 画面の意味, 読む意味, 日本語の例文, 英語の例文, 豆知識(説明欄に載せる)
+REELS = [
+    dict(intro="準1級の単語を、瞬間英作文で覚えよう✍️\n今日は「弱い」「気をつける」「傍観者」の3語です。", tags="#英検準1級 #瞬間英作文 #英単語",
+         items=[
+             (277, "vulnerable", "傷つきやすい、かかりやすい", "傷つきやすい", "子どもは寒さに弱い。", "Children are vulnerable to the cold.",
+              ["be vulnerable to A で「Aに弱い、Aを受けやすい」", "名詞は vulnerability(弱さ、脆弱性)", "ITの記事では「システムの脆弱性」の意味でよく出ます"]),
+             (278, "heed", "〜に気をつける、心に留める", "気をつける", "彼は医者の助言に従った。", "He heeded his doctor's advice.",
+              ["pay heed to A でも同じ意味", "advice・warning(警告)と一緒によく使います", "形容詞は heedless(不注意な)"]),
+             (279, "bystander", "傍観者、見物人", "傍観者", "数人の見物人が事故を目撃した。", "Several bystanders witnessed the accident.",
+              ["stand by(そばに立つ、傍観する)から", "似た語は onlooker(見物人)", "innocent bystander で「巻き添えになった人」"]),
+         ]),
+    dict(intro="長文によく出る準1級単語、瞬間英作文で言えるかな?🗣️\n今日は「混雑」「捨てる」「炎」の3語です。", tags="#英検準1級 #英単語 #英語学習",
+         items=[
+             (280, "congestion", "(交通・場所などの)混雑", "混雑", "新しい道路で渋滞が減った。", "The new road reduced traffic congestion.",
+              ["traffic congestion で「交通渋滞」", "形容詞は congested(混雑した)", "nasal congestion は「鼻づまり」"]),
+             (281, "discard", "〜を捨てる、処分する", "捨てる", "私は古い服を捨てた。", "I discarded my old clothes.",
+              ["throw away とほぼ同じ意味", "dis(離す)+ card(カード):トランプでカードを捨てるイメージ", "名詞で「捨てられた物」の意味もあります"]),
+             (282, "blaze", "(燃え盛る)炎、火炎", "炎", "消防士たちは火をすぐに消した。", "Firefighters quickly put out the blaze.",
+              ["fire より「激しく燃え上がる炎」", "動詞で「燃え上がる」", "blazing hot で「焼けつくように暑い」"]),
+         ]),
+    dict(intro="日常でも使える準1級単語です✨\n今日は「不器用な」「取り除く」「認める」の3語。", tags="#英検準1級 #パス単 #瞬間英作文",
+         items=[
+             (283, "clumsy", "不器用な、ぎこちない", "不器用な", "彼は箸の使い方が不器用だ。", "He is clumsy with chopsticks.",
+              ["be clumsy with A で「Aの扱いが不器用だ」", "名詞は clumsiness(不器用さ)", "反対は skillful(器用な)"]),
+             (284, "eliminate", "〜を取り除く、敗退させる", "取り除く", "この薬は痛みを取り除く。", "This medicine eliminates the pain.",
+              ["remove / get rid of と近い意味", "受け身 be eliminated で「(試合で)敗退する」", "名詞は elimination(除去、敗退)"]),
+             (285, "acknowledge", "〜を認める", "認める", "彼女は自分の間違いを認めた。", "She acknowledged her mistake.",
+              ["admit と近い意味。acknowledge that ~ の形も", "名詞は acknowledgment(承認、感謝)", "本のあとがきの Acknowledgments は「謝辞」"]),
+         ]),
+    dict(intro="1語で意味が広がる単語をセットで✍️\n今日は「養う」「期限切れ」「登録」の3語です。", tags="#英検準1級 #英単語 #大人の勉強",
+         items=[
+             (286, "cultivate", "〜を耕す、(能力)を養う", "養う", "読書は想像力を養う。", "Reading cultivates the imagination.",
+              ["土地を耕す → 能力・関係を育てる、と意味が広がります", "名詞は cultivation(耕作、育成)", "culture(文化)と同じ語源"]),
+             (287, "overdue", "(支払い・返却の)期限が過ぎた", "期限が過ぎた", "その本は返却期限が過ぎている。", "The library book is overdue.",
+              ["due(期限の)+ over(過ぎて)", "「とっくに〜されるべき」の意味もあります", "an overdue bill で「未払いの請求書」"]),
+             (288, "enrollment", "登録、入学", "登録", "今年は入学者数が増えた。", "Enrollment increased this year.",
+              ["動詞は enroll(登録する、入学する)", "enroll in A で「Aに入学する、Aに登録する」", "イギリスでは enrolment とつづります"]),
+         ]),
+    dict(intro="ニュースでよく見る準1級単語です📰\n今日は「入隊する」「無秩序」「気が進まない」の3語。", tags="#英検準1級 #時事英語 #瞬間英作文",
+         items=[
+             (289, "enlist", "(援助など)を得る、入隊する", "入隊する", "彼女は軍隊に入隊した。", "She enlisted in the army.",
+              ["enlist in A で「Aに入隊する」", "enlist the help of A で「Aの協力を得る」", "en(中に)+ list(名簿):名簿に入れる"]),
+             (290, "anarchy", "無政府状態、無秩序", "無秩序", "停電で町は大混乱になった。", "The blackout turned the city into anarchy.",
+              ["アクセントは最初の a(アナーキー)", "an(ない)+ arch(支配者)", "形容詞は anarchic(無秩序な)"]),
+             (291, "reluctant", "気乗りがしない、しぶしぶの", "気乗りがしない", "彼は謝りたがらなかった。", "He was reluctant to apologize.",
+              ["be reluctant to do の形でよく出ます", "名詞は reluctance(気が進まないこと)", "副詞 reluctantly は「しぶしぶ」"]),
+         ]),
+    dict(intro="身の回りの物や人にも使える単語です🧳\n今日は「壊れやすい」「評価する」「疲れきった」の3語。", tags="#英検準1級 #英単語 #英語学習",
+         items=[
+             (292, "fragile", "壊れやすい、不安定な", "壊れやすい", "このグラスはとても壊れやすい。", "These glasses are very fragile.",
+              ["荷物の「取扱注意」シールは FRAGILE", "反対は sturdy / tough(丈夫な)", "「(状態が)不安定な」の意味もあります"]),
+             (293, "evaluate", "〜を評価する", "評価する", "先生は生徒の作文を評価した。", "The teacher evaluated the students' essays.",
+              ["assess とほぼ同じ意味", "名詞は evaluation(評価)", "中に value(価値)が入っています"]),
+             (294, "weary", "ひどく疲れた、飽き飽きして", "ひどく疲れた", "長い会議のあと、私たちは疲れきっていた。", "We were weary after the long meeting.",
+              ["tired / exhausted と近い意味", "be weary of A で「Aに飽き飽きしている」", "発音は「ウィアリ」"]),
+         ]),
+    dict(intro="準1級の社会・政治の長文でよく出ます🏛️\n今日は「拘置」「連合」「穏やかな」の3語です。", tags="#英検準1級 #長文読解 #瞬間英作文",
+         items=[
+             (295, "custody", "保護、親権、拘置", "拘置", "容疑者は警察に拘束された。", "The suspect was taken into custody.",
+              ["take A into custody で「Aを拘束する」", "離婚の話では「親権」の意味", "in custody で「拘留されて」"]),
+             (296, "coalition", "(政党などの)連立、連合", "連合", "環境団体は川を守るために連合を作った。", "Environmental groups formed a coalition to protect the river.",
+              ["coalition government で「連立政権」", "coali(合体する)+ tion", "政治・社会の長文に出やすい単語です"]),
+             (297, "tranquil", "静かな、穏やかな", "穏やかな", "私たちは静かな村で休暇を過ごした。", "We spent our holiday in a tranquil village.",
+              ["calm / peaceful / serene と近い意味", "名詞は tranquility(静けさ)", "tranquilizer は「精神安定剤」"]),
+         ]),
 ]
+ITEMS = [it for r in REELS for it in r["items"]]
 
 
 def font(name, size, weight=None):
@@ -258,9 +312,15 @@ def caption_text(items, intro, tags):
 
 
 if __name__ == "__main__":
+    import sys
     import quizify_words as qw
-    qw.guard("black", [(it[0], it[1]) for it in ITEMS])  # 黒で使った単語とかぶっていたら止める
+    want = {int(x) for x in sys.argv[1:]}
+    reels = [r for r in REELS if not want or r["items"][0][0] in want]
+    qw.guard("black", [(it[0], it[1]) for r in reels for it in r["items"]])  # 黒で使った単語とかぶっていたら止める
     mr.load_env()
-    build(ITEMS, OUT / f"black_{ITEMS[0][0]}.mp4")
-    for it in ITEMS:
-        qw.add("black", it[1], no=it[0])
+    for r in reels:
+        out = OUT / f"black_{r['items'][0][0]}.mp4"
+        build(r["items"], out)
+        out.with_suffix(".txt").write_text(caption_text(r["items"], r["intro"], r["tags"]) + "\n")
+        for it in r["items"]:
+            qw.add("black", it[1], no=it[0])
