@@ -30,6 +30,15 @@ jobs:
           MANGA_IG_USER_ID: ${{ secrets.MANGA_IG_USER_ID }}
           MANGA_IG_ACCESS_TOKEN: ${{ secrets.MANGA_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: quizify(@quizify_english)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 quizify_post.py run
+        env:
+          QUIZIFY_IG_USER_ID: ${{ secrets.QUIZIFY_IG_USER_ID }}
+          QUIZIFY_IG_ACCESS_TOKEN: ${{ secrets.QUIZIFY_IG_ACCESS_TOKEN }}
+          SITE_URL: https://eng-navi.github.io
       - name: Threads(eng_navi)
         if: always()
         run: |
