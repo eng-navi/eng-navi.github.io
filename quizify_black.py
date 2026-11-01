@@ -4,6 +4,8 @@
 間は 2024年の元動画(274〜276)を 0.01 秒単位で測った値。声は前後の無音を切ってから、この間で並べる。
 
   .venv-tts/bin/python quizify_black.py      → out/quizify/black_<最初の番号>.mp4
+
+作る前に quizify_words.json(黒で使った単語)と照らし合わせ、かぶっていたら止まる。作った単語は「予定」として記録する。
 """
 import hashlib
 import re
@@ -241,5 +243,9 @@ def build(items, out):
 
 
 if __name__ == "__main__":
+    import quizify_words as qw
+    qw.guard("black", [(it[0], it[1]) for it in ITEMS])  # 黒で使った単語とかぶっていたら止める
     mr.load_env()
     build(ITEMS, OUT / f"black_{ITEMS[0][0]}.mp4")
+    for it in ITEMS:
+        qw.add("black", it[1], no=it[0])
