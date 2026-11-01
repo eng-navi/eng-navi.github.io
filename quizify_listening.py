@@ -3,7 +3,7 @@
 1問ごとに カウントダウン(3・2・1)→ マイクの画面で英語を1回 → 日本語訳 A/B(片方はすり替えたひっかけ)。
 答えは説明欄(キャプションの後半)に、元の投稿と同じ形で入れる(answer_text)。間と配置は 2024年の元動画(77・78 / 143・144)を 0.01 秒単位で測った値。
 
-  .venv-tts/bin/python quizify_listening.py      → out/quizify/listening_<最初の番号>.mp4 と、説明欄の答え
+  .venv-tts/bin/python quizify_listening.py [番号...]   → out/quizify/listening_<最初の番号>.mp4 と .txt(説明欄の全文)
 
 カウントダウンの音は元動画(本人のアカウント)から切り出したもの(assets/quizify/countdown.wav)。
 """
@@ -58,18 +58,120 @@ OPT = qb.font("KiwiMaru-Medium.ttf", 26)
 FOOT = qb.font("KiwiMaru-Medium.ttf", 31)
 DIGIT = qb.font("OpenSans%5Bwdth,wght%5D.ttf", 58, [600, 100])
 
-ITEMS = [
-    # 番号, 声(None なら順番に回す), 英文, 訳A, 訳B, 正解(A/B), 語句(説明欄に載せる「語句：意味」)
-    (145, None, "When is the new branch scheduled to open?",
-     "新しい支店はいつ開店予定ですか。", "新しい支店はどこに開店予定ですか。", "A",
-     ["branch：支店", "be scheduled to do：…する予定である"]),
-    (146, None, "Kevin, do you have a minute? I'm updating the slides for Friday's client presentation. "
-     "My manager asked me to add the latest sales figures. Could you send me the report from last quarter?",
-     "ケビン、ちょっといい？金曜日の社内会議のスライドを作り直しているの。部長から、最新の売上目標を加えるように言われて。先月の報告書を送ってもらえる？",
-     "ケビン、ちょっといい？金曜日の顧客向けプレゼンのスライドを更新しているの。上司から、最新の売上の数字を加えるように言われて。前の四半期の報告書を送ってもらえる？",
-     "B",
-     ["Do you have a minute?：ちょっといい？", "update：更新する", "client：顧客", "presentation：発表、プレゼン",
-      "add A to B：BにAを加える", "sales figures：売上の数字", "quarter：四半期"]),
+# 1本ずつ:紹介文(毎回書き下ろし)、ハッシュタグ、2問(短い1文=Part 2 風、会話・トーク=Part 3/4 風)
+# 問題:番号, 声(None なら順番に回す), 英文, 訳A, 訳B, 正解(A/B), 語句(説明欄に載せる「語句：意味」)
+# 英文は TOEIC の問題集から場面・流れ・問われる語句だけを借りてオリジナルで書き、場面も変えている
+REELS = [
+    dict(intro="🎧 1回だけ聞いて、正しい訳を選べる?\n今日は「担当者を聞く質問」と「予定変更の電話」です。",
+         tags="#TOEICリスニング #TOEIC600点 #英語耳",
+         items=[
+             (145, None, "Who's in charge of ordering office supplies?",
+              "事務用品の注文を担当しているのは誰ですか。", "事務用品の配達を担当しているのは誰ですか。", "A",
+              ["be in charge of A：Aを担当している", "order：注文する", "office supplies：事務用品"]),
+             (146, None, "Hi, Tom. My train is delayed because of a signal problem, so I won't get to the office by ten. "
+              "Could we push the client meeting back by an hour? If that doesn't work, please start without me.",
+              "トム、事故で電車が止まっていて、9時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間早めてもらえるかな？無理なら、中止にして。",
+              "トム、信号トラブルで電車が遅れていて、10時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間遅らせてもらえるかな？無理なら、僕抜きで始めて。",
+              "B",
+              ["delayed：遅れている", "signal problem：信号トラブル", "get to A：Aに着く", "push back：(予定を)遅らせる",
+               "client：顧客", "work：うまくいく、都合がつく", "without A：Aなしで"]),
+         ]),
+    dict(intro="🎧 聞き取れたら上級者!\n今日は「承認されたか確認する質問」と「同僚へのお願い」です。",
+         tags="#TOEIC #リスニング対策 #ビジネス英語",
+         items=[
+             (147, None, "Has the new marketing plan been approved yet?",
+              "新しいマーケティング計画はもう提出されましたか。", "新しいマーケティング計画はもう承認されましたか。", "B",
+              ["marketing plan：マーケティング計画", "approve：承認する", "yet：(疑問文で)もう"]),
+             (148, None, "Hi, Ben. Could you check the sales report before I send it to the director? "
+              "I think some numbers in the second table are wrong. Also, could you pick up the cake for tomorrow's welcome lunch?",
+              "ベン、部長に送る前に売上報告書を確認してもらえる？2つ目の表の数字がいくつか間違っていると思うの。それと、明日の歓迎ランチのケーキを受け取ってきてもらえる？",
+              "ベン、部長に送る前に売上報告書を書き直してもらえる？最初の表の数字がいくつか抜けていると思うの。それと、明日の歓迎ディナーのケーキを受け取ってきてもらえる？",
+              "A",
+              ["sales report：売上報告書", "director：部長、取締役", "table：表", "pick up：受け取る", "welcome lunch：歓迎ランチ"]),
+         ]),
+    dict(intro="🎧 1回で聞き取れるか、試してみよう。\n今日は「届くはずの物」と「ビルからのお知らせ」です。",
+         tags="#TOEICリスニング #英語学習 #スキマ時間",
+         items=[
+             (149, None, "Weren't the new chairs supposed to arrive this morning?",
+              "新しい椅子は今朝届く予定ではなかったのですか。", "新しい机は今朝届く予定ではなかったのですか。", "A",
+              ["be supposed to do：…することになっている", "arrive：届く、到着する"]),
+             (150, None, "Good morning. This is the building management office. The air conditioning on the third floor "
+              "will be shut down for repairs from one to three this afternoon. During that time, the conference rooms on the fifth floor will be available.",
+              "おはようございます。ビル管理事務所です。3階の照明は、点検のため今日の午後1時から3時まで止まります。その間は、5階の休憩室をお使いいただけます。",
+              "おはようございます。ビル管理事務所です。3階のエアコンは、修理のため今日の午後1時から3時まで止まります。その間は、5階の会議室をお使いいただけます。",
+              "B",
+              ["building management office：ビル管理事務所", "air conditioning：エアコン", "shut down：止める、停止する",
+               "repair：修理", "conference room：会議室", "available：利用できる"]),
+         ]),
+    dict(intro="🎧 似ている訳にだまされないで!\n今日は「忘れ物」と「売上についての会議」です。",
+         tags="#TOEIC #英語リスニング #社会人の勉強",
+         items=[
+             (151, None, "I think I left my umbrella in the lobby.",
+              "ロビーに傘を忘れてきたと思います。", "受付に傘を忘れてきたと思います。", "A",
+              ["leave：置き忘れる(過去形は left)", "lobby：ロビー"]),
+             (152, None, "Let's start with this year's sales. Sales of our shampoo have dropped by ten percent since spring. "
+              "Customer surveys show that many people find the bottle hard to open. So we need a new design by the end of the month.",
+              "まずは今年の売上から始めましょう。当社のシャンプーの売上は、春から10パーセント落ちています。顧客アンケートでは、ボトルが開けにくいという声が多いです。そこで、今月末までに新しいデザインが必要です。",
+              "まずは今年の売上から始めましょう。当社のシャンプーの売上は、夏から20パーセント落ちています。顧客アンケートでは、ボトルが重いという声が多いです。そこで、来月末までに新しいデザインが必要です。",
+              "A",
+              ["sales：売上", "drop：落ちる、下がる", "survey：アンケート、調査", "find A hard to do：Aが…しにくいと感じる",
+               "by the end of the month：月末までに"]),
+         ]),
+    dict(intro="🎧 When と Where、聞き分けられる?\n今日は「いつ届くか」と「歯医者からの電話」です。",
+         tags="#TOEICリスニング #TOEIC対策 #英語耳",
+         items=[
+             (153, None, "When can you send me the final draft?",
+              "最終稿をどこに送ればいいですか。", "最終稿をいつ送ってもらえますか。", "B",
+              ["final draft：最終稿", "send A B：AにBを送る"]),
+             (154, None, "Hello, this is Green Dental Clinic calling for Mr. Park. Dr. Wilson will be at a conference on Thursday, "
+              "so we need to change your appointment. Could you come in on Friday at the same time instead?",
+              "もしもし、グリーン歯科です。パーク様でしょうか。ウィルソン先生が木曜日に学会に出席するため、ご予約を変更させていただく必要があります。代わりに金曜日の同じ時間にお越しいただけますか？",
+              "もしもし、グリーン歯科です。パーク様でしょうか。ウィルソン先生が木曜日に出張するため、ご予約を取り消させていただく必要があります。代わりに金曜日の午前中にお越しいただけますか？",
+              "A",
+              ["dental clinic：歯科医院", "conference：学会、会議", "appointment：予約", "come in：来院する、来る", "instead：代わりに"]),
+         ]),
+    dict(intro="🎧 選ぶ質問、聞き取れる?\n今日は「どちらの席がいいか」と「美術館の案内」です。",
+         tags="#TOEIC #リスニング #旅行英語",
+         items=[
+             (155, None, "Would you prefer a window seat or an aisle seat?",
+              "窓側の席と前方の席、どちらがよろしいですか。", "窓側の席と通路側の席、どちらがよろしいですか。", "B",
+              ["prefer：…のほうを好む", "window seat：窓側の席", "aisle seat：通路側の席"]),
+             (156, None, "Welcome to the City Art Museum. Our special exhibition of travel photography is on the third floor "
+              "and runs until the end of this month. Please note that flash photography is not allowed in the gallery.",
+              "市立美術館へようこそ。旅行写真の特別展は3階で、今月末まで開催しています。展示室内でのフラッシュ撮影は禁止されていますのでご注意ください。",
+              "市立美術館へようこそ。旅行写真の特別展は2階で、来月末まで開催しています。展示室内での撮影はすべて禁止されていますのでご注意ください。",
+              "A",
+              ["special exhibition：特別展", "photography：写真(撮影)", "run：(展示などが)続く、開催される",
+               "note that ~：…に注意する", "allow：許可する", "gallery：展示室"]),
+         ]),
+    dict(intro="🎧 始まる?終わる?ちゃんと聞き取れるかな。\n今日は「研修の時間」と「送別のあいさつ」です。",
+         tags="#TOEICリスニング #ビジネス英語 #英語学習",
+         items=[
+             (157, None, "Isn't the training session supposed to end at four?",
+              "研修は4時に始まる予定ではなかったのですか。", "研修は4時に終わる予定ではなかったのですか。", "B",
+              ["training session：研修", "be supposed to do：…することになっている"]),
+             (158, None, "Before we close the meeting, I'd like to thank Emma Hill, who will move to our Singapore office next month. "
+              "Over the past six years, she has trained more than fifty new employees. Please join us for her farewell party on Friday evening.",
+              "会議を終える前に、来月シンガポール支社へ異動するエマ・ヒルさんにお礼を言いたいと思います。この6年間で、彼女は50人以上の新入社員を指導してくれました。金曜日の夜の送別会にぜひご参加ください。",
+              "会議を終える前に、来月シドニー支社へ異動するエマ・ヒルさんにお礼を言いたいと思います。この5年間で、彼女は15人以上の新入社員を採用してくれました。金曜日の昼の送別会にぜひご参加ください。",
+              "A",
+              ["move to A：Aへ移る、異動する", "over the past ~ years：この…年間で", "train：指導する、研修する",
+               "employee：社員", "farewell party：送別会"]),
+         ]),
+    dict(intro="🎧 open と closed、聞き間違えないで!\n今日は「新しいお店」と「ラジオの交通情報」です。",
+         tags="#TOEIC #英語リスニング #スキマ時間",
+         items=[
+             (159, None, "I heard the new café on the first floor is open.",
+              "1階の新しいカフェが開店したそうですね。", "1階の新しいカフェが閉店したそうですね。", "A",
+              ["I heard ~：…だと聞いた", "first floor：1階", "open：営業している"]),
+             (160, None, "Good evening. This is the traffic update from City Radio. Because of strong winds, the Blue Line "
+              "between Central Station and the airport has been suspended. Service is expected to resume early tomorrow morning.",
+              "こんばんは。シティ・ラジオの交通情報です。大雨のため、中央駅と空港の間のブルーラインは運転を見合わせています。運転再開は明日の昼の見込みです。",
+              "こんばんは。シティ・ラジオの交通情報です。強風のため、中央駅と空港の間のブルーラインは運転を見合わせています。運転再開は明日の早朝の見込みです。",
+              "B",
+              ["traffic update：交通情報", "strong wind：強風", "suspend：一時停止する、見合わせる", "service：運行",
+               "be expected to do：…する見込みである", "resume：再開する"]),
+         ]),
 ]
 
 
@@ -230,8 +332,19 @@ def answer_text(items):
     return "\n".join(out)
 
 
+def caption(reel):
+    """説明欄の全文:紹介文 → 今回の音声 → ハッシュタグ → 答え(元の投稿と同じ形)。"""
+    return "\n".join([reel["intro"], accent_line(reel["items"]), "\u3000\u3000", reel["tags"], answer_text(reel["items"])])
+
+
 if __name__ == "__main__":
+    import sys
     mr.load_env()
-    build(ITEMS, OUT / f"listening_{ITEMS[0][0]}.mp4")
-    print(accent_line(ITEMS))
-    print(answer_text(ITEMS))
+    want = {int(a) for a in sys.argv[1:]}
+    for reel in REELS:
+        items = reel["items"]
+        if want and items[0][0] not in want:
+            continue
+        out = OUT / f"listening_{items[0][0]}.mp4"
+        build(items, out)
+        out.with_suffix(".txt").write_text(caption(reel) + "\n")
