@@ -1,6 +1,6 @@
 """@quizify_english の白い「英単語(初級)」リールを作る。1本に2語(受験・英検で問われるやさしめのコロケーション)。
 
-1語ごとに 英語 → 日本語の意味 → 日本語の例文 → (考える間) → 英語の例文(女性)→ 英語の例文(男性)の順。黒とほぼ同じで、
+1語ごとに 英語 → 日本語の意味 → 日本語の例文 → (考える間) → 英語の例文 → 英語の例文(もう1回)の順。黒とほぼ同じで、
 英語の例文を2回読むのが違い。間と配置は 2024年の元動画(159・161)の4語分を 0.01 秒単位で測った値の平均。
 
   .venv-tts/bin/python quizify_white.py      → out/quizify/white_<最初の番号>.mp4 と .txt(説明欄の全文)
@@ -19,12 +19,12 @@ import quizify_black as qb
 
 ROOT, OUT, SR, W, H, FPS = qb.ROOT, qb.OUT, qb.SR, qb.W, qb.H, qb.FPS
 
-# 声。英語1回目と日本語は黒と同じ(元動画も同じ声)。2回目は男性(元動画は約100Hz の低めの声)
+# 声は黒と同じ(本人の希望で、英語の例文の2回目も同じ Lily)
 EN_VOICE, EN_SPEED = qb.EN_VOICE, qb.EN_SPEED        # Lily(イギリス・女性)
-EN2_VOICE = "onwK4e9ZLuTAKqWW03F9"                   # Daniel(イギリス・男性)
+EN2_VOICE = EN_VOICE
 JA_VOICE, JA_SPEED = qb.JA_VOICE, qb.JA_SPEED        # Nanami(音読さんの「ななみ」)
-# 音量(RMS)。元動画は英語 -14dB、日本語 -12dB 前後
-LEVEL = {EN_VOICE: 0.18, EN2_VOICE: 0.18, JA_VOICE: 0.23}
+# 音量(RMS)は黒と同じ。大きくすると山が抑えられて声が割れて聞こえるため
+LEVEL = {EN_VOICE: 0.092, JA_VOICE: 0.163}
 
 # 間(秒)
 LEAD = 0.55        # 動画の頭 → 英語
@@ -41,9 +41,9 @@ NEXT_AFTER = 0.38  # 英語の例文(男性)が終わってから次の画面へ
 BG = (241, 244, 241)
 INK = (17, 19, 17)
 NUM = qb.font("EBGaramond-Italic%5Bwght%5D.ttf", 60, [400])
-TITLE = qb.font("MPLUSRounded1c-Bold.ttf", 48)
-MEAN = qb.font("MPLUSRounded1c-Bold.ttf", 37)
-JA = qb.font("MPLUSRounded1c-Bold.ttf", 32)
+TITLE = qb.font("ZenMaruGothic-Medium.ttf", 48)
+MEAN = qb.font("ZenMaruGothic-Medium.ttf", 37)
+JA = qb.font("ZenMaruGothic-Medium.ttf", 32)
 EN = qb.font("EBGaramond%5Bwght%5D.ttf", 48, [600])
 
 ITEMS = [
