@@ -1668,5 +1668,96 @@
     "translation": "弊社の新製品発表会に参加されたことはありますか？",
     "explanation": "ever（これまでに）は「経験」を表す現在完了とよく一緒に使われます。\n「今までに〜したことがあるか」をたずねるので、Have you ever 〜? の形になります。\n\nしたがって、②Have が正解。",
     "caption": "ever があったら、時制は？🎤\n「経験」を表す現在完了の基本です。\n\n#TOEIC対策 #英語学習 #現在完了"
+  },
+  {
+    "no": 125,
+    "category": "時制",
+    "question": "Please text me as soon as you ( ) at the station.",
+    "options": [
+      "will arrive",
+      "arrive"
+    ],
+    "answer": 2,
+    "translation": "駅に着いたらすぐにメッセージを送ってね。",
+    "explanation": "as soon as（〜するとすぐに）や when・if などが「時」や「条件」を表すときは、未来のことでも現在形を使います。\n\nしたがって、②arrive が正解。",
+    "caption": "未来のことなのに will を使わない？🚉\n時制問題でいちばん出るルールです。\n\n#英検2級 #英文法 #時制"
+  },
+  {
+    "no": 128,
+    "category": "助動詞",
+    "question": "She ( ) be tired. She has been working since early this morning.",
+    "options": [
+      "must",
+      "cannot"
+    ],
+    "answer": 1,
+    "translation": "彼女は疲れているにちがいない。今朝早くからずっと働いているのだから。",
+    "explanation": "must には「〜しなければならない」のほかに、「〜にちがいない」という強い推量の意味があります。\n朝からずっと働いているので、疲れているはずだと考えられます。\n\nしたがって、①must が正解。",
+    "caption": "must は「しなければならない」だけじゃない💡\n推量の must、使い分けられるかな？\n\n#英検2級 #助動詞 #英語学習"
+  },
+  {
+    "no": 131,
+    "category": "受動態",
+    "question": "This bridge ( ) by a famous architect in 1950.",
+    "options": [
+      "designed",
+      "was designed"
+    ],
+    "answer": 2,
+    "translation": "この橋は1950年に有名な建築家によって設計された。",
+    "explanation": "橋は「設計する」側ではなく「設計される」側なので、受動態〈be動詞＋過去分詞〉にします。\nin 1950 という過去の時があるので、be動詞は was です。\n\nしたがって、②was designed が正解。",
+    "caption": "主語が「する側」か「される側」か🌉\n受動態の基本を1問で確認しよう。\n\n#英検2級 #受動態 #英文法"
+  },
+  {
+    "no": 134,
+    "category": "助動詞",
+    "question": "You ( ) bring your lunch tomorrow. Lunch will be provided.",
+    "options": [
+      "don't have to",
+      "must not"
+    ],
+    "answer": 1,
+    "translation": "明日はお弁当を持ってくる必要はありません。昼食は用意されます。",
+    "explanation": "don't have to は「〜する必要はない」、must not は「〜してはいけない」という禁止です。\n昼食が用意されるので、持ってくる必要がないという意味になります。\n\nしたがって、①don't have to が正解。",
+    "caption": "「しなくていい」と「してはいけない」🍱\n意味が大きく変わるので要注意です。\n\n#英検2級 #助動詞 #英語学習"
+  },
+  {
+    "no": 137,
+    "category": "受動態",
+    "question": "I was very ( ) with the hotel service.",
+    "options": [
+      "satisfied",
+      "satisfying"
+    ],
+    "answer": 1,
+    "translation": "私はそのホテルのサービスにとても満足した。",
+    "explanation": "satisfy は「〜を満足させる」という意味なので、人が「満足する」は受け身の be satisfied with で表します。\nsatisfying は「（物事が）満足のいく」という意味です。\n\nしたがって、①satisfied が正解。",
+    "caption": "satisfied と satisfying、どっち？🏨\n感情を表す受け身は入試の定番です。\n\n#英検2級 #受動態 #英文法"
+  },
+  {
+    "no": 140,
+    "category": "時制",
+    "question": "I'm not sure if it ( ) tomorrow.",
+    "options": [
+      "will rain",
+      "rains"
+    ],
+    "answer": 1,
+    "translation": "明日雨が降るかどうかはわからない。",
+    "explanation": "この if は「もし〜なら」ではなく、「〜かどうか」という意味で、sure の内容を表す名詞のかたまりです。\nこの場合は、未来のことは will を使って表します。\n\nしたがって、①will rain が正解。",
+    "caption": "if のあとなのに will？☔\n「もし」の if と「かどうか」の if を見分けよう。\n\n#英検2級 #英文法 #時制"
+  },
+  {
+    "no": 143,
+    "category": "受動態",
+    "question": "The street was crowded ( ) tourists.",
+    "options": [
+      "by",
+      "with"
+    ],
+    "answer": 2,
+    "translation": "その通りは観光客で混雑していた。",
+    "explanation": "be crowded with A で「Aで混雑している」という意味です。\nbe filled with（〜で満たされている）や be covered with（〜で覆われている）と同じく、by ではなく with を使います。\n\nしたがって、②with が正解。",
+    "caption": "受け身なのに by じゃない？🚶\nwith を使う受け身の表現をまとめて覚えよう。\n\n#英検2級 #受動態 #英語学習"
   }
 ]
