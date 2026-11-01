@@ -2468,5 +2468,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 128,
+    "category": "助動詞",
+    "question": "She ( ) be tired. She has been working since early this morning.",
+    "options": [
+      "must",
+      "cannot"
+    ],
+    "answer": 1,
+    "translation": "彼女は疲れているにちがいない。今朝早くからずっと働いているのだから。",
+    "explanation": "must には「〜しなければならない」のほかに、「〜にちがいない」という強い推量の意味があります。\n朝からずっと働いているので、疲れているはずだと考えられます。\n\nしたがって、①must が正解。",
+    "audio": "audio/q128.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
