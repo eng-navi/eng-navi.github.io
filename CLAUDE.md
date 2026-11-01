@@ -176,3 +176,5 @@ work could wait：仕事は後回しにできる
 - 記録は quizify_words.json(過去の投稿は `quizify_words.py scan` で表紙を OCR して作成、黒112語・白81語)。確認は `python3 quizify_words.py check black <単語...>`
 - quizify_black.py は作る前に自動でチェックし、かぶっていれば止まる。作った単語は「予定」として記録される。白の作成スクリプトを作るときも同じ guard / add を入れる
 - リスニング(TOEIC Part 3/4)はかぶりチェック不要
+- リスニングの答えはコメントではなく説明欄(キャプションの後半)。元の投稿と同じ形:【番号】→英文→正しい訳→(空行)→「語句：意味」の一覧→(空行)→「Xが正解。」を ----- で区切る。空行には全角スペース(quizify_listening.py の answer_text)。黒・白には答えはない
+- 投稿ペース:1日3本(黒・白・青を1本ずつ)
