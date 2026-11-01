@@ -5,7 +5,7 @@
     python3 quizify_post.py run      # 時間になった予約を投稿(GitHub Actions が15分おきに実行)
 
 4コマ(manga_post.py)と同じ仕組みを、quizify 用のトークン(QUIZIFY_IG_*)で使う。動画は docs/quizify/ に公開する。
-投稿したら quizify_words.json の単語を「投稿済み」にする。
+投稿したら答え・解説をコメントにも置き、quizify_words.json の単語を「投稿済み」にする。
 """
 import json
 import os
@@ -60,6 +60,19 @@ def mark_posted(key):
     WORDS.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n")
 
 
+def comment_text(caption):
+    """説明欄の答え・解説の部分(最初の ----- から最後の ----- まで)。コメントにも同じものを置く。"""
+    lines = caption.split("\n")
+    marks = [i for i, l in enumerate(lines) if l.startswith("-----")]
+    return "\n".join(lines[marks[0]:marks[-1] + 1]) if len(marks) >= 2 else ""
+
+
+def add_comment(media_id, caption):
+    text = comment_text(caption)
+    if text:
+        post.api("POST", f"{media_id}/comments", message=post.keep_blank_lines(text))
+
+
 def publish(item):
     url = f"{os.environ.get('SITE_URL', 'https://eng-navi.github.io').rstrip('/')}/quizify/{item['key']}.mp4"
     for _ in range(40):  # 公開URLに反映されるまで待つ
@@ -74,6 +87,7 @@ def publish(item):
                  caption=post.keep_blank_lines(item["caption"]), share_to_feed="true")["id"]
     post.wait_until_ready(c)
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
+    add_comment(mid, item["caption"])  # 答え・解説はコメントにも(タップしやすい)
     story = post.post_story(url)
     link = post.api("GET", mid, fields="permalink").get("permalink")
     log = mp.load(LOG, {})
