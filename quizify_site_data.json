@@ -1,0 +1,777 @@
+{
+ "black_277": [
+  {
+   "no": 277,
+   "word": "vulnerable",
+   "mean": "傷つきやすい、かかりやすい",
+   "ja": "子どもは寒さに弱い。",
+   "en": "Children are vulnerable to the cold.",
+   "tips": [
+    "be vulnerable to A で「Aに弱い、Aを受けやすい」",
+    "名詞は vulnerability(弱さ、脆弱性)",
+    "ITの記事では「システムの脆弱性」の意味でよく出ます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_18ad05bdfc76.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_de10e45f1739.mp3"
+  },
+  {
+   "no": 278,
+   "word": "heed",
+   "mean": "〜に気をつける、心に留める",
+   "ja": "彼は医者の助言に従った。",
+   "en": "He heeded his doctor's advice.",
+   "tips": [
+    "pay heed to A でも同じ意味",
+    "advice・warning(警告)と一緒によく使います",
+    "形容詞は heedless(不注意な)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_a1b3487c92ce.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_4615e9c5d0bc.mp3"
+  },
+  {
+   "no": 279,
+   "word": "bystander",
+   "mean": "傍観者、見物人",
+   "ja": "数人の見物人が事故を目撃した。",
+   "en": "Several bystanders witnessed the accident.",
+   "tips": [
+    "stand by(そばに立つ、傍観する)から",
+    "似た語は onlooker(見物人)",
+    "innocent bystander で「巻き添えになった人」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_28c0722abfa6.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_2e9e11a995fd.mp3"
+  }
+ ],
+ "black_280": [
+  {
+   "no": 280,
+   "word": "congestion",
+   "mean": "(交通・場所などの)混雑",
+   "ja": "新しい道路で渋滞が減った。",
+   "en": "The new road reduced traffic congestion.",
+   "tips": [
+    "traffic congestion で「交通渋滞」",
+    "形容詞は congested(混雑した)",
+    "nasal congestion は「鼻づまり」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_1665d3a38d86.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_2cf8a6fc77e7.mp3"
+  },
+  {
+   "no": 281,
+   "word": "discard",
+   "mean": "〜を捨てる、処分する",
+   "ja": "私は古い服を捨てた。",
+   "en": "I discarded my old clothes.",
+   "tips": [
+    "throw away とほぼ同じ意味",
+    "dis(離す)+ card(カード):トランプでカードを捨てるイメージ",
+    "名詞で「捨てられた物」の意味もあります"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_70fc16700ded.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_4c70b0589dc6.mp3"
+  },
+  {
+   "no": 282,
+   "word": "blaze",
+   "mean": "(燃え盛る)炎、火炎",
+   "ja": "消防士たちは火をすぐに消した。",
+   "en": "Firefighters quickly put out the blaze.",
+   "tips": [
+    "fire より「激しく燃え上がる炎」",
+    "動詞で「燃え上がる」",
+    "blazing hot で「焼けつくように暑い」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_47602a2b7466.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_bb5b1cd72581.mp3"
+  }
+ ],
+ "black_283": [
+  {
+   "no": 283,
+   "word": "clumsy",
+   "mean": "不器用な、ぎこちない",
+   "ja": "彼は箸の使い方が不器用だ。",
+   "en": "He is clumsy with chopsticks.",
+   "tips": [
+    "be clumsy with A で「Aの扱いが不器用だ」",
+    "名詞は clumsiness(不器用さ)",
+    "反対は skillful(器用な)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f746070d91a0.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b1c27c4e80d0.mp3"
+  },
+  {
+   "no": 284,
+   "word": "eliminate",
+   "mean": "〜を取り除く、敗退させる",
+   "ja": "この薬は痛みを取り除く。",
+   "en": "This medicine eliminates the pain.",
+   "tips": [
+    "remove / get rid of と近い意味",
+    "受け身 be eliminated で「(試合で)敗退する」",
+    "名詞は elimination(除去、敗退)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_90ad5715eda1.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_da227ccafed5.mp3"
+  },
+  {
+   "no": 285,
+   "word": "acknowledge",
+   "mean": "〜を認める",
+   "ja": "彼女は自分の間違いを認めた。",
+   "en": "She acknowledged her mistake.",
+   "tips": [
+    "admit と近い意味。acknowledge that ~ の形も",
+    "名詞は acknowledgment(承認、感謝)",
+    "本のあとがきの Acknowledgments は「謝辞」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_9b43cb633a99.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_5c74adb7f6b1.mp3"
+  }
+ ],
+ "black_286": [
+  {
+   "no": 286,
+   "word": "cultivate",
+   "mean": "〜を耕す、(能力)を養う",
+   "ja": "読書は想像力を養う。",
+   "en": "Reading cultivates the imagination.",
+   "tips": [
+    "土地を耕す → 能力・関係を育てる、と意味が広がります",
+    "名詞は cultivation(耕作、育成)",
+    "culture(文化)と同じ語源"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_4e98eb2ad327.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_438b9e150ab1.mp3"
+  },
+  {
+   "no": 287,
+   "word": "overdue",
+   "mean": "(支払い・返却の)期限が過ぎた",
+   "ja": "その本は返却期限が過ぎている。",
+   "en": "The library book is overdue.",
+   "tips": [
+    "due(期限の)+ over(過ぎて)",
+    "「とっくに〜されるべき」の意味もあります",
+    "an overdue bill で「未払いの請求書」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_5a164f5d6feb.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_63b5e0cc950b.mp3"
+  },
+  {
+   "no": 288,
+   "word": "enrollment",
+   "mean": "登録、入学",
+   "ja": "今年は入学者数が増えた。",
+   "en": "Enrollment increased this year.",
+   "tips": [
+    "動詞は enroll(登録する、入学する)",
+    "enroll in A で「Aに入学する、Aに登録する」",
+    "イギリスでは enrolment とつづります"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ef065f78e667.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_e5e5b7d1c135.mp3"
+  }
+ ],
+ "black_289": [
+  {
+   "no": 289,
+   "word": "enlist",
+   "mean": "(援助など)を得る、入隊する",
+   "ja": "彼女は軍隊に入隊した。",
+   "en": "She enlisted in the army.",
+   "tips": [
+    "enlist in A で「Aに入隊する」",
+    "enlist the help of A で「Aの協力を得る」",
+    "en(中に)+ list(名簿):名簿に入れる"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_258366dad800.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_160bd8eceadc.mp3"
+  },
+  {
+   "no": 290,
+   "word": "anarchy",
+   "mean": "無政府状態、無秩序",
+   "ja": "停電で町は大混乱になった。",
+   "en": "The blackout turned the city into anarchy.",
+   "tips": [
+    "アクセントは最初の a(アナーキー)",
+    "an(ない)+ arch(支配者)",
+    "形容詞は anarchic(無秩序な)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ffeb6b2fc521.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_8405feae5b12.mp3"
+  },
+  {
+   "no": 291,
+   "word": "reluctant",
+   "mean": "気乗りがしない、しぶしぶの",
+   "ja": "彼は謝りたがらなかった。",
+   "en": "He was reluctant to apologize.",
+   "tips": [
+    "be reluctant to do の形でよく出ます",
+    "名詞は reluctance(気が進まないこと)",
+    "副詞 reluctantly は「しぶしぶ」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ef721f0b3db4.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ba10d5e33334.mp3"
+  }
+ ],
+ "black_292": [
+  {
+   "no": 292,
+   "word": "fragile",
+   "mean": "壊れやすい、不安定な",
+   "ja": "このグラスはとても壊れやすい。",
+   "en": "These glasses are very fragile.",
+   "tips": [
+    "荷物の「取扱注意」シールは FRAGILE",
+    "反対は sturdy / tough(丈夫な)",
+    "「(状態が)不安定な」の意味もあります"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_6633ba1c7cc0.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_4a22d5d88c47.mp3"
+  },
+  {
+   "no": 293,
+   "word": "evaluate",
+   "mean": "〜を評価する",
+   "ja": "先生は生徒の作文を評価した。",
+   "en": "The teacher evaluated the students' essays.",
+   "tips": [
+    "assess とほぼ同じ意味",
+    "名詞は evaluation(評価)",
+    "中に value(価値)が入っています"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_d7ab159d7d8f.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ecaed53b57b5.mp3"
+  },
+  {
+   "no": 294,
+   "word": "weary",
+   "mean": "ひどく疲れた、飽き飽きして",
+   "ja": "長い会議のあと、私たちは疲れきっていた。",
+   "en": "We were weary after the long meeting.",
+   "tips": [
+    "tired / exhausted と近い意味",
+    "be weary of A で「Aに飽き飽きしている」",
+    "発音は「ウィアリ」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_2963c226ec51.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_525d8b4b858e.mp3"
+  }
+ ],
+ "black_295": [
+  {
+   "no": 295,
+   "word": "custody",
+   "mean": "保護、親権、拘置",
+   "ja": "容疑者は警察に拘束された。",
+   "en": "The suspect was taken into custody.",
+   "tips": [
+    "take A into custody で「Aを拘束する」",
+    "離婚の話では「親権」の意味",
+    "in custody で「拘留されて」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_3c39599d0819.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_a72b148b7344.mp3"
+  },
+  {
+   "no": 296,
+   "word": "coalition",
+   "mean": "(政党などの)連立、連合",
+   "ja": "環境団体は川を守るために連合を作った。",
+   "en": "Environmental groups formed a coalition to protect the river.",
+   "tips": [
+    "coalition government で「連立政権」",
+    "coali(合体する)+ tion",
+    "政治・社会の長文に出やすい単語です"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_8a14de80ffb1.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_3471e185d0d2.mp3"
+  },
+  {
+   "no": 297,
+   "word": "tranquil",
+   "mean": "静かな、穏やかな",
+   "ja": "私たちは静かな村で休暇を過ごした。",
+   "en": "We spent our holiday in a tranquil village.",
+   "tips": [
+    "calm / peaceful / serene と近い意味",
+    "名詞は tranquility(静けさ)",
+    "tranquilizer は「精神安定剤」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_8efe5918b11b.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_46e7433f3c7e.mp3"
+  }
+ ],
+ "white_163": [
+  {
+   "no": 163,
+   "word": "be involved in A",
+   "mean": "〜に関わる、〜に参加する",
+   "ja": "多くの学生がボランティア活動に関わっている。",
+   "en": "Many students are involved in volunteer work.",
+   "tips": [
+    "前置詞は in。「〜の中に入り込んでいる」イメージ",
+    "get involved in A で「〜に関わるようになる」",
+    "名詞は involvement(関与)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_36eabda4bd19.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_796c239b9035.mp3"
+  },
+  {
+   "no": 164,
+   "word": "be related to A",
+   "mean": "〜に関係がある",
+   "ja": "健康は睡眠と深く関係している。",
+   "en": "Health is closely related to sleep.",
+   "tips": [
+    "前置詞は to。with にしないよう注意",
+    "closely(密接に)と一緒によく使います",
+    "名詞は relation / relationship(関係)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_0bd60ad56d15.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_64c5f8a197bd.mp3"
+  }
+ ],
+ "white_165": [
+  {
+   "no": 165,
+   "word": "compare A with B",
+   "mean": "AをBと比べる",
+   "ja": "他人と自分を比べないで。",
+   "en": "Don't compare yourself with others.",
+   "tips": [
+    "with の代わりに to も使えます",
+    "compare A to B は「AをBにたとえる」の意味にもなります",
+    "名詞は comparison(比較)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f8c4589b8176.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_8719795e808d.mp3"
+  },
+  {
+   "no": 166,
+   "word": "encourage A to do",
+   "mean": "Aに〜するよう勧める、励ます",
+   "ja": "先生は私に留学するよう勧めた。",
+   "en": "My teacher encouraged me to study abroad.",
+   "tips": [
+    "to のあとは動詞の原形",
+    "反対は discourage A from doing(Aに〜する気をなくさせる)",
+    "名詞は encouragement(励まし)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_1ea4bd2c0368.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_2e3b395465c1.mp3"
+  }
+ ],
+ "white_167": [
+  {
+   "no": 167,
+   "word": "allow A to do",
+   "mean": "Aが〜するのを許す",
+   "ja": "父は私が夜遅くに出かけるのを許さない。",
+   "en": "My father doesn't allow me to go out late at night.",
+   "tips": [
+    "let A do と同じ意味。let のあとは to がつきません",
+    "受け身は A is allowed to do(Aは〜してよい)",
+    "名詞は allowance(おこづかい、許容量)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_15c88539a4a3.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_e72bf3309df8.mp3"
+  },
+  {
+   "no": 168,
+   "word": "have an effect on A",
+   "mean": "〜に影響を与える",
+   "ja": "音楽は気分に良い影響を与える。",
+   "en": "Music has a good effect on our mood.",
+   "tips": [
+    "前置詞は on。good / bad / big などを effect の前に入れられます",
+    "動詞の affect(影響する)と混同しやすいので注意",
+    "形容詞は effective(効果的な)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_facea5beda81.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b118e375b302.mp3"
+  }
+ ],
+ "white_169": [
+  {
+   "no": 169,
+   "word": "play an important role in A",
+   "mean": "〜で重要な役割を果たす",
+   "ja": "睡眠は記憶において重要な役割を果たす。",
+   "en": "Sleep plays an important role in memory.",
+   "tips": [
+    "role(役割)と roll(転がる)は同じ発音",
+    "important の代わりに key / major もよく使います",
+    "part を使って play an important part in A とも言えます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_86707c0e33fd.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_147a973c8611.mp3"
+  },
+  {
+   "no": 170,
+   "word": "be similar to A",
+   "mean": "〜に似ている",
+   "ja": "私の意見はあなたの意見に似ている。",
+   "en": "My opinion is similar to yours.",
+   "tips": [
+    "前置詞は to。with にしないよう注意",
+    "yours(あなたのもの)のように、比べるものの形をそろえます",
+    "名詞は similarity(類似点)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_bd287982f404.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_5223d0c38368.mp3"
+  }
+ ],
+ "white_171": [
+  {
+   "no": 171,
+   "word": "object to A",
+   "mean": "〜に反対する",
+   "ja": "多くの住民が新しい道路の計画に反対した。",
+   "en": "Many residents objected to the new road plan.",
+   "tips": [
+    "この to は前置詞。動詞を続けるときは object to doing の形",
+    "名詞の object(物、目的)とアクセントの位置が違います",
+    "名詞は objection(反対)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_3c7d865749c1.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_9f579d719cb8.mp3"
+  },
+  {
+   "no": 172,
+   "word": "decide to do",
+   "mean": "〜することに決める",
+   "ja": "私は毎朝走ることに決めた。",
+   "en": "I decided to run every morning.",
+   "tips": [
+    "to のあとは動詞の原形。decide doing とは言いません",
+    "decide not to do で「〜しないことに決める」",
+    "名詞は decision(決定)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_613612322089.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_621b137c72a2.mp3"
+  }
+ ],
+ "white_173": [
+  {
+   "no": 173,
+   "word": "have an interest in A",
+   "mean": "〜に興味がある",
+   "ja": "彼は日本の歴史に興味を持っている。",
+   "en": "He has an interest in Japanese history.",
+   "tips": [
+    "be interested in A と同じ意味",
+    "前置詞は in",
+    "interesting(おもしろい)と interested(興味がある)の違いも大切"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f7773957a9a5.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_48f09c201aab.mp3"
+  },
+  {
+   "no": 174,
+   "word": "reduce the risk of A",
+   "mean": "〜の危険を減らす",
+   "ja": "運動はけがの危険を減らす。",
+   "en": "Exercise reduces the risk of injury.",
+   "tips": [
+    "risk of A で「Aの危険」",
+    "反対は increase the risk of A(〜の危険を高める)",
+    "名詞は reduction(減少)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_664c96818cd9.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_86da1be64573.mp3"
+  }
+ ],
+ "white_175": [
+  {
+   "no": 175,
+   "word": "be due to do",
+   "mean": "〜する予定である",
+   "ja": "会議は3時に始まる予定だ。",
+   "en": "The meeting is due to start at three.",
+   "tips": [
+    "due to A(Aのせいで)と形が似ているので注意",
+    "締め切りの「〜が期限で」の意味もあります",
+    "The report is due tomorrow.(レポートは明日が締め切り)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b239f2f9637b.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_4c38ea88361e.mp3"
+  },
+  {
+   "no": 176,
+   "word": "avoid doing",
+   "mean": "〜するのを避ける",
+   "ja": "彼は甘い物を食べるのを避けている。",
+   "en": "He avoids eating sweets.",
+   "tips": [
+    "avoid のあとは doing。to do は使いません",
+    "同じ仲間:enjoy / finish / mind doing",
+    "形容詞は unavoidable(避けられない)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f334b3bffbc0.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_09d53d8c9e7e.mp3"
+  }
+ ],
+ "listening_145": [
+  {
+   "no": 145,
+   "en": "Who's in charge of ordering office supplies?",
+   "a": "事務用品の注文を担当しているのは誰ですか。",
+   "b": "事務用品の配達を担当しているのは誰ですか。",
+   "ans": "A",
+   "words": [
+    "be in charge of A：Aを担当している",
+    "order：注文する",
+    "office supplies：事務用品"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/nPczCjzI2devNBz1zQrb_809d8c575ce4.mp3"
+  },
+  {
+   "no": 146,
+   "en": "Hi, Tom. My train is delayed because of a signal problem, so I won't get to the office by ten. Could we push the client meeting back by an hour? If that doesn't work, please start without me.",
+   "a": "トム、事故で電車が止まっていて、9時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間早めてもらえるかな？無理なら、中止にして。",
+   "b": "トム、信号トラブルで電車が遅れていて、10時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間遅らせてもらえるかな？無理なら、僕抜きで始めて。",
+   "ans": "B",
+   "words": [
+    "delayed：遅れている",
+    "signal problem：信号トラブル",
+    "get to A：Aに着く",
+    "push back：(予定を)遅らせる",
+    "client：顧客",
+    "work：うまくいく、都合がつく",
+    "without A：Aなしで"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/pFZP5JQG7iQjIQuC4Bku_b041c1e6f235.mp3"
+  }
+ ],
+ "listening_147": [
+  {
+   "no": 147,
+   "en": "Has the new marketing plan been approved yet?",
+   "a": "新しいマーケティング計画はもう提出されましたか。",
+   "b": "新しいマーケティング計画はもう承認されましたか。",
+   "ans": "B",
+   "words": [
+    "marketing plan：マーケティング計画",
+    "approve：承認する",
+    "yet：(疑問文で)もう"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/XrExE9yKIg1WjnnlVkGX_1216ddef0c66.mp3"
+  },
+  {
+   "no": 148,
+   "en": "Hi, Ben. Could you check the sales report before I send it to the director? I think some numbers in the second table are wrong. Also, could you pick up the cake for tomorrow's welcome lunch?",
+   "a": "ベン、部長に送る前に売上報告書を確認してもらえる？2つ目の表の数字がいくつか間違っていると思うの。それと、明日の歓迎ランチのケーキを受け取ってきてもらえる？",
+   "b": "ベン、部長に送る前に売上報告書を書き直してもらえる？最初の表の数字がいくつか抜けていると思うの。それと、明日の歓迎ディナーのケーキを受け取ってきてもらえる？",
+   "ans": "A",
+   "words": [
+    "sales report：売上報告書",
+    "director：部長、取締役",
+    "table：表",
+    "pick up：受け取る",
+    "welcome lunch：歓迎ランチ"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/JBFqnCBsd6RMkjVDRZzb_01365819a71e.mp3"
+  }
+ ],
+ "listening_149": [
+  {
+   "no": 149,
+   "en": "Weren't the new chairs supposed to arrive this morning?",
+   "a": "新しい椅子は今朝届く予定ではなかったのですか。",
+   "b": "新しい机は今朝届く予定ではなかったのですか。",
+   "ans": "A",
+   "words": [
+    "be supposed to do：…することになっている",
+    "arrive：届く、到着する"
+   ],
+   "accent": "🇦🇺 オーストラリア英語",
+   "audio": "audio/IKne3meq5aSn9XLyUdCD_2b4c6d20343c.mp3"
+  },
+  {
+   "no": 150,
+   "en": "Good morning. This is the building management office. The air conditioning on the third floor will be shut down for repairs from one to three this afternoon. During that time, the conference rooms on the fifth floor will be available.",
+   "a": "おはようございます。ビル管理事務所です。3階の照明は、点検のため今日の午後1時から3時まで止まります。その間は、5階の休憩室をお使いいただけます。",
+   "b": "おはようございます。ビル管理事務所です。3階のエアコンは、修理のため今日の午後1時から3時まで止まります。その間は、5階の会議室をお使いいただけます。",
+   "ans": "B",
+   "words": [
+    "building management office：ビル管理事務所",
+    "air conditioning：エアコン",
+    "shut down：止める、停止する",
+    "repair：修理",
+    "conference room：会議室",
+    "available：利用できる"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/hpp4J3VqNfWAUOO0d1Us_4a9c06c0c04c.mp3"
+  }
+ ],
+ "listening_151": [
+  {
+   "no": 151,
+   "en": "I think I left my umbrella in the lobby.",
+   "a": "ロビーに傘を忘れてきたと思います。",
+   "b": "受付に傘を忘れてきたと思います。",
+   "ans": "A",
+   "words": [
+    "leave：置き忘れる(過去形は left)",
+    "lobby：ロビー"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/Xb7hH8MSUJpSbSDYk0k2_dc692bd97fb0.mp3"
+  },
+  {
+   "no": 152,
+   "en": "Let's start with this year's sales. Sales of our shampoo have dropped by ten percent since spring. Customer surveys show that many people find the bottle hard to open. So we need a new design by the end of the month.",
+   "a": "まずは今年の売上から始めましょう。当社のシャンプーの売上は、春から10パーセント落ちています。顧客アンケートでは、ボトルが開けにくいという声が多いです。そこで、今月末までに新しいデザインが必要です。",
+   "b": "まずは今年の売上から始めましょう。当社のシャンプーの売上は、夏から20パーセント落ちています。顧客アンケートでは、ボトルが重いという声が多いです。そこで、来月末までに新しいデザインが必要です。",
+   "ans": "A",
+   "words": [
+    "sales：売上",
+    "drop：落ちる、下がる",
+    "survey：アンケート、調査",
+    "find A hard to do：Aが…しにくいと感じる",
+    "by the end of the month：月末までに"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/cjVigY5qzO86Huf0OWal_2c1e274f11d2.mp3"
+  }
+ ],
+ "listening_153": [
+  {
+   "no": 153,
+   "en": "When can you send me the final draft?",
+   "a": "最終稿をどこに送ればいいですか。",
+   "b": "最終稿をいつ送ってもらえますか。",
+   "ans": "B",
+   "words": [
+    "final draft：最終稿",
+    "send A B：AにBを送る"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/onwK4e9ZLuTAKqWW03F9_ddee794c4958.mp3"
+  },
+  {
+   "no": 154,
+   "en": "Hello, this is Green Dental Clinic calling for Mr. Park. Dr. Wilson will be at a conference on Thursday, so we need to change your appointment. Could you come in on Friday at the same time instead?",
+   "a": "もしもし、グリーン歯科です。パーク様でしょうか。ウィルソン先生が木曜日に学会に出席するため、ご予約を変更させていただく必要があります。代わりに金曜日の同じ時間にお越しいただけますか？",
+   "b": "もしもし、グリーン歯科です。パーク様でしょうか。ウィルソン先生が木曜日に出張するため、ご予約を取り消させていただく必要があります。代わりに金曜日の午前中にお越しいただけますか？",
+   "ans": "A",
+   "words": [
+    "dental clinic：歯科医院",
+    "conference：学会、会議",
+    "appointment：予約",
+    "come in：来院する、来る",
+    "instead：代わりに"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/EXAVITQu4vr4xnSDxMaL_5ed68f04f8d7.mp3"
+  }
+ ],
+ "listening_155": [
+  {
+   "no": 155,
+   "en": "Would you prefer a window seat or an aisle seat?",
+   "a": "窓側の席と前方の席、どちらがよろしいですか。",
+   "b": "窓側の席と通路側の席、どちらがよろしいですか。",
+   "ans": "B",
+   "words": [
+    "prefer：…のほうを好む",
+    "window seat：窓側の席",
+    "aisle seat：通路側の席"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/pFZP5JQG7iQjIQuC4Bku_dbfa247faf47.mp3"
+  },
+  {
+   "no": 156,
+   "en": "Welcome to the City Art Museum. Our special exhibition of travel photography is on the third floor and runs until the end of this month. Please note that flash photography is not allowed in the gallery.",
+   "a": "市立美術館へようこそ。旅行写真の特別展は3階で、今月末まで開催しています。展示室内でのフラッシュ撮影は禁止されていますのでご注意ください。",
+   "b": "市立美術館へようこそ。旅行写真の特別展は2階で、来月末まで開催しています。展示室内での撮影はすべて禁止されていますのでご注意ください。",
+   "ans": "A",
+   "words": [
+    "special exhibition：特別展",
+    "photography：写真(撮影)",
+    "run：(展示などが)続く、開催される",
+    "note that ~：…に注意する",
+    "allow：許可する",
+    "gallery：展示室"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/iP95p4xoKVk53GoZ742B_17bc0ae59f11.mp3"
+  }
+ ],
+ "listening_157": [
+  {
+   "no": 157,
+   "en": "Isn't the training session supposed to end at four?",
+   "a": "研修は4時に始まる予定ではなかったのですか。",
+   "b": "研修は4時に終わる予定ではなかったのですか。",
+   "ans": "B",
+   "words": [
+    "training session：研修",
+    "be supposed to do：…することになっている"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/nPczCjzI2devNBz1zQrb_6630b9a4db3e.mp3"
+  },
+  {
+   "no": 158,
+   "en": "Before we close the meeting, I'd like to thank Emma Hill, who will move to our Singapore office next month. Over the past six years, she has trained more than fifty new employees. Please join us for her farewell party on Friday evening.",
+   "a": "会議を終える前に、来月シンガポール支社へ異動するエマ・ヒルさんにお礼を言いたいと思います。この6年間で、彼女は50人以上の新入社員を指導してくれました。金曜日の夜の送別会にぜひご参加ください。",
+   "b": "会議を終える前に、来月シドニー支社へ異動するエマ・ヒルさんにお礼を言いたいと思います。この5年間で、彼女は15人以上の新入社員を採用してくれました。金曜日の昼の送別会にぜひご参加ください。",
+   "ans": "A",
+   "words": [
+    "move to A：Aへ移る、異動する",
+    "over the past ~ years：この…年間で",
+    "train：指導する、研修する",
+    "employee：社員",
+    "farewell party：送別会"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/XrExE9yKIg1WjnnlVkGX_1f89fef5190c.mp3"
+  }
+ ],
+ "listening_159": [
+  {
+   "no": 159,
+   "en": "I heard the new café on the first floor is open.",
+   "a": "1階の新しいカフェが開店したそうですね。",
+   "b": "1階の新しいカフェが閉店したそうですね。",
+   "ans": "A",
+   "words": [
+    "I heard ~：…だと聞いた",
+    "first floor：1階",
+    "open：営業している"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/hpp4J3VqNfWAUOO0d1Us_3519ac2fbdee.mp3"
+  },
+  {
+   "no": 160,
+   "en": "Good evening. This is the traffic update from City Radio. Because of strong winds, the Blue Line between Central Station and the airport has been suspended. Service is expected to resume early tomorrow morning.",
+   "a": "こんばんは。シティ・ラジオの交通情報です。大雨のため、中央駅と空港の間のブルーラインは運転を見合わせています。運転再開は明日の昼の見込みです。",
+   "b": "こんばんは。シティ・ラジオの交通情報です。強風のため、中央駅と空港の間のブルーラインは運転を見合わせています。運転再開は明日の早朝の見込みです。",
+   "ans": "B",
+   "words": [
+    "traffic update：交通情報",
+    "strong wind：強風",
+    "suspend：一時停止する、見合わせる",
+    "service：運行",
+    "be expected to do：…する見込みである",
+    "resume：再開する"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/JBFqnCBsd6RMkjVDRZzb_d9a42decadd4.mp3"
+  }
+ ]
+}

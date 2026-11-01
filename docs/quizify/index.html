@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quizify_english 復習ページ|リスニング・英単語・瞬間英作文</title>
+<meta name="description" content="Instagram @quizify_english の問題を、音声つきでもう一度。TOEIC風リスニング、受験・英検のコロケーション、英検準1級の瞬間英作文。">
+<link rel="canonical" href="https://eng-navi.github.io/quizify/">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f5f3ef; background-image: linear-gradient(#dedcd7 1px, transparent 1px), linear-gradient(90deg, #dedcd7 1px, transparent 1px); background-size: 27px 27px; color: #282828; font-family: "Noto Sans JP", sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 28px 16px 48px; }
+  .crumb { font-size: 12px; color: #888; } .crumb a { color: inherit; }
+  h1 { font-size: 22px; line-height: 1.5; margin-top: 16px; }
+  .lead { margin-top: 8px; font-size: 14px; color: #666; line-height: 1.8; }
+  nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 18px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  nav button { border: 0; background: none; padding: 10px 2px; border-radius: 9px; font-size: 13px; font-weight: 500; color: #666; cursor: pointer; }
+  nav button[aria-pressed="true"] { background: #282828; color: #fff; }
+  section { display: none; } section.on { display: block; }
+  .note { margin-top: 12px; font-size: 13px; color: #777; }
+  ol { list-style: none; margin-top: 12px; display: grid; gap: 12px; }
+  .card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+  .no { font-family: "EB Garamond", serif; font-style: italic; color: #999; font-size: 15px; } .no span { font-style: normal; font-family: system-ui; font-size: 12px; margin-left: 6px; }
+  .w { font-family: "EB Garamond", serif; font-weight: 600; font-size: 26px; margin-top: 2px; }
+  .m { color: #c83430; font-size: 14px; margin-top: 2px; }
+  .ja { font-size: 15px; margin-top: 10px; line-height: 1.7; }
+  .en { font-family: "EB Garamond", serif; font-size: 20px; line-height: 1.5; margin-top: 10px; }
+  .tips { margin-top: 10px; padding-left: 1.2em; font-size: 13px; color: #555; line-height: 1.8; }
+  .play { border: 0; background: #282828; color: #fff; border-radius: 999px; padding: 7px 14px; font-size: 13px; cursor: pointer; margin-top: 8px; vertical-align: middle; }
+  .w .play { margin: 0 0 0 6px; padding: 4px 10px; font-size: 12px; }
+  .reveal { margin-top: 12px; border: 1px solid #c83430; background: #fff; color: #c83430; border-radius: 999px; padding: 8px 16px; font-size: 13px; cursor: pointer; }
+  .ans { display: none; } .card.open .ans { display: block; } .card.open .reveal { display: none; }
+  .opt { display: block; width: 100%; text-align: left; margin-top: 10px; border: 1px solid #ddd; background: #fafaf8; border-radius: 12px; padding: 12px; font-size: 14px; line-height: 1.6; cursor: pointer; color: #282828; }
+  .opt.ok { border-color: #2e8b57; background: #eef8f1; } .opt.ng { border-color: #c83430; background: #fdf0ef; }
+  .res { margin-top: 12px; font-weight: 700; }
+  .empty { color: #999; font-size: 14px; text-align: center; padding: 20px; }
+  .cta { display: block; margin-top: 22px; padding: 14px; border-radius: 14px; background: #282828; color: #fff; text-align: center; text-decoration: none; font-weight: 500; }
+  .foot { margin-top: 26px; font-size: 10px; color: #aaa; text-align: center; } .foot a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › quizify_english 復習</p>
+  <h1>Instagram の問題を、音声つきでもう一度</h1>
+  <p class="lead">@quizify_english に投稿した問題をまとめています。新しい順に並んでいます。</p>
+  <nav><button data-t="listening">🎧 リスニング</button><button data-t="white">📗 英単語(初級)</button><button data-t="black">📕 瞬間英作文</button></nav>
+  <section id="listening"><p class="note">TOEIC Part 2〜4 風。音声を聞いて、正しい訳を選ぼう</p><ol><li class="card" data-ans="A"><p class="no">145 <span>🇺🇸 アメリカ英語</span></p><button class="play" data-src="audio/nPczCjzI2devNBz1zQrb_809d8c575ce4.mp3">▶ 1回だけ聞いてみる</button><button class="opt" data-c="A">A) 事務用品の注文を担当しているのは誰ですか。</button><button class="opt" data-c="B">B) 事務用品の配達を担当しているのは誰ですか。</button><div class="ans"><p class="res"></p><p class="en">Who&#x27;s in charge of ordering office supplies?</p><ul class="tips"><li>be in charge of A：Aを担当している</li><li>order：注文する</li><li>office supplies：事務用品</li></ul></div></li><li class="card" data-ans="B"><p class="no">146 <span>🇬🇧 イギリス英語</span></p><button class="play" data-src="audio/pFZP5JQG7iQjIQuC4Bku_b041c1e6f235.mp3">▶ 1回だけ聞いてみる</button><button class="opt" data-c="A">A) トム、事故で電車が止まっていて、9時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間早めてもらえるかな？無理なら、中止にして。</button><button class="opt" data-c="B">B) トム、信号トラブルで電車が遅れていて、10時までに会社に着けそうにないんだ。顧客との打ち合わせを1時間遅らせてもらえるかな？無理なら、僕抜きで始めて。</button><div class="ans"><p class="res"></p><p class="en">Hi, Tom. My train is delayed because of a signal problem, so I won&#x27;t get to the office by ten. Could we push the client meeting back by an hour? If that doesn&#x27;t work, please start without me.</p><ul class="tips"><li>delayed：遅れている</li><li>signal problem：信号トラブル</li><li>get to A：Aに着く</li><li>push back：(予定を)遅らせる</li><li>client：顧客</li><li>work：うまくいく、都合がつく</li><li>without A：Aなしで</li></ul></div></li></ol></section><section id="white"><p class="note">受験・英検で問われるコロケーション。日本語を見て英語で言ってみよう</p><ol><li class=empty>近日公開</li></ol></section><section id="black"><p class="note">英検準1級の単語。日本語を見て、すぐ英語にしてみよう</p><ol><li class=empty>近日公開</li></ol></section>
+  <a class="cta" href="https://www.instagram.com/quizify_english/">Instagram で毎日の問題を見る →</a>
+  <p class="foot"><a href="/">eng_navi 英語クイズ</a></p>
+</main>
+<script>
+const tabs = document.querySelectorAll("nav button"), secs = document.querySelectorAll("section");
+const show = (t) => { tabs.forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === t)); secs.forEach((s) => s.classList.toggle("on", s.id === t)); try { localStorage.setItem("qz-tab", t); } catch (e) {} };
+tabs.forEach((b) => (b.onclick = () => show(b.dataset.t)));
+let start = "listening"; try { start = localStorage.getItem("qz-tab") || start; } catch (e) {}
+show(location.hash.slice(1) || start);
+const audio = new Audio();
+document.querySelectorAll(".play").forEach((b) => (b.onclick = () => { audio.src = b.dataset.src; audio.play(); }));
+document.querySelectorAll(".reveal").forEach((b) => (b.onclick = () => b.closest(".card").classList.add("open")));
+document.querySelectorAll(".opt").forEach((b) => (b.onclick = () => {
+  const card = b.closest(".card"), ans = card.dataset.ans;
+  if (card.classList.contains("open")) return;
+  card.querySelectorAll(".opt").forEach((o) => o.classList.add(o.dataset.c === ans ? "ok" : "ng"));
+  card.querySelector(".res").textContent = b.dataset.c === ans ? "⭕ 正解!" : `❌ 正解は ${ans}`;
+  card.classList.add("open");
+}));
+</script>
+</body>
+</html>
