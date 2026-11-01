@@ -1699,5 +1699,629 @@
       "note": "「見たことはあるのに訳せない」単語をクイズ形式で",
       "url": "https://link.amazon/B0H2BMN624"
     }
+  },
+  {
+    "id": 38,
+    "title": "寝る前に使えるひとこと英語5選",
+    "hook": "今日もおつかれさま🌙 寝る前のひとことを英語で",
+    "items": [
+      [
+        "I'm beat.",
+        "くたくた",
+        "I worked all day. I'm beat.",
+        "一日中働いて、くたくただよ",
+        "😮‍💨"
+      ],
+      [
+        "I'm calling it a night.",
+        "今日はもう寝る",
+        "It's late. I'm calling it a night.",
+        "遅いし、今日はもう寝るね",
+        "🛏️"
+      ],
+      [
+        "I can't keep my eyes open.",
+        "眠くて目が開かない",
+        "Sorry, I can't keep my eyes open.",
+        "ごめん、眠くて目が開かない",
+        "😪"
+      ],
+      [
+        "Sleep tight.",
+        "ぐっすり寝てね",
+        "Good night. Sleep tight.",
+        "おやすみ、ぐっすり寝てね",
+        "🌙"
+      ],
+      [
+        "Sweet dreams.",
+        "いい夢を",
+        "See you tomorrow. Sweet dreams!",
+        "また明日。いい夢を!",
+        "💫"
+      ]
+    ],
+    "closing": "今夜、1つ使ってみてね🌙",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 39,
+    "title": "あいづちで使える英語5選",
+    "hook": "Yes と OK だけじゃない、会話がはずむあいづち🗣️",
+    "items": [
+      [
+        "Makes sense.",
+        "なるほどね",
+        "Oh, that makes sense.",
+        "ああ、なるほどね",
+        "💡"
+      ],
+      [
+        "Fair enough.",
+        "それもそうだね",
+        "You're tired? Fair enough.",
+        "疲れてるの?それもそうだね",
+        "🤝"
+      ],
+      [
+        "Exactly.",
+        "まさにそれ",
+        "Exactly! That's what I mean.",
+        "まさにそれ!そういうこと",
+        "🎯"
+      ],
+      [
+        "Tell me about it.",
+        "ほんとそれ",
+        "This heat is crazy. — Tell me about it.",
+        "この暑さやばいね。—ほんとそれ",
+        "💯"
+      ],
+      [
+        "You're kidding.",
+        "冗談でしょ",
+        "You won the lottery? You're kidding!",
+        "宝くじ当たったの?冗談でしょ!",
+        "😲"
+      ]
+    ],
+    "closing": "次の会話で1つ使ってみてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 40,
+    "title": "カフェで使える英語5選",
+    "hook": "海外のカフェで、そのまま使えるひとこと☕",
+    "items": [
+      [
+        "Can I get a ~?",
+        "〜をください",
+        "Can I get a small latte?",
+        "スモールのラテをください",
+        "☕"
+      ],
+      [
+        "to go",
+        "持ち帰りで",
+        "Could I have it to go?",
+        "持ち帰りでお願いできますか",
+        "🥡"
+      ],
+      [
+        "No ice, please.",
+        "氷なしで",
+        "An iced tea, no ice, please.",
+        "アイスティーを、氷なしで",
+        "🧊"
+      ],
+      [
+        "Can I get a refill?",
+        "おかわりできますか",
+        "Excuse me, can I get a refill?",
+        "すみません、おかわりできますか",
+        "🔁"
+      ],
+      [
+        "Keep the change.",
+        "おつりはいいです",
+        "Here you go. Keep the change.",
+        "はいどうぞ。おつりはいいです",
+        "🪙"
+      ]
+    ],
+    "closing": "旅行の前に保存しておいてね📌",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 41,
+    "title": "励ますときの英語5選",
+    "hook": "がんばってる人に送りたいひとこと📣",
+    "items": [
+      [
+        "You got this.",
+        "君ならできる",
+        "Don't worry. You got this!",
+        "大丈夫、君ならできる!",
+        "💪"
+      ],
+      [
+        "Hang in there.",
+        "もう少しの辛抱だよ",
+        "Exams end next week. Hang in there!",
+        "試験は来週で終わり。もう少しだよ!",
+        "🧗"
+      ],
+      [
+        "Don't give up.",
+        "あきらめないで",
+        "You're so close. Don't give up!",
+        "あと少しだよ。あきらめないで!",
+        "🔥"
+      ],
+      [
+        "I'm proud of you.",
+        "誇りに思うよ",
+        "You finished the race! I'm proud of you.",
+        "完走したね!誇りに思うよ",
+        "🏅"
+      ],
+      [
+        "Take it easy.",
+        "無理しないでね",
+        "You look tired. Take it easy.",
+        "疲れてそうだね。無理しないでね",
+        "🍵"
+      ]
+    ],
+    "closing": "がんばってる友だちに送ってみてね📩",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 42,
+    "title": "謝るときの英語5選",
+    "hook": "Sorry だけじゃない、場面別の謝り方🙇",
+    "items": [
+      [
+        "My bad.",
+        "ごめん、私のミス",
+        "Oops, my bad. I'll fix it.",
+        "あ、ごめん私のミス。直すね",
+        "🙏"
+      ],
+      [
+        "I didn't mean to.",
+        "わざとじゃないの",
+        "Sorry, I didn't mean to hurt you.",
+        "ごめん、傷つけるつもりじゃなかった",
+        "😣"
+      ],
+      [
+        "It's my fault.",
+        "私のせいです",
+        "Don't blame him. It's my fault.",
+        "彼を責めないで。私のせいなの",
+        "🙇"
+      ],
+      [
+        "Sorry to bother you.",
+        "お邪魔してすみません",
+        "Sorry to bother you, but do you have a minute?",
+        "お邪魔してすみません、少しいいですか",
+        "🚪"
+      ],
+      [
+        "I apologize for ~",
+        "〜をおわびします",
+        "I apologize for the late reply.",
+        "返信が遅くなり、申し訳ありません",
+        "📧"
+      ]
+    ],
+    "closing": "どれが一番使いやすい?コメントで教えてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 43,
+    "title": "お礼を伝える英語5選",
+    "hook": "Thank you をもっと気持ちよく伝える言い方🙌",
+    "items": [
+      [
+        "I owe you one.",
+        "借りができたね",
+        "Thanks for the ride. I owe you one!",
+        "送ってくれてありがとう。借りができたね!",
+        "🤝"
+      ],
+      [
+        "You're a lifesaver.",
+        "本当に助かった",
+        "You fixed my laptop? You're a lifesaver!",
+        "パソコン直してくれたの?本当に助かった!",
+        "🛟"
+      ],
+      [
+        "I really appreciate it.",
+        "本当に感謝してる",
+        "Thanks for your help. I really appreciate it.",
+        "手伝ってくれてありがとう。本当に感謝してる",
+        "🙏"
+      ],
+      [
+        "Thanks a ton.",
+        "ほんとにありがとう",
+        "Thanks a ton for the gift!",
+        "プレゼントほんとにありがとう!",
+        "🎁"
+      ],
+      [
+        "You shouldn't have.",
+        "気をつかわなくてよかったのに",
+        "Flowers for me? You shouldn't have!",
+        "私に花を?気をつかわなくてよかったのに!",
+        "💐"
+      ]
+    ],
+    "closing": "今日、誰かに使ってみてね😊",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 44,
+    "title": "天気の話で使える英語5選",
+    "hook": "会話のきっかけにぴったりな天気のひとこと🌦️",
+    "items": [
+      [
+        "It's pouring.",
+        "土砂降りだ",
+        "Take an umbrella. It's pouring.",
+        "傘持っていって。土砂降りだよ",
+        "🌧️"
+      ],
+      [
+        "get caught in the rain",
+        "雨にあう",
+        "I got caught in the rain on my way home.",
+        "帰り道で雨にあった",
+        "☔"
+      ],
+      [
+        "It's freezing.",
+        "めちゃくちゃ寒い",
+        "It's freezing this morning!",
+        "今朝はめちゃくちゃ寒い!",
+        "🥶"
+      ],
+      [
+        "It's so muggy.",
+        "すごく蒸し暑い",
+        "It's so muggy today.",
+        "今日はすごく蒸し暑いね",
+        "🥵"
+      ],
+      [
+        "The sun is out.",
+        "晴れてきた",
+        "Look, the sun is out!",
+        "見て、晴れてきたよ!",
+        "☀️"
+      ]
+    ],
+    "closing": "今日の天気、英語で言ってみてね☁️",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 45,
+    "title": "週末に使えるひとこと英語5選",
+    "hook": "金曜日から使える、週末のひとこと🎉",
+    "items": [
+      [
+        "Any plans for the weekend?",
+        "週末の予定ある?",
+        "Any plans for the weekend?",
+        "週末なにか予定ある?",
+        "📅"
+      ],
+      [
+        "I'm just chilling.",
+        "のんびりしてる",
+        "Nothing special. I'm just chilling.",
+        "特に何も。のんびりしてるよ",
+        "🛋️"
+      ],
+      [
+        "Let's hang out.",
+        "遊ぼうよ",
+        "Are you free Sunday? Let's hang out!",
+        "日曜ひま?遊ぼうよ!",
+        "🎳"
+      ],
+      [
+        "I slept in.",
+        "ゆっくり寝てた",
+        "I slept in until noon.",
+        "お昼までゆっくり寝てた",
+        "😴"
+      ],
+      [
+        "Time flies.",
+        "時間がたつのは早い",
+        "It's Sunday night already. Time flies!",
+        "もう日曜の夜。時間がたつのは早い!",
+        "⏰"
+      ]
+    ],
+    "closing": "週末の予定、英語でコメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 46,
+    "title": "イライラを伝える英語5選",
+    "hook": "ちょっとイラッとしたときの英語😤",
+    "items": [
+      [
+        "I'm fed up with ~",
+        "〜にうんざり",
+        "I'm fed up with this rain.",
+        "この雨にもううんざり",
+        "😩"
+      ],
+      [
+        "get on my nerves",
+        "イラッとする",
+        "That noise gets on my nerves.",
+        "あの音、イラッとする",
+        "💢"
+      ],
+      [
+        "I've had enough.",
+        "もうたくさんだ",
+        "Stop it. I've had enough!",
+        "やめて。もうたくさん!",
+        "✋"
+      ],
+      [
+        "Calm down.",
+        "落ち着いて",
+        "Calm down. It's not a big deal.",
+        "落ち着いて。たいしたことないよ",
+        "🧘"
+      ],
+      [
+        "Don't take it out on me.",
+        "八つ当たりしないで",
+        "I know you're upset, but don't take it out on me.",
+        "怒ってるのはわかるけど、八つ当たりしないで",
+        "🙅"
+      ]
+    ],
+    "closing": "どれか使ったことある?コメントで教えてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 47,
+    "title": "TOEICで出る「電話」英語5選",
+    "hook": "Part 3・4 の電話の場面でよく出る表現📞",
+    "items": [
+      [
+        "hold on",
+        "電話を切らずに待つ",
+        "Could you hold on a moment?",
+        "少々お待ちいただけますか",
+        "⏳"
+      ],
+      [
+        "call back",
+        "折り返し電話する",
+        "I'll call you back in ten minutes.",
+        "10分後に折り返します",
+        "🔁"
+      ],
+      [
+        "leave a message",
+        "伝言を残す",
+        "Would you like to leave a message?",
+        "伝言を残されますか",
+        "📝"
+      ],
+      [
+        "be on another line",
+        "別の電話に出ている",
+        "She's on another line right now.",
+        "彼女はいま別の電話に出ています",
+        "☎️"
+      ],
+      [
+        "put A through to B",
+        "AをBにつなぐ",
+        "I'll put you through to the sales department.",
+        "営業部におつなぎします",
+        "🔌"
+      ]
+    ],
+    "closing": "Part 3・4 の前に保存しておいてね📌",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 48,
+    "title": "TOEICで出る「メール」英語5選",
+    "hook": "Part 7 のメール問題でよく見る表現📧",
+    "items": [
+      [
+        "attached",
+        "添付の",
+        "Please see the attached file.",
+        "添付のファイルをご覧ください",
+        "📎"
+      ],
+      [
+        "get back to",
+        "あとで返事をする",
+        "I'll get back to you by Friday.",
+        "金曜日までにお返事します",
+        "↩️"
+      ],
+      [
+        "regarding",
+        "〜について",
+        "I'm writing regarding your order.",
+        "ご注文の件でご連絡しています",
+        "🔎"
+      ],
+      [
+        "at your earliest convenience",
+        "お手すきの際に",
+        "Please reply at your earliest convenience.",
+        "お手すきの際にご返信ください",
+        "🙇"
+      ],
+      [
+        "forward",
+        "転送する",
+        "I'll forward the email to my manager.",
+        "そのメールを上司に転送します",
+        "📤"
+      ]
+    ],
+    "closing": "Part 7 の前に見返してね📌",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 49,
+    "title": "TOEICで出る「出張」英語5選",
+    "hook": "出張の場面は TOEIC の定番✈️",
+    "items": [
+      [
+        "business trip",
+        "出張",
+        "He's on a business trip to Osaka.",
+        "彼は大阪に出張中です",
+        "💼"
+      ],
+      [
+        "book a flight",
+        "飛行機を予約する",
+        "I booked a flight for Monday morning.",
+        "月曜の朝の便を予約した",
+        "🎫"
+      ],
+      [
+        "itinerary",
+        "旅程表",
+        "I'll email you the itinerary.",
+        "旅程表をメールで送ります",
+        "🗺️"
+      ],
+      [
+        "reimburse",
+        "経費を払い戻す",
+        "The company will reimburse your hotel costs.",
+        "会社がホテル代を払い戻します",
+        "💴"
+      ],
+      [
+        "be away on business",
+        "出張で不在である",
+        "Ms. Lee is away on business this week.",
+        "リーさんは今週出張で不在です",
+        "🧳"
+      ]
+    ],
+    "closing": "出張の場面、聞き取れるかな?🎧",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 50,
+    "title": "学校英語 vs ネイティブ英語5選",
+    "hook": "教科書の英語を、ネイティブはこう言う🗣️",
+    "items": [
+      [
+        "What's up?",
+        "元気?(How are you? のくだけた言い方)",
+        "Hey, what's up?",
+        "やあ、元気?",
+        "👋"
+      ],
+      [
+        "I'm stuffed.",
+        "お腹いっぱい(I'm full. より強め)",
+        "No more, thanks. I'm stuffed.",
+        "もういいよ、ありがとう。お腹いっぱい",
+        "🍽️"
+      ],
+      [
+        "Sounds good.",
+        "いいね(OK. の代わりに)",
+        "Lunch at noon? Sounds good.",
+        "お昼12時?いいね",
+        "👍"
+      ],
+      [
+        "No worries.",
+        "気にしないで(You're welcome. の代わりに)",
+        "Thanks for waiting. — No worries!",
+        "待っててくれてありがとう。—気にしないで!",
+        "😊"
+      ],
+      [
+        "I'm down.",
+        "乗った!(Yes, I want to. の代わりに)",
+        "Karaoke tonight? I'm down!",
+        "今夜カラオケ?乗った!",
+        "🙌"
+      ]
+    ],
+    "closing": "知ってたものはいくつあった?コメントで教えてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
   }
 ]
