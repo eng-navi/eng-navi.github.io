@@ -985,7 +985,10 @@ def generic_scenes(sp):
             for (t, c), ff in zip(line, fonts):
                 d.text((x, 885), t, font=ff, fill=c, anchor="ls")
                 x += ff.getlength(t)
-        d.text((W / 2, 975), sp["note"], font=m.JP(40), fill=(110, 110, 110), anchor="ms")
+        fn = m.JP(40)
+        while fn.getlength(sp["note"]) > W - 240:
+            fn = m.JP(fn.size - 2)
+        d.text((W / 2, 975), sp["note"], font=fn, fill=(110, 110, 110), anchor="ms")
         return img
 
     def meaning(i):
@@ -1136,6 +1139,119 @@ GENERIC.update({
                  ex_en="He piled the books on the desk.", ex_ja="彼は机の上に本を積み重ねた",
                  story=[(_pile1, "ペン、パイを1枚ずつ積んでいく", "せっせ"), (_pile2, "パイが山積みに!", "ドーン")],
                  line2=("navi", "That's a big pile!")),
+})
+
+
+# ---- 語呂合わせ:物語の場面を、キャラ・小物・看板の組み合わせで作る ----
+def _chars(d, i, cast):
+    """cast: [(who, expr, x), ...]"""
+    for who, expr, x in cast:
+        shadow(d, x, 1440, 200)
+        if who == "pen":
+            m.penguin(d, x, 1230, 200, expr, hat_on=False, seed=51 + i % 3)
+        elif who == "navi":
+            m.owl(d, x, 1230, 200, expr, seed=41 + i % 3)
+        else:
+            m.capybara(d, x, 1300, 240, "shock" if expr == "shock" else "calm", seed=91 + i % 3)
+
+
+def scene(cast, sign=None, extra=None):
+    def f(img, d, i):
+        if sign:
+            m.board(d, 300, 640, 780, 900, sign)
+        if extra:
+            extra(img, d, i)
+        _chars(d, i, cast)
+    return f
+
+
+def _speed(img, d, i):
+    for k in range(4):
+        d.line([(100, 1120 + k * 50), (260, 1120 + k * 50)], fill=(150, 140, 130), width=6)
+
+
+def _rain(img, d, i):
+    cloud(d, 540, 760, 260, 1100, rain=True, t=i)
+
+
+def _picnic(img, d, i):
+    table(d, 1110 + i % 3)
+    for k, col in enumerate(((230, 90, 80), (240, 200, 70), (120, 170, 120))):
+        d.ellipse([430 + k * 80, 1140, 490 + k * 80, 1180], fill=col, outline=INK, width=3)
+
+
+def _hurdle(img, d, i):
+    for x in (620, 820):
+        d.line([(x, 1200), (x, 1420)], fill=INK, width=10)
+    d.rectangle([600, 1190, 840, 1230], fill=(230, 90, 80), outline=INK, width=5)
+
+
+def _papers(img, d, i):
+    paper_pile(d, 540, 1400, 12, 1130)
+
+
+def _sorted(img, d, i):
+    for k, cx in enumerate((400, 560, 720)):
+        paper_pile(d, cx, 1400, 4, 1140 + k)
+
+
+def _gauge(img, d, i):
+    d.rounded_rectangle([340, 700, 740, 780], radius=20, fill=(255, 255, 255), outline=INK, width=5)
+    d.rounded_rectangle([348, 708, 348 + max(20, 120 - i * 4), 772], radius=16, fill=(230, 90, 80))
+    d.text((540, 830), "GAS", font=m.EN(50), fill=INK, anchor="mm")
+
+
+GENERIC.update({
+    "tackle": dict(word="tackle", short="取り組む", meaning="(問題などに)取り組む", pun=("タックルで", "取り組む tackle!"),
+        chant="タックルで取り組む tackle", chant_voice="タックルで、取り組む、タックル!", note="発音は「タックル」。ラグビーのタックルと同じ",
+        ex_en="We need to tackle this problem together.", ex_ja="この問題に、みんなで取り組む必要がある",
+        tip="tackle a problem で「問題に取り組む」。", story=[(scene([("pen", "shock", 300)], sign="PROBLEM"), "大きな問題がやってきた…!", ("ドーン", (800, 1050))),
+        (scene([("pen", "happy", 600)], sign="PROBLEM", extra=_speed), "タックルで、問題に取り組む!", ("タックル!", (800, 1000)))], line2=("pen", "Tackle!")),
+    "vacant": dict(word="vacant", short="空いている", meaning="(席・部屋が)空いている", pun=("バカンスで", "空っぽ vacant!"),
+        chant="バカンスで空っぽ vacant", chant_voice="バカンスで、空っぽ、ヴェイカント!", note="発音は「ヴェイカント」。空室は vacancy",
+        ex_en="Is this seat vacant?", ex_ja="この席は空いていますか?",
+        tip="ホテルの「空室あり」は VACANCY。", story=[(scene([("pen", "happy", 300), ("navi", "happy", 780)], sign="VACATION"), "みんなでバカンスへ出発!", ("♪", (540, 1050))),
+        (scene([], sign="VACANT"), "会社はみんなバカンスで、空っぽ!", ("ガラーン", (540, 1150)))]),
+    "fade": dict(word="fade", short="薄れる", meaning="(色・記憶などが)薄れる、消えていく", pun=("フェードアウトで", "薄れる fade!"),
+        chant="フェードアウトで薄れる fade", chant_voice="フェードアウトで、薄れる、フェイド!", note="発音は「フェイド」",
+        ex_en="The color of my jeans has faded.", ex_ja="ジーンズの色があせてしまった",
+        tip="fade away で「だんだん消えていく」。", story=[(scene([("pen", "happy", 540)], sign="NEW JEANS"), "お気に入りの、こいブルーのジーンズ", ("キラッ", (820, 1050))),
+        (scene([("pen", "shock", 540)], sign="old jeans"), "洗うたびに、色がフェードアウト…", ("うすっ", (820, 1050)))], line2=("pen", "It faded...")),
+    "boost": dict(word="boost", short="高める", meaning="高める、押し上げる", pun=("ブーストで", "高める boost!"),
+        chant="ブーストで高める boost", chant_voice="ブーストで、高める、ブースト!", note="発音は「ブースト」。ゲームのブーストと同じ",
+        ex_en="Music can boost your mood.", ex_ja="音楽は気分を高めてくれる",
+        tip="boost sales で「売上を伸ばす」。", story=[(scene([("pen", "smug", 540)]), "なんだか、やる気が出ない…", ("ぐったり", (800, 1050))),
+        (scene([("pen", "happy", 540)], extra=_speed), "好きな曲で、テンションをブースト!", ("ブースト!", (800, 1000)))], line2=("pen", "Boost!")),
+    "gauge": dict(word="gauge", short="測る", meaning="測る、(気持ちなどを)判断する", pun=("ゲージで", "測る gauge!"),
+        chant="ゲージで測る gauge", chant_voice="ゲージで、測る、ゲイジ!", note="発音は「ゲイジ」(u は読まない)",
+        ex_en="It's hard to gauge how he feels.", ex_ja="彼の気持ちを測るのは難しい",
+        tip="名詞では「計器、ものさし」。", story=[(scene([("pen", "shock", 300)], extra=_gauge), "ガソリンのゲージが、どんどん減る…", ("ピコン", (800, 1050))),
+        (scene([("navi", "smug", 760)], extra=_gauge), "ゲージで、残りを測る!", ("あと少し", (300, 1050)))]),
+    "rush": dict(word="rush", short="急ぐ", meaning="急ぐ、急いで行く", pun=("ラッシュで", "急ぐ rush!"),
+        chant="ラッシュで急ぐ rush", chant_voice="ラッシュで、急ぐ、ラッシュ!", note="発音は「ラッシュ」。通勤ラッシュと同じ",
+        ex_en="Don't rush. We still have time.", ex_ja="急がないで。まだ時間はあるよ",
+        tip="rush hour で「通勤ラッシュの時間」。", story=[(scene([("pen", "shock", 540)], sign="8:58"), "電車まで、あと2分!", ("ヤバい", (820, 1050))),
+        (scene([("pen", "shock", 700)], extra=_speed), "ラッシュの中を、急ぐ!", ("ダーッ", (300, 1000)))], line2=("pen", "Rush!")),
+    "spoil": dict(word="spoil", short="台無しにする", meaning="台無しにする、甘やかす", pun=("スポイルで", "台無し spoil!"),
+        chant="スポイルで台無し spoil", chant_voice="スポイルで、台無し、スポイル!", note="発音は「スポイル」",
+        ex_en="The rain spoiled our picnic.", ex_ja="雨でピクニックが台無しになった",
+        tip="spoil a child で「子どもを甘やかす」。", story=[(scene([("pen", "happy", 230)], extra=_picnic), "ピクニックの準備、完了!", ("♪", (820, 1050))),
+        (scene([("pen", "shock", 230)], extra=lambda img, d, i: (_picnic(img, d, i), _rain(img, d, i))), "雨で、ぜんぶ台無し…", ("ザーッ", (820, 1050)))], line2=("pen", "It's spoiled...")),
+    "hurdle": dict(word="hurdle", short="障害", meaning="障害、乗り越えるべき問題", pun=("ハードルは", "障害 hurdle!"),
+        chant="ハードルは障害 hurdle", chant_voice="ハードルは、障害、ハードル!", note="発音は「ハードル」。陸上のハードルと同じ",
+        ex_en="Money is the biggest hurdle for us.", ex_ja="お金が私たちにとって最大の障害だ",
+        tip="clear a hurdle で「障害を乗り越える」。", story=[(scene([("pen", "happy", 300)], extra=_speed), "ゴールまで一直線!", ("ダッ", (800, 1000))),
+        (scene([("pen", "shock", 300)], extra=_hurdle), "目の前に、大きなハードル(障害)が!", ("ドン", (720, 1000)))]),
+    "sort": dict(word="sort", short="分ける", meaning="分類する、整理する", pun=("ソートで", "分ける sort!"),
+        chant="ソートで分ける sort", chant_voice="ソートで、分ける、ソート!", note="発音は「ソート」。表計算のソートと同じ",
+        ex_en="Please sort the papers by date.", ex_ja="書類を日付順に分けてください",
+        tip="sort out で「(問題を)解決する」の意味も。", story=[(scene([("pen", "shock", 230)], extra=_papers), "書類がぐちゃぐちゃ…", ("ドサッ", (820, 1050))),
+        (scene([("pen", "happy", 230)], extra=_sorted), "ソートして、きれいに分ける!", ("せっせ", (820, 1050)))]),
+    "bump": dict(word="bump", short="ぶつかる", meaning="ぶつかる、ぶつける", pun=("バンプで", "ぶつかる bump!"),
+        chant="バンプでぶつかる bump", chant_voice="バンプで、ぶつかる、バンプ!", note="発音は「バンプ」。道路のバンプ(段差)と同じ",
+        ex_en="I bumped into an old friend at the station.", ex_ja="駅で昔の友だちにばったり会った",
+        tip="bump into A で「Aにばったり会う」。", story=[(scene([("pen", "happy", 230), ("navi", "happy", 850)]), "曲がり角の向こうから…", ("てくてく", (540, 1000))),
+        (scene([("pen", "shock", 460), ("navi", "shock", 620)]), "ゴツン!ナビとぶつかった", ("ゴツン", (540, 900)))], line2=("navi", "Ouch!")),
 })
 
 

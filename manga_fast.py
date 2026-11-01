@@ -1087,6 +1087,161 @@ SCRIPTS.update({
 })
 
 
+def _p(img, boxes, k, seed):
+    x0, y0, x1, y1 = boxes[k]
+    return x0, y0, m.panel(img, boxes[k], seed)
+
+
+def a_close_call():
+    img, boxes, pw, ph = m.comic("a close call")
+    x0, y0, d = _p(img, boxes, 0, 161)
+    m.penguin(d, x0 + pw * 0.45, y0 + ph * 0.7, 150, "smug", hat_on=False)
+    m.clock(d, x0 + pw * 0.82, y0 + ph * 0.5, 38)
+    m.zzz(img, x0 + pw * 0.62, y0 + ph * 0.42)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.45, y0 + 170), "Zzz...", "グーグー…", 1)
+    x0, y0, d = _p(img, boxes, 1, 162)
+    m.penguin(d, x0 + pw * 0.4, y0 + ph * 0.66, 165, "shock", hat_on=False)
+    m.clock(d, x0 + pw * 0.8, y0 + ph * 0.5, 42)
+    m.sweat(d, x0 + pw * 0.6, y0 + ph * 0.44)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.4, y0 + 180), "Oh no! It's 8:50!", "えっ!8時50分!", 2)
+    x0, y0, d = _p(img, boxes, 2, 163)
+    for k in range(4):
+        d.line([(x0 + 30, y0 + ph * 0.55 + k * 30), (x0 + pw * 0.3, y0 + ph * 0.55 + k * 30)], fill=(150, 140, 130), width=5)
+    m.penguin(d, x0 + pw * 0.6, y0 + ph * 0.68, 150, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + 180), "I have to run!", "走らなきゃ!", 3)
+    m.sfx(img, (x0 + pw * 0.2, y0 + ph * 0.9), "*dash*", 30, (200, 140, 60), 8)
+    x0, y0, d = _p(img, boxes, 3, 164)
+    m.penguin(d, x0 + pw * 0.24, y0 + ph * 0.74, 110, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.36, y0 + ph * 0.6)
+    m.capybara(d, x0 + pw * 0.7, y0 + ph * 0.74, 150, "calm")
+    bot = small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.24, y0 + ph * 0.56), "That was a close call!", "危機一髪だった!", 4)
+    small_bubble(d, (x0 + pw * 0.3, bot + 10, x0 + pw - 12, 0), (x0 + pw * 0.7, y0 + ph * 0.62), "...It's Saturday.", "…今日、土曜だよ", 5)
+    return m._end(img)
+
+
+def out_of_stock():
+    img, boxes, pw, ph = m.comic("out of stock", series="toeic")
+    x0, y0, d = _p(img, boxes, 0, 165)
+    shop(d, x0 + pw * 0.72, y0 + ph * 0.92, 200)
+    m.penguin(d, x0 + pw * 0.3, y0 + ph * 0.7, 130, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 180), "I want the new game!", "新作のゲームがほしい!", 1)
+    x0, y0, d = _p(img, boxes, 1, 166)
+    m.capybara(d, x0 + pw * 0.55, y0 + ph * 0.7, 180, "calm")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200), "Sorry. It's out of stock.", "すみません、在庫切れです", 2)
+    x0, y0, d = _p(img, boxes, 2, 167)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.68, 165, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.7, y0 + ph * 0.46)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200), "When will you get more?", "いつ入荷しますか?", 3)
+    x0, y0, d = _p(img, boxes, 3, 168)
+    m.capybara(d, x0 + pw * 0.6, y0 + ph * 0.7, 170, "calm")
+    controller(d, x0 + pw * 0.5, y0 + ph * 0.9, 90)
+    m.penguin(d, x0 + pw * 0.16, y0 + ph * 0.8, 90, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.5), "...I'm playing\nthe last one.", "…最後の1本は私が遊んでる", 4)
+    return m._end(img)
+
+
+def too_good_to_be_true():
+    img, boxes, pw, ph = m.comic("too good to be true")
+    x0, y0, d = _p(img, boxes, 0, 171)
+    m.penguin(d, x0 + pw * 0.42, y0 + ph * 0.68, 160, "happy", hat_on=False)
+    phone(d, x0 + pw * 0.62, y0 + ph * 0.6)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.42, y0 + 200), "Look! A free trip\nto Hawaii!", "見て!ハワイ旅行が無料!", 1)
+    x0, y0, d = _p(img, boxes, 1, 172)
+    m.owl(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "smug")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200), "That sounds too good\nto be true.", "話がうますぎるよ", 2)
+    x0, y0, d = _p(img, boxes, 2, 173)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "happy", hat_on=False)
+    sparkle(d, x0 + pw * 0.82, y0 + ph * 0.5)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "I already signed up!", "もう申し込んだよ!", 3)
+    x0, y0, d = _p(img, boxes, 3, 174)
+    m.board(d, x0 + pw * 0.08, y0 + ph * 0.4, x0 + pw * 0.48, y0 + ph * 0.58, "HAWAII")
+    m.capybara(d, x0 + pw * 0.62, y0 + ph * 0.66, 150, "calm")
+    hot_tub(d, x0 + pw * 0.6, y0 + ph * 0.72, pw * 0.6)
+    m.penguin(d, x0 + pw * 0.16, y0 + ph * 0.82, 90, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.36), "Welcome to Hawaii.", "ハワイへようこそ", 4)
+    return m._end(img)
+
+
+def under_the_weather():
+    img, boxes, pw, ph = m.comic("under the weather")
+    x0, y0, d = _p(img, boxes, 0, 175)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "normal")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 120, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 200), "You look pale.\nAre you OK?", "顔色悪いよ。大丈夫?", 1)
+    x0, y0, d = _p(img, boxes, 1, 176)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.7, y0 + ph * 0.46)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200), "I'm a bit under\nthe weather.", "ちょっと体調が悪くて", 2)
+    x0, y0, d = _p(img, boxes, 2, 177)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "happy")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 115, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 180), "Go home and rest.", "帰って休んで", 3)
+    x0, y0, d = _p(img, boxes, 3, 178)
+    m.penguin(d, x0 + pw * 0.62, y0 + ph * 0.66, 150, "happy", hat_on=False)
+    sparkle(d, x0 + pw * 0.86, y0 + ph * 0.46)
+    m.owl(d, x0 + pw * 0.18, y0 + ph * 0.8, 90, "shock")
+    bot = small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.62, y0 + ph * 0.46), "Yay! I feel better!", "やった!元気になった!", 4)
+    small_bubble(d, (x0 + 12, bot + 10, x0 + pw * 0.5, 0), (x0 + pw * 0.18, y0 + ph * 0.66), "...That was fast.", "…早っ", 5)
+    return m._end(img)
+
+
+def a_piece_of_cake():
+    img, boxes, pw, ph = m.comic("a piece of cake")
+    x0, y0, d = _p(img, boxes, 0, 181)
+    m.board(d, x0 + pw * 0.5, y0 + ph * 0.42, x0 + pw * 0.92, y0 + ph * 0.6, "PUZZLE")
+    m.owl(d, x0 + pw * 0.26, y0 + ph * 0.68, 140, "normal")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.26, y0 + 180), "Can you solve this?", "このパズル、解ける?", 1)
+    x0, y0, d = _p(img, boxes, 1, 182)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "smug", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200), "Easy.\nIt's a piece of cake.", "楽勝。朝飯前だよ", 2)
+    x0, y0, d = _p(img, boxes, 2, 183)
+    m.board(d, x0 + pw * 0.5, y0 + ph * 0.42, x0 + pw * 0.92, y0 + ph * 0.6, "PUZZLE")
+    m.penguin(d, x0 + pw * 0.28, y0 + ph * 0.7, 140, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.44, y0 + ph * 0.5)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.28, y0 + 180), "...Hmm. Maybe not.", "…あれ。無理かも", 3)
+    x0, y0, d = _p(img, boxes, 3, 184)
+    cake(d, x0 + pw * 0.36, y0 + ph * 0.92, 120)
+    m.capybara(d, x0 + pw * 0.72, y0 + ph * 0.7, 150, "calm")
+    m.penguin(d, x0 + pw * 0.14, y0 + ph * 0.8, 90, "happy", hat_on=False)
+    bot = small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.66, y0 + ph * 0.5), "Here's a real\npiece of cake.", "はい、本物のケーキ", 4)
+    small_bubble(d, (x0 + 12, bot + 10, x0 + pw * 0.5, 0), (x0 + pw * 0.14, y0 + ph * 0.66), "Thanks, Boss!", "部長、ありがとう!", 5)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "a_close_call": dict(draw=a_close_call, word="a close call", hook="「危機一髪」って英語で?", meaning="危機一髪、きわどいところ", level="英検2級レベル",
+        ex_en="I almost missed the last train. It was a close call.", ex_ja="終電に乗り遅れるところだった。危機一髪だった",
+        words=[("Zzz...", "グーグー(寝息)"), ("Oh no!", "しまった!"), ("have to ~", "〜しなければならない"), ("run", "走る"), ("Saturday", "土曜日")],
+        panels=[[("pen", "Zzz...")], [("pen", "Oh no! It's eight fifty!")], [("pen", "I have to run!")],
+                [("navi", "That was a close call!"), ("boss", "...It's Saturday.")]],
+        explain=[("navi", "A close call."), ("pen", "I almost missed the last train. It was a close call.")]),
+    "out_of_stock": dict(draw=out_of_stock, word="out of stock", hook="「在庫切れ」って英語で?", meaning="在庫切れで", level="TOEIC頻出",
+        ex_en="The red shirt is out of stock in my size.", ex_ja="赤いシャツは、私のサイズが在庫切れだ",
+        words=[("new", "新しい"), ("Sorry.", "すみません"), ("get more", "入荷する、追加で仕入れる"), ("the last one", "最後の1つ"), ("game", "ゲーム")],
+        panels=[[("pen", "I want the new game!")], [("boss", "Sorry. It's out of stock.")], [("pen", "When will you get more?")],
+                [("boss", "...I'm playing the last one.")]],
+        explain=[("navi", "Out of stock."), ("pen", "The red shirt is out of stock in my size.")]),
+    "too_good_to_be_true": dict(draw=too_good_to_be_true, word="too good to be true", hook="「話がうますぎる」英語で?", meaning="話がうますぎる、本当とは思えない", level="英検2級レベル",
+        ex_en="A job with high pay and no work? That's too good to be true.", ex_ja="高給で仕事なし?話がうますぎるよ",
+        words=[("free", "無料の"), ("trip", "旅行"), ("sound ~", "〜に聞こえる"), ("sign up", "申し込む"), ("Welcome to ~", "〜へようこそ")],
+        panels=[[("pen", "Look! A free trip to Hawaii!")], [("navi", "That sounds too good to be true.")], [("pen", "I already signed up!")],
+                [("boss", "Welcome to Hawaii.")]],
+        explain=[("navi", "Too good to be true."), ("pen", "A job with high pay and no work? That's too good to be true.")]),
+    "under_the_weather": dict(draw=under_the_weather, word="under the weather", hook="「ちょっと体調が悪い」英語で?", meaning="(少し)体調が悪い", level="英検2級レベル",
+        ex_en="I'm a little under the weather today, so I'll stay home.", ex_ja="今日は少し体調が悪いので、家にいます",
+        words=[("pale", "顔色が悪い"), ("a bit", "少し"), ("rest", "休む"), ("feel better", "体調がよくなる"), ("fast", "速い")],
+        panels=[[("navi", "You look pale. Are you OK?")], [("pen", "I'm a bit under the weather.")], [("navi", "Go home and rest.")],
+                [("pen", "Yay! I feel better!"), ("navi", "...That was fast.")]],
+        explain=[("navi", "Under the weather."), ("pen", "I'm a little under the weather today, so I'll stay home.")]),
+    "a_piece_of_cake": dict(draw=a_piece_of_cake, word="a piece of cake", hook="「楽勝!」って英語で?", meaning="楽にできること、朝飯前", level="英検準2級レベル",
+        ex_en="The test was a piece of cake.", ex_ja="テストは楽勝だった",
+        words=[("solve", "解く"), ("Easy.", "簡単だよ"), ("Maybe not.", "そうでもないかも"), ("real", "本物の"), ("Boss", "部長")],
+        panels=[[("navi", "Can you solve this?")], [("pen", "Easy. It's a piece of cake.")], [("pen", "...Hmm. Maybe not.")],
+                [("boss", "Here's a real piece of cake."), ("pen", "Thanks, Boss!")]],
+        explain=[("navi", "A piece of cake."), ("pen", "The test was a piece of cake.")]),
+})
+
+
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)

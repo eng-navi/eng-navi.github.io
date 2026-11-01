@@ -2323,5 +2323,725 @@
       "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
       "url": "https://link.amazon/B0159dCGh"
     }
+  },
+  {
+    "id": 51,
+    "title": "TOEICで出る「お店・返品」英語5選",
+    "hook": "Part 3・7 の買い物の場面でよく出る表現🛍️",
+    "items": [
+      [
+        "make a purchase",
+        "購入する",
+        "You need a receipt to return anything you purchased.",
+        "購入した物を返品するにはレシートが必要です",
+        "🧾"
+      ],
+      [
+        "out of stock",
+        "在庫切れで",
+        "Sorry, that size is out of stock right now.",
+        "申し訳ありません、そのサイズは現在在庫切れです",
+        "📦"
+      ],
+      [
+        "return merchandise",
+        "商品を返品する",
+        "You can return merchandise within 30 days.",
+        "商品は30日以内なら返品できます",
+        "↩️"
+      ],
+      [
+        "provide a refund",
+        "返金する",
+        "We'll provide a full refund if you're not satisfied.",
+        "ご満足いただけなければ全額返金します",
+        "💴"
+      ],
+      [
+        "hours of operation",
+        "営業時間",
+        "Our hours of operation are 9 to 6.",
+        "営業時間は9時から6時です",
+        "🕘"
+      ]
+    ],
+    "closing": "買い物の場面、聞き取れるかな?🎧",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 52,
+    "title": "TOEICで出る「人事・採用」英語5選",
+    "hook": "Part 4・7 の求人の場面でよく出る表現💼",
+    "items": [
+      [
+        "apply for a position",
+        "職に応募する",
+        "She applied for a position at a design firm.",
+        "彼女はデザイン会社の職に応募した",
+        "📝"
+      ],
+      [
+        "human resources",
+        "人事部",
+        "Please send your résumé to human resources.",
+        "履歴書は人事部に送ってください",
+        "🗂️"
+      ],
+      [
+        "a sales representative",
+        "営業担当者",
+        "A sales representative will call you tomorrow.",
+        "明日、営業担当者からお電話します",
+        "📞"
+      ],
+      [
+        "a summer intern",
+        "夏のインターン生",
+        "We're looking for two summer interns.",
+        "夏のインターン生を2名募集しています",
+        "🌻"
+      ],
+      [
+        "a management team",
+        "経営陣",
+        "The management team meets every Monday.",
+        "経営陣は毎週月曜日に会議をする",
+        "👔"
+      ]
+    ],
+    "closing": "求人の英文、読めるようになろう📌",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 53,
+    "title": "TOEICで出る「お金・会計」英語5選",
+    "hook": "会社のお金の話でよく出る表現💰",
+    "items": [
+      [
+        "a membership fee",
+        "会費",
+        "The membership fee is 30 dollars a month.",
+        "会費は月30ドルです",
+        "💳"
+      ],
+      [
+        "payment methods",
+        "支払い方法",
+        "What payment methods do you accept?",
+        "どの支払い方法が使えますか",
+        "💸"
+      ],
+      [
+        "an advertising budget",
+        "広告予算",
+        "We increased our advertising budget this year.",
+        "今年は広告予算を増やした",
+        "📈"
+      ],
+      [
+        "a high salary",
+        "高い給料",
+        "The job offers a high salary and flexible hours.",
+        "その仕事は給料が高く、勤務時間も柔軟だ",
+        "💴"
+      ],
+      [
+        "a savings account",
+        "普通預金口座",
+        "I opened a savings account at a local bank.",
+        "地元の銀行で普通預金口座を作った",
+        "🏦"
+      ]
+    ],
+    "closing": "お金の場面、保存して見返してね📌",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 54,
+    "title": "TOEICで出る「仕事の進め方」英語5選",
+    "hook": "会議やメールでよく出る表現🗣️",
+    "items": [
+      [
+        "find a solution",
+        "解決策を見つける",
+        "We need to find a solution by Friday.",
+        "金曜日までに解決策を見つける必要がある",
+        "💡"
+      ],
+      [
+        "provide feedback",
+        "意見を伝える",
+        "Please provide feedback on the new design.",
+        "新しいデザインについて意見をください",
+        "💬"
+      ],
+      [
+        "a top priority",
+        "最優先事項",
+        "Customer safety is our top priority.",
+        "お客様の安全が最優先です",
+        "🥇"
+      ],
+      [
+        "have an impact on",
+        "〜に影響を与える",
+        "The new rule will have an impact on sales.",
+        "新しいルールは売上に影響するだろう",
+        "🌊"
+      ],
+      [
+        "in response to",
+        "〜を受けて",
+        "In response to customer requests, we extended our hours.",
+        "お客様の声を受けて、営業時間を延長しました",
+        "📢"
+      ]
+    ],
+    "closing": "会議の前に見返してね📌",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 55,
+    "title": "体調がイマイチな日の英語5選",
+    "hook": "なんだか調子が出ない日に🤒",
+    "items": [
+      [
+        "under the weather",
+        "ちょっと体調が悪い",
+        "I'm a bit under the weather today.",
+        "今日はちょっと体調が悪い",
+        "🌧️"
+      ],
+      [
+        "have a sore throat",
+        "のどが痛い",
+        "I have a sore throat from talking too much.",
+        "しゃべりすぎて、のどが痛い",
+        "🗣️"
+      ],
+      [
+        "have a slight cold",
+        "軽い風邪をひいている",
+        "I just have a slight cold. Don't worry.",
+        "軽い風邪をひいてるだけ。心配しないで",
+        "🤧"
+      ],
+      [
+        "get rid of",
+        "〜を治す、取り除く",
+        "I can't get rid of this cough.",
+        "このせきがなかなか治らない",
+        "😷"
+      ],
+      [
+        "be sensitive to",
+        "〜に弱い、敏感だ",
+        "I'm sensitive to cold weather.",
+        "寒さに弱いんだ",
+        "🥶"
+      ]
+    ],
+    "closing": "体調、お大事にね🍵",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 56,
+    "title": "ネイティブっぽく聞こえるひとこと英語5選",
+    "hook": "教科書にはあまり出ないけど、よく聞くひとこと✨",
+    "items": [
+      [
+        "I couldn't agree more.",
+        "大賛成!",
+        "Pizza tonight? I couldn't agree more.",
+        "今夜はピザ?大賛成!",
+        "🙌"
+      ],
+      [
+        "Not that I know of.",
+        "私の知る限りではないよ",
+        "Is the meeting canceled? — Not that I know of.",
+        "会議は中止?—私の知る限りではないよ",
+        "🤔"
+      ],
+      [
+        "It's no laughing matter.",
+        "笑いごとじゃないよ",
+        "I lost my wallet. It's no laughing matter!",
+        "財布をなくしたの。笑いごとじゃないよ!",
+        "😤"
+      ],
+      [
+        "It never hurts to ask.",
+        "聞いてみても損はない",
+        "Ask for a discount. It never hurts to ask.",
+        "値引きを頼んでみなよ。聞いても損はないよ",
+        "🙋"
+      ],
+      [
+        "Where are your manners?",
+        "お行儀が悪いよ",
+        "Don't talk with your mouth full. Where are your manners?",
+        "口に物を入れたまま話さないの。お行儀悪いよ",
+        "🍽️"
+      ]
+    ],
+    "closing": "どれが言ってみたい?コメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 57,
+    "title": "ギリギリ・失敗の英語5選",
+    "hook": "やらかした日に使える英語😅",
+    "items": [
+      [
+        "make it",
+        "間に合う",
+        "We made it just in time!",
+        "ギリギリ間に合った!",
+        "🏃"
+      ],
+      [
+        "a close call",
+        "危機一髪",
+        "I almost fell. That was a close call.",
+        "転びそうになった。危機一髪だった",
+        "😰"
+      ],
+      [
+        "sleep in",
+        "寝坊する、ゆっくり寝る",
+        "I slept in and missed the bus.",
+        "寝坊してバスに乗り遅れた",
+        "😴"
+      ],
+      [
+        "only to ~",
+        "〜したが結局…",
+        "I ran to the store, only to find it closed.",
+        "お店まで走ったけど、結局閉まってた",
+        "🚪"
+      ],
+      [
+        "I'm running late.",
+        "遅れそう",
+        "Sorry, I'm running late. See you at 7:10.",
+        "ごめん、遅れそう。7時10分に着くね",
+        "⏰"
+      ]
+    ],
+    "closing": "どれか使ったことある?コメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 58,
+    "title": "本音を言うときの英語5選",
+    "hook": "ちょっと言いにくいことを伝えるとき💭",
+    "items": [
+      [
+        "To be honest,",
+        "正直に言うと",
+        "To be honest, I don't like horror movies.",
+        "正直に言うと、ホラー映画は苦手なんだ",
+        "🫣"
+      ],
+      [
+        "It's not that ~",
+        "〜というわけじゃない",
+        "It's not that I don't want to go. I'm just tired.",
+        "行きたくないわけじゃないの。ただ疲れてて",
+        "🙇"
+      ],
+      [
+        "I can't stand ~",
+        "〜が我慢できない",
+        "I can't stand people who are always late.",
+        "いつも遅刻する人は我慢できない",
+        "😤"
+      ],
+      [
+        "I don't care if ~",
+        "〜でも気にしない",
+        "I don't care if it rains. Let's go!",
+        "雨でも気にしない。行こう!",
+        "☔"
+      ],
+      [
+        "All I can do is ~",
+        "できるのは〜だけ",
+        "All I can do is wait.",
+        "私にできるのは待つことだけ",
+        "⏳"
+      ]
+    ],
+    "closing": "言いにくいことも、英語ならさらっと言えるかも💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 59,
+    "title": "「簡単・難しい」を表す英語5選",
+    "hook": "easy / difficult 以外の言い方📊",
+    "items": [
+      [
+        "a piece of cake",
+        "楽勝",
+        "This test is a piece of cake.",
+        "このテストは楽勝だ",
+        "🍰"
+      ],
+      [
+        "It's not that easy.",
+        "そんなに簡単じゃない",
+        "Cooking every day? It's not that easy.",
+        "毎日料理?そんなに簡単じゃないよ",
+        "🍳"
+      ],
+      [
+        "too good to be true",
+        "話がうますぎる",
+        "A free iPhone? That's too good to be true.",
+        "無料のiPhone?話がうますぎるよ",
+        "🤨"
+      ],
+      [
+        "I have no idea how to ~",
+        "どう〜すればいいか全然わからない",
+        "I have no idea how to fix this.",
+        "これ、どう直せばいいか全然わからない",
+        "🔧"
+      ],
+      [
+        "It's no picnic.",
+        "楽じゃない",
+        "Raising three kids is no picnic.",
+        "3人の子育ては楽じゃない",
+        "🧺"
+      ]
+    ],
+    "closing": "どれが一番使えそう?コメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 60,
+    "title": "自分のことを話す英語5選",
+    "hook": "自己紹介や雑談で使える言い方🙋",
+    "items": [
+      [
+        "I'm used to ~ing",
+        "〜するのに慣れている",
+        "I'm used to getting up early.",
+        "早起きには慣れている",
+        "⏰"
+      ],
+      [
+        "I'm not sure if ~",
+        "〜かどうかわからない",
+        "I'm not sure if I can come tomorrow.",
+        "明日来られるかどうかわからない",
+        "🤔"
+      ],
+      [
+        "I'm addicted to ~",
+        "〜にハマっている",
+        "I'm addicted to this game.",
+        "このゲームにハマってる",
+        "🎮"
+      ],
+      [
+        "I'm pretty much ~",
+        "ほぼ〜だ",
+        "I'm pretty much done with my homework.",
+        "宿題はほぼ終わった",
+        "✅"
+      ],
+      [
+        "I'm not a morning person.",
+        "朝が苦手",
+        "Don't call me at 7. I'm not a morning person.",
+        "7時に電話しないで。朝が苦手なの",
+        "🌅"
+      ]
+    ],
+    "closing": "あなたはどれ?コメントで教えてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 61,
+    "title": "学校英語 vs ネイティブ英語5選②",
+    "hook": "教科書の英語を、ネイティブはこう言う🗣️ 第2弾",
+    "items": [
+      [
+        "I have no idea.",
+        "全然わからない(I don't know. より強め)",
+        "Where's Tom? — I have no idea.",
+        "トムはどこ?—全然わからない",
+        "🤷"
+      ],
+      [
+        "Absolutely!",
+        "もちろん!(Yes. の代わりに)",
+        "Can you help me? — Absolutely!",
+        "手伝ってくれる?—もちろん!",
+        "👌"
+      ],
+      [
+        "Not really.",
+        "そうでもないかな(No. をやわらかく)",
+        "Are you hungry? — Not really.",
+        "お腹すいた?—そうでもないかな",
+        "🙂"
+      ],
+      [
+        "Gotcha.",
+        "了解(I understand. のくだけた言い方)",
+        "Meet at 5? Gotcha.",
+        "5時集合?了解",
+        "👍"
+      ],
+      [
+        "My pleasure.",
+        "どういたしまして(You're welcome. より丁寧)",
+        "Thanks for the help. — My pleasure.",
+        "手伝ってくれてありがとう。—どういたしまして",
+        "😊"
+      ]
+    ],
+    "closing": "知ってたものはいくつあった?コメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 62,
+    "title": "「時間」にまつわる英語5選",
+    "hook": "時間を表す、よく使う言い回し⏰",
+    "items": [
+      [
+        "just a while ago",
+        "ついさっき",
+        "I had lunch just a while ago.",
+        "ついさっきお昼を食べた",
+        "🍙"
+      ],
+      [
+        "by now",
+        "今ごろはもう",
+        "She'll be home by now.",
+        "彼女は今ごろもう家に着いているだろう",
+        "🏠"
+      ],
+      [
+        "any time soon",
+        "すぐには(〜ない)",
+        "The rain won't stop any time soon.",
+        "雨はすぐにはやみそうにない",
+        "🌧️"
+      ],
+      [
+        "at the latest",
+        "遅くとも",
+        "Please reply by Friday at the latest.",
+        "遅くとも金曜日までに返信してください",
+        "📅"
+      ],
+      [
+        "Time's up.",
+        "時間切れ",
+        "Time's up! Put your pens down.",
+        "時間切れ!ペンを置いてください",
+        "⌛"
+      ]
+    ],
+    "closing": "時間の英語、保存しておいてね📌",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 63,
+    "title": "職場で使えるひとこと英語5選",
+    "hook": "オフィスでよく聞く短いひとこと🏢",
+    "items": [
+      [
+        "Do you have a minute?",
+        "ちょっといい?",
+        "Do you have a minute? I have a question.",
+        "ちょっといい?質問があって",
+        "⏱️"
+      ],
+      [
+        "I'll get back to you.",
+        "あとで連絡します",
+        "Let me check and I'll get back to you.",
+        "確認して、あとで連絡します",
+        "📩"
+      ],
+      [
+        "I'm on it.",
+        "すぐやります",
+        "Can you send the file? — I'm on it.",
+        "ファイル送ってくれる?—すぐやります",
+        "🏃"
+      ],
+      [
+        "Let me double-check.",
+        "念のため確認させて",
+        "Let me double-check the numbers.",
+        "念のため数字を確認させて",
+        "🔍"
+      ],
+      [
+        "Good job!",
+        "よくやったね!",
+        "You finished it already? Good job!",
+        "もう終わったの?よくやったね!",
+        "👏"
+      ]
+    ],
+    "closing": "明日の職場で1つ使ってみてね💼",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 64,
+    "title": "人間関係で使える英語5選",
+    "hook": "友だち・同僚との関係を表す表現🤝",
+    "items": [
+      [
+        "argue with",
+        "〜と言い争う",
+        "I don't want to argue with you.",
+        "あなたと言い争いたくない",
+        "💢"
+      ],
+      [
+        "get along with",
+        "〜と仲良くやる",
+        "I get along well with my coworkers.",
+        "同僚とうまくやっている",
+        "😊"
+      ],
+      [
+        "make a good first impression",
+        "よい第一印象を与える",
+        "Smile to make a good first impression.",
+        "よい第一印象のために笑顔でいよう",
+        "✨"
+      ],
+      [
+        "put yourself in my shoes",
+        "私の立場になって考える",
+        "Put yourself in my shoes for a second.",
+        "ちょっと私の立場になって考えてみて",
+        "👟"
+      ],
+      [
+        "Between you and me,",
+        "ここだけの話",
+        "Between you and me, he's leaving the company.",
+        "ここだけの話、彼は会社を辞めるんだ",
+        "🤫"
+      ]
+    ],
+    "closing": "どれが一番使えそう?コメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 65,
+    "title": "節約・お金の英語5選",
+    "hook": "お金の話で使える、身近な表現💰",
+    "items": [
+      [
+        "whenever possible",
+        "できるときはいつでも",
+        "I cook for myself whenever possible.",
+        "できるときはいつも自炊している",
+        "🍳"
+      ],
+      [
+        "spend money on",
+        "〜にお金を使う",
+        "I spend too much money on coffee.",
+        "コーヒーにお金を使いすぎている",
+        "☕"
+      ],
+      [
+        "on a tight budget",
+        "予算が厳しい",
+        "I'm on a tight budget this month.",
+        "今月は予算が厳しい",
+        "📉"
+      ],
+      [
+        "It's a steal.",
+        "めちゃくちゃお得",
+        "This jacket was only 20 dollars. It's a steal!",
+        "このジャケット20ドルだった。めちゃお得!",
+        "🛍️"
+      ],
+      [
+        "a rip-off",
+        "ぼったくり",
+        "Ten dollars for water? What a rip-off!",
+        "水が10ドル?ぼったくりだ!",
+        "😱"
+      ]
+    ],
+    "closing": "節約の話、英語でもしてみてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
   }
 ]
