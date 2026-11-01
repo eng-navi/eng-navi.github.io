@@ -226,6 +226,8 @@ def build(site, quizzes):
         if (site / sub / "index.html").exists():
             urls.append(f"{SITE_URL}/{sub}/")
         urls += [f"{SITE_URL}/{sub}/{d.name}/" for d in sorted((site / sub).glob("*/")) if (d / "index.html").exists()]
+    # 音声つきクイズ(リスニング・英単語・瞬間英作文)
+    urls += [f"{SITE_URL}/{sub}/" for sub in ("quizify", "listening", "tango", "tango-advanced") if (site / sub / "index.html").exists()]
     (site / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls) + "</urlset>\n")

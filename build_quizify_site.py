@@ -52,7 +52,7 @@ def collect():
 
 
 def play(src, label="▶ 聞く"):
-    return f'<button class="play" data-src="{e(src)}">{label}</button>' if src else ""
+    return f'<button class="play" data-src="/quizify/{e(src)}">{label}</button>' if src else ""
 
 
 def word_card(it, kind):
@@ -73,9 +73,44 @@ def listen_card(it):
             f'<div class="ans"><p class="res"></p><p class="en">{e(it["en"])}</p><ul class="tips">{words}</ul></div></li>')
 
 
-TABS = [("listening", "🎧 リスニング", "TOEIC Part 2〜4 風。音声を聞いて、正しい訳を選ぼう"),
-        ("white", "📗 英単語(初級)", "受験・英検で問われるコロケーション。日本語を見て英語で言ってみよう"),
-        ("black", "📕 瞬間英作文", "英検準1級の単語。日本語を見て、すぐ英語にしてみよう")]
+# 色ごとのページ。対象のレベルをはっきり書く(見る人にも検索にもわかりやすく)
+PAGES = {
+    "listening": dict(path="listening", icon="🎧", name="英語リスニング問題",
+                      title="英語リスニング問題|TOEIC Part 3・4/英検準1級・2級|音声つき",
+                      desc="TOEIC Part 3・4、英検準1級〜2級レベルのリスニング問題を音声つきで。1回だけ聞いて、正しい訳を選ぶ2択クイズ。TOEIC 800〜900点を目指す人に。",
+                      h1="英語リスニング問題(TOEIC Part 3・4/英検準1級〜2級)",
+                      lead="TOEIC で差がつく Part 3・4(会話・説明文)と、英検準1級〜2級レベルのリスニング。音声を1回だけ聞いて、正しい訳を選ぼう。TOEIC 800〜900点を目指す人におすすめです。"),
+    "white": dict(path="tango", icon="📗", name="英単語・熟語(英検3級〜2級)",
+                  title="英単語・熟語クイズ|英検3級〜2級・大学受験|例文と音声つき",
+                  desc="英検3級〜2級・大学受験でよく問われる英単語と熟語(コロケーション)を、例文と音声で。日本語を見て英語で言えるか、瞬間英作文で確認。",
+                  h1="英単語・熟語(英検3級〜2級・大学受験)",
+                  lead="英検3級〜2級・大学受験でよく問われる、前置詞までセットの熟語や基本の単語。日本語の例文を見て、英語で言えたら答えを見よう。"),
+    "black": dict(path="tango-advanced", icon="📕", name="瞬間英作文(英検2級〜準1級)",
+                  title="瞬間英作文|英検2級〜準1級・TOEIC高得点の英単語|例文と音声つき",
+                  desc="英検2級〜準1級、TOEIC 800点以上を目指す人向けの英単語を、瞬間英作文で。日本語の例文をすぐ英語にして、音声で答え合わせ。",
+                  h1="瞬間英作文(英検2級〜準1級・TOEIC高得点)",
+                  lead="英検2級〜準1級、TOEIC 800点以上を目指す人向けの英単語。日本語の例文を見て、すぐに英語で言ってみよう。"),
+}
+
+
+def page_cards(kind, data, keys, archive):
+    cards = "".join(listen_card(it) if kind == "listening" else word_card(it, kind)
+                    for k in keys if k.startswith(kind) for it in data[k])
+    # 過去の投稿(2023〜2024年)。quizify_archive.py で毎日少しずつ取り込んでいる
+    old = sorted(archive.get(kind, {}).values(), key=lambda v: v["date"], reverse=True)
+    old_items = [it for v in old for it in v.get("items", []) if kind != "listening" or (it.get("a") and it.get("b"))]
+    if old_items:
+        cards += f'<li class="era">過去の問題(2023〜2024年)・{len(old_items)}問</li>' + "".join(
+            listen_card({**it, "words": it.get("words", [])}) if kind == "listening" else word_card(it, kind) for it in old_items)
+    n = sum(len(data[k]) for k in keys if k.startswith(kind)) + len(old_items)
+    return cards or "<li class=empty>近日公開</li>", n
+
+
+def fill(**kw):
+    out = TEMPLATE
+    for k, v in kw.items():
+        out = out.replace("{{" + k + "}}", str(v))
+    return out
 
 
 def pages():
@@ -84,22 +119,24 @@ def pages():
     arc = ROOT / "quizify_archive.json"
     archive = json.loads(arc.read_text()) if arc.exists() else {}
     keys = sorted((k for k in posted if k in data), key=lambda k: posted[k]["posted_at"], reverse=True)
-    secs, nav = [], []
-    for kind, label, note in TABS:
-        cards = "".join(listen_card(it) if kind == "listening" else word_card(it, kind)
-                        for k in keys if k.startswith(kind) for it in data[k])
-        # 過去の投稿(2023〜2024年)。quizify_archive.py で毎日少しずつ取り込んでいる
-        old = sorted(archive.get(kind, {}).values(), key=lambda v: v["date"], reverse=True)
-        old_items = [it for v in old for it in v.get("items", []) if kind != "listening" or (it.get("a") and it.get("b"))]
-        if old_items:
-            cards += f'<li class="era">過去の問題(2023〜2024年)・{len(old_items)}問</li>' + "".join(
-                listen_card({**it, "words": it.get("words", [])}) if kind == "listening" else word_card(it, kind) for it in old_items)
-        nav.append(f'<button data-t="{kind}">{label}</button>')
-        secs.append(f'<section id="{kind}"><p class="note">{note}</p><ol>{cards or "<li class=empty>近日公開</li>"}</ol></section>')
-    SITE.mkdir(parents=True, exist_ok=True)
     count = len(json.loads((ROOT / "posted.json").read_text())) // 10 * 10 + 100  # トップのクイズの問題数(アーカイブ100問+投稿分)。「〇問以上」用に10の位で切り捨て
-    (SITE / "index.html").write_text(TEMPLATE.replace("{{nav}}", "".join(nav)).replace("{{secs}}", "".join(secs)).replace("{{count}}", str(count)))
-    print(f"✓ quizify の復習ページ({len(keys)} 本分)")
+    hub = []
+    for kind, pg in PAGES.items():
+        cards, n = page_cards(kind, data, keys, archive)
+        others = "".join(f'<a href="/{p2["path"]}/">{p2["icon"]} {p2["name"]}</a>' for k2, p2 in PAGES.items() if k2 != kind)
+        body = f'<ol>{cards}</ol><nav class="others"><p>ほかの問題</p>{others}</nav>'
+        d = ROOT / "docs" / pg["path"]
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(fill(title=pg["title"], desc=pg["desc"], path=pg["path"], crumb=pg["name"], h1=pg["h1"],
+                                           lead=pg["lead"], body=body, kind=kind, count=count))
+        hub.append(f'<a class="hubcard" href="/{pg["path"]}/"><b>{pg["icon"]} {pg["name"]}</b><small>{pg["lead"]}</small><em>{n}問 →</em></a>')
+    SITE.mkdir(parents=True, exist_ok=True)
+    (SITE / "index.html").write_text(fill(
+        title="リスニング・英単語・瞬間英作文|音声つき英語クイズ|eng_navi",
+        desc="TOEIC Part 3・4/英検のリスニング、英検3級〜2級の英単語・熟語、英検準1級・TOEIC高得点の瞬間英作文。音声つきで復習できます。",
+        path="quizify", crumb="音声つき英語クイズ", h1="音声つきで、もう一度",
+        lead="Instagram @quizify_english の問題を、レベル別にまとめています。", body="".join(hub), kind="", count=count))
+    print(f"✓ quizify のページ({len(keys)} 本分+過去の投稿)")
 
 
 TEMPLATE = """<!doctype html>
@@ -107,9 +144,9 @@ TEMPLATE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>quizify_english 復習ページ|リスニング・英単語・瞬間英作文</title>
-<meta name="description" content="Instagram @quizify_english の問題を、音声つきでもう一度。TOEIC風リスニング、受験・英検のコロケーション、英検準1級の瞬間英作文。">
-<link rel="canonical" href="https://eng-navi.github.io/quizify/">
+<title>{{title}}</title>
+<meta name="description" content="{{desc}}">
+<link rel="canonical" href="https://eng-navi.github.io/{{path}}/">
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -118,10 +155,11 @@ TEMPLATE = """<!doctype html>
   .crumb { font-size: 12px; color: #888; } .crumb a { color: inherit; }
   h1 { font-size: 22px; line-height: 1.5; margin-top: 16px; }
   .lead { margin-top: 8px; font-size: 14px; color: #666; line-height: 1.8; }
-  nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 18px; background: #fff; border-radius: 12px; padding: 4px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-  nav button { border: 0; background: none; padding: 10px 2px; border-radius: 9px; font-size: 13px; font-weight: 500; color: #666; cursor: pointer; }
-  nav button[aria-pressed="true"] { background: #282828; color: #fff; }
-  section { display: none; } section.on { display: block; }
+  .hubcard { display: block; margin-top: 14px; padding: 18px; border-radius: 14px; background: #fff; text-decoration: none; color: #282828; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+  .hubcard b { display: block; font-size: 17px; } .hubcard small { display: block; margin-top: 6px; font-size: 13px; color: #666; line-height: 1.7; }
+  .hubcard em { display: inline-block; margin-top: 10px; font-style: normal; font-weight: 700; color: #c83430; font-size: 14px; }
+  .others { margin-top: 22px; } .others p { font-size: 13px; color: #888; }
+  .others a { display: block; margin-top: 8px; padding: 12px 14px; border-radius: 12px; background: #fff; color: #282828; text-decoration: none; font-size: 14px; }
   .note { margin-top: 12px; font-size: 13px; color: #777; }
   ol { list-style: none; margin-top: 12px; display: grid; gap: 12px; }
   .card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
@@ -159,12 +197,11 @@ TEMPLATE = """<!doctype html>
 </head>
 <body>
 <main>
-  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › quizify_english 復習</p>
-  <h1>Instagram の問題を、音声つきでもう一度</h1>
-  <p class="lead">@quizify_english に投稿した問題をまとめています。新しい順に並んでいます。</p>
+  <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › {{crumb}}</p>
+  <h1>{{h1}}</h1>
+  <p class="lead">{{lead}}</p>
   <a class="toplink" href="/">🎯 トップには<b>英文法クイズが{{count}}問以上</b>。解くほど苦手がわかります<span>→</span></a>
-  <nav>{{nav}}</nav>
-  {{secs}}
+  {{body}}
   <div class="rec" id="rec"></div>
   <a class="cta" href="https://www.instagram.com/quizify_english/">Instagram で毎日の問題を見る →</a>
   <a class="home" href="/"><b>英文法クイズ {{count}}問以上・無料</b><small>1問30秒。英検・TOEIC・大学受験の得点アップに</small><span>トップで挑戦する →</span></a>
@@ -200,11 +237,10 @@ document.addEventListener("click", (ev) => {
   const place = a.classList.contains("toplink") ? "quizify_top" : a.classList.contains("home") ? "quizify_home" : a.closest(".abroad") ? "quizify_abroad" : a.closest(".rec") ? "quizify_rec" : "quizify_other";
   gtag("event", "link_click", { place, label: tip ? `${label} [${copy}]` : label, copy });
 });
-const tabs = document.querySelectorAll("nav button"), secs = document.querySelectorAll("section");
-const show = (t) => { showRec(t); tabs.forEach((b) => b.setAttribute("aria-pressed", b.dataset.t === t)); secs.forEach((s) => s.classList.toggle("on", s.id === t)); try { localStorage.setItem("qz-tab", t); } catch (e) {} };
-tabs.forEach((b) => (b.onclick = () => show(b.dataset.t)));
-let start = "listening"; try { start = localStorage.getItem("qz-tab") || start; } catch (e) {}
-show(location.hash.slice(1) || start);
+showRec("{{kind}}");
+// 前の /quizify/#white などのリンクは、色ごとのページへ
+const OLD = { listening: "/listening/", white: "/tango/", black: "/tango-advanced/" };
+if (!"{{kind}}" && OLD[location.hash.slice(1)]) location.replace(OLD[location.hash.slice(1)]);
 const audio = new Audio();
 document.querySelectorAll(".play").forEach((b) => (b.onclick = () => { audio.src = b.dataset.src; audio.play(); }));
 document.querySelectorAll(".reveal").forEach((b) => (b.onclick = () => b.closest(".card").classList.add("open")));

@@ -113,7 +113,8 @@ def run():
     publish(rest[0])
     import build_quizify_site
     build_quizify_site.pages()  # 復習ページに今の回を載せる
-    mp.push([str(LOG), str(WORDS), str(build_quizify_site.SITE / "index.html")], "quizify を投稿")
+    pages = [str(ROOT / "docs" / d / "index.html") for d in ("quizify", "listening", "tango", "tango-advanced")]
+    mp.push([str(LOG), str(WORDS)] + pages, "quizify を投稿")
 
 
 def main():
