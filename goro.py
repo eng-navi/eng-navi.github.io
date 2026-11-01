@@ -930,6 +930,162 @@ def scene_grab_goro(i):
     return img
 
 
+# ---- 共通の型:語呂合わせ1本を spec(辞書)から作る。物語の2場面だけ draw 関数を渡す ----
+def generic_scenes(sp):
+    """sp: word, pun(2つ:[(前半), (後半)]), chant(唱える文), meaning(画面の意味), note(発音などの一言),
+    ex_en, ex_ja, story=[(draw(img, d, i), キャプション, 効果音の文字), ...] を2つ。"""
+    blue, red = (110, 160, 210), (230, 120, 110)
+
+    def hook(i):
+        img = stage(900 + i % 3)
+        d = ImageDraw.Draw(img)
+        shadow(d, 540, 1400, 260)
+        m.penguin(d, 540, 1150, 300, "shock", hat_on=False, seed=51 + i % 3)
+        m.sweat(d, 700, 1000, 30)
+        caption(d, f"{sp['word']}、", 820, 96, box=False)
+        caption(d, "1秒で覚えられる?", 950, 80, color=(200, 52, 48), box=False)
+        return img
+
+    def story(k):
+        draw, cap, sfx = sp["story"][k]
+
+        def f(i):
+            img = stage(910 + k * 10 + i % 3)
+            d = ImageDraw.Draw(img)
+            draw(img, d, i)
+            if sfx:  # 文字だけなら真ん中の上、(文字, (x, y)) なら指定の位置
+                text, xy = sfx if isinstance(sfx, tuple) else (sfx, (560, 760))
+                jsfx(img, xy, text, 90, (220, 60, 50), -6)
+            caption(d, cap, 1640, 56)
+            return img
+        return f
+
+    def word(i):
+        img = stage(930 + i % 3)
+        d = ImageDraw.Draw(img)
+        shadow(d, 780, 1440, 220)
+        m.penguin(d, 780, 1230, 230, "happy", hat_on=False, seed=51 + i % 3)
+        jsfx(img, (300, 1150), "ドン!", 110, (220, 60, 50), -8)
+        d.rounded_rectangle([90, 600, W - 90, 1020], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+        step = min(3, 1 + i // 4)
+        parts = [(sp["pun"][0], blue), (sp["pun"][1], red)]
+        f = m.JP(110)
+        while sum(f.getlength(p) for p, _ in parts) + 24 > W - 260:
+            f = m.JP(f.size - 4)
+        x = W / 2 - (sum(f.getlength(p) for p, _ in parts) + 24) / 2
+        for k, (p, c) in enumerate(parts):
+            d.text((x, 740), p, font=f, fill=c if k < step else (215, 210, 205), anchor="ls")
+            x += f.getlength(p) + 24
+        if step >= 3:
+            line = [(sp["word"], blue), (" = ", INK), (sp["short"], red)]
+            fonts = [m.EN(120), m.EN(90), m.JP(84)]
+            while sum(ff.getlength(t) for (t, _), ff in zip(line, fonts)) > W - 220:
+                fonts = [m.EN(fonts[0].size - 6), fonts[1], m.JP(fonts[2].size - 4)]
+            x = W / 2 - sum(ff.getlength(t) for (t, _), ff in zip(line, fonts)) / 2
+            for (t, c), ff in zip(line, fonts):
+                d.text((x, 885), t, font=ff, fill=c, anchor="ls")
+                x += ff.getlength(t)
+        d.text((W / 2, 975), sp["note"], font=m.JP(40), fill=(110, 110, 110), anchor="ms")
+        return img
+
+    def meaning(i):
+        img = stage(950 + i % 3)
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle([110, 640, W - 110, 1180], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+        d.text((W / 2, 800), sp["word"], font=m.EN(150), fill=INK, anchor="ms")
+        d.text((W / 2, 920), f"= {sp['meaning']}", font=m.JP(58), fill=(200, 52, 48), anchor="ms")
+        m.draw_fit(d, (W / 2, 1010), sp["ex_en"], m.EN(50), INK, width=W - 300)
+        m.draw_fit(d, (W / 2, 1100), f"({sp['ex_ja']})", m.JP(38), (110, 110, 110), width=W - 300, jp=True)
+        shadow(d, 260, 1440, 180)
+        m.owl(d, 260, 1260, 180, "smug", seed=41 + i % 3)
+        shadow(d, 820, 1440, 180)
+        m.penguin(d, 820, 1260, 170, "happy", hat_on=False, seed=51 + i % 3)
+        caption(d, f"{sp['chant']}!", 1640, 54)
+        return img
+
+    def goro(i):
+        img = stage(970 + i % 3)
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle([90, 640, W - 90, 1060], radius=40, fill=(255, 252, 245), outline=INK, width=6)
+        s = 1.0 + max(0, 0.25 - i / FPS) * 0.6
+        f = m.JP(int(96 * s))
+        for k, (p, c) in enumerate(((sp["pun"][0], blue), (sp["pun"][1], red))):
+            while f.getlength(p) > W - 240:
+                f = m.JP(f.size - 4)
+            d.text((W / 2, 800 + k * 120), p, font=f, fill=c, anchor="ms")
+        d.text((W / 2, 1025), f"= {sp['word']}({sp['short']})", font=m.JP(48), fill=INK, anchor="ms")
+        shadow(d, 300, 1440, 200)
+        m.penguin(d, 300, 1240, 210, "happy", hat_on=False, seed=51 + i % 3)
+        shadow(d, 790, 1440, 200)
+        m.owl(d, 790, 1240, 200, "happy", seed=41 + i % 3)
+        jsfx(img, (545, 1180), "せーの!", 70, (220, 90, 70), 6)
+        caption(d, "声に出して、もう1回!", 1640, 58)
+        d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+        return img
+
+    return hook, story(0), story(1), word, meaning, goro
+
+
+def generic_plan(sp, gap):
+    hook, s1, s2, word, meaning, goro = generic_scenes(sp)
+    w = sp["word"].capitalize()
+    return [
+        (1.3, hook, [tone(660, 0.15), gap(0.2)]),
+        (1.8, s1, [tone(880, 0.12, 0.04)] + ([gap(0.1), voice(*sp["line1"])] if sp.get("line1") else [])),
+        (2.0, s2, [tone(1100, 0.1, 0.04)] + ([gap(0.1), voice(*sp["line2"])] if sp.get("line2") else [])),
+        (2.6, word, [tone(90, 0.4, 0.25, 6), gap(0.3), voice("navi", f"{w}!"), gap(0.3), voice("pen", f"{w}!")]),
+        (4.4, meaning, [gap(0.2), voice("navi", f"{w}."), gap(0.4), voice("pen", sp["ex_en"])]),
+        (3.2, goro, [tone(660, 0.15), gap(0.15), voice("pen", sp["chant_voice"]), gap(0.35), voice("navi", sp["chant_voice"]), gap(0.6)]),
+    ]
+
+
+# ---- dull(退屈な):「ダルい授業は、dull!」 ----
+def _dull1(img, d, i):
+    m.board(d, 200, 700, 880, 1000, "HISTORY")
+    shadow(d, 260, 1440, 200)
+    m.owl(d, 260, 1240, 200, "smug", seed=41 + i % 3)
+    shadow(d, 800, 1440, 200)
+    m.penguin(d, 800, 1240, 200, "smug", hat_on=False, seed=51 + i % 3)
+
+
+def _dull2(img, d, i):
+    table(d, 990 + i % 3)
+    shadow(d, 540, 1440, 220)
+    m.penguin(d, 540, 1160, 200, "smug", hat_on=False, seed=51 + i % 3)
+    m.zzz(img, 720, 960 - (i % 6) * 6)
+
+
+# ---- beg(ねだる):「バッグ、ちょうだい!とねだる」 ----
+def _beg1(img, d, i):
+    m.suitcase(d, 540, 1050, 200, color=(230, 150, 160))
+    shadow(d, 230, 1440, 200)
+    m.penguin(d, 230, 1230, 200, "happy", hat_on=False, seed=51 + i % 3)
+    shadow(d, 850, 1440, 200)
+    m.owl(d, 850, 1230, 200, "normal", seed=41 + i % 3)
+
+
+def _beg2(img, d, i):
+    shadow(d, 330, 1440, 200)
+    m.penguin(d, 330, 1260 + (i % 2) * 8, 190, "shock", hat_on=False, seed=51 + i % 3)
+    shadow(d, 800, 1440, 200)
+    m.owl(d, 800, 1230, 210, "shock", seed=41 + i % 3)
+    m.sweat(d, 920, 1050, 30)
+
+
+GENERIC = {
+    "dull": dict(word="dull", short="退屈な", meaning="退屈な、つまらない", pun=("ダルい授業は", "dull!"),
+                 chant="ダルい授業は dull", chant_voice="ダルい授業は、ダル!", note="発音は「ダル」。だるい、とほぼ同じ音",
+                 ex_en="The movie was so dull that I fell asleep.", ex_ja="その映画はとても退屈で、眠ってしまった",
+                 story=[(_dull1, "先生の話が長くて、ダル〜い…", ("ダル〜", (800, 1060))), (_dull2, "ペン、ついに寝てしまう", "スヤァ")],
+                 line2=("pen", "So dull...")),
+    "beg": dict(word="beg", short="ねだる", meaning="ねだる、懇願する", pun=("バッグ!と", "ねだる beg!"),
+                chant="バッグ!とねだる beg", chant_voice="バッグ!と、ねだる、ベッグ!", note="発音は「ベッグ」。バッグに近い音",
+                ex_en="The kids begged their parents for a puppy.", ex_ja="子どもたちは子犬がほしいと親にねだった",
+                story=[(_beg1, "ピンクのバッグを見つけたペン…", "かわいい!"), (_beg2, "「バッグちょうだい!」とねだる", "おねがい!")],
+                line2=("pen", "Please, please!")),
+}
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr
@@ -1021,7 +1177,8 @@ def main():
     pipe = KPipeline(lang_code="b", repo_id="hexgrad/Kokoro-82M")
     gap = lambda s: np.zeros(int(SR * s), dtype=np.float32)
     mr_env()
-    plan = plans(pipe)[name]
+    gap0 = lambda s: np.zeros(int(SR * s), dtype=np.float32)
+    plan = generic_plan(GENERIC[name], gap0) if name in GENERIC else plans(pipe)[name]
     OUT.mkdir(parents=True, exist_ok=True)
     frames, audio = [], []
     for dur, draw, sounds in plan:

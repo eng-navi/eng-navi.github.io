@@ -2,6 +2,7 @@
 
     .venv-tts/bin/python manga_fast.py procrastinate      # out/manga/procrastinate_fast.mp4 と 4コマ・解説の画像
     .venv-tts/bin/python manga_fast.py procrastinate --hook   # 冒頭を変えた版(procrastinate_fast_hook.mp4)
+    .venv-tts/bin/python manga_fast.py procrastinate --hook --short   # 短い版:1・2コマ目を一度に、間を詰め、最後はまとめカード
 
 ・--hook:文字だけのタイトル画面をやめて、0秒目から1コマ目。問いかけは1コマ目のあいだ上に大きく重ねる
 
@@ -122,7 +123,7 @@ def procrastinate():
     return img
 
 
-def explain_card(sc):
+def explain_card(sc, summary=False):
     """解説:ターゲット単語+例文+今回出てきた単語。"""
     img = Image.new("RGB", (m.W, m.H), BG)
     d = ImageDraw.Draw(img)
@@ -144,7 +145,11 @@ def explain_card(sc):
         y = 820 + i * 78
         d.text((160, y), en, font=m.EN(44), fill=m.INK, anchor="lm")
         d.text((560, y), ja, font=m.JP(30), fill=(110, 100, 95), anchor="lm")
-    d.text((m.W // 2, 1250), "保存して、使ってみてね", font=m.JP(32), fill=(200, 52, 48), anchor="mm")
+    if summary:  # まとめカード:保存して復習してもらう
+        d.rounded_rectangle((m.W // 2 - 330, 1205, m.W // 2 + 330, 1295), radius=45, fill=(200, 52, 48))
+        d.text((m.W // 2, 1250), "保存して、あとで復習しよう", font=m.JP(40), fill=(255, 255, 255), anchor="mm")
+    else:
+        d.text((m.W // 2, 1250), "保存して、使ってみてね", font=m.JP(32), fill=(200, 52, 48), anchor="mm")
     d.text((m.W - 50, m.H - 30), "@yonkoma_eigo", font=m.EN(30), fill=(160, 150, 140), anchor="rm")
     return img
 
@@ -332,6 +337,11 @@ SCRIPTS.update({
         ex_en="I'll lead a short workshop for new staff.", ex_ja="新人向けに短い研修を担当する",
         words=[("lead", "率いる、担当する"), ("workshop", "研修、講習会"), ("topic", "テーマ、話題"),
                ("step one", "その1、最初の手順"), ("staff", "職員、スタッフ")]),
+    "inside_out": _from_reel(
+        "inside_out", word="inside out", hook="「裏返し」って英語で?",
+        meaning="裏返しに", level="英検準2級〜2級レベル",
+        ex_en="My son wore his sweater inside out.", ex_ja="息子はセーターを裏返しに着ていた",
+        words=[("Morning!", "おはよう"), ("hat", "帽子"), ("I know.", "知ってる"), ("trend", "流行"), ("Me too.", "私も")]),
     "make_an_appointment": _from_reel(
         "make_an_appointment", word="make an appointment", hook="「アポを取る」英語で?",
         meaning="(人と会う)約束をする", level="TOEIC頻出",
@@ -1104,25 +1114,34 @@ def main():
         hook_len = 1.1
         scenes.append(("title", None, hook_len))
         audio += [mr.pop(), mr.silence(hook_len - len(mr.pop()) / SR)]
-    for i, (src, lines) in enumerate(zip(crops, sc["panels"])):
+    short = "--short" in sys.argv
+    panels = list(zip(crops, sc["panels"]))
+    if short:
+        # 短い版:1・2コマ目を上の段ごと一度に見せて、3秒以内に話が動くようにする
+        x0, y0 = boxes[0][0], boxes[0][1]
+        x1, y1 = boxes[1][2], boxes[1][3]
+        panels = [(comic.crop((int(x0), int(y0), int(x1), int(y1))), sc["panels"][0] + sc["panels"][1])] + panels[2:]
+    gap, lead = (0.1, 0.06) if short else (0.18, 0.12)
+    for i, (src, lines) in enumerate(panels):
         clips = []
         for who, text in lines:
-            clips += [voice(who, text), mr.silence(0.18)]
-        clip = np.concatenate([mr.pop(), mr.silence(0.12)] + clips)
+            clips += [voice(who, text), mr.silence(gap)]
+        clip = np.concatenate([mr.pop(), mr.silence(lead)] + clips)
         scenes.append(("hooked" if hook and i == 0 else "panel", src, len(clip) / SR))
         audio.append(clip)
-    scenes.append(("panel_all", comic, 1.0))
-    audio.append(mr.silence(1.0))
-    ex = [mr.pop(), mr.silence(0.2)]
+    if not short:
+        scenes.append(("panel_all", comic, 1.0))
+        audio.append(mr.silence(1.0))
+    ex = [mr.pop(), mr.silence(0.15 if short else 0.2)]
     for who, text in sc["explain"]:
-        ex += [voice(who, text), mr.silence(0.35)]
-    ex.append(mr.silence(1.2))
+        ex += [voice(who, text), mr.silence(0.25 if short else 0.35)]
+    ex.append(mr.silence(1.6 if short else 1.2))  # 短い版はまとめカードを少し長めに見せる(保存してもらうため)
     ex = np.concatenate(ex)
-    scenes.append(("explain", card, len(ex) / SR))
+    scenes.append(("explain", explain_card(sc, summary=True) if short else card, len(ex) / SR))
     audio.append(ex)
     total = sum(s[2] for s in scenes)
 
-    out = OUT / f"{name}_fast{'_hook' if hook else ''}.mp4"
+    out = OUT / f"{name}_fast{'_hook' if hook else ''}{'_short' if short else ''}.mp4"
     rng = random.Random(7)
     grid_bg = Image.new("RGB", (W, H), BG)
     g = ImageDraw.Draw(grid_bg)
