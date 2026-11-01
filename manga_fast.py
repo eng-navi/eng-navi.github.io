@@ -1036,6 +1036,57 @@ SCRIPTS.update({
 })
 
 
+def hot_tub(d, cx, top, w, seed=420):
+    """湯船(湯気つき)。キャラを描いたあとに描くと、体の下半分がお湯に隠れる。"""
+    m.shape(d, m.rrect_pts(cx - w / 2, top, cx + w / 2, top + w * 0.36, 22), (200, 170, 130), seed=seed)
+    d.rectangle([cx - w / 2 + 10, top + 8, cx + w / 2 - 10, top + 30], fill=(170, 215, 235))
+    for k in (-0.3, 0, 0.3):
+        x = cx + k * w
+        d.line(m.wob([(x, top - 20), (x - 10, top - 50), (x + 6, top - 80)], amp=3, seed=seed + 1), fill=(190, 190, 200), width=5, joint="curve")
+
+
+def hit_it_off():
+    img, boxes, pw, ph = m.comic("hit it off")
+    x0, y0, x1, y1 = boxes[0]
+    d = m.panel(img, boxes[0], 151)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "normal")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 120, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 190), "How's your new neighbor?", "新しいお隣さん、どう?", 1)
+    x0, y0, x1, y1 = boxes[1]
+    d = m.panel(img, boxes[1], 152)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 200), "We hit it off\nright away!", "すぐに意気投合したよ!", 2)
+    sparkle(d, x0 + pw * 0.84, y0 + ph * 0.5)
+    sparkle(d, x0 + pw * 0.16, y0 + ph * 0.56, 10)
+    x0, y0, x1, y1 = boxes[2]
+    d = m.panel(img, boxes[2], 153)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "shock")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 115, "smug", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 200), "Wow. What do you\nhave in common?", "へえ。共通点は?", 3)
+    x0, y0, x1, y1 = boxes[3]
+    d = m.panel(img, boxes[3], 154)
+    m.penguin(d, x0 + pw * 0.3, y0 + ph * 0.7, 115, "happy", hat_on=False)
+    m.capybara(d, x0 + pw * 0.7, y0 + ph * 0.72, 150, "calm")
+    hot_tub(d, x0 + pw * 0.5, y0 + ph * 0.74, pw * 0.9)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.5), "We both love hot baths.", "二人とも、お風呂が大好き", 4)
+    m.sfx(img, (x0 + pw * 0.16, y0 + ph * 0.46), "*ahh~*", 30, (200, 140, 60), 8)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "hit_it_off": dict(
+        draw=hit_it_off, word="hit it off", hook="「意気投合する」英語で?",
+        meaning="(初対面で)すぐに意気投合する", level="英検2級レベル",
+        ex_en="We hit it off at the party and became good friends.", ex_ja="パーティーで意気投合して、仲良くなった",
+        words=[("neighbor", "近所の人、お隣さん"), ("right away", "すぐに"), ("have A in common", "Aが共通している"),
+               ("both", "二人とも"), ("hot bath", "熱いお風呂")],
+        panels=[[("navi", "How's your new neighbor?")], [("pen", "We hit it off right away!")],
+                [("navi", "Wow. What do you have in common?")], [("pen", "We both love hot baths.")]],
+        explain=[("navi", "Hit it off."), ("pen", "We hit it off at the party and became good friends.")],
+    ),
+})
+
+
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)

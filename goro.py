@@ -1086,6 +1086,59 @@ GENERIC = {
 }
 
 
+# ---- steer(操縦する):「ステアリングで操縦 steer」 ----
+def _steer1(img, d, i):
+    cx, cy = 540, 1000
+    d.ellipse([cx - 150, cy - 150, cx + 150, cy + 150], outline=(80, 80, 90), width=26)
+    for a in (90, 210, 330):
+        r = math.radians(a + i * 8)
+        d.line([(cx, cy), (cx + 140 * math.cos(r), cy + 140 * math.sin(r))], fill=(80, 80, 90), width=18)
+    shadow(d, 540, 1440, 220)
+    m.penguin(d, 540, 1270, 190, "happy", hat_on=False, seed=51 + i % 3)
+
+
+def _steer2(img, d, i):
+    x = 300 + (i % 24) * 18
+    for k in range(4):
+        d.line([(x - 260, 1120 + k * 50), (x - 120, 1120 + k * 50)], fill=(150, 140, 130), width=6)
+    shadow(d, x, 1440, 200)
+    m.penguin(d, x, 1230, 200, "happy", hat_on=False, seed=51 + i % 3)
+
+
+# ---- pile(積み重ねる):「パイを積む pile」 ----
+def _pile1(img, d, i):
+    table(d, 1010 + i % 3)
+    for k in range(min(6, 1 + i // 3)):
+        y = 1170 - k * 34
+        d.ellipse([440, y - 18, 640, y + 18], fill=(225, 175, 105), outline=INK, width=4)
+    shadow(d, 230, 1440, 200)
+    m.penguin(d, 230, 1230, 200, "happy", hat_on=False, seed=51 + i % 3)
+
+
+def _pile2(img, d, i):
+    table(d, 1020 + i % 3)
+    for k in range(10):
+        y = 1170 - k * 34
+        d.ellipse([440 + (k % 2) * 8, y - 18, 640 + (k % 2) * 8, y + 18], fill=(225, 175, 105), outline=INK, width=4)
+    shadow(d, 850, 1440, 200)
+    m.owl(d, 850, 1230, 200, "shock", seed=41 + i % 3)
+    m.sweat(d, 960, 1050, 30)
+
+
+GENERIC.update({
+    "steer": dict(word="steer", short="操縦する", meaning="操縦する、(話などを)導く", pun=("ステアリングで", "操縦 steer!"),
+                  chant="ステアリングで操縦 steer", chant_voice="ステアリングで、操縦、スティア!", note="発音は「スティア」(ハンドルは steering)",
+                  ex_en="She steered the boat toward the shore.", ex_ja="彼女は岸に向かってボートを操縦した",
+                  story=[(_steer1, "ペン、ハンドルをにぎる", "ぐるっ"), (_steer2, "ステアリングで、すいすい操縦!", "ブーン")],
+                  line2=("pen", "I can steer!")),
+    "pile": dict(word="pile", short="積み重ねる", meaning="積み重ねる、(積み重ねた)山", pun=("パイを", "積む pile!"),
+                 chant="パイを積む pile", chant_voice="パイを積む、パイル!", note="発音は「パイル」。a pile of A で「Aの山」",
+                 ex_en="He piled the books on the desk.", ex_ja="彼は机の上に本を積み重ねた",
+                 story=[(_pile1, "ペン、パイを1枚ずつ積んでいく", "せっせ"), (_pile2, "パイが山積みに!", "ドーン")],
+                 line2=("navi", "That's a big pile!")),
+})
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr
