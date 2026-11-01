@@ -401,7 +401,8 @@
     const h = document.documentElement;
     h.dataset.fs = c.fs || "m";
     h.dataset.mark = c.mark || "on";
-    const dark = c.theme === "dark" || (c.theme !== "light" && window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches);
+    // 何も選んでいないときはライト(端末がダークでも)。「自動」を選んだ人だけ端末に合わせる
+    const dark = c.theme === "dark" || (c.theme === "auto" && window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches);
     h.dataset.theme = dark ? "dark" : "light";
     window.VIEW = c;
   })();
@@ -734,7 +735,7 @@
         <div class="bgm-menu set-menu" id="view-menu" hidden>
           <p>表示の設定</p>
           <div class="row"><span>文字の大きさ</span>${seg("fs", [["s", "小"], ["m", "標準"], ["l", "大"], ["xl", "特大"]], V.fs || "m")}</div>
-          <div class="row"><span>画面の色</span>${seg("theme", [["auto", "自動"], ["light", "ライト"], ["dark", "ダーク"]], V.theme || "auto")}</div>
+          <div class="row"><span>画面の色</span>${seg("theme", [["auto", "自動"], ["light", "ライト"], ["dark", "ダーク"]], V.theme || "light")}</div>
           <div class="row"><span>英文のハイライト</span>${seg("mark", [["on", "あり"], ["off", "なし"]], V.mark || "on")}</div>
           <div class="row"><span>答え・解説の位置</span>${seg("pos", [["below", "選択肢の下"], ["top", "英文のすぐ下"]], V.pos || "below")}</div>
           <div class="row"><span>答えのあとの並び</span>${seg("order", [["std", "訳→解説"], ["exp", "解説を先に"]], V.order || "std")}</div>
@@ -768,7 +769,7 @@
       const h = document.documentElement;
       h.dataset.fs = V.fs || "m";
       h.dataset.mark = V.mark || "on";
-      const dark = V.theme === "dark" || (V.theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+      const dark = V.theme === "dark" || (V.theme === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
       h.dataset.theme = dark ? "dark" : "light";
       menu.querySelectorAll(`[data-view="${b.dataset.view}"]`).forEach((x) => x.setAttribute("aria-checked", x === b));
       trackEvent("view_setting", { key: b.dataset.view, value: b.dataset.v });
@@ -1350,6 +1351,27 @@
     document.getElementById("retry").onclick = () => (allMode ? begin(sorted, { all: true }) : begin(set));
     document.getElementById("menu").onclick = renderStart;
   }
+
+  // 解説などの開閉(details)を、高さをなめらかに変えて開く・閉じる
+  document.addEventListener("click", (e) => {
+    const sum = e.target.closest("details > summary");
+    if (!sum || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const det = sum.parentElement, body = sum.nextElementSibling;
+    if (!body || !body.animate) return;
+    e.preventDefault();
+    if (det.dataset.anim) return;
+    det.dataset.anim = "1";
+    const done = () => { delete det.dataset.anim; body.style.overflow = ""; };
+    body.style.overflow = "hidden";
+    if (!det.open) {
+      det.open = true;
+      const h = body.scrollHeight;
+      body.animate([{ height: "0px", opacity: 0 }, { height: h + "px", opacity: 1 }], { duration: 320, easing: "cubic-bezier(.2,.8,.2,1)" }).onfinish = done;
+    } else {
+      const h = body.scrollHeight;
+      body.animate([{ height: h + "px", opacity: 1 }, { height: "0px", opacity: 0 }], { duration: 240, easing: "ease-in" }).onfinish = () => { det.open = false; done(); };
+    }
+  });
 
   document.addEventListener("click", (e) => {
     // 開いているメニュー(BGM・音声)の外をタップしたら閉じる
