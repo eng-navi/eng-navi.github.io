@@ -1,9 +1,9 @@
 """@quizify_english の青い「リスニング問題」リールを作る。1本に2問(短い1文=Part 2 風、会話・トーク=Part 3/4 風)。
 
 1問ごとに カウントダウン(3・2・1)→ マイクの画面で英語を1回 → 日本語訳 A/B(片方はすり替えたひっかけ)。
-答えは説明・コメント欄。間と配置は 2024年の元動画(77・78 / 143・144)を 0.01 秒単位で測った値。
+答えは説明欄(キャプションの後半)に、元の投稿と同じ形で入れる(answer_text)。間と配置は 2024年の元動画(77・78 / 143・144)を 0.01 秒単位で測った値。
 
-  .venv-tts/bin/python quizify_listening.py      → out/quizify/listening_<最初の番号>.mp4 と、答えのコメント
+  .venv-tts/bin/python quizify_listening.py      → out/quizify/listening_<最初の番号>.mp4 と、説明欄の答え
 
 カウントダウンの音は元動画(本人のアカウント)から切り出したもの(assets/quizify/countdown.wav)。
 """
@@ -44,14 +44,17 @@ FOOT = qb.font("KiwiMaru-Medium.ttf", 31)
 DIGIT = qb.font("OpenSans%5Bwdth,wght%5D.ttf", 58, [600, 100])
 
 ITEMS = [
-    # 番号, 声, 英文, 訳A, 訳B, 正解(A/B)
+    # 番号, 声, 英文, 訳A, 訳B, 正解(A/B), 語句(説明欄に載せる「語句：意味」)
     (145, SHORT_VOICE, "When is the new branch scheduled to open?",
-     "新しい支店はいつ開店予定ですか。", "新しい支店はどこに開店予定ですか。", "A"),
+     "新しい支店はいつ開店予定ですか。", "新しい支店はどこに開店予定ですか。", "A",
+     ["branch：支店", "be scheduled to do：…する予定である"]),
     (146, TALK_VOICE, "Kevin, do you have a minute? I'm updating the slides for Friday's client presentation. "
      "My manager asked me to add the latest sales figures. Could you send me the report from last quarter?",
      "ケビン、ちょっといい？金曜日の社内会議のスライドを作り直しているの。部長から、最新の売上目標を加えるように言われて。先月の報告書を送ってもらえる？",
      "ケビン、ちょっといい？金曜日の顧客向けプレゼンのスライドを更新しているの。上司から、最新の売上の数字を加えるように言われて。前の四半期の報告書を送ってもらえる？",
-     "B"),
+     "B",
+     ["Do you have a minute?：ちょっといい？", "update：更新する", "client：顧客", "presentation：発表、プレゼン",
+      "add A to B：BにAを加える", "sales figures：売上の数字", "quarter：四半期"]),
 ]
 
 
@@ -108,7 +111,7 @@ def countdown(img, t):
 
 
 def frame(item, stage, t=0.0, fade=1.0):
-    no, _, _, opt_a, opt_b, _ = item
+    no, _, _, opt_a, opt_b = item[:5]
     img = BG.copy()
     d = ImageDraw.Draw(img)
     d.text((110, 176), str(no), font=NUM, fill=INK, anchor="ls")
@@ -195,15 +198,17 @@ def build(items, out):
         print(f"  {start:6.2f}  {item[0]} {stage}")
 
 
-def answer_comment(items):
-    """説明・コメント欄に入れる答え。"""
-    out = ["--------------------------------------"]
-    for no, _, en, a, b, ans in items:
-        out += [f"【{no}】 答え:{ans}", en, a if ans == "A" else b, ""]
-    return "\n".join(out).rstrip() + "\n--------------------------------------"
+def answer_text(items):
+    """説明欄(キャプション)の後半に入れる答え。元の投稿と同じ形。空行には全角スペースを入れる(Instagram が空行を詰めるため)。"""
+    sp = "\u3000\u3000"
+    out = [sp, "--------------------------------------"]
+    for no, _, en, a, b, ans, words in items:
+        out += [f"【{no}】", en, a if ans == "A" else b, sp, *words, sp, f" {sp}", f"{ans}が正解。",
+                "--------------------------------------"]
+    return "\n".join(out)
 
 
 if __name__ == "__main__":
     mr.load_env()
     build(ITEMS, OUT / f"listening_{ITEMS[0][0]}.mp4")
-    print(answer_comment(ITEMS))
+    print(answer_text(ITEMS))
