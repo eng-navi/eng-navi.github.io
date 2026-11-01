@@ -1,6 +1,6 @@
 """@quizify_english の白い「英単語(初級)」リールを作る。1本に2語(受験・英検で問われるやさしめのコロケーション)。
 
-1語ごとに 英語 → 日本語の意味 → 日本語の例文 → (考える間) → 英語の例文 → 英語の例文(もう1回)の順。黒とほぼ同じで、
+1語ごとに 英語 → 日本語の意味 → 日本語の例文 → (考える間) → 英語の例文(女性)→ 英語の例文(男性)の順。黒とほぼ同じで、
 英語の例文を2回読むのが違い。間と配置は 2024年の元動画(159・161)の4語分を 0.01 秒単位で測った値の平均。
 
   .venv-tts/bin/python quizify_white.py      → out/quizify/white_<最初の番号>.mp4 と .txt(説明欄の全文)
@@ -12,19 +12,19 @@ import tempfile
 
 import numpy as np
 import soundfile as sf
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 import manga_reel as mr
 import quizify_black as qb
 
 ROOT, OUT, SR, W, H, FPS = qb.ROOT, qb.OUT, qb.SR, qb.W, qb.H, qb.FPS
 
-# 声は黒と同じ(本人の希望で、英語の例文の2回目も同じ Lily)
+# 声。英語1回目と日本語は黒と同じ。2回目は元動画と同じく低い男性(声くらべで本人が選んだ Charlie)
 EN_VOICE, EN_SPEED = qb.EN_VOICE, qb.EN_SPEED        # Lily(イギリス・女性)
-EN2_VOICE = EN_VOICE
+EN2_VOICE, EN2_SPEED = "IKne3meq5aSn9XLyUdCD", 0.94   # Charlie(男性)。元の読む長さに合わせて少しゆっくり
 JA_VOICE, JA_SPEED = qb.JA_VOICE, qb.JA_SPEED        # Nanami(音読さんの「ななみ」)
 # 音量(RMS)は黒と同じ。大きくすると山が抑えられて声が割れて聞こえるため
-LEVEL = {EN_VOICE: 0.092, JA_VOICE: 0.163}
+LEVEL = {EN_VOICE: 0.092, EN2_VOICE: 0.092, JA_VOICE: 0.163}
 
 # 間(秒)
 LEAD = 0.55        # 動画の頭 → 英語
@@ -40,11 +40,13 @@ NEXT_AFTER = 0.38  # 英語の例文(男性)が終わってから次の画面へ
 
 BG = (241, 244, 241)
 INK = (17, 19, 17)
-NUM = qb.font("EBGaramond-Italic%5Bwght%5D.ttf", 60, [400])
-TITLE = qb.font("ZenMaruGothic-Medium.ttf", 48)
-MEAN = qb.font("ZenMaruGothic-Medium.ttf", 37)
-JA = qb.font("ZenMaruGothic-Medium.ttf", 32)
-EN = qb.font("EBGaramond%5Bwght%5D.ttf", 48, [600])
+# フォントは元の Canva と同じ:英語 Cardo、日本語 筑紫A丸ゴシック(macOS の標準フォント。ダウンロードして使う)
+TSUKUSHI = "/System/Library/AssetsV2/com_apple_MobileAsset_Font7/d9a8a6ae726910080d90232eaf0edb06da712758.asset/AssetData/TsukushiAMaruGothic.ttc"
+NUM = qb.font("Cardo-Italic.ttf", 52)
+TITLE = ImageFont.truetype(TSUKUSHI, 53, index=1)
+MEAN = ImageFont.truetype(TSUKUSHI, 40, index=1)
+JA = ImageFont.truetype(TSUKUSHI, 34, index=1)
+EN = qb.font("Cardo-Bold.ttf", 44)
 
 ITEMS = [
     # 番号, 表現, 画面の意味, 読む意味, 日本語の例文, 英語の例文, 豆知識(説明欄に載せる)
@@ -64,17 +66,17 @@ def frame(item, stage):
     no, word, mean, _, ja, en = item[:6]
     im = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(im)
-    d.text((104, 176), str(no), font=NUM, fill=INK, anchor="ls")
-    qb.spaced(d, (104, 447), "英単語（初級）", TITLE, INK, 0)
+    d.text((102, 176), str(no), font=NUM, fill=INK, anchor="ls")
+    qb.spaced(d, (100, 449), "英単語（初級）", TITLE, INK, 0)
     if stage in ("word", "mean"):
         d.text((103, 620), word, font=EN, fill=INK, anchor="ls")
         if stage == "mean":
-            qb.spaced(d, (107, 784), mean, MEAN, INK, 4)
+            qb.spaced(d, (104, 785), mean, MEAN, INK, 1)
         return im
-    for i, line in enumerate(qb.wrap_ja(d, ja, JA, 460, 3)):
-        qb.spaced(d, (103, 860 + i * 60), line, JA, INK, 3)
+    for i, line in enumerate(qb.wrap_ja(d, ja, JA, 460, 1)):
+        qb.spaced(d, (101, 861 + i * 60), line, JA, INK, 1)
     if stage == "en":
-        lines = qb.wrap(d, en, EN, 470)
+        lines = qb.wrap(d, en, EN, 475)
         top = 658 - (len(lines) - 1) * 35
         for i, line in enumerate(lines):
             d.text((103, top + i * 70), line, font=EN, fill=INK, anchor="ls")
@@ -91,7 +93,7 @@ def build(items, out):
                  (qb.tts(JA_VOICE, said, JA_SPEED), MEAN_JA, "mean"),
                  (qb.tts(JA_VOICE, ja, JA_SPEED), JA_EN, "ja"),
                  (qb.tts(EN_VOICE, en, EN_SPEED), EN_EN, "en"),
-                 (qb.tts(EN2_VOICE, en, EN_SPEED), TAIL if k == len(items) - 1 else EN_NEXT, None)]
+                 (qb.tts(EN2_VOICE, en, EN2_SPEED), TAIL if k == len(items) - 1 else EN_NEXT, None)]
         for clip, gap, stage in parts:
             if stage == "word":
                 cuts.append((0.0 if k == 0 else last_end + NEXT_AFTER, item, stage))
