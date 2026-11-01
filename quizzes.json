@@ -1683,6 +1683,31 @@
     "caption": "未来のことなのに will を使わない？🚉\n時制問題でいちばん出るルールです。\n\n#英検2級 #英文法 #時制"
   },
   {
+    "no": 126,
+    "text": "Compared with last year, far more people joined the city marathon.",
+    "target": "Compared with",
+    "translation": "去年と比べて、はるかに多くの人が市民マラソンに参加した。",
+    "glossary": [
+      "compared with [to] X：Xと比べて",
+      "far more：はるかに多くの"
+    ],
+    "explanation": "「compared with X」は「Xと比べて」という意味です。\nwith の代わりに to を使って compared to X とも言います。\n比べる対象（ここでは去年）を後ろに置いて、文の頭や終わりで使います。",
+    "caption": "「〜と比べて」を英語で📊\ncompared with、長文でも会話でもよく出ます。\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 127,
+    "category": "語彙",
+    "question": "The airline offers meal ( ) to passengers whose flights are delayed.",
+    "options": [
+      "vouchers",
+      "visitors"
+    ],
+    "answer": 1,
+    "translation": "その航空会社は、フライトが遅れた乗客に食事券を提供している。",
+    "explanation": "meal voucher（食事券）は TOEIC でよく出る組み合わせです。\n遅延した乗客に「提供するもの」なので、vouchers（引換券）が自然です。\n\nしたがって、①vouchers が正解。",
+    "caption": "フライトが遅れたらもらえるもの✈️\nmeal ___、TOEIC の定番の組み合わせです。\n\n#TOEIC #TOEIC単語 #英語学習"
+  },
+  {
     "no": 128,
     "category": "助動詞",
     "question": "She ( ) be tired. She has been working since early this morning.",
@@ -1694,6 +1719,31 @@
     "translation": "彼女は疲れているにちがいない。今朝早くからずっと働いているのだから。",
     "explanation": "must には「〜しなければならない」のほかに、「〜にちがいない」という強い推量の意味があります。\n朝からずっと働いているので、疲れているはずだと考えられます。\n\nしたがって、①must が正解。",
     "caption": "must は「しなければならない」だけじゃない💡\n推量の must、使い分けられるかな？\n\n#英検2級 #助動詞 #英語学習"
+  },
+  {
+    "no": 129,
+    "text": "These five students are not representative of the whole school.",
+    "target": "representative of",
+    "translation": "この5人の生徒が、学校全体を代表しているわけではない。",
+    "glossary": [
+      "be representative of X：Xを代表している、Xの典型である",
+      "whole：全体の"
+    ],
+    "explanation": "「be representative of X」は「Xを代表している、Xの典型を表している」という意味です。\nアンケートや調査の話で、「一部の人の意見が全体を正しく表しているか」を述べるときによく使われます。",
+    "caption": "「〜を代表している」を英語で🏫\n調査やデータの長文で頻出の表現です。\n\n#英語フレーズ #英検準1級 #長文読解"
+  },
+  {
+    "no": 130,
+    "category": "品詞",
+    "question": "Our sales team has made ( ) progress this quarter.",
+    "options": [
+      "remarkably",
+      "remarkable"
+    ],
+    "answer": 2,
+    "translation": "うちの営業チームは、この四半期で目覚ましい進歩をとげた。",
+    "explanation": "空所のあとの progress（進歩）は名詞です。\n名詞を説明できるのは形容詞なので、remarkable（目覚ましい）が入ります。\n副詞の remarkably は名詞を説明できません。\n\nしたがって、②remarkable が正解。",
+    "caption": "名詞の前に入るのはどっち？📈\nTOEIC Part 5 の品詞問題、1秒で解けるかな。\n\n#TOEIC #TOEIC対策 #英文法"
   },
   {
     "no": 131,
@@ -1709,6 +1759,31 @@
     "caption": "主語が「する側」か「される側」か🌉\n受動態の基本を1問で確認しよう。\n\n#英検2級 #受動態 #英文法"
   },
   {
+    "no": 132,
+    "text": "My grandfather loved painting, and that talent seems to run in our family.",
+    "target": "run in our family",
+    "translation": "祖父は絵を描くのが大好きで、その才能はうちの家系に受け継がれているようだ。",
+    "glossary": [
+      "run in X's family：（才能・病気などが）Xの家系に受け継がれている",
+      "talent：才能"
+    ],
+    "explanation": "「run in X's family」は「Xの家系に見られる、受け継がれている」という意味です。\n才能や性格のほか、体質や病気についても使います。\nrun には「（性質などが）流れている」というイメージがあります。",
+    "caption": "「家系に受け継がれている」を英語で🎨\nrun のちょっと意外な使い方です。\n\n#英語フレーズ #英語イディオム #英検準1級"
+  },
+  {
+    "no": 133,
+    "category": "語彙",
+    "question": "The hotel follows strict safety ( ) to protect its guests.",
+    "options": [
+      "standards",
+      "destinations"
+    ],
+    "answer": 1,
+    "translation": "そのホテルは、宿泊客を守るために厳しい安全基準を守っている。",
+    "explanation": "safety standards で「安全基準」という意味になります。\nstrict（厳しい）や follow（守る）と一緒によく使われます。\n\nしたがって、①standards が正解。",
+    "caption": "「安全基準」を英語で🏨\nstrict と相性のいい名詞を選ぼう。\n\n#TOEIC #TOEIC単語 #ビジネス英語"
+  },
+  {
     "no": 134,
     "category": "助動詞",
     "question": "You ( ) bring your lunch tomorrow. Lunch will be provided.",
@@ -1720,6 +1795,31 @@
     "translation": "明日はお弁当を持ってくる必要はありません。昼食は用意されます。",
     "explanation": "don't have to は「〜する必要はない」、must not は「〜してはいけない」という禁止です。\n昼食が用意されるので、持ってくる必要がないという意味になります。\n\nしたがって、①don't have to が正解。",
     "caption": "「しなくていい」と「してはいけない」🍱\n意味が大きく変わるので要注意です。\n\n#英検2級 #助動詞 #英語学習"
+  },
+  {
+    "no": 135,
+    "text": "Her preference for tea over coffee is well known in our office.",
+    "target": "preference for tea over coffee",
+    "translation": "彼女がコーヒーより紅茶が好きなことは、うちの会社ではよく知られている。",
+    "glossary": [
+      "Z's preference for X over Y：ZがYよりXを好むこと",
+      "well known：よく知られている"
+    ],
+    "explanation": "「Z's preference for X over Y」は「ZがYよりXを好むこと」という意味です。\nover には「〜より優先して」という意味合いがあり、prefer X to Y（YよりXが好き）の名詞版と考えると覚えやすくなります。",
+    "caption": "「AよりBが好き」を名詞で言うと？☕\npreference for X over Y、英作文にも使えます。\n\n#英語フレーズ #英検準1級 #英作文"
+  },
+  {
+    "no": 136,
+    "category": "品詞",
+    "question": "Please keep all customer ( ) private.",
+    "options": [
+      "informative",
+      "information"
+    ],
+    "answer": 2,
+    "translation": "顧客情報はすべて外部にもらさないようにしてください。",
+    "explanation": "customer ___ で「顧客〇〇」という1つの名詞のかたまりを作ります。\nall のあとには名詞が必要なので、information（情報）が入ります。\ninformative（有益な）は形容詞です。\n\nしたがって、②information が正解。",
+    "caption": "customer のあとに入るのは？🔒\n名詞が2つ並ぶ形は Part 5 の頻出パターンです。\n\n#TOEIC #TOEIC対策 #英文法"
   },
   {
     "no": 137,
@@ -1735,6 +1835,31 @@
     "caption": "satisfied と satisfying、どっち？🏨\n感情を表す受け身は入試の定番です。\n\n#英検2級 #受動態 #英文法"
   },
   {
+    "no": 138,
+    "text": "With so much at stake, the team practiced every day before the final.",
+    "target": "With so much at stake",
+    "translation": "多くのものがかかっていたので、チームは決勝の前に毎日練習した。",
+    "glossary": [
+      "at stake：かかっている、危うくなっている",
+      "final：決勝戦"
+    ],
+    "explanation": "「at stake」は「（大切なものが）かかっている、危険にさらされている」という意味です。\nwith so much at stake で「あまりにも多くのものがかかっているので」という決まった言い方になります。",
+    "caption": "「多くがかかっている」を英語で🏆\nat stake、ニュースや長文の定番です。\n\n#英語フレーズ #英語イディオム #英検準1級"
+  },
+  {
+    "no": 139,
+    "category": "語彙",
+    "question": "The café uses ( ) local vegetables in all of its dishes.",
+    "options": [
+      "exclusively",
+      "intensively"
+    ],
+    "answer": 1,
+    "translation": "そのカフェは、すべての料理に地元の野菜だけを使っている。",
+    "explanation": "exclusively は「もっぱら、〜だけ」という意味です。\n「地元の野菜だけを使っている」となり、文の意味が通ります。\nintensively は「集中的に」という意味です。\n\nしたがって、①exclusively が正解。",
+    "caption": "「〜だけを使う」を1語で🥕\nexclusively、TOEIC によく出る副詞です。\n\n#TOEIC #TOEIC単語 #英語学習"
+  },
+  {
     "no": 140,
     "category": "時制",
     "question": "I'm not sure if it ( ) tomorrow.",
@@ -1748,6 +1873,31 @@
     "caption": "if のあとなのに will？☔\n「もし」の if と「かどうか」の if を見分けよう。\n\n#英検2級 #英文法 #時制"
   },
   {
+    "no": 141,
+    "text": "I thought the test would be hard, but as it turned out, it was quite easy.",
+    "target": "as it turned out",
+    "translation": "テストは難しいと思っていたが、ふたを開けてみればかなり簡単だった。",
+    "glossary": [
+      "as it turns [turned] out：ふたを開けてみれば、実際は",
+      "quite：かなり"
+    ],
+    "explanation": "「as it turns out」は「ふたを開けてみれば、実際は」という意味です。\n予想とは違う結果だったときに使い、過去の話なら as it turned out の形になります。",
+    "caption": "「ふたを開けてみれば」を英語で📝\n予想と違う結果を話すときの定番フレーズです。\n\n#英語フレーズ #英会話 #英検準1級"
+  },
+  {
+    "no": 142,
+    "category": "品詞",
+    "question": "( ), the concert was canceled because of the storm.",
+    "options": [
+      "Regrettably",
+      "Regretful"
+    ],
+    "answer": 1,
+    "translation": "残念ながら、そのコンサートは嵐のために中止になった。",
+    "explanation": "文の頭でカンマで区切られた空所には、文全体を説明する副詞が入ります。\nRegrettably（残念ながら）は Unfortunately とほぼ同じ意味です。\nRegretful（後悔している）は形容詞なので、ここには入りません。\n\nしたがって、①Regrettably が正解。",
+    "caption": "文の頭、カンマの前に入るのは？☔\n文全体を説明する副詞の見分け方です。\n\n#TOEIC #TOEIC対策 #英文法"
+  },
+  {
     "no": 143,
     "category": "受動態",
     "question": "The street was crowded ( ) tourists.",
@@ -1759,5 +1909,31 @@
     "translation": "その通りは観光客で混雑していた。",
     "explanation": "be crowded with A で「Aで混雑している」という意味です。\nbe filled with（〜で満たされている）や be covered with（〜で覆われている）と同じく、by ではなく with を使います。\n\nしたがって、②with が正解。",
     "caption": "受け身なのに by じゃない？🚶\nwith を使う受け身の表現をまとめて覚えよう。\n\n#英検2級 #受動態 #英語学習"
+  },
+  {
+    "no": 144,
+    "text": "If he really wanted the job, which I'm sure he does, he would apply right away.",
+    "target": "which I'm sure he does",
+    "translation": "もし彼が本当にその仕事をしたいなら――きっとそうだと思うけれど――すぐに応募するだろう。",
+    "glossary": [
+      ", which S do [don't]：実際にSはそうしている［いない］",
+      "apply：応募する",
+      "right away：すぐに"
+    ],
+    "explanation": "「, which S do [don't]」は、前の内容を受けて「実際にSはそうしている［していない］」と付け加える言い方です。\nここでは which I'm sure he does で「（本当にその仕事をしたいと）彼は思っているにちがいないけれど」という意味になります。",
+    "caption": "文の途中の which, 意味わかる？🤔\nネイティブがよく使う、ひとこと付け足す言い方です。\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 145,
+    "category": "語彙",
+    "question": "The two companies decided to ( ) their partnership at the end of the year.",
+    "options": [
+      "terminate",
+      "facilitate"
+    ],
+    "answer": 1,
+    "translation": "その2社は、年末で提携を終了することに決めた。",
+    "explanation": "terminate は「〜を終了させる」という意味で、契約や提携の終わりによく使われます。\nfacilitate は「〜を容易にする、促進する」という意味です。\n\nしたがって、①terminate が正解。",
+    "caption": "「契約を終わらせる」を1語で📄\nterminate、ビジネス英語の重要単語です。\n\n#TOEIC #TOEIC単語 #ビジネス英語"
   }
 ]
