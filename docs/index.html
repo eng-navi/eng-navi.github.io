@@ -250,6 +250,13 @@
   .goal b { font-size: 15px; font-weight: 700; color: var(--accent-ink); }
   .goal span { font-size: 12px; color: var(--sub); line-height: 1.5; }
   .goal small { margin-top: auto; font-size: 11px; color: #9a9a9a; }
+  /* 音声つきのページへの入口(リンク) */
+  a.goal { text-decoration: none; color: inherit; }
+  .voice-goals .goal b { color: var(--ink); }
+  .vg-listen::before { background: #9cc4d2; }
+  .vg-white::before { background: #d9d6cf; }
+  .vg-black::before { background: #2a2a2a; }
+  .vg-list::before { background: #c83430; }
   .goal:active { transform: scale(.98); }
   .goal.random { background: var(--ink); border-color: var(--ink); }
   .goal.random::before { background: linear-gradient(#456142 0 33%, #f7b6ba 33% 66%, #adc8d1 66%); }
@@ -448,7 +455,7 @@
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a[href]");
     if (!a) return;
-    const place = a.dataset.place || (a.classList.contains("nudge") ? "explanation" : a.classList.contains("reel") ? "reel" : a.closest(".rec") ? "result" : a.closest(".foot") ? "footer" : "other");
+    const place = a.dataset.place || (a.closest(".voice-goals") ? "home_voice" : a.classList.contains("nudge") ? "explanation" : a.classList.contains("reel") ? "reel" : a.closest(".rec") ? "result" : a.closest(".foot") ? "footer" : "other");
     const label = (a.querySelector("b") || a).textContent.trim().slice(0, 80);
     // ボタンの上の吹き出し(セール・無料体験)のどの言い方だったか
     const prev = a.previousElementSibling;
@@ -865,6 +872,13 @@
         ${goal("blue")}${goal("green")}${goal("pink")}
         <button class="goal random" id="random"><b>実力試し</b><span>全シリーズからランダムに10問</span><small>シャッフル</small></button>
       </div>
+      <p class="h">音声つきで鍛える</p>
+      <div class="goals voice-goals">
+        <a class="goal vg-listen" href="listening/"><b>🎧 リスニング</b><span>TOEIC Part 3・4/英検準1級〜2級</span><small>聞いて答える2択</small></a>
+        <a class="goal vg-white" href="tango/"><b>📗 英単語・熟語</b><span>英検3級〜2級・大学受験</span><small>例文と音声つき</small></a>
+        <a class="goal vg-black" href="tango-advanced/"><b>📕 瞬間英作文</b><span>英検2級〜準1級・TOEIC高得点</span><small>日本語→英語</small></a>
+        <a class="goal vg-list" href="list/"><b>💬 フレーズ集</b><span>日常会話・TOEICの表現</span><small>音声つき</small></a>
+      </div>
       <div class="more-wrap">
       ${Object.keys(cats).length ? `
         <details class="more">
@@ -877,10 +891,6 @@
       </details>
       </div>
       <nav class="links">
-        <a href="listening/"><span>🎧 リスニング問題<small>TOEIC Part 3・4/英検準1級〜2級</small></span><i>→</i></a>
-        <a href="tango/"><span>📗 英単語・熟語<small>英検3級〜2級・大学受験</small></span><i>→</i></a>
-        <a href="tango-advanced/"><span>📕 瞬間英作文<small>英検2級〜準1級・TOEIC高得点</small></span><i>→</i></a>
-        <a href="list/"><span>フレーズ集<small>音声つき</small></span><i>→</i></a>
         <a href="manga/"><span>4コマで覚える英語<small>キャラの声つき</small></span><i>→</i></a>
         <a href="q/"><span>問題一覧<small>答えと解説つき</small></span><i>→</i></a>
       </nav>
