@@ -318,7 +318,7 @@ def build(items, out):
 
 def accent_line(items):
     """説明欄の前半に添える「今回の音声」。"""
-    return "🎧 今回の音声:" + " / ".join(f"{no} {voice_for(no, k)[2]} {voice_for(no, k)[3]}" if not item[1] else str(no)
+    return "🔊 今回の音声:" + " / ".join(f"{no} {voice_for(no, k)[2]} {voice_for(no, k)[3]}" if not item[1] else str(no)
                                       for k, item in enumerate(items) for no in [item[0]])
 
 
