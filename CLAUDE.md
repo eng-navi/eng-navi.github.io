@@ -139,6 +139,7 @@ work could wait：仕事は後回しにできる
 - 元データとメモは affiliates.md、サイトに出すものは docs/recommend.js(リンク集ページ docs/links/ も自動で同じ内容)
 - 「話せない」枠は4候補(スピーク・ネイティブキャンプ・産経・TORAbit)から毎回2つ。GA4 の link_click(label)で比べ、押されないものは入れ替える
 - キャンペーン確認:3日に1回の cloud routine(https://claude.ai/code/routines/trig_01FsPKuKzzuTDpM4XSCa8S4F)がスマホに通知。「キャンペーンの素材を作って」と言われたら、Book Review 系のストーリーと Threads の #PR 投稿を作る
+- Threads の配分(2026/11 から、閲覧数の分析より):日常・気持ちの5選を1日2〜3本、TOEICの5選は1日1本まで(身近な場面)、壁単語・意外な意味・投票クイズは週に数回。新しい型「学校英語 vs ネイティブ英語」も混ぜる
 - Threads の型:5選・10選(list)/「知らないとまずい」「スコアの壁」「意外な意味」(list の reveal:最初は単語だけ、意味はツリーで)/投票クイズ/イディオム画像/4コマ。同じ型を続けない
 - 動画・画像の文字は左右に余白(manga.SAFE=120px)をとり、はみ出す場合は manga.draw_fit で改行する(iPhone SE で英文が欠けたため)
 - 4コマの声は ElevenLabs(Starter・月30,000クレジット上限のキー)。ナビ=Teddy Twinkle、ペン=Mia、部長=Gappu ka Bhai(manga_reel.py の ELEVEN)。同じセリフは out/voice_cache に保存して使い回す。--kokoro で無料の声に戻せる。ElevenLabs のプランは 11/26 に自動更新されない設定
