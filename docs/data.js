@@ -2524,5 +2524,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 131,
+    "category": "受動態",
+    "question": "This bridge ( ) by a famous architect in 1950.",
+    "options": [
+      "designed",
+      "was designed"
+    ],
+    "answer": 2,
+    "translation": "この橋は1950年に有名な建築家によって設計された。",
+    "explanation": "橋は「設計する」側ではなく「設計される」側なので、受動態〈be動詞＋過去分詞〉にします。\nin 1950 という過去の時があるので、be動詞は was です。\n\nしたがって、②was designed が正解。",
+    "audio": "audio/q131.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
