@@ -2505,5 +2505,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 130,
+    "category": "品詞",
+    "question": "Our sales team has made ( ) progress this quarter.",
+    "options": [
+      "remarkably",
+      "remarkable"
+    ],
+    "answer": 2,
+    "translation": "うちの営業チームは、この四半期で目覚ましい進歩をとげた。",
+    "explanation": "空所のあとの progress（進歩）は名詞です。\n名詞を説明できるのは形容詞なので、remarkable（目覚ましい）が入ります。\n副詞の remarkably は名詞を説明できません。\n\nしたがって、②remarkable が正解。",
+    "audio": "audio/q130.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
