@@ -2487,5 +2487,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 129,
+    "text": "These five students are not representative of the whole school.",
+    "target": "representative of",
+    "glossary": [
+      "be representative of X：Xを代表している、Xの典型である",
+      "whole：全体の"
+    ],
+    "translation": "この5人の生徒が、学校全体を代表しているわけではない。",
+    "explanation": "「be representative of X」は「Xを代表している、Xの典型を表している」という意味です。\nアンケートや調査の話で、「一部の人の意見が全体を正しく表しているか」を述べるときによく使われます。",
+    "audio": "audio/q129.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
