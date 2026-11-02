@@ -50,33 +50,95 @@ def blank(word):
     return None
 
 
+# ---- 投稿の見た目(2026/11/2〜):前に伸びた型(帯+罫線+「これ解ける❓」+「正解はこちら👇👇」)にそろえる ----
+BAR = "━━━━━━━━━━━━━━━━━━"
+
+
+def banner(label, ask, body):
+    return f"▂▅▇　{label}　▇▅▂\n\n━━━━＼ {ask} ／━━━━━━\n{body}\n{BAR}\n\n正解はこちら👇👇"
+
+
+def fill_black(it, pool):
+    """黒の例文の単語を( )にして、①② の2択。pool は ほかの単語(活用形)の候補"""
+    stem = it["word"].lower()[:5]
+    toks = it["en"].split()
+    for i, t in enumerate(toks):
+        core = re.sub(r"[^A-Za-z]", "", t)
+        if core.lower().startswith(stem):
+            wrong = random.Random(it["word"]).choice([p for p in pool if p.lower()[:4] != core.lower()[:4]])
+            q = " ".join(toks[:i] + [t.replace(core, "(　　)")] + toks[i + 1:])
+            opts = [core, wrong] if random.Random(it["en"]).random() < 0.5 else [wrong, core]
+            return q, core, opts
+    return None
+
+
+def answer_reply(ans_line, en, ja, gloss, kind):
+    return f"✅ 正解:{ans_line}\n\n{en}\n({ja})\n\n{gloss}\n\n音声つきで復習するなら🔊\n{link(kind)}"
+
+
+QUOTES = [
+    ("Imagination is more important than knowledge.", "Albert Einstein", "imagination:想像力", "想像力は知識よりも大切だ。"),
+    ("Stay hungry, stay foolish.", "Steve Jobs", "foolish:愚かな、ばかげた", "ハングリーであれ。愚か者であれ。"),
+    ("The unexamined life is not worth living.", "Socrates", "unexamined:吟味されていない\nbe worth ~ing:〜する価値がある", "吟味されない人生は、生きる価値がない。"),
+    ("That which does not kill us makes us stronger.", "Friedrich Nietzsche", "that which ~:〜するもの", "私たちを殺さないものは、私たちをより強くする。"),
+    ("Genius is one percent inspiration and ninety-nine percent perspiration.", "Thomas Edison", "inspiration:ひらめき\nperspiration:汗、努力", "天才とは1%のひらめきと99%の努力である。"),
+    ("The best way to predict the future is to invent it.", "Alan Kay", "predict:予測する\ninvent:発明する、生み出す", "未来を予測する最善の方法は、それを発明することだ。"),
+    ("Life is what happens to you while you're busy making other plans.", "John Lennon", "be busy ~ing:〜するのに忙しい", "人生とは、ほかの計画を立てるのに忙しいあいだに起こるものだ。"),
+    ("The only thing we have to fear is fear itself.", "Franklin D. Roosevelt", "fear:恐れる、恐怖\nitself:それ自体", "私たちが恐れるべき唯一のものは、恐怖そのものだ。"),
+    ("Not everything that is faced can be changed, but nothing can be changed until it is faced.", "James Baldwin", "face:向き合う", "向き合ったものすべてが変えられるわけではない。しかし、向き合うまでは何も変えられない。"),
+    ("Education is the most powerful weapon which you can use to change the world.", "Nelson Mandela", "weapon:武器\npowerful:強力な", "教育は、世界を変えるために使える最も強力な武器だ。"),
+    ("We are what we repeatedly do.", "Will Durant", "repeatedly:くり返し", "私たちは、くり返し行うことの積み重ねでできている。"),
+    ("Knowledge is power.", "Francis Bacon", "knowledge:知識", "知識は力なり。"),
+    ("The journey of a thousand miles begins with one step.", "Lao Tzu(老子)", "journey:旅\na thousand miles:千マイル", "千里の道も一歩から。"),
+    ("I think, therefore I am.", "René Descartes", "therefore:それゆえに", "我思う、ゆえに我あり。"),
+]
+
+
+def quote_post(idx):
+    en, who, gloss, ja = QUOTES[idx % len(QUOTES)]
+    head = banner("英検準1級でよく出る↓", "これ読める❓", f"{en}\n——— {who}")
+    reply = f"✅ 訳\n{ja}\n\n{gloss}\n\n英検準1級の単語を、音声つきで🔊\n{link('black')}"
+    return [(head, {}), reply]
+
+
+def phrase_post(idx):
+    """Threads の5選から1つ:日本語 → 英語(ひとこと)"""
+    lists = json.loads((ROOT / "threads_lists.json").read_text())
+    items = [it for l in lists if "TOEIC" not in l["title"] and not l.get("reveal") for it in l["items"]]
+    it = items[(idx * 7) % len(items)]
+    head = banner("ネイティブがよく使う↓", "英語で言える❓", f"「{it[1]}」\n\nヒント:{it[0][0]}…")
+    reply = f"✅ 正解:{it[0]}\n\n{it[2]}\n({it[3]})\n\nほかのフレーズも音声つきで🔊\n{SITE}/list/?utm_source=threads&utm_medium=social&utm_campaign=quizify"
+    return [(head, {}), reply]
+
+
 def posts(key, items):
-    """[(本文, 追加パラメータ), 返信の文]"""
+    """Instagram に出た回 → [(本文, 追加パラメータ), 返信]"""
     kind = key.split("_")[0]
     if kind == "listening":
         a = items[0]
-        head = (f"🎧 リスニング問題(TOEIC・英検)\n1回だけ聞いて、正しい訳はどっち?\n\n"
-                f"A) {a['a']}\nB) {a['b']}\n\n答えはツリーへ👇")
-        body = [f"【{it['no']}】 答え:{it['ans']}\n{it['en']}\n({it['a'] if it['ans'] == 'A' else it['b']})" for it in items]
-        reply = "✅ 答え合わせ\n\n" + "\n\n".join(body[:1]) + f"\n\n2問目(長めの会話)は、サイトで音声つきで解けます👇\n{link(kind)}"
+        head = banner("TOEIC・英検リスニング↓", "聞き取れる❓", f"1回だけ聞いて、正しい訳はどっち?\n\n① {a['a']}\n② {a['b']}")
+        reply = answer_reply("①" if a["ans"] == "A" else "②", a["en"], a["a"] if a["ans"] == "A" else a["b"], "2問目(長めの会話)は、サイトで解けます", kind)
         return [(head, {"video": items[0].get("_video")}), reply]
     if kind == "white":
         it = items[0]
         b = blank(it["word"])
-        if b:
+        if b and it.get("en"):
             q, ans, wrong = b
-            opts = [ans, wrong] if random.Random(it["no"]).random() < 0.5 else [wrong, ans]
-            head = f"📗 英単語クイズ(英検3級〜2級)\n\n「{it['mean']}」を英語で言うと?\n{q}\n\n( )に入るのはどっち?答えはツリーへ👇"
-            extra = {"poll_attachment": json.dumps({"option_a": opts[0], "option_b": opts[1]})}
-            reply = (f"✅ 正解は {ans}\n\n{it['word']}:{it['mean']}\n{it['en']}\n({it['ja']})"
-                     + "".join(f"\n\n{x['word']}:{x['mean']}\n{x['en']}\n({x['ja']})" for x in items[1:])
-                     + f"\n\n例文の音声はこちら🔊\n{link(kind)}")
-            return [(head, extra), reply]
-    # 黒(と前置詞のない白):日本語 → 英語
-    label = "📕 瞬間英作文(英検2級〜準1級)" if kind == "black" else "📗 英単語(英検3級〜2級)"
-    head = f"{label}\nこの日本語、英語で言える?\n\n" + "\n".join(f"{i + 1}. {it['ja']}({it['word']})" for i, it in enumerate(items)) + "\n\n答えはツリーへ👇"
-    reply = "✅ 答え\n\n" + "\n".join(f"{i + 1}. {it['en']}" for i, it in enumerate(items)) + f"\n\n音声つきで復習するなら🔊\n{link(kind)}"
-    return [(head, {}), reply]
+            sent = re.sub(rf"\b{ans}\b", "(　　)", it["en"], count=1)
+            opts = [ans, wrong] if random.Random(it.get("no") or it["word"]).random() < 0.5 else [wrong, ans]
+            head = banner("英検2級でよく出る↓", "これ解ける❓", f"{sent}\n\n① {opts[0]}　　② {opts[1]}")
+            return [(head, {}), answer_reply(f"{'①' if opts[0] == ans else '②'} {ans}", it["en"], it["ja"], f"{it['word']}:{it['mean']}", kind)]
+    if kind == "black":
+        pool = [re.sub(r"[^A-Za-z]", "", t) for x in items for t in x["en"].split() if re.sub(r"[^A-Za-z]", "", t).lower()[:5] == x["word"][:5]]
+        it = items[0]
+        f = fill_black(it, pool or [items[-1]["word"]])
+        if f:
+            q, ans, opts = f
+            head = banner("英検準1級でよく出る↓", "これ解ける❓", f"{q}\n\n① {opts[0]}　　② {opts[1]}")
+            return [(head, {}), answer_reply(f"{'①' if opts[0] == ans else '②'} {ans}", it["en"], it["ja"], f"{it['word']}:{it['mean']}", kind)]
+    it = items[0]
+    head = banner("英検でよく出る↓", "英語で言える❓", f"「{it['ja']}」\n\nヒント:{it['word']}")
+    return [(head, {}), answer_reply(it["word"], it["en"], it["ja"], f"{it['word']}:{it['mean']}", kind)]
 
 
 def publish_video(text, url):
@@ -118,42 +180,23 @@ def archive_items(kind):
 
 
 def extra_posts(item):
-    """予約表の1件 {key, at, kind, idx} → [(本文, 追加パラメータ), 返信]"""
     kind, idx = item["kind"], item["idx"]
-    its = archive_items(kind)
-    if kind == "listening":  # 文字で読む版:英文 → 正しい訳はどっち?
-        it = its[idx]
-        head = f"📖 この英文の意味はどっち?(TOEIC・英検)\n\n{it['en']}\n\n答えはツリーへ👇"
-        opts = {"option_a": "A) " + it["a"][:22], "option_b": "B) " + it["b"][:22]}
-        reply = f"✅ 正解は {it['ans']}\n\n{it['en']}\n({it['ja']})\n\n音声つきのリスニング問題はこちら🎧\n{link('listening')}"
-        return [(f"{head}\n\nA) {it['a']}\nB) {it['b']}", {"poll_attachment": json.dumps({"option_a": "A", "option_b": "B"})}), reply]
-    if kind == "black":  # 単語の意味:2択の投票
-        it = its[idx]
-        pool = [x for x in its if x.get("mean") and x["mean"] != it.get("mean") and len(x["mean"]) <= 20]
-        wrong = random.Random(it["word"]).choice(pool)["mean"]
-        right = it["mean"][:24]
-        opts = [right, wrong[:24]] if random.Random(idx).random() < 0.5 else [wrong[:24], right]
-        head = f"📕 英検準1級の単語、意味わかる?\n\n{it['word']}\n\n答えはツリーへ👇"
-        ex = f"\n{it['en']}\n({it['ja']})" if it.get("en") else ""
-        reply = f"✅ 正解は「{it['mean']}」\n\n{it['word']}:{it['mean']}{ex}\n\n準1級の単語をもっと🔊\n{link('black')}"
-        return [(head, {"poll_attachment": json.dumps({"option_a": opts[0], "option_b": opts[1]})}), reply]
-    it = its[idx]  # 白:前置詞の2択(なければ日本語→英語)
-    b = blank(it["word"])
-    if b and it.get("en"):
-        q, ans, wrong = b
-        opts = [ans, wrong] if random.Random(idx).random() < 0.5 else [wrong, ans]
-        head = f"📗 英単語クイズ(英検3級〜2級)\n\n「{it['mean']}」を英語で言うと?\n{q}\n\n( )に入るのはどっち?答えはツリーへ👇"
-        reply = f"✅ 正解は {ans}\n\n{it['word']}:{it['mean']}\n{it['en']}\n({it['ja']})\n\n例文の音声はこちら🔊\n{link('white')}"
-        return [(head, {"poll_attachment": json.dumps({"option_a": opts[0], "option_b": opts[1]})}), reply]
-    head = f"📗 この日本語、英語で言える?\n\n{it['ja']}\n(ヒント:{it['word']})\n\n答えはツリーへ👇"
-    reply = f"✅ 答え\n\n{it['en']}\n\n{it['word']}:{it['mean']}\n\n例文の音声はこちら🔊\n{link('white')}"
-    return [(head, {}), reply]
+    if kind == "quote":
+        return quote_post(idx)
+    if kind == "phrase":
+        return phrase_post(idx)
+    src = "black" if kind == "fill_black" else "white"
+    data = json.loads(DATA.read_text())  # 読み取りミスのない今の回を先に、そのあと過去の投稿
+    its = [x for k, v in data.items() if k.startswith(src) for x in v]
+    its += [x for x in archive_items(src) if x.get("en") and "  " not in x["en"] and not re.search(r"[a-z]'[a-z]{2,}we|don'tw", x["en"])]
+    it = its[idx % len(its)]
+    return posts(f"{src}_x", [it] + [x for x in its if x is not it][:6])
 
 
 def post_extra(item):
     (head, extra), reply = extra_posts(item)
     assert len(head) <= 500 and len(reply) <= 500, item
-    mid = th.publish(head, topic_tag=th.TOPIC, **extra)
+    mid = th.publish(head, topic_tag=th.TOPIC, **{k: v for k, v in extra.items() if k != "video"})
     time.sleep(5)
     th.publish(reply, reply_to_id=mid)
     return th.api("GET", mid, fields="permalink").get("permalink")
