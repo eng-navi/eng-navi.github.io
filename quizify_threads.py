@@ -181,6 +181,8 @@ def archive_items(kind):
 
 def extra_posts(item):
     kind, idx = item["kind"], item["idx"]
+    if kind.startswith("list5_"):
+        return list5_posts(kind[6:], idx)
     if kind == "quote":
         return quote_post(idx)
     if kind == "phrase":
@@ -191,6 +193,65 @@ def extra_posts(item):
     its += [x for x in archive_items(src) if x.get("en") and "  " not in x["en"] and not re.search(r"[a-z]'[a-z]{2,}we|don'tw", x["en"])]
     it = its[idx % len(its)]
     return posts(f"{src}_x", [it] + [x for x in its if x is not it][:6])
+
+
+# ---- 5選(2026/11/3〜):eng_navi で伸びている型を、試験・レベル別の中身で ----
+EMO = ["🔥", "💡", "📌", "✨", "🎯", "🧠", "📚", "⚡", "🌟", "✅"]
+LIST_TITLES = {
+    "black": [("英検準1級によく出る単語5選", "知ってたら一気に読める、準1級の頻出語📕"),
+              ("「知ってるけど言えない」準1級の単語5選", "読めても、英作文で出てこない単語たち🧠"),
+              ("長文で差がつく 準1級の単語5選", "ここが読めると、長文がスラスラ📖"),
+              ("ニュースによく出る 準1級の単語5選", "英字ニュースでよく見るやつ📰")],
+    "white": [("前置詞までセットで覚える熟語5選", "英検2級・共通テストで問われる形📗"),
+              ("入試の並べかえで出る 熟語5選", "この形、そのまま覚えると強い✍️"),
+              ("英検2級で差がつく 熟語5選", "前置詞をまちがえやすいもの中心に🎯")],
+    "listening": [("TOEIC Part 3・4 によく出る表現5選", "会話・説明文でよく聞く表現🎧"),
+                  ("TOEICリスニングで聞き取りたい表現5選", "聞こえた瞬間わかると、スコアが上がる📈"),
+                  ("ビジネス英語でそのまま使える表現5選", "TOEICにも仕事にも効く💼")],
+}
+
+
+def pool(src):
+    data = json.loads(DATA.read_text())
+    if src == "listening":
+        seen, out = set(), []
+        for k, v in data.items():
+            if not k.startswith("listening"):
+                continue
+            for it in v:
+                for w in it["words"]:
+                    en, ja = w.split("：", 1)
+                    if en.lower() not in seen and len(en) <= 30 and len(en.split()) >= 2:  # 1語だけのものは5選に向かないので外す
+                        seen.add(en.lower())
+                        ex = next((m.strip() for m in re.findall(r"[^.?!]+[.?!]", it["en"]) if en.split()[0].lower() in m.lower()), "")
+                        out.append(dict(word=en, mean=ja, en=ex[:120], ja=""))
+        return out
+    its = [x for k, v in data.items() if k.startswith(src) for x in v]
+    its += [x for x in archive_items(src) if x.get("mean") and len(x["mean"]) <= 24 and (not x.get("en") or not re.search(r"don'tw|  ", x["en"]))]
+    seen, out = set(), []
+    for x in its:
+        if x["word"].lower() not in seen:
+            seen.add(x["word"].lower())
+            out.append(x)
+    return out
+
+
+def list5_posts(src, idx):
+    p = pool(src)
+    items = [p[(idx * 5 + i) % len(p)] for i in range(5)]
+    title, hook = LIST_TITLES[src][idx % len(LIST_TITLES[src])]
+    emo = EMO[idx % 5: idx % 5 + 5]
+    head = f"{hook}\n\n【{title}】\n\n" + "\n".join(f"{emo[i]} {it['word']} = {it['mean'][:20]}" for i, it in enumerate(items))
+    used, blocks = set(), []
+    for i, it in enumerate(items):  # 同じ例文は1回だけ
+        if it.get("en") and it["en"] not in used:
+            used.add(it["en"])
+            blocks.append(f"{emo[i]} {it['word']}\n{it['en']}" + (f"\n({it['ja']})" if it.get("ja") else ""))
+    reply = ("例文で覚えよう✍️\n\n" + "\n\n".join(blocks) if blocks else "保存して、すきま時間に見返してね📌")
+    tail = f"\n\n音声つきで復習するなら🔊\n{link(src)}"
+    if len(reply) + len(tail) > 500:
+        reply = reply[: 500 - len(tail) - 1].rsplit("\n\n", 1)[0]
+    return [(head, {}), reply + tail]
 
 
 def post_extra(item):
