@@ -2543,5 +2543,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 132,
+    "text": "My grandfather loved painting, and that talent seems to run in our family.",
+    "target": "run in our family",
+    "glossary": [
+      "run in X's family：（才能・病気などが）Xの家系に受け継がれている",
+      "talent：才能"
+    ],
+    "translation": "祖父は絵を描くのが大好きで、その才能はうちの家系に受け継がれているようだ。",
+    "explanation": "「run in X's family」は「Xの家系に見られる、受け継がれている」という意味です。\n才能や性格のほか、体質や病気についても使います。\nrun には「（性質などが）流れている」というイメージがあります。",
+    "audio": "audio/q132.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
