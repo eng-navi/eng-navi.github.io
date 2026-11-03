@@ -2580,5 +2580,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 134,
+    "category": "助動詞",
+    "question": "You ( ) bring your lunch tomorrow. Lunch will be provided.",
+    "options": [
+      "don't have to",
+      "must not"
+    ],
+    "answer": 1,
+    "translation": "明日はお弁当を持ってくる必要はありません。昼食は用意されます。",
+    "explanation": "don't have to は「〜する必要はない」、must not は「〜してはいけない」という禁止です。\n昼食が用意されるので、持ってくる必要がないという意味になります。\n\nしたがって、①don't have to が正解。",
+    "audio": "audio/q134.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
