@@ -2561,5 +2561,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 133,
+    "category": "語彙",
+    "question": "The hotel follows strict safety ( ) to protect its guests.",
+    "options": [
+      "standards",
+      "destinations"
+    ],
+    "answer": 1,
+    "translation": "そのホテルは、宿泊客を守るために厳しい安全基準を守っている。",
+    "explanation": "safety standards で「安全基準」という意味になります。\nstrict（厳しい）や follow（守る）と一緒によく使われます。\n\nしたがって、①standards が正解。",
+    "audio": "audio/q133.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
