@@ -78,6 +78,20 @@ def load_log():
 
 
 def publish(text, **extra):
+    """返信(reply_to_id あり)は、失敗しても投稿全体を止めない:少し待ってやり直し、だめならリンクを外して出す。
+    本体だけ出て記録が残らず、次の回に同じ投稿が二重に出るのを防ぐ(2026/11/3 にあった)。"""
+    if extra.get("reply_to_id"):
+        for attempt, t in enumerate((text, text, re.sub(r"https?://\S+", "(リンクはプロフィールから)", text))):
+            try:
+                return _publish(t, **extra)
+            except SystemExit as e:
+                print(f"返信のやり直し {attempt + 1}: {str(e)[:120]}")
+                time.sleep(20)
+        return None
+    return _publish(text, **extra)
+
+
+def _publish(text, **extra):
     user = os.environ["THREADS_USER_ID"]
     cid = api("POST", f"{user}/threads", media_type="TEXT", text=text, **extra)["id"]
     time.sleep(3)  # 公式の推奨:作成から公開まで少し待つ
