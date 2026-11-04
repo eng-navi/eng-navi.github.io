@@ -2617,5 +2617,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 136,
+    "category": "品詞",
+    "question": "Please keep all customer ( ) private.",
+    "options": [
+      "informative",
+      "information"
+    ],
+    "answer": 2,
+    "translation": "顧客情報はすべて外部にもらさないようにしてください。",
+    "explanation": "customer ___ で「顧客〇〇」という1つの名詞のかたまりを作ります。\nall のあとには名詞が必要なので、information（情報）が入ります。\ninformative（有益な）は形容詞です。\n\nしたがって、②information が正解。",
+    "audio": "audio/q136.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
