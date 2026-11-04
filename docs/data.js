@@ -2636,5 +2636,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 137,
+    "category": "受動態",
+    "question": "I was very ( ) with the hotel service.",
+    "options": [
+      "satisfied",
+      "satisfying"
+    ],
+    "answer": 1,
+    "translation": "私はそのホテルのサービスにとても満足した。",
+    "explanation": "satisfy は「〜を満足させる」という意味なので、人が「満足する」は受け身の be satisfied with で表します。\nsatisfying は「（物事が）満足のいく」という意味です。\n\nしたがって、①satisfied が正解。",
+    "audio": "audio/q137.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
