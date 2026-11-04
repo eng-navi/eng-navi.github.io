@@ -2599,5 +2599,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 135,
+    "text": "Her preference for tea over coffee is well known in our office.",
+    "target": "preference for tea over coffee",
+    "glossary": [
+      "Z's preference for X over Y：ZがYよりXを好むこと",
+      "well known：よく知られている"
+    ],
+    "translation": "彼女がコーヒーより紅茶が好きなことは、うちの会社ではよく知られている。",
+    "explanation": "「Z's preference for X over Y」は「ZがYよりXを好むこと」という意味です。\nover には「〜より優先して」という意味合いがあり、prefer X to Y（YよりXが好き）の名詞版と考えると覚えやすくなります。",
+    "audio": "audio/q135.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
