@@ -2655,5 +2655,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 138,
+    "text": "With so much at stake, the team practiced every day before the final.",
+    "target": "With so much at stake",
+    "glossary": [
+      "at stake：かかっている、危うくなっている",
+      "final：決勝戦"
+    ],
+    "translation": "多くのものがかかっていたので、チームは決勝の前に毎日練習した。",
+    "explanation": "「at stake」は「（大切なものが）かかっている、危険にさらされている」という意味です。\nwith so much at stake で「あまりにも多くのものがかかっているので」という決まった言い方になります。",
+    "audio": "audio/q138.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
