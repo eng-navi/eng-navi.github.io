@@ -2673,5 +2673,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 139,
+    "category": "語彙",
+    "question": "The café uses ( ) local vegetables in all of its dishes.",
+    "options": [
+      "exclusively",
+      "intensively"
+    ],
+    "answer": 1,
+    "translation": "そのカフェは、すべての料理に地元の野菜だけを使っている。",
+    "explanation": "exclusively は「もっぱら、〜だけ」という意味です。\n「地元の野菜だけを使っている」となり、文の意味が通ります。\nintensively は「集中的に」という意味です。\n\nしたがって、①exclusively が正解。",
+    "audio": "audio/q139.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
