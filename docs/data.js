@@ -2692,5 +2692,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 140,
+    "category": "時制",
+    "question": "I'm not sure if it ( ) tomorrow.",
+    "options": [
+      "will rain",
+      "rains"
+    ],
+    "answer": 1,
+    "translation": "明日雨が降るかどうかはわからない。",
+    "explanation": "この if は「もし〜なら」ではなく、「〜かどうか」という意味で、sure の内容を表す名詞のかたまりです。\nこの場合は、未来のことは will を使って表します。\n\nしたがって、①will rain が正解。",
+    "audio": "audio/q140.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
