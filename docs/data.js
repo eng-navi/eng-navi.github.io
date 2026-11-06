@@ -2711,5 +2711,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 141,
+    "text": "I thought the test would be hard, but as it turned out, it was quite easy.",
+    "target": "as it turned out",
+    "glossary": [
+      "as it turns [turned] out：ふたを開けてみれば、実際は",
+      "quite：かなり"
+    ],
+    "translation": "テストは難しいと思っていたが、ふたを開けてみればかなり簡単だった。",
+    "explanation": "「as it turns out」は「ふたを開けてみれば、実際は」という意味です。\n予想とは違う結果だったときに使い、過去の話なら as it turned out の形になります。",
+    "audio": "audio/q141.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
