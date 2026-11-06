@@ -2729,5 +2729,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 142,
+    "category": "品詞",
+    "question": "( ), the concert was canceled because of the storm.",
+    "options": [
+      "Regrettably",
+      "Regretful"
+    ],
+    "answer": 1,
+    "translation": "残念ながら、そのコンサートは嵐のために中止になった。",
+    "explanation": "文の頭でカンマで区切られた空所には、文全体を説明する副詞が入ります。\nRegrettably（残念ながら）は Unfortunately とほぼ同じ意味です。\nRegretful（後悔している）は形容詞なので、ここには入りません。\n\nしたがって、①Regrettably が正解。",
+    "audio": "audio/q142.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
