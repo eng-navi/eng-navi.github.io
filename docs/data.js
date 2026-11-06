@@ -2748,5 +2748,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 143,
+    "category": "受動態",
+    "question": "The street was crowded ( ) tourists.",
+    "options": [
+      "by",
+      "with"
+    ],
+    "answer": 2,
+    "translation": "その通りは観光客で混雑していた。",
+    "explanation": "be crowded with A で「Aで混雑している」という意味です。\nbe filled with（〜で満たされている）や be covered with（〜で覆われている）と同じく、by ではなく with を使います。\n\nしたがって、②with が正解。",
+    "audio": "audio/q143.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
