@@ -2786,5 +2786,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 145,
+    "category": "語彙",
+    "question": "The two companies decided to ( ) their partnership at the end of the year.",
+    "options": [
+      "terminate",
+      "facilitate"
+    ],
+    "answer": 1,
+    "translation": "その2社は、年末で提携を終了することに決めた。",
+    "explanation": "terminate は「〜を終了させる」という意味で、契約や提携の終わりによく使われます。\nfacilitate は「〜を容易にする、促進する」という意味です。\n\nしたがって、①terminate が正解。",
+    "audio": "audio/q145.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
