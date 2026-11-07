@@ -2767,5 +2767,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 144,
+    "text": "If he really wanted the job, which I'm sure he does, he would apply right away.",
+    "target": "which I'm sure he does",
+    "glossary": [
+      ", which S do [don't]：実際にSはそうしている［いない］",
+      "apply：応募する",
+      "right away：すぐに"
+    ],
+    "translation": "もし彼が本当にその仕事をしたいなら――きっとそうだと思うけれど――すぐに応募するだろう。",
+    "explanation": "「, which S do [don't]」は、前の内容を受けて「実際にSはそうしている［していない］」と付け加える言い方です。\nここでは which I'm sure he does で「（本当にその仕事をしたいと）彼は思っているにちがいないけれど」という意味になります。",
+    "audio": "audio/q144.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
