@@ -2805,5 +2805,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 146,
+    "category": "仮定法",
+    "question": "If I ( ) you, I would take the job offer.",
+    "options": [
+      "am",
+      "were"
+    ],
+    "answer": 2,
+    "translation": "もし私があなただったら、その仕事のオファーを受けるだろう。",
+    "explanation": "現在の事実と違うことを仮定するときは、if のあとを過去形にします(仮定法過去)。\nbe動詞は、主語が I でもふつう were を使います。\n\nしたがって、②were が正解。",
+    "audio": "audio/q146.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
