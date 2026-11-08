@@ -1255,6 +1255,50 @@ GENERIC.update({
 })
 
 
+def _box(img, d, i):
+    m.shape(d, m.rrect_pts(440, 1180, 640, 1330, 8), (214, 170, 120), seed=1200)
+    d.text((540, 1255), "BOX", font=m.EN(50), fill=(120, 80, 50), anchor="mm")
+
+
+def _suitcase(img, d, i):
+    m.suitcase(d, 560, 1250, 200, color=(120, 160, 210))
+
+
+def _nosmoke(img, d, i):
+    d.ellipse([400, 650, 680, 930], outline=(220, 60, 50), width=18)
+    d.line([(440, 690), (640, 890)], fill=(220, 60, 50), width=18)
+    d.text((540, 790), "NO", font=m.EN(70), fill=INK, anchor="mm")
+
+
+def _ball(img, d, i):
+    x = 380 + (i % 24) * 14
+    d.ellipse([x - 30, 1330, x + 30, 1390], fill=(240, 200, 70), outline=INK, width=4)
+
+
+GENERIC.update({
+    "lift": dict(word="lift", short="持ち上げる", meaning="持ち上げる", pun=("リフトで", "持ち上げる lift!"),
+        chant="リフトで持ち上げる lift", chant_voice="リフトで、持ち上げる、リフト!", note="発音は「リフト」。スキー場のリフトと同じ",
+        ex_en="Can you help me lift this box?", ex_ja="この箱を持ち上げるのを手伝ってくれる?",
+        tip="give A a lift で「Aを車に乗せる」の意味も。", story=[(scene([("pen", "shock", 260)], extra=_box), "重い箱が、持ち上がらない…", ("うーん", (820, 1000))),
+        (scene([("pen", "happy", 260), ("navi", "happy", 820)], extra=_box), "リフトみたいに、持ち上げる!", ("よいしょ!", (540, 900)))], line2=("pen", "Lift!")),
+    "chase": dict(word="chase", short="追いかける", meaning="追いかける", pun=("チェイスで", "追いかける chase!"),
+        chant="チェイスで追いかける chase", chant_voice="チェイスで、追いかける、チェイス!", note="発音は「チェイス」。カーチェイスと同じ",
+        ex_en="The dog chased the ball across the park.", ex_ja="犬は公園の向こうまでボールを追いかけた",
+        tip="chase a dream で「夢を追いかける」。", story=[(scene([("pen", "happy", 300)], extra=_ball), "ボールがころころ…", ("ころころ", (800, 1000))),
+        (scene([("pen", "shock", 700)], extra=lambda img, d, i: (_speed(img, d, i), _ball(img, d, i))), "カーチェイスみたいに、追いかける!", ("ダーッ", (300, 950)))], line2=("pen", "Wait!")),
+    "ban": dict(word="ban", short="禁止する", meaning="禁止する", pun=("バン!と", "禁止する ban!"),
+        chant="バン!と禁止する ban", chant_voice="バン!と、禁止する、バン!", note="発音は「バン」",
+        ex_en="Smoking is banned in this building.", ex_ja="このビルでは喫煙が禁止されている",
+        tip="be banned from ~ing で「〜するのを禁止される」。", story=[(scene([("pen", "happy", 300)], sign="SNACK ZONE"), "オフィスでおやつタイム♪", ("もぐもぐ", (800, 1000))),
+        (scene([("navi", "smug", 300)], extra=_nosmoke), "ナビが、バン!と禁止!", ("バン!", (800, 1000)))], line2=("navi", "Banned!")),
+    "pack": dict(word="pack", short="詰める", meaning="詰める、荷造りする", pun=("パックに", "詰める pack!"),
+        chant="パックに詰める pack", chant_voice="パックに、詰める、パック!", note="発音は「パック」。牛乳パックと同じ",
+        ex_en="I packed my suitcase last night.", ex_ja="昨日の夜、スーツケースに荷物を詰めた",
+        tip="be packed with A で「Aでぎゅうぎゅう」。", story=[(scene([("pen", "happy", 260)], extra=_suitcase), "明日から旅行!", ("ワクワク", (820, 1000))),
+        (scene([("pen", "shock", 260)], extra=_suitcase), "パックみたいに、ぎゅうぎゅう!", ("ぎゅっ", (820, 1000)))], line2=("pen", "It's packed!")),
+})
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr

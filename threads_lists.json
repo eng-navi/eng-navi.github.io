@@ -3043,5 +3043,485 @@
       "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
       "url": "https://link.amazon/B0159dCGh"
     }
+  },
+  {
+    "id": 66,
+    "title": "TOEICで出る「会社の数字」英語5選",
+    "hook": "売上・価格の話でよく出る表現📈",
+    "items": [
+      [
+        "an increase in sales",
+        "売上の増加",
+        "We saw an increase in sales after the ad.",
+        "広告のあと、売上が増えた",
+        "📈"
+      ],
+      [
+        "a decrease in price",
+        "価格の下落",
+        "There was a decrease in price this month.",
+        "今月は価格が下がった",
+        "📉"
+      ],
+      [
+        "market research",
+        "市場調査",
+        "We did market research before the launch.",
+        "発売前に市場調査をした",
+        "🔍"
+      ],
+      [
+        "company policy",
+        "会社の方針",
+        "Company policy doesn't allow pets.",
+        "会社の方針でペットは禁止だ",
+        "📋"
+      ],
+      [
+        "a manufacturing plant",
+        "製造工場",
+        "They opened a new manufacturing plant.",
+        "新しい製造工場を開いた",
+        "🏭"
+      ]
+    ],
+    "closing": "数字の場面、聞き取れるかな?🎧",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 67,
+    "title": "TOEICで出る「場所・施設」英語5選",
+    "hook": "Part 1・3 によく出る場所の表現🏢",
+    "items": [
+      [
+        "a construction site",
+        "建設現場",
+        "Wear a helmet at the construction site.",
+        "建設現場ではヘルメットをかぶって",
+        "🚧"
+      ],
+      [
+        "a convention center",
+        "会議場",
+        "The event is at the convention center.",
+        "イベントは会議場で行われる",
+        "🏛️"
+      ],
+      [
+        "a law firm",
+        "法律事務所",
+        "She works at a law firm downtown.",
+        "彼女は街中の法律事務所で働いている",
+        "⚖️"
+      ],
+      [
+        "public transportation",
+        "公共交通機関",
+        "I use public transportation to get to work.",
+        "通勤には公共交通機関を使う",
+        "🚌"
+      ],
+      [
+        "go sightseeing",
+        "観光する",
+        "We went sightseeing after the conference.",
+        "会議のあと観光した",
+        "📸"
+      ]
+    ],
+    "closing": "場所の英語、保存して見返してね📌",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 68,
+    "title": "「ちょっと待って」を伝える英語5選",
+    "hook": "Wait だけじゃない、待ってもらう言い方⏳",
+    "items": [
+      [
+        "Hold on.",
+        "ちょっと待って",
+        "Hold on. Let me get my bag.",
+        "ちょっと待って。かばん取ってくる",
+        "✋"
+      ],
+      [
+        "Just a sec.",
+        "すぐだから",
+        "Just a sec! I'm almost ready.",
+        "すぐだから!もうすぐ準備できる",
+        "⏱️"
+      ],
+      [
+        "Give me a minute.",
+        "少し時間をちょうだい",
+        "Give me a minute to think.",
+        "考えるから少し時間をちょうだい",
+        "🤔"
+      ],
+      [
+        "Hang on.",
+        "待ってて",
+        "Hang on, I'll be right there.",
+        "待ってて、すぐ行くから",
+        "📞"
+      ],
+      [
+        "Bear with me.",
+        "ちょっと辛抱して",
+        "Bear with me. This will take a moment.",
+        "ちょっと辛抱して。少しかかるから",
+        "🙏"
+      ]
+    ],
+    "closing": "どれが使いやすい?コメントで教えてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 69,
+    "title": "気持ちをやわらげる英語5選",
+    "hook": "言いにくいことを、角を立てずに伝える🕊️",
+    "items": [
+      [
+        "I'm afraid ~",
+        "あいにく〜",
+        "I'm afraid I can't come tomorrow.",
+        "あいにく明日は行けないんだ",
+        "🙇"
+      ],
+      [
+        "Would you mind ~ing?",
+        "〜してもらえますか",
+        "Would you mind closing the window?",
+        "窓を閉めてもらえますか",
+        "🪟"
+      ],
+      [
+        "It might be better to ~",
+        "〜したほうがいいかも",
+        "It might be better to leave early.",
+        "早めに出たほうがいいかも",
+        "💡"
+      ],
+      [
+        "I was wondering if ~",
+        "〜していただけないかと思って",
+        "I was wondering if you could help me.",
+        "手伝っていただけないかと思って",
+        "🤲"
+      ],
+      [
+        "No offense, but ~",
+        "悪気はないんだけど",
+        "No offense, but this soup is too salty.",
+        "悪気はないんだけど、このスープしょっぱい",
+        "😅"
+      ]
+    ],
+    "closing": "大人の言い方、保存しておいてね📌",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 70,
+    "title": "「疲れた」を表す英語5選",
+    "hook": "tired だけじゃない、疲れの言い方😮‍💨",
+    "items": [
+      [
+        "I'm exhausted.",
+        "くたくた",
+        "I worked 12 hours. I'm exhausted.",
+        "12時間働いた。くたくた",
+        "🥱"
+      ],
+      [
+        "I'm worn out.",
+        "疲れ果てた",
+        "The kids wore me out today.",
+        "今日は子どもたちに疲れ果てた",
+        "🫠"
+      ],
+      [
+        "I'm drained.",
+        "気力がない",
+        "That meeting left me drained.",
+        "あの会議で気力を使い果たした",
+        "🔋"
+      ],
+      [
+        "I'm burned out.",
+        "燃え尽きた",
+        "I'm burned out from work.",
+        "仕事で燃え尽きた",
+        "🔥"
+      ],
+      [
+        "I need a break.",
+        "休みたい",
+        "I need a break. Let's get coffee.",
+        "休みたい。コーヒー行こう",
+        "☕"
+      ]
+    ],
+    "closing": "今日のあなたはどれ?コメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 71,
+    "title": "TOEICで出る「会議・打ち合わせ」英語5選②",
+    "hook": "会議の場面でよく聞く表現🗓️",
+    "items": [
+      [
+        "reschedule a meeting",
+        "会議の日程を変更する",
+        "Can we reschedule the meeting to Friday?",
+        "会議を金曜に変更できますか",
+        "📅"
+      ],
+      [
+        "be on the agenda",
+        "議題にのぼっている",
+        "The budget is on the agenda today.",
+        "今日は予算が議題だ",
+        "📝"
+      ],
+      [
+        "take notes",
+        "メモを取る",
+        "Could you take notes during the meeting?",
+        "会議中にメモを取ってもらえますか",
+        "🗒️"
+      ],
+      [
+        "wrap up",
+        "締めくくる",
+        "Let's wrap up the meeting.",
+        "会議を締めくくりましょう",
+        "🎁"
+      ],
+      [
+        "follow up on",
+        "〜について追って連絡する",
+        "I'll follow up on this by email.",
+        "この件はメールで追って連絡します",
+        "📧"
+      ]
+    ],
+    "closing": "会議の英語、聞き取れるかな?🎧",
+    "book": {
+      "name": "TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ",
+      "note": "TOEICによく出る会社・生活の英語を、音声つきで",
+      "url": "https://link.amazon/B09qOB6Ou"
+    }
+  },
+  {
+    "id": 72,
+    "title": "ほめられたときに返す英語5選",
+    "hook": "Thank you だけじゃない、うれしい返し方😊",
+    "items": [
+      [
+        "That means a lot.",
+        "そう言ってもらえてうれしい",
+        "Thanks. That means a lot to me.",
+        "ありがとう。そう言ってもらえてうれしい",
+        "💖"
+      ],
+      [
+        "You made my day.",
+        "おかげでいい日になった",
+        "Your message made my day.",
+        "あなたのメッセージで最高の日になった",
+        "🌞"
+      ],
+      [
+        "I'm flattered.",
+        "光栄です",
+        "Me? I'm flattered.",
+        "私が?光栄です",
+        "😳"
+      ],
+      [
+        "You're too kind.",
+        "優しすぎるよ",
+        "You're too kind. It was nothing.",
+        "優しすぎるよ。大したことないって",
+        "🤗"
+      ],
+      [
+        "I couldn't have done it without you.",
+        "あなたのおかげだよ",
+        "Thanks, but I couldn't have done it without you.",
+        "ありがとう、でもあなたのおかげだよ",
+        "🤝"
+      ]
+    ],
+    "closing": "誰かにほめられたら使ってみてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 73,
+    "title": "「最高!」を表す英語5選",
+    "hook": "Good より上の気持ちを伝える🙌",
+    "items": [
+      [
+        "Awesome!",
+        "最高!",
+        "The concert was awesome!",
+        "ライブ最高だった!",
+        "🎸"
+      ],
+      [
+        "It's out of this world.",
+        "この世のものとは思えない",
+        "This cake is out of this world.",
+        "このケーキ、別次元においしい",
+        "🌌"
+      ],
+      [
+        "Couldn't be better.",
+        "これ以上ないくらい最高",
+        "How's work? — Couldn't be better.",
+        "仕事どう?—これ以上ないくらい最高",
+        "💯"
+      ],
+      [
+        "It's to die for.",
+        "たまらない",
+        "Their pizza is to die for.",
+        "あそこのピザはたまらない",
+        "🍕"
+      ],
+      [
+        "It blew my mind.",
+        "衝撃的だった",
+        "That movie blew my mind.",
+        "あの映画は衝撃的だった",
+        "🤯"
+      ]
+    ],
+    "closing": "最近「最高!」だったことは?コメントしてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 74,
+    "title": "「迷う・決められない」を表す英語5選",
+    "hook": "優柔不断なときに使える英語🤷",
+    "items": [
+      [
+        "I'm torn.",
+        "決めきれない",
+        "I'm torn between the red one and the blue one.",
+        "赤と青で決めきれない",
+        "⚖️"
+      ],
+      [
+        "I can't make up my mind.",
+        "決心がつかない",
+        "I can't make up my mind about the trip.",
+        "旅行に行くか決心がつかない",
+        "🌀"
+      ],
+      [
+        "I'm on the fence.",
+        "迷っている",
+        "I'm still on the fence about the job.",
+        "その仕事、まだ迷ってる",
+        "🚧"
+      ],
+      [
+        "Let me sleep on it.",
+        "一晩考えさせて",
+        "It sounds good, but let me sleep on it.",
+        "いいね、でも一晩考えさせて",
+        "🛏️"
+      ],
+      [
+        "It's up to you.",
+        "あなたが決めて",
+        "Italian or Chinese? It's up to you.",
+        "イタリアンか中華?あなたが決めて",
+        "👉"
+      ]
+    ],
+    "closing": "迷ったときに使ってみてね💬",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
+  },
+  {
+    "id": 75,
+    "title": "朝のあいさつ・雑談の英語5選",
+    "hook": "朝の会話でそのまま使える☀️",
+    "items": [
+      [
+        "Morning!",
+        "おはよう!(くだけた言い方)",
+        "Morning! Did you sleep well?",
+        "おはよう!よく寝れた?",
+        "🌅"
+      ],
+      [
+        "How's it going?",
+        "調子どう?",
+        "Hey, how's it going?",
+        "やあ、調子どう?",
+        "👋"
+      ],
+      [
+        "I'm not fully awake yet.",
+        "まだ目が覚めてない",
+        "Sorry, I'm not fully awake yet.",
+        "ごめん、まだ目が覚めてなくて",
+        "😪"
+      ],
+      [
+        "I overslept.",
+        "寝坊した",
+        "I overslept and missed breakfast.",
+        "寝坊して朝ごはん食べそびれた",
+        "⏰"
+      ],
+      [
+        "Have a good one!",
+        "よい一日を!",
+        "See you later. Have a good one!",
+        "またね。よい一日を!",
+        "✨"
+      ]
+    ],
+    "closing": "明日の朝、1つ使ってみてね☀️",
+    "book": {
+      "name": "英語の壁を乗り越えるセットフレーズ1000",
+      "note": "知ってる単語なのに意味が変わるフレーズを、穴埋めクイズで",
+      "url": "https://link.amazon/B0159dCGh"
+    }
   }
 ]

@@ -1242,6 +1242,63 @@ SCRIPTS.update({
 })
 
 
+def i_couldnt_agree_more():
+    img, boxes, pw, ph = m.comic("I couldn't agree more")
+    x0, y0, d = _p(img, boxes, 0, 191)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "normal")
+    m.penguin(d, x0 + pw * 0.74, y0 + ph * 0.7, 120, "normal", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 180), "Let's take a break.", "休憩しよう", 1)
+    x0, y0, d = _p(img, boxes, 1, 192)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "happy", hat_on=False)
+    sparkle(d, x0 + pw * 0.82, y0 + ph * 0.48)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "I couldn't agree more!", "大賛成!", 2)
+    x0, y0, d = _p(img, boxes, 2, 193)
+    m.clock(d, x0 + pw * 0.82, y0 + ph * 0.5, 40)
+    m.owl(d, x0 + pw * 0.36, y0 + ph * 0.66, 150, "smug")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.36, y0 + 200), "...We started five\nminutes ago.", "…5分前に始めたばかりだけど", 3)
+    x0, y0, d = _p(img, boxes, 3, 194)
+    m.capybara(d, x0 + pw * 0.6, y0 + ph * 0.7, 180, "calm")
+    m.zzz(img, x0 + pw * 0.3, y0 + ph * 0.46)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.55, y0 + ph * 0.5), "Zzz... I couldn't\nagree more...", "Zzz…大賛成…", 4)
+    return m._end(img)
+
+
+def its_a_steal():
+    img, boxes, pw, ph = m.comic("It's a steal!")
+    x0, y0, d = _p(img, boxes, 0, 195)
+    m.board(d, x0 + pw * 0.52, y0 + ph * 0.42, x0 + pw * 0.92, y0 + ph * 0.58, "SALE")
+    m.penguin(d, x0 + pw * 0.3, y0 + ph * 0.7, 140, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 200), "This jacket is only\nten dollars!", "このジャケット、たった10ドル!", 1)
+    x0, y0, d = _p(img, boxes, 1, 196)
+    m.owl(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "shock")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "Wow! It's a steal!", "めちゃくちゃお得!", 2)
+    x0, y0, d = _p(img, boxes, 2, 197)
+    m.penguin(d, x0 + pw * 0.5, y0 + ph * 0.66, 170, "smug", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "So I bought five.", "だから5着買った", 3)
+    x0, y0, d = _p(img, boxes, 3, 198)
+    m.owl(d, x0 + pw * 0.2, y0 + ph * 0.78, 100, "shock")
+    m.capybara(d, x0 + pw * 0.66, y0 + ph * 0.72, 150, "calm")
+    m.penguin(d, x0 + pw * 0.42, y0 + ph * 0.78, 100, "happy", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + ph * 0.5), "Thanks for the gift.\nWe match.", "プレゼントありがとう。おそろいだね", 4)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "i_couldnt_agree_more": dict(draw=i_couldnt_agree_more, word="I couldn't agree more", hook="「大賛成!」って英語で?", meaning="大賛成だ、まったく同感だ", level="英検2級レベル",
+        ex_en="Pizza for dinner? I couldn't agree more.", ex_ja="夕食はピザ?大賛成!",
+        words=[("take a break", "休憩する"), ("couldn't", "can't の過去形(ここでは「これ以上〜できない」)"), ("start", "始める"), ("ago", "〜前に"), ("five minutes", "5分")],
+        panels=[[("navi", "Let's take a break.")], [("pen", "I couldn't agree more!")], [("navi", "...We started five minutes ago.")],
+                [("boss", "Zzz... I couldn't agree more...")]],
+        explain=[("navi", "I couldn't agree more."), ("pen", "Pizza for dinner? I couldn't agree more.")]),
+    "its_a_steal": dict(draw=its_a_steal, word="It's a steal!", hook="「めちゃくちゃお得!」英語で?", meaning="めちゃくちゃお得だ、格安だ", level="英検2級レベル",
+        ex_en="Only twenty dollars for these shoes? It's a steal!", ex_ja="この靴がたった20ドル?めちゃくちゃお得!",
+        words=[("jacket", "ジャケット"), ("only", "たった"), ("bought", "buy の過去形"), ("gift", "プレゼント"), ("match", "おそろいだ、合う")],
+        panels=[[("pen", "This jacket is only ten dollars!")], [("navi", "Wow! It's a steal!")], [("pen", "So I bought five.")],
+                [("boss", "Thanks for the gift. We match.")]],
+        explain=[("navi", "It's a steal!"), ("pen", "Only twenty dollars for these shoes? It's a steal!")]),
+})
+
+
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)
