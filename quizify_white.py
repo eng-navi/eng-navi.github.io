@@ -123,6 +123,33 @@ REELS = [
               "その先生は私の人生に大きな影響を与えた。", "The teacher had a great influence on my life.",
               ["前置詞は on", "effect は「結果としての影響」、influence は「人や考え方への影響」のイメージ", "形容詞は influential(影響力のある)"]),
          ]),
+    dict(intro="to のあとの形、セットで言えるかな?🗣️\n今日は「〜しがち」「〜することを求められる」の2つです。", tags="#英単語 #英文法 #英検2級",
+         items=[
+             (179, "tend to do", "〜しがちである、〜する傾向がある", "しがちである",
+              "私は週末に夜ふかししがちだ。", "I tend to stay up late on weekends.",
+              ["to のあとは動詞の原形", "名詞は tendency(傾向)", "have a tendency to do でも同じ意味"]),
+             (180, "be required to do", "〜することを求められる", "することを求められる",
+              "乗客はシートベルトを締めることが求められている。", "Passengers are required to wear seat belts.",
+              ["require A to do(Aに〜することを求める)の受け身", "名詞は requirement(必要条件)", "TOEIC の注意書きによく出ます"]),
+         ]),
+    dict(intro="入試・英検でよく問われる形です📝\n今日は「AをBと言う」「〜から利益を得る」の2つ。", tags="#英単語 #大学受験 #共通テスト",
+         items=[
+             (181, "describe A as B", "AをBと言う、AをBだと説明する", "AをBと言う",
+              "多くの人が彼を天才だと言う。", "Many people describe him as a genius.",
+              ["as のあとには名詞や形容詞", "regard A as B(AをBとみなす)と同じ形", "名詞は description(説明)"]),
+             (182, "benefit from A", "〜から利益を得る、〜で得をする", "から利益を得る",
+              "生徒たちは新しいプログラムから恩恵を受けた。", "Students benefited from the new program.",
+              ["前置詞は from", "benefit A で「Aのためになる」の形も", "形容詞は beneficial(有益な)"]),
+         ]),
+    dict(intro="会話でも長文でも使える表現です✨\n今日は「〜に限られる」「何があっても」の2つ。", tags="#英単語 #英会話 #英検2級",
+         items=[
+             (183, "be limited to A", "〜に限られている", "に限られている",
+              "参加者は30人に限られている。", "The number of participants is limited to thirty.",
+              ["前置詞は to", "limited edition で「限定版」", "名詞は limit(限度)・limitation(制限)"]),
+             (184, "no matter what", "何があっても、たとえ何が〜でも", "何があっても",
+              "何があっても、あなたの味方だよ。", "I'll support you no matter what.",
+              ["no matter what happens(何が起きても)の happens が省略された形", "no matter how / where / who も同じ仲間", "whatever とほぼ同じ意味"]),
+         ]),
 ]
 ITEMS = [it for r in REELS for it in r["items"]]
 

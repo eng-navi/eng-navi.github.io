@@ -1140,6 +1140,69 @@
    "status": "予定",
    "date": "2026-11-08",
    "source": null
+  },
+  {
+   "word": "petition",
+   "no": 301,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "habitual",
+   "no": 302,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "daring",
+   "no": 303,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "thrive",
+   "no": 304,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "compartment",
+   "no": 305,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "accelerate",
+   "no": 306,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "descendant",
+   "no": 307,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "decay",
+   "no": 308,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "refine",
+   "no": 309,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
   }
  ],
  "white": [
@@ -1860,6 +1923,48 @@
   {
    "word": "have an influence on A",
    "no": 178,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "tend to do",
+   "no": 179,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "be required to do",
+   "no": 180,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "describe A as B",
+   "no": 181,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "benefit from A",
+   "no": 182,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "be limited to A",
+   "no": 183,
+   "status": "予定",
+   "date": "2026-11-08",
+   "source": null
+  },
+  {
+   "word": "no matter what",
+   "no": 184,
    "status": "予定",
    "date": "2026-11-08",
    "source": null

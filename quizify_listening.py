@@ -172,6 +172,42 @@ REELS = [
               ["traffic update：交通情報", "strong wind：強風", "suspend：一時停止する、見合わせる", "service：運行",
                "be expected to do：…する見込みである", "resume：再開する"]),
          ]),
+    dict(intro="🎧 1回だけ聞いて、正しい訳を選べる?\n今日は「場所をたずねる質問」と「会議室の予約」です。", tags="#TOEICリスニング #TOEIC対策 #英語耳",
+         items=[
+             (161, None, "Where should I put these boxes?",
+              "この箱はどこに置けばいいですか。", "この箱はいつ運べばいいですか。", "A",
+              ["put：置く", "box：箱"]),
+             (162, None, "Hi, this is Lisa from the sales team. I'd like to book the large conference room for Thursday afternoon. "
+              "We're expecting about twenty visitors from a client company. Could you also set up a projector for us?",
+              "営業チームのリサです。木曜日の午後に大会議室を予約したいのですが。取引先から20人ほど来客があります。プロジェクターの準備もお願いできますか。",
+              "営業チームのリサです。金曜日の午前に小会議室を予約したいのですが。取引先から10人ほど来客があります。マイクの準備もお願いできますか。",
+              "A",
+              ["book：予約する", "conference room：会議室", "expect：(来客などを)見込む", "client：取引先、顧客", "set up：準備する、設置する", "projector：プロジェクター"]),
+         ]),
+    dict(intro="🎧 聞き取れたら上級者!\n今日は「提案への返事」と「店内アナウンス」です。", tags="#TOEIC #リスニング対策 #スキマ時間",
+         items=[
+             (163, None, "Why don't we take a short break?",
+              "少し休憩しませんか。", "少し早く帰りませんか。", "A",
+              ["Why don't we ~?：〜しませんか", "take a break：休憩する"]),
+             (164, None, "Attention, shoppers. Our store will close in thirty minutes. Please bring your items to the registers on the first floor. "
+              "Also, all winter coats are twenty percent off until the end of the day.",
+              "お客様にお知らせします。当店はあと1時間で閉店いたします。商品は2階のレジへお持ちください。また、冬物の靴は本日に限り半額です。",
+              "お客様にお知らせします。当店はあと30分で閉店いたします。商品は1階のレジへお持ちください。また、冬物のコートは本日中20パーセント引きです。",
+              "B",
+              ["Attention, shoppers.：お客様にお知らせします", "close：閉店する", "register：レジ", "item：商品", "~ percent off：〜パーセント引き"]),
+         ]),
+    dict(intro="🎧 似ている訳にだまされないで!\n今日は「誰の担当か」と「工場見学の案内」です。", tags="#TOEICリスニング #ビジネス英語 #英語学習",
+         items=[
+             (165, None, "Who's going to lead the training session?",
+              "研修を担当するのは誰ですか。", "研修に参加するのは誰ですか。", "A",
+              ["lead：(会などを)担当する、進める", "training session：研修"]),
+             (166, None, "Welcome to our factory tour. Today, you'll see how we make our chocolate, from the beans to the final package. "
+              "For safety reasons, please wear the hair nets we handed out and don't touch any of the machines.",
+              "工場見学へようこそ。今日は、豆から最後の包装まで、チョコレートの作り方をご覧いただきます。安全のため、お配りした帽子をかぶり、機械には触れないでください。",
+              "工場見学へようこそ。今日は、豆から最後の包装まで、チョコレートの作り方をご覧いただきます。安全のため、お配りしたヘアネットをつけ、機械には一切触れないでください。",
+              "B",
+              ["factory tour：工場見学", "package：包装", "for safety reasons：安全のため", "hair net：ヘアネット", "hand out：配る", "machine：機械"]),
+         ]),
 ]
 
 

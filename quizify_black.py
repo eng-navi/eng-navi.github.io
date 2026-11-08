@@ -125,6 +125,33 @@ REELS = [
              (300, "surplus", "余り、黒字", "黒字", "その会社は今年、予算が黒字だった。", "The company had a budget surplus this year.",
               ["反対は deficit(赤字、不足)", "trade surplus で「貿易黒字」", "sur(上に)+ plus(より多く)"]),
          ]),
+    dict(intro="長文で差がつく準1級単語です📖\n今日は「嘆願書」「習慣的な」「大胆な」の3語。", tags="#英検準1級 #英単語 #瞬間英作文",
+         items=[
+             (301, "petition", "嘆願書、請願", "嘆願書", "1,000人以上が嘆願書に署名した。", "Over 1,000 people signed the petition.",
+              ["sign a petition で「嘆願書に署名する」", "動詞で「請願する」", "社会問題の長文によく出ます"]),
+             (302, "habitual", "習慣的な、いつもの", "習慣的な", "彼はいつも朝寝坊だ。", "He is a habitual late riser.",
+              ["名詞は habit(習慣)", "habitually で「習慣的に」", "a habitual smoker で「常習的な喫煙者」"]),
+             (303, "daring", "大胆な、思い切った", "大胆な", "それは大胆な計画だった。", "It was a daring plan.",
+              ["動詞の dare(思い切って〜する)から", "bold とほぼ同じ意味", "名詞で「大胆さ」の意味も"]),
+         ]),
+    dict(intro="ニュースでよく見る準1級単語です📰\n今日は「繁栄する」「収納場所」「加速する」の3語。", tags="#英検準1級 #時事英語 #英単語",
+         items=[
+             (304, "thrive", "繁栄する、元気に育つ", "繁栄する", "この植物は暖かい気候でよく育つ。", "These plants thrive in warm weather.",
+              ["flourish・prosper と近い意味", "thrive on A で「Aを糧にして元気になる」", "ビジネスの記事では「(会社が)成長する」"]),
+             (305, "compartment", "区画、仕切り", "区画", "かばんは頭上の収納棚に入れてください。", "Put your bag in the overhead compartment.",
+              ["飛行機の overhead compartment(頭上の収納棚)でよく出ます", "電車の「車室」の意味も", "part(部分)が入っています"]),
+             (306, "accelerate", "加速する、早める", "加速する", "新しいシステムで作業が速くなる。", "The new system will accelerate the process.",
+              ["名詞は acceleration(加速)", "車のアクセルは accelerator", "反対は slow down / decelerate"]),
+         ]),
+    dict(intro="理系の長文にも出る準1級単語です🔬\n今日は「子孫」「腐る」「洗練する」の3語。", tags="#英検準1級 #長文読解 #瞬間英作文",
+         items=[
+             (307, "descendant", "子孫", "子孫", "彼はその有名な画家の子孫だ。", "He is a descendant of the famous painter.",
+              ["反対は ancestor(祖先)", "動詞の descend(下る)から:代々下っていく人", "a descendant of A で「Aの子孫」"]),
+             (308, "decay", "腐る、衰える", "腐る", "砂糖は虫歯の原因になる。", "Sugar can cause your teeth to decay.",
+              ["tooth decay で「虫歯」", "rot とほぼ同じ意味", "建物や制度が「衰える」にも使えます"]),
+             (309, "refine", "洗練する、改良する", "洗練する", "彼女はイベントの前にスピーチを磨いた。", "She refined her speech before the event.",
+              ["形容詞 refined は「洗練された、精製された」", "refined sugar で「精製糖」", "名詞は refinement(改良、洗練)"]),
+         ]),
 ]
 ITEMS = [it for r in REELS for it in r["items"]]
 

@@ -351,6 +351,138 @@
    "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_672aa3aa9c6c.mp3"
   }
  ],
+ "black_301": [
+  {
+   "no": 301,
+   "word": "petition",
+   "mean": "嘆願書、請願",
+   "ja": "1,000人以上が嘆願書に署名した。",
+   "en": "Over 1,000 people signed the petition.",
+   "tips": [
+    "sign a petition で「嘆願書に署名する」",
+    "動詞で「請願する」",
+    "社会問題の長文によく出ます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b5345d3bd141.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_71c03b455c7e.mp3"
+  },
+  {
+   "no": 302,
+   "word": "habitual",
+   "mean": "習慣的な、いつもの",
+   "ja": "彼はいつも朝寝坊だ。",
+   "en": "He is a habitual late riser.",
+   "tips": [
+    "名詞は habit(習慣)",
+    "habitually で「習慣的に」",
+    "a habitual smoker で「常習的な喫煙者」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_2fd2a60fd2ba.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_816989208195.mp3"
+  },
+  {
+   "no": 303,
+   "word": "daring",
+   "mean": "大胆な、思い切った",
+   "ja": "それは大胆な計画だった。",
+   "en": "It was a daring plan.",
+   "tips": [
+    "動詞の dare(思い切って〜する)から",
+    "bold とほぼ同じ意味",
+    "名詞で「大胆さ」の意味も"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_aa004d4e6bd6.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f62480c9ab04.mp3"
+  }
+ ],
+ "black_304": [
+  {
+   "no": 304,
+   "word": "thrive",
+   "mean": "繁栄する、元気に育つ",
+   "ja": "この植物は暖かい気候でよく育つ。",
+   "en": "These plants thrive in warm weather.",
+   "tips": [
+    "flourish・prosper と近い意味",
+    "thrive on A で「Aを糧にして元気になる」",
+    "ビジネスの記事では「(会社が)成長する」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_6a5957e6d64d.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_4afc9f130232.mp3"
+  },
+  {
+   "no": 305,
+   "word": "compartment",
+   "mean": "区画、仕切り",
+   "ja": "かばんは頭上の収納棚に入れてください。",
+   "en": "Put your bag in the overhead compartment.",
+   "tips": [
+    "飛行機の overhead compartment(頭上の収納棚)でよく出ます",
+    "電車の「車室」の意味も",
+    "part(部分)が入っています"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_3fbbbe8ceab0.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_0ddf694fb60d.mp3"
+  },
+  {
+   "no": 306,
+   "word": "accelerate",
+   "mean": "加速する、早める",
+   "ja": "新しいシステムで作業が速くなる。",
+   "en": "The new system will accelerate the process.",
+   "tips": [
+    "名詞は acceleration(加速)",
+    "車のアクセルは accelerator",
+    "反対は slow down / decelerate"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_358e65d758e4.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_cef5e65dd179.mp3"
+  }
+ ],
+ "black_307": [
+  {
+   "no": 307,
+   "word": "descendant",
+   "mean": "子孫",
+   "ja": "彼はその有名な画家の子孫だ。",
+   "en": "He is a descendant of the famous painter.",
+   "tips": [
+    "反対は ancestor(祖先)",
+    "動詞の descend(下る)から:代々下っていく人",
+    "a descendant of A で「Aの子孫」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_15a772d41acb.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_039c2eb151e8.mp3"
+  },
+  {
+   "no": 308,
+   "word": "decay",
+   "mean": "腐る、衰える",
+   "ja": "砂糖は虫歯の原因になる。",
+   "en": "Sugar can cause your teeth to decay.",
+   "tips": [
+    "tooth decay で「虫歯」",
+    "rot とほぼ同じ意味",
+    "建物や制度が「衰える」にも使えます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_919087b37343.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_1e2d6d892fd2.mp3"
+  },
+  {
+   "no": 309,
+   "word": "refine",
+   "mean": "洗練する、改良する",
+   "ja": "彼女はイベントの前にスピーチを磨いた。",
+   "en": "She refined her speech before the event.",
+   "tips": [
+    "形容詞 refined は「洗練された、精製された」",
+    "refined sugar で「精製糖」",
+    "名詞は refinement(改良、洗練)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_867ebc8116c6.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_cf7098264507.mp3"
+  }
+ ],
  "white_163": [
   {
    "no": 163,
@@ -589,6 +721,96 @@
    ],
    "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_9010c30c3737.mp3",
    "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ff99b918cb8a.mp3"
+  }
+ ],
+ "white_179": [
+  {
+   "no": 179,
+   "word": "tend to do",
+   "mean": "〜しがちである、〜する傾向がある",
+   "ja": "私は週末に夜ふかししがちだ。",
+   "en": "I tend to stay up late on weekends.",
+   "tips": [
+    "to のあとは動詞の原形",
+    "名詞は tendency(傾向)",
+    "have a tendency to do でも同じ意味"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b070dd8e31ee.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_e88f068c4eca.mp3"
+  },
+  {
+   "no": 180,
+   "word": "be required to do",
+   "mean": "〜することを求められる",
+   "ja": "乗客はシートベルトを締めることが求められている。",
+   "en": "Passengers are required to wear seat belts.",
+   "tips": [
+    "require A to do(Aに〜することを求める)の受け身",
+    "名詞は requirement(必要条件)",
+    "TOEIC の注意書きによく出ます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_08107c8aefb0.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_18ad6e28860c.mp3"
+  }
+ ],
+ "white_181": [
+  {
+   "no": 181,
+   "word": "describe A as B",
+   "mean": "AをBと言う、AをBだと説明する",
+   "ja": "多くの人が彼を天才だと言う。",
+   "en": "Many people describe him as a genius.",
+   "tips": [
+    "as のあとには名詞や形容詞",
+    "regard A as B(AをBとみなす)と同じ形",
+    "名詞は description(説明)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_54cabc6b4e7d.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_3e8c69e9220d.mp3"
+  },
+  {
+   "no": 182,
+   "word": "benefit from A",
+   "mean": "〜から利益を得る、〜で得をする",
+   "ja": "生徒たちは新しいプログラムから恩恵を受けた。",
+   "en": "Students benefited from the new program.",
+   "tips": [
+    "前置詞は from",
+    "benefit A で「Aのためになる」の形も",
+    "形容詞は beneficial(有益な)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_c2d96f2689d3.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_7de08a31cc45.mp3"
+  }
+ ],
+ "white_183": [
+  {
+   "no": 183,
+   "word": "be limited to A",
+   "mean": "〜に限られている",
+   "ja": "参加者は30人に限られている。",
+   "en": "The number of participants is limited to thirty.",
+   "tips": [
+    "前置詞は to",
+    "limited edition で「限定版」",
+    "名詞は limit(限度)・limitation(制限)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_5efb0fa7762f.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f3b823a9e46a.mp3"
+  },
+  {
+   "no": 184,
+   "word": "no matter what",
+   "mean": "何があっても、たとえ何が〜でも",
+   "ja": "何があっても、あなたの味方だよ。",
+   "en": "I'll support you no matter what.",
+   "tips": [
+    "no matter what happens(何が起きても)の happens が省略された形",
+    "no matter how / where / who も同じ仲間",
+    "whatever とほぼ同じ意味"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b830edd9502b.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_6686942bb321.mp3"
   }
  ],
  "listening_145": [
@@ -846,6 +1068,101 @@
    ],
    "accent": "🇬🇧 イギリス英語",
    "audio": "audio/JBFqnCBsd6RMkjVDRZzb_d9a42decadd4.mp3"
+  }
+ ],
+ "listening_161": [
+  {
+   "no": 161,
+   "en": "Where should I put these boxes?",
+   "a": "この箱はどこに置けばいいですか。",
+   "b": "この箱はいつ運べばいいですか。",
+   "ans": "A",
+   "words": [
+    "put：置く",
+    "box：箱"
+   ],
+   "accent": "🇦🇺 オーストラリア英語",
+   "audio": "audio/IKne3meq5aSn9XLyUdCD_8d0d49128aed.mp3"
+  },
+  {
+   "no": 162,
+   "en": "Hi, this is Lisa from the sales team. I'd like to book the large conference room for Thursday afternoon. We're expecting about twenty visitors from a client company. Could you also set up a projector for us?",
+   "a": "営業チームのリサです。木曜日の午後に大会議室を予約したいのですが。取引先から20人ほど来客があります。プロジェクターの準備もお願いできますか。",
+   "b": "営業チームのリサです。金曜日の午前に小会議室を予約したいのですが。取引先から10人ほど来客があります。マイクの準備もお願いできますか。",
+   "ans": "A",
+   "words": [
+    "book：予約する",
+    "conference room：会議室",
+    "expect：(来客などを)見込む",
+    "client：取引先、顧客",
+    "set up：準備する、設置する",
+    "projector：プロジェクター"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/Xb7hH8MSUJpSbSDYk0k2_9df93ffa9583.mp3"
+  }
+ ],
+ "listening_163": [
+  {
+   "no": 163,
+   "en": "Why don't we take a short break?",
+   "a": "少し休憩しませんか。",
+   "b": "少し早く帰りませんか。",
+   "ans": "A",
+   "words": [
+    "Why don't we ~?：〜しませんか",
+    "take a break：休憩する"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/EXAVITQu4vr4xnSDxMaL_b237a7750f33.mp3"
+  },
+  {
+   "no": 164,
+   "en": "Attention, shoppers. Our store will close in thirty minutes. Please bring your items to the registers on the first floor. Also, all winter coats are twenty percent off until the end of the day.",
+   "a": "お客様にお知らせします。当店はあと1時間で閉店いたします。商品は2階のレジへお持ちください。また、冬物の靴は本日に限り半額です。",
+   "b": "お客様にお知らせします。当店はあと30分で閉店いたします。商品は1階のレジへお持ちください。また、冬物のコートは本日中20パーセント引きです。",
+   "ans": "B",
+   "words": [
+    "Attention, shoppers.：お客様にお知らせします",
+    "close：閉店する",
+    "register：レジ",
+    "item：商品",
+    "~ percent off：〜パーセント引き"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/cjVigY5qzO86Huf0OWal_139df21412a5.mp3"
+  }
+ ],
+ "listening_165": [
+  {
+   "no": 165,
+   "en": "Who's going to lead the training session?",
+   "a": "研修を担当するのは誰ですか。",
+   "b": "研修に参加するのは誰ですか。",
+   "ans": "A",
+   "words": [
+    "lead：(会などを)担当する、進める",
+    "training session：研修"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/onwK4e9ZLuTAKqWW03F9_05294ee6b26c.mp3"
+  },
+  {
+   "no": 166,
+   "en": "Welcome to our factory tour. Today, you'll see how we make our chocolate, from the beans to the final package. For safety reasons, please wear the hair nets we handed out and don't touch any of the machines.",
+   "a": "工場見学へようこそ。今日は、豆から最後の包装まで、チョコレートの作り方をご覧いただきます。安全のため、お配りした帽子をかぶり、機械には触れないでください。",
+   "b": "工場見学へようこそ。今日は、豆から最後の包装まで、チョコレートの作り方をご覧いただきます。安全のため、お配りしたヘアネットをつけ、機械には一切触れないでください。",
+   "ans": "B",
+   "words": [
+    "factory tour：工場見学",
+    "package：包装",
+    "for safety reasons：安全のため",
+    "hair net：ヘアネット",
+    "hand out：配る",
+    "machine：機械"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/pFZP5JQG7iQjIQuC4Bku_99dc82b33389.mp3"
   }
  ]
 }
