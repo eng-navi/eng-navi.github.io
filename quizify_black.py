@@ -116,6 +116,15 @@ REELS = [
              (297, "tranquil", "静かな、穏やかな", "穏やかな", "私たちは静かな村で休暇を過ごした。", "We spent our holiday in a tranquil village.",
               ["calm / peaceful / serene と近い意味", "名詞は tranquility(静けさ)", "tranquilizer は「精神安定剤」"]),
          ]),
+    dict(intro="社会・政治の長文で差がつく準1級単語です🏛️\n今日は「取り締まる」「変装する」「黒字」の3語。", tags="#英検準1級 #英単語 #瞬間英作文",
+         items=[
+             (298, "enforce", "(法律などを)施行する、守らせる", "取り締まる", "警察は速度制限を厳しく取り締まっている。", "The police enforce the speed limit strictly.",
+              ["名詞は enforcement(施行、取り締まり)", "law enforcement で「警察などの法執行機関」", "in(中に)+ force(力)で「力を持たせる」"]),
+             (299, "disguise", "変装させる、隠す", "変装させる", "彼女はウェイターに変装した。", "She disguised herself as a waiter.",
+              ["disguise oneself as A で「Aに変装する」", "名詞で「変装」:in disguise(変装して)", "a blessing in disguise は「災い転じて福となる」"]),
+             (300, "surplus", "余り、黒字", "黒字", "その会社は今年、予算が黒字だった。", "The company had a budget surplus this year.",
+              ["反対は deficit(赤字、不足)", "trade surplus で「貿易黒字」", "sur(上に)+ plus(より多く)"]),
+         ]),
 ]
 ITEMS = [it for r in REELS for it in r["items"]]
 

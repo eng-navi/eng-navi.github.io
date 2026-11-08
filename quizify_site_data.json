@@ -307,6 +307,50 @@
    "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_46e7433f3c7e.mp3"
   }
  ],
+ "black_298": [
+  {
+   "no": 298,
+   "word": "enforce",
+   "mean": "(法律などを)施行する、守らせる",
+   "ja": "警察は速度制限を厳しく取り締まっている。",
+   "en": "The police enforce the speed limit strictly.",
+   "tips": [
+    "名詞は enforcement(施行、取り締まり)",
+    "law enforcement で「警察などの法執行機関」",
+    "in(中に)+ force(力)で「力を持たせる」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_c4cb08b2cf4c.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_89790464e3df.mp3"
+  },
+  {
+   "no": 299,
+   "word": "disguise",
+   "mean": "変装させる、隠す",
+   "ja": "彼女はウェイターに変装した。",
+   "en": "She disguised herself as a waiter.",
+   "tips": [
+    "disguise oneself as A で「Aに変装する」",
+    "名詞で「変装」:in disguise(変装して)",
+    "a blessing in disguise は「災い転じて福となる」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_c3c723b3e45b.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_558590f2ca74.mp3"
+  },
+  {
+   "no": 300,
+   "word": "surplus",
+   "mean": "余り、黒字",
+   "ja": "その会社は今年、予算が黒字だった。",
+   "en": "The company had a budget surplus this year.",
+   "tips": [
+    "反対は deficit(赤字、不足)",
+    "trade surplus で「貿易黒字」",
+    "sur(上に)+ plus(より多く)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_d3d77afb0d76.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_672aa3aa9c6c.mp3"
+  }
+ ],
  "white_163": [
   {
    "no": 163,
@@ -515,6 +559,36 @@
    ],
    "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f334b3bffbc0.mp3",
    "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_09d53d8c9e7e.mp3"
+  }
+ ],
+ "white_177": [
+  {
+   "no": 177,
+   "word": "consider doing",
+   "mean": "〜しようかと考える",
+   "ja": "私は留学しようかと考えている。",
+   "en": "I'm considering studying abroad.",
+   "tips": [
+    "consider のあとは doing。to do にしないよう注意",
+    "名詞は consideration(考慮)",
+    "take A into consideration で「Aを考慮に入れる」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_872381231e54.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_d03ceb349d4e.mp3"
+  },
+  {
+   "no": 178,
+   "word": "have an influence on A",
+   "mean": "〜に影響を与える",
+   "ja": "その先生は私の人生に大きな影響を与えた。",
+   "en": "The teacher had a great influence on my life.",
+   "tips": [
+    "前置詞は on",
+    "effect は「結果としての影響」、influence は「人や考え方への影響」のイメージ",
+    "形容詞は influential(影響力のある)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_9010c30c3737.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ff99b918cb8a.mp3"
   }
  ],
  "listening_145": [

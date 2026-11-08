@@ -114,6 +114,15 @@ REELS = [
               "彼は甘い物を食べるのを避けている。", "He avoids eating sweets.",
               ["avoid のあとは doing。to do は使いません", "同じ仲間:enjoy / finish / mind doing", "形容詞は unavoidable(避けられない)"]),
          ]),
+    dict(intro="動名詞か不定詞か、迷いやすい形です🤔\n今日は「〜しようかと考える」「影響を与える」の2つ。", tags="#英文法 #英単語 #大学受験",
+         items=[
+             (177, "consider doing", "〜しようかと考える", "しようかと考える",
+              "私は留学しようかと考えている。", "I'm considering studying abroad.",
+              ["consider のあとは doing。to do にしないよう注意", "名詞は consideration(考慮)", "take A into consideration で「Aを考慮に入れる」"]),
+             (178, "have an influence on A", "〜に影響を与える", "に影響を与える",
+              "その先生は私の人生に大きな影響を与えた。", "The teacher had a great influence on my life.",
+              ["前置詞は on", "effect は「結果としての影響」、influence は「人や考え方への影響」のイメージ", "形容詞は influential(影響力のある)"]),
+         ]),
 ]
 ITEMS = [it for r in REELS for it in r["items"]]
 
