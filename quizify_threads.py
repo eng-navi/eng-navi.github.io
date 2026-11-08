@@ -24,7 +24,7 @@ DATA = ROOT / "quizify_site_data.json"
 IG_LOG = ROOT / "quizify_posted.json"
 LOG = ROOT / "quizify_threads_posted.json"
 SITE = "https://eng-navi.github.io"
-START = "2026-11-02"  # この日以降に Instagram に出た回から
+START = "2099-01-01"  # Instagram 連動の投稿は 2026/11/9 から止めた(穴埋め・動画は閲覧10〜25、5選は平均180のため)。再開するときは日付を戻す
 DELAY = timedelta(minutes=30)
 PREPS = ["in", "on", "to", "with", "for", "of", "about", "from", "at", "into"]
 PAGE = {"black": "tango-advanced", "white": "tango", "listening": "listening"}
@@ -201,7 +201,10 @@ LIST_TITLES = {
     "black": [("英検準1級によく出る単語5選", "知ってたら一気に読める、準1級の頻出語📕"),
               ("「知ってるけど言えない」準1級の単語5選", "読めても、英作文で出てこない単語たち🧠"),
               ("長文で差がつく 準1級の単語5選", "ここが読めると、長文がスラスラ📖"),
-              ("ニュースによく出る 準1級の単語5選", "英字ニュースでよく見るやつ📰")],
+              ("ニュースによく出る 準1級の単語5選", "英字ニュースでよく見るやつ📰"),
+              ("「知ってるけど言えない」準1級の単語5選②", "見たことあるのに、英作文で出てこない🧠"),
+              ("英検準1級に受かる人は知ってる単語5選", "これ全部わかったら、準1級の語彙は合格圏🎯"),
+              ("日常でも使える 準1級の単語5選", "試験だけじゃもったいない、使える単語✨")],
     "white": [("前置詞までセットで覚える熟語5選", "英検2級・共通テストで問われる形📗"),
               ("入試の並べかえで出る 熟語5選", "この形、そのまま覚えると強い✍️"),
               ("英検2級で差がつく 熟語5選", "前置詞をまちがえやすいもの中心に🎯")],
@@ -209,6 +212,35 @@ LIST_TITLES = {
                   ("TOEICリスニングで聞き取りたい表現5選", "聞こえた瞬間わかると、スコアが上がる📈"),
                   ("ビジネス英語でそのまま使える表現5選", "TOEICにも仕事にも効く💼")],
 }
+
+# Threads の5選用に足す準1級の単語(英検準1級 単熟語EX の見出し語。例文はオリジナル)
+EXTRA_BLACK = [
+    ("enforce", "(法律などを)施行する、守らせる", "The police enforce the speed limit strictly.", "警察は速度制限を厳しく取り締まっている。"),
+    ("disguise", "変装させる、隠す", "She disguised herself as a waiter.", "彼女はウェイターに変装した。"),
+    ("surplus", "余り、黒字", "The company had a budget surplus this year.", "その会社は今年、予算が黒字だった。"),
+    ("petition", "嘆願書、請願", "Over 1,000 people signed the petition.", "1,000人以上が嘆願書に署名した。"),
+    ("habitual", "習慣的な、いつもの", "He is a habitual late riser.", "彼はいつも朝寝坊だ。"),
+    ("thrive", "繁栄する、元気に育つ", "These plants thrive in warm weather.", "この植物は暖かい気候でよく育つ。"),
+    ("accelerate", "加速する、早める", "The new system will accelerate the process.", "新しいシステムで作業が速くなる。"),
+    ("decay", "腐る、衰える", "Sugar can cause your teeth to decay.", "砂糖は虫歯の原因になる。"),
+    ("refine", "洗練する、改良する", "She refined her speech before the event.", "彼女はイベントの前にスピーチを磨いた。"),
+    ("obsessed", "取りつかれた、夢中な", "My brother is obsessed with video games.", "弟はゲームに夢中だ。"),
+    ("uphold", "支持する、守る", "The court upheld the decision.", "裁判所はその判決を支持した。"),
+    ("itinerary", "旅程(表)", "I'll email you the itinerary for the trip.", "旅行の旅程表をメールで送ります。"),
+    ("explicit", "明確な、はっきりした", "The rules are explicit about phone use.", "スマホの使用についてのルールは明確だ。"),
+    ("lenient", "寛大な、甘い", "Our teacher is lenient about homework.", "うちの先生は宿題に甘い。"),
+    ("contemplate", "じっくり考える", "I'm contemplating a career change.", "転職をじっくり考えている。"),
+    ("vacant", "空いている", "Is this seat vacant?", "この席は空いていますか。"),
+    ("daring", "大胆な、思い切った", "It was a daring plan.", "それは大胆な計画だった。"),
+    ("compartment", "区画、仕切り", "Put your bag in the overhead compartment.", "かばんは頭上の収納棚に入れてください。"),
+    ("swell", "ふくらむ、腫れる", "My ankle swelled after the fall.", "転んだあと足首が腫れた。"),
+    ("bribe", "賄賂(を贈る)", "The official was accused of taking bribes.", "その役人は賄賂を受け取ったとして告発された。"),
+    ("faint", "かすかな、気を失う", "I heard a faint sound outside.", "外でかすかな音が聞こえた。"),
+    ("tranquil", "静かな、穏やかな", "We spent a tranquil weekend in the mountains.", "山で穏やかな週末を過ごした。"),
+    ("hectic", "とても忙しい", "Monday was a hectic day at work.", "月曜は仕事がとても忙しい日だった。"),
+    ("notorious", "悪名高い", "This road is notorious for traffic jams.", "この道は渋滞で悪名高い。"),
+    ("vivid", "鮮やかな、生き生きとした", "I have a vivid memory of that day.", "あの日のことを鮮明に覚えている。"),
+]
 
 
 def pool(src):
@@ -227,6 +259,8 @@ def pool(src):
                         out.append(dict(word=en, mean=ja, en=ex[:120], ja=""))
         return out
     its = [x for k, v in data.items() if k.startswith(src) for x in v]
+    if src == "black":
+        its += [dict(word=w, mean=m_, en=e_, ja=j) for w, m_, e_, j in EXTRA_BLACK]
     its += [x for x in archive_items(src) if x.get("mean") and len(x["mean"]) <= 24 and (not x.get("en") or not re.search(r"don'tw|  ", x["en"]))]
     seen, out = set(), []
     for x in its:
