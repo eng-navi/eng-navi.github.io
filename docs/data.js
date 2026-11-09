@@ -2842,5 +2842,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 148,
+    "category": "品詞",
+    "question": "Because of budget ( ), the event was moved online.",
+    "options": [
+      "constraints",
+      "constrained"
+    ],
+    "answer": 1,
+    "translation": "予算の制約により、そのイベントはオンラインに変更された。",
+    "explanation": "空所は Because of の後ろで、budget と組み合わさって名詞のかたまりを作ります。\n名詞の constraints(制約)を入れると budget constraints(予算の制約)になります。\nconstrained は形容詞・過去分詞です。\n\nしたがって、①constraints が正解。",
+    "audio": "audio/q148.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
