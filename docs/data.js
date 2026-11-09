@@ -2861,5 +2861,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 149,
+    "category": "関係詞",
+    "question": "( ) she said made everyone laugh.",
+    "options": [
+      "That",
+      "What"
+    ],
+    "answer": 2,
+    "translation": "彼女が言ったことに、みんなが笑った。",
+    "explanation": "「〜すること・もの」を表し、文の主語になれるのは関係代名詞 what です。\nthat は先行詞(前に来る名詞)が必要なので、ここでは使えません。\n\nしたがって、②What が正解。",
+    "audio": "audio/q149.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
