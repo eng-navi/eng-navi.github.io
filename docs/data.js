@@ -2824,5 +2824,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 147,
+    "text": "The new rules are bound to cause some confusion at first.",
+    "target": "are bound to",
+    "glossary": [
+      "be bound to do：きっと〜する、〜するに違いない",
+      "confusion：混乱"
+    ],
+    "translation": "新しいルールは、最初は多少の混乱を招くに違いない。",
+    "explanation": "「be bound to do」は「きっと〜する、〜するに違いない」という意味です。\nbound は「縛られた」が元の意味で、「そうなることが決まっている」というイメージです。",
+    "audio": "audio/q147.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
