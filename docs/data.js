@@ -2880,5 +2880,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 150,
+    "text": "The concert tickets sold out in the blink of an eye.",
+    "target": "in the blink of an eye",
+    "glossary": [
+      "in the blink of an eye：あっという間に、一瞬で",
+      "sell out：売り切れる"
+    ],
+    "translation": "コンサートのチケットは、あっという間に売り切れた。",
+    "explanation": "「in the blink of an eye」は「まばたきする間に」、つまり「あっという間に」という意味です。\nblink は「まばたき」のことです。",
+    "audio": "audio/q150.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
