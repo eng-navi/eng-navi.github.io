@@ -2917,5 +2917,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 152,
+    "category": "比較",
+    "question": "The ( ) you practice, the better you will get.",
+    "options": [
+      "more",
+      "most"
+    ],
+    "answer": 1,
+    "translation": "練習すればするほど、上達する。",
+    "explanation": "〈the + 比較級, the + 比較級〉で「〜すればするほど、ますます…」という意味になります。\n最上級の most ではなく、比較級の more を使います。\n\nしたがって、①more が正解。",
+    "audio": "audio/q152.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
