@@ -2898,5 +2898,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 151,
+    "category": "語彙",
+    "question": "Through careful ( ) of customer behavior, the store improved its layout.",
+    "options": [
+      "observation",
+      "collision"
+    ],
+    "answer": 1,
+    "translation": "顧客の行動を注意深く観察することで、その店は売り場の配置を改善した。",
+    "explanation": "careful(注意深い)と customer behavior(顧客の行動)に合うのは observation(観察)です。\ncollision は「衝突」という意味なので、文の意味が通りません。\n\nしたがって、①observation が正解。",
+    "audio": "audio/q151.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
