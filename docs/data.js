@@ -2973,5 +2973,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 155,
+    "category": "動名詞",
+    "question": "I stopped ( ) to check my phone while walking.",
+    "options": [
+      "to look",
+      "looking"
+    ],
+    "answer": 2,
+    "translation": "歩きながら携帯を見るのはやめた。",
+    "explanation": "stop doing は「〜するのをやめる」、stop to do は「〜するために立ち止まる」という意味です。\n「歩きスマホをやめた」という意味なので、動名詞を使います。\n\nしたがって、②looking が正解。",
+    "audio": "audio/q155.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
