@@ -2954,5 +2954,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 154,
+    "category": "品詞",
+    "question": "The chef ( ) uses fresh local vegetables.",
+    "options": [
+      "consistent",
+      "consistently"
+    ],
+    "answer": 2,
+    "translation": "そのシェフは、いつも新鮮な地元の野菜を使っている。",
+    "explanation": "空所がなくても、The chef uses ... という文が成り立っています。\n動詞 uses を説明できるのは副詞なので、consistently(常に、一貫して)が入ります。\nconsistent は形容詞です。\n\nしたがって、②consistently が正解。",
+    "audio": "audio/q154.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
