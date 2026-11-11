@@ -2936,5 +2936,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 153,
+    "text": "She went out of her way to help the new students.",
+    "target": "went out of her way to help",
+    "glossary": [
+      "go out of one's way to do：わざわざ〜する",
+      "help：手伝う"
+    ],
+    "translation": "彼女はわざわざ新入生を手伝ってくれた。",
+    "explanation": "「go out of one's way to do」は「わざわざ〜する」という意味です。\nいつもの道(way)から外れてまで何かをする、というイメージです。",
+    "audio": "audio/q153.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
