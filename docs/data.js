@@ -3010,5 +3010,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 157,
+    "category": "品詞",
+    "question": "The company runs TV ads to increase its ( ) recognition.",
+    "options": [
+      "branded",
+      "brand"
+    ],
+    "answer": 2,
+    "translation": "その会社はブランドの認知度を上げるために、テレビ広告を出している。",
+    "explanation": "brand recognition(ブランドの認知度)は、名詞が2つ並んだよく出る組み合わせです。\nbranded(ブランドものの)を入れると、意味が通りません。\n\nしたがって、②brand が正解。",
+    "audio": "audio/q157.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
