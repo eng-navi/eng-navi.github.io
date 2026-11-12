@@ -2992,5 +2992,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 156,
+    "text": "We'll stay at my aunt's house for the time being.",
+    "target": "for the time being",
+    "glossary": [
+      "for the time being：当分の間、さしあたり",
+      "stay at A：Aに泊まる"
+    ],
+    "translation": "私たちは当分の間、おばの家に泊まる。",
+    "explanation": "「for the time being」は「当分の間、さしあたり」という意味です。\n「今のところは一時的に」というニュアンスで、ずっと続くわけではないことを表します。",
+    "audio": "audio/q156.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
