@@ -3029,5 +3029,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 158,
+    "category": "不定詞",
+    "question": "The question was ( ) difficult for me to answer.",
+    "options": [
+      "very",
+      "too"
+    ],
+    "answer": 2,
+    "translation": "その問題は難しすぎて、私には答えられなかった。",
+    "explanation": "〈too + 形容詞 + to do〉で「あまりに〜なので…できない」という意味になります。\nvery を使うと、後ろの to answer とつながりません。\n\nしたがって、②too が正解。",
+    "audio": "audio/q158.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
