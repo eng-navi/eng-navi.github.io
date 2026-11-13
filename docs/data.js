@@ -3048,5 +3048,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 159,
+    "text": "She has a knack for making people feel at ease.",
+    "target": "has a knack for",
+    "glossary": [
+      "have a knack for A：Aのコツをつかんでいる、Aが得意だ",
+      "at ease：くつろいで"
+    ],
+    "translation": "彼女には、人をリラックスさせるコツがある。",
+    "explanation": "「have a knack for A」は「Aのコツをつかんでいる、Aが得意だ」という意味です。\nknack は「(生まれつきの)こつ、才能」のことです。",
+    "audio": "audio/q159.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
