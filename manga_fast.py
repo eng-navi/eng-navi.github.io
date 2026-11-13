@@ -1299,6 +1299,71 @@ SCRIPTS.update({
 })
 
 
+def make_it():
+    img, boxes, pw, ph = m.comic("make it")
+    x0, y0, d = _p(img, boxes, 0, 201)
+    m.clock(d, x0 + pw * 0.82, y0 + ph * 0.5, 40)
+    m.owl(d, x0 + pw * 0.34, y0 + ph * 0.66, 150, "normal")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.34, y0 + 180), "The movie starts at seven!", "映画は7時からだよ!", 1)
+    x0, y0, d = _p(img, boxes, 1, 202)
+    for k in range(4):
+        d.line([(x0 + 30, y0 + ph * 0.55 + k * 30), (x0 + pw * 0.3, y0 + ph * 0.55 + k * 30)], fill=(150, 140, 130), width=5)
+    m.penguin(d, x0 + pw * 0.6, y0 + ph * 0.68, 150, "shock", hat_on=False)
+    m.sweat(d, x0 + pw * 0.78, y0 + ph * 0.48)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.6, y0 + 180), "We won't make it!", "間に合わない!", 2)
+    x0, y0, d = _p(img, boxes, 2, 203)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.68, 140, "happy")
+    m.penguin(d, x0 + pw * 0.72, y0 + ph * 0.7, 120, "happy", hat_on=False)
+    sparkle(d, x0 + pw * 0.5, y0 + ph * 0.44)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.5, y0 + 180), "Phew! We made it!", "ふう!間に合った!", 3)
+    x0, y0, d = _p(img, boxes, 3, 204)
+    m.board(d, x0 + pw * 0.08, y0 + ph * 0.4, x0 + pw * 0.5, y0 + ph * 0.56, "TOMORROW")
+    m.capybara(d, x0 + pw * 0.66, y0 + ph * 0.72, 150, "calm")
+    m.penguin(d, x0 + pw * 0.18, y0 + ph * 0.82, 90, "shock", hat_on=False)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.62, y0 + ph * 0.36), "...The movie is tomorrow.", "…映画は明日だよ", 4)
+    return m._end(img)
+
+
+def have_no_idea():
+    img, boxes, pw, ph = m.comic("I have no idea")
+    x0, y0, d = _p(img, boxes, 0, 205)
+    m.owl(d, x0 + pw * 0.4, y0 + ph * 0.66, 160, "shock")
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.4, y0 + 180), "Where's my pen?", "私のペン、どこ?", 1)
+    x0, y0, d = _p(img, boxes, 1, 206)
+    cx, cy = x0 + pw * 0.5, y0 + ph * 0.66
+    m.penguin(d, cx, cy, 170, "normal", hat_on=False)
+    d.line([(cx - 60, cy - 120), (cx + 60, cy - 150)], fill=(240, 190, 60), width=12)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (cx, y0 + 180), "I have no idea.", "全然わからない", 2)
+    x0, y0, d = _p(img, boxes, 2, 207)
+    m.owl(d, x0 + pw * 0.3, y0 + ph * 0.66, 150, "shock")
+    cx, cy = x0 + pw * 0.74, y0 + ph * 0.7
+    m.penguin(d, cx, cy, 115, "normal", hat_on=False)
+    d.line([(cx - 40, cy - 80), (cx + 40, cy - 100)], fill=(240, 190, 60), width=9)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (x0 + pw * 0.3, y0 + 180), "It's on your head!", "頭の上にあるよ!", 3)
+    x0, y0, d = _p(img, boxes, 3, 208)
+    cx, cy = x0 + pw * 0.5, y0 + ph * 0.66
+    m.penguin(d, cx, cy, 170, "shock", hat_on=False)
+    d.line([(cx - 60, cy - 120), (cx + 60, cy - 150)], fill=(240, 190, 60), width=12)
+    m.sweat(d, cx + 90, cy - 60)
+    small_bubble(d, (x0 + 12, y0 + 18, x0 + pw - 12, 0), (cx, y0 + 180), "...Oh.", "…あ。", 4)
+    return m._end(img)
+
+
+SCRIPTS.update({
+    "make_it": dict(draw=make_it, word="make it", hook="「間に合う」って英語で?", meaning="間に合う、うまくいく", level="英検2級レベル",
+        ex_en="I ran to the station and made it just in time.", ex_ja="駅まで走って、ギリギリ間に合った",
+        words=[("start", "始まる"), ("won't", "will not の短縮形"), ("Phew!", "ふう!"), ("made", "make の過去形"), ("tomorrow", "明日")],
+        panels=[[("navi", "The movie starts at seven!")], [("pen", "We won't make it!")], [("navi", "Phew! We made it!")],
+                [("boss", "...The movie is tomorrow.")]],
+        explain=[("navi", "Make it."), ("pen", "I ran to the station and made it just in time.")]),
+    "have_no_idea": dict(draw=have_no_idea, word="I have no idea", hook="「全然わからない」英語で?", meaning="全然わからない、見当もつかない", level="英検準2級レベル",
+        ex_en="I have no idea how to fix this.", ex_ja="これをどう直せばいいのか、全然わからない",
+        words=[("Where's ~?", "〜はどこ?"), ("pen", "ペン"), ("on your head", "頭の上に"), ("Oh.", "あ。"), ("idea", "考え、見当")],
+        panels=[[("navi", "Where's my pen?")], [("pen", "I have no idea.")], [("navi", "It's on your head!")], [("pen", "...Oh.")]],
+        explain=[("navi", "I have no idea."), ("pen", "I have no idea how to fix this.")]),
+})
+
+
 def jitter(src, rng, scale=1.0, area=(980, 1350), top=300):
     """1コマごとに、わずかにずらして傾ける(ストップモーション風)。"""
     tw = int(area[0] * scale)

@@ -24,6 +24,8 @@ W, H, FPS, SR = 1080, 1920, 30, 24000
 
 # (key, 表現, 意味, 例文, 和訳, ひとこと)
 STORIES = [
+    ("hang_in_there", "Hang in there.", "もう少しの辛抱だよ", "Exams end next week. Hang in there!", "試験は来週で終わり。もう少しだよ!", "がんばってる人への応援のひとこと"),
+    ("tell_me_about_it", "Tell me about it.", "ほんとそれ", "This heat is crazy. — Tell me about it.", "この暑さやばいね。— ほんとそれ", "「話して」じゃなく、強い同意"),
     ("just_in_case", "just in case", "念のため", "Take a jacket, just in case.", "念のため上着持っていきな", "出かける前のひとことに"),
     ("drive_me_crazy", "drive me crazy", "イライラさせる", "This slow Wi-Fi is driving me crazy.", "この遅いWi-Fi、ほんとイライラする", "crazy でも「頭がおかしい」じゃないよ"),
     ("couldnt_be_better", "couldn't be better", "最高だよ", "How's your new job? Couldn't be better!", "新しい仕事どう?— 最高!", "これ以上よくなれない=最高"),

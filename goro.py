@@ -1299,6 +1299,48 @@ GENERIC.update({
 })
 
 
+def _cards3(img, d, i):
+    cards(d, 540, 1150, 5, 1300 + i % 3)
+
+
+def _trap(img, d, i):
+    d.rectangle([420, 1330, 660, 1350], fill=(120, 120, 130), outline=INK, width=4)
+    for k in range(7):
+        x = 430 + k * 34
+        d.polygon([(x, 1330), (x + 14, 1290), (x + 28, 1330)], fill=(160, 160, 170), outline=INK)
+    d.ellipse([515, 1250, 565, 1295], fill=(240, 200, 70), outline=INK, width=4)
+
+
+def _boat(img, d, i):
+    d.rectangle([0, 1250, W, 1500], fill=(170, 205, 235))
+    x = 300 + (i % 24) * 10
+    m.shape(d, [(x - 120, 1240), (x + 120, 1240), (x + 80, 1300), (x - 80, 1300)], (200, 150, 100), seed=1310)
+
+
+GENERIC.update({
+    "spin": dict(word="spin", short="回る", meaning="回る、回転させる", pun=("スピンで", "回る spin!"),
+        chant="スピンで回る spin", chant_voice="スピンで、回る、スピン!", note="発音は「スピン」。フィギュアスケートのスピンと同じ",
+        ex_en="The dancer spun around on one foot.", ex_ja="ダンサーは片足でくるりと回った",
+        tip="過去形は spun。頭が「くらくらする」は My head is spinning.", story=[(scene([("pen", "happy", 540)]), "フィギュアスケートの選手みたいに…", ("ワクワク", (820, 1000))),
+        (scene([("pen", "shock", 540)], extra=_speed), "スピンで、くるくる回る!", ("くるくる", (820, 1000)))], line2=("pen", "I'm spinning!")),
+    "shuffle": dict(word="shuffle", short="混ぜる", meaning="(カードなどを)混ぜる、足を引きずって歩く", pun=("シャッフルで", "混ぜる shuffle!"),
+        chant="シャッフルで混ぜる shuffle", chant_voice="シャッフルで、混ぜる、シャッフル!", note="発音は「シャッフル」。音楽のシャッフル再生と同じ",
+        ex_en="Please shuffle the cards before we start.", ex_ja="始める前にカードを混ぜてください",
+        tip="shuffle one's feet で「足を引きずって歩く」。", story=[(scene([("navi", "happy", 300)], extra=lambda img, d, i: (table(d, 1320), _cards3(img, d, i))), "トランプで遊ぼう!", ("♪", (800, 1000))),
+        (scene([("pen", "happy", 300)], extra=lambda img, d, i: (table(d, 1330), _cards3(img, d, i))), "シャッフルで、よく混ぜる!", ("シャッ", (800, 1000)))]),
+    "drift": dict(word="drift", short="漂う", meaning="漂う、流される", pun=("ドリフトで", "漂う drift!"),
+        chant="ドリフトで漂う drift", chant_voice="ドリフトで、漂う、ドリフト!", note="発音は「ドリフト」。車のドリフト走行と同じ",
+        ex_en="The boat drifted slowly down the river.", ex_ja="ボートはゆっくりと川を流れていった",
+        tip="drift off で「うとうと眠りに落ちる」。", story=[(scene([("pen", "happy", 300)], extra=_boat), "ボートでのんびり…", ("ぷかぷか", (800, 1000))),
+        (scene([("pen", "shock", 700)], extra=_boat), "あれ、ドリフトして、流されてる!", ("すい〜", (300, 1000)))], line2=("pen", "I'm drifting!")),
+    "trap": dict(word="trap", short="閉じ込める", meaning="わな、閉じ込める", pun=("トラップで", "閉じ込める trap!"),
+        chant="トラップで閉じ込める trap", chant_voice="トラップで、閉じ込める、トラップ!", note="発音は「トラップ」",
+        ex_en="We were trapped in the elevator for an hour.", ex_ja="私たちは1時間エレベーターに閉じ込められた",
+        tip="be trapped in A で「Aに閉じ込められる」。", story=[(scene([("pen", "happy", 250)], extra=_trap), "おいしそうなチーズが…", ("じーっ", (820, 1000))),
+        (scene([("pen", "shock", 540)], extra=_trap), "トラップで、閉じ込められた!", ("ガシャン", (820, 950)))], line2=("pen", "I'm trapped!")),
+})
+
+
 def voice(who, text, speed=1.0):
     """4コマと同じ ElevenLabs のキャラの声(ナビ=Teddy、ペン=Mia)。大きさをそろえる。保存ずみなら使い回す"""
     import manga_reel as mr
