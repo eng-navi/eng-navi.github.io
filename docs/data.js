@@ -3066,5 +3066,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 160,
+    "category": "品詞",
+    "question": "Please fill out the form ( ) before submitting it.",
+    "options": [
+      "careful",
+      "carefully"
+    ],
+    "answer": 2,
+    "translation": "提出する前に、用紙に慎重に記入してください。",
+    "explanation": "fill out the form(用紙に記入する)という動詞のかたまりを説明するのは副詞です。\ncarefully(慎重に)が入ります。careful は形容詞です。\n\nしたがって、②carefully が正解。",
+    "audio": "audio/q160.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
