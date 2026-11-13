@@ -3085,5 +3085,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 161,
+    "category": "仮定法",
+    "question": "If I ( ) known about the party, I would have gone.",
+    "options": [
+      "had",
+      "have"
+    ],
+    "answer": 1,
+    "translation": "パーティーのことを知っていたら、行ったのに。",
+    "explanation": "過去の事実と違うことを仮定するときは、if のあとを〈had + 過去分詞〉にします(仮定法過去完了)。\n後ろの would have gone もその目印です。\n\nしたがって、①had が正解。",
+    "audio": "audio/q161.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
