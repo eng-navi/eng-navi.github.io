@@ -152,6 +152,33 @@ REELS = [
              (309, "refine", "洗練する、改良する", "洗練する", "彼女はイベントの前にスピーチを磨いた。", "She refined her speech before the event.",
               ["形容詞 refined は「洗練された、精製された」", "refined sugar で「精製糖」", "名詞は refinement(改良、洗練)"]),
          ]),
+    dict(intro="体や形の変化を表す準1級単語です🩹\n今日は「腫れる」「部分」「賄賂」の3語。", tags="#英検準1級 #英単語 #瞬間英作文",
+         items=[
+             (310, "swell", "ふくらむ、腫れる", "腫れる", "転んだあと足首が腫れた。", "My ankle swelled after the fall.",
+              ["名詞は swelling(腫れ)", "過去分詞は swollen / swelled", "人数などが「増える」にも使えます"]),
+             (311, "segment", "部分、区分", "部分", "若者は市場の大きな部分を占めている。", "Young people make up a large segment of the market.",
+              ["market segment で「市場区分」", "動詞で「区分する」", "part・section と近い意味"]),
+             (312, "bribe", "賄賂(を贈る)", "賄賂", "その役人は賄賂を受け取ったとして告発された。", "The official was accused of taking bribes.",
+              ["take a bribe で「賄賂を受け取る」", "名詞は bribery(贈収賄)", "政治・事件の長文に出ます"]),
+         ]),
+    dict(intro="気持ちや社会を表す準1級単語です🏛️\n今日は「夢中な」「支持する」「打倒する」の3語。", tags="#英検準1級 #時事英語 #英単語",
+         items=[
+             (313, "obsessed", "取りつかれた、夢中な", "夢中な", "弟はゲームに夢中だ。", "My brother is obsessed with video games.",
+              ["be obsessed with A で「Aに夢中だ」", "名詞は obsession(執着)", "良くも悪くも「頭から離れない」イメージ"]),
+             (314, "uphold", "支持する、守る", "支持する", "裁判所はその判決を支持した。", "The court upheld the decision.",
+              ["過去形は upheld", "uphold the law で「法を守る」", "support より固い言い方"]),
+             (315, "overthrow", "打倒する、ひっくり返す", "打倒する", "国民は独裁者を打倒した。", "The people overthrew the dictator.",
+              ["過去形は overthrew、過去分詞は overthrown", "over(上から)+ throw(投げる)", "歴史の長文によく出ます"]),
+         ]),
+    dict(intro="旅行やルールの話でも使える準1級単語です✈️\n今日は「旅程」「かすかな」「明確な」の3語。", tags="#英検準1級 #長文読解 #瞬間英作文",
+         items=[
+             (316, "itinerary", "旅程(表)", "旅程表", "旅行の旅程表をメールで送ります。", "I'll email you the itinerary for the trip.",
+              ["発音は「アイティナラリ」", "TOEIC の出張の場面でもよく出ます", "schedule より「旅の計画」に限った言い方"]),
+             (317, "faint", "かすかな、気を失う", "かすかな", "外でかすかな音が聞こえた。", "I heard a faint sound outside.",
+              ["動詞で「気を失う」", "a faint hope で「かすかな望み」", "反対は clear・strong"]),
+             (318, "explicit", "明確な、はっきりした", "明確な", "スマホの使用についてのルールは明確だ。", "The rules are explicit about phone use.",
+              ["反対は implicit(暗黙の)", "副詞は explicitly(はっきりと)", "be explicit about A で「Aについて明確だ」"]),
+         ]),
 ]
 ITEMS = [it for r in REELS for it in r["items"]]
 

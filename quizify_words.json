@@ -1203,6 +1203,69 @@
    "status": "投稿済み",
    "date": "2026-11-12",
    "source": null
+  },
+  {
+   "word": "swell",
+   "no": 310,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "segment",
+   "no": 311,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "bribe",
+   "no": 312,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "obsessed",
+   "no": 313,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "uphold",
+   "no": 314,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "overthrow",
+   "no": 315,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "itinerary",
+   "no": 316,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "faint",
+   "no": 317,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "explicit",
+   "no": 318,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
   }
  ],
  "white": [
@@ -1967,6 +2030,48 @@
    "no": 184,
    "status": "投稿済み",
    "date": "2026-11-12",
+   "source": null
+  },
+  {
+   "word": "be patient with A",
+   "no": 185,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "in terms of A",
+   "no": 186,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "be available for A",
+   "no": 187,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "offer to do",
+   "no": 188,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "be certain to do",
+   "no": 189,
+   "status": "予定",
+   "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "bear A in mind",
+   "no": 190,
+   "status": "予定",
+   "date": "2026-11-13",
    "source": null
   }
  ]

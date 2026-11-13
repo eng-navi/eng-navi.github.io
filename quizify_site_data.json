@@ -483,6 +483,138 @@
    "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_cf7098264507.mp3"
   }
  ],
+ "black_310": [
+  {
+   "no": 310,
+   "word": "swell",
+   "mean": "ふくらむ、腫れる",
+   "ja": "転んだあと足首が腫れた。",
+   "en": "My ankle swelled after the fall.",
+   "tips": [
+    "名詞は swelling(腫れ)",
+    "過去分詞は swollen / swelled",
+    "人数などが「増える」にも使えます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_4eaffc3fbdd8.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_70d1a9e96a41.mp3"
+  },
+  {
+   "no": 311,
+   "word": "segment",
+   "mean": "部分、区分",
+   "ja": "若者は市場の大きな部分を占めている。",
+   "en": "Young people make up a large segment of the market.",
+   "tips": [
+    "market segment で「市場区分」",
+    "動詞で「区分する」",
+    "part・section と近い意味"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_6638c9474f1b.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_98e6082a4608.mp3"
+  },
+  {
+   "no": 312,
+   "word": "bribe",
+   "mean": "賄賂(を贈る)",
+   "ja": "その役人は賄賂を受け取ったとして告発された。",
+   "en": "The official was accused of taking bribes.",
+   "tips": [
+    "take a bribe で「賄賂を受け取る」",
+    "名詞は bribery(贈収賄)",
+    "政治・事件の長文に出ます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_03f5dc06a6eb.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b630c62642d8.mp3"
+  }
+ ],
+ "black_313": [
+  {
+   "no": 313,
+   "word": "obsessed",
+   "mean": "取りつかれた、夢中な",
+   "ja": "弟はゲームに夢中だ。",
+   "en": "My brother is obsessed with video games.",
+   "tips": [
+    "be obsessed with A で「Aに夢中だ」",
+    "名詞は obsession(執着)",
+    "良くも悪くも「頭から離れない」イメージ"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f90f3b3ab60f.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_990766a34667.mp3"
+  },
+  {
+   "no": 314,
+   "word": "uphold",
+   "mean": "支持する、守る",
+   "ja": "裁判所はその判決を支持した。",
+   "en": "The court upheld the decision.",
+   "tips": [
+    "過去形は upheld",
+    "uphold the law で「法を守る」",
+    "support より固い言い方"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_a55444e2685d.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_2dbc81c1f534.mp3"
+  },
+  {
+   "no": 315,
+   "word": "overthrow",
+   "mean": "打倒する、ひっくり返す",
+   "ja": "国民は独裁者を打倒した。",
+   "en": "The people overthrew the dictator.",
+   "tips": [
+    "過去形は overthrew、過去分詞は overthrown",
+    "over(上から)+ throw(投げる)",
+    "歴史の長文によく出ます"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_9ae3cdc48b4e.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_d524d496d6f8.mp3"
+  }
+ ],
+ "black_316": [
+  {
+   "no": 316,
+   "word": "itinerary",
+   "mean": "旅程(表)",
+   "ja": "旅行の旅程表をメールで送ります。",
+   "en": "I'll email you the itinerary for the trip.",
+   "tips": [
+    "発音は「アイティナラリ」",
+    "TOEIC の出張の場面でもよく出ます",
+    "schedule より「旅の計画」に限った言い方"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_8e967cf2d99a.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_e818bc0c36ef.mp3"
+  },
+  {
+   "no": 317,
+   "word": "faint",
+   "mean": "かすかな、気を失う",
+   "ja": "外でかすかな音が聞こえた。",
+   "en": "I heard a faint sound outside.",
+   "tips": [
+    "動詞で「気を失う」",
+    "a faint hope で「かすかな望み」",
+    "反対は clear・strong"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_3f8cd0965430.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_3e427c92a0bb.mp3"
+  },
+  {
+   "no": 318,
+   "word": "explicit",
+   "mean": "明確な、はっきりした",
+   "ja": "スマホの使用についてのルールは明確だ。",
+   "en": "The rules are explicit about phone use.",
+   "tips": [
+    "反対は implicit(暗黙の)",
+    "副詞は explicitly(はっきりと)",
+    "be explicit about A で「Aについて明確だ」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_a7473e2a26bc.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f677861126cc.mp3"
+  }
+ ],
  "white_163": [
   {
    "no": 163,
@@ -811,6 +943,96 @@
    ],
    "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b830edd9502b.mp3",
    "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_6686942bb321.mp3"
+  }
+ ],
+ "white_185": [
+  {
+   "no": 185,
+   "word": "be patient with A",
+   "mean": "Aに対して我慢強い、辛抱強い",
+   "ja": "その先生は生徒にとても辛抱強い。",
+   "en": "The teacher is very patient with her students.",
+   "tips": [
+    "前置詞は with",
+    "名詞の patient は「患者」の意味",
+    "反対は impatient(短気な)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_e7aaf461f135.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_5583cdfe9be5.mp3"
+  },
+  {
+   "no": 186,
+   "word": "in terms of A",
+   "mean": "Aの観点から、Aの点では",
+   "ja": "値段の点では、こちらの方がいい。",
+   "en": "In terms of price, this one is better.",
+   "tips": [
+    "長文で「〜の面では」と訳すとスムーズ",
+    "term は「言葉、期間、条件」など意味が多い",
+    "in the long term で「長い目で見れば」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_f04c2be4ba93.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_0c6f75e4d338.mp3"
+  }
+ ],
+ "white_187": [
+  {
+   "no": 187,
+   "word": "be available for A",
+   "mean": "Aに都合がつく、Aに対応できる",
+   "ja": "明日の打ち合わせに都合はつきますか。",
+   "en": "Are you available for a meeting tomorrow?",
+   "tips": [
+    "人に使うと「手が空いている」",
+    "物に使うと「手に入る、利用できる」",
+    "名詞は availability(空き状況)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_6cb4e4bd281b.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_660751233dc0.mp3"
+  },
+  {
+   "no": 188,
+   "word": "offer to do",
+   "mean": "〜しようと申し出る",
+   "ja": "彼は駅まで送ると申し出てくれた。",
+   "en": "He offered to drive me to the station.",
+   "tips": [
+    "to のあとは動詞の原形",
+    "offer A B で「AにBを提供する」の形も",
+    "名詞で「申し出、提案」"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_ff535d0e98cc.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_aa72d106b94b.mp3"
+  }
+ ],
+ "white_189": [
+  {
+   "no": 189,
+   "word": "be certain to do",
+   "mean": "きっと〜する",
+   "ja": "彼女はきっと試験に合格するだろう。",
+   "en": "She is certain to pass the exam.",
+   "tips": [
+    "be sure to do とほぼ同じ意味",
+    "be certain of A で「Aを確信している」",
+    "副詞は certainly(確かに)"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_dda4395cfc33.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_07314c515a84.mp3"
+  },
+  {
+   "no": 190,
+   "word": "bear A in mind",
+   "mean": "Aを心に留めておく",
+   "ja": "安全が第一だということを心に留めておいて。",
+   "en": "Please bear in mind that safety comes first.",
+   "tips": [
+    "keep A in mind と同じ意味",
+    "A が長いときは bear in mind that ~ の形になる",
+    "bear には「運ぶ、耐える」などの意味も"
+   ],
+   "word_audio": "audio/pFZP5JQG7iQjIQuC4Bku_cd8f367f285c.mp3",
+   "en_audio": "audio/pFZP5JQG7iQjIQuC4Bku_b3217183efde.mp3"
   }
  ],
  "listening_145": [
@@ -1163,6 +1385,102 @@
    ],
    "accent": "🇬🇧 イギリス英語",
    "audio": "audio/pFZP5JQG7iQjIQuC4Bku_99dc82b33389.mp3"
+  }
+ ],
+ "listening_167": [
+  {
+   "no": 167,
+   "en": "How long will the meeting last?",
+   "a": "会議はどのくらい続きますか。",
+   "b": "会議はいつ始まりますか。",
+   "ans": "A",
+   "words": [
+    "How long ~?：どのくらいの時間〜",
+    "last：続く"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/XrExE9yKIg1WjnnlVkGX_9e9c61a3320c.mp3"
+  },
+  {
+   "no": 168,
+   "en": "Hello, this is Ken from Quick Delivery. We tried to deliver your package this morning, but no one was home. We'll try again tomorrow between two and four. If that time doesn't work, please call us back at this number.",
+   "a": "クイック配送のケンです。今朝お荷物をお届けにうかがいましたが、ご不在でした。明日の2時から4時の間に再度うかがいます。ご都合が悪ければ、この番号に折り返しお電話ください。",
+   "b": "クイック配送のケンです。今朝お荷物をお届けにうかがいましたが、ご不在でした。明日の午前10時から12時の間に再度うかがいます。ご都合が悪ければ、メールでご連絡ください。",
+   "ans": "A",
+   "words": [
+    "deliver：配達する",
+    "package：荷物",
+    "try again：もう一度試みる",
+    "work：(時間などが)都合がよい",
+    "call A back：Aに折り返し電話する"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/iP95p4xoKVk53GoZ742B_0a140bce0d45.mp3"
+  }
+ ],
+ "listening_169": [
+  {
+   "no": 169,
+   "en": "Would you like me to print the report?",
+   "a": "報告書を提出しましょうか。",
+   "b": "報告書を印刷しましょうか。",
+   "ans": "B",
+   "words": [
+    "Would you like me to ~?：〜しましょうか",
+    "print：印刷する"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/nPczCjzI2devNBz1zQrb_6e8ad7d9c163.mp3"
+  },
+  {
+   "no": 170,
+   "en": "Attention, passengers. The six-fifteen express to Riverside has been delayed by twenty minutes due to maintenance work. It will now depart from platform three instead of platform five. We apologize for the inconvenience.",
+   "a": "乗客の皆様にお知らせします。6時15分発リバーサイド行きの急行は、点検作業のため10分遅れております。発車は5番線から3番線に変更となります。ご迷惑をおかけして申し訳ございません。",
+   "b": "乗客の皆様にお知らせします。6時15分発リバーサイド行きの急行は、点検作業のため20分遅れております。発車は5番線ではなく3番線からとなります。ご迷惑をおかけして申し訳ございません。",
+   "ans": "B",
+   "words": [
+    "passenger：乗客",
+    "express：急行",
+    "be delayed：遅れている",
+    "maintenance work：点検作業",
+    "depart：出発する",
+    "instead of A：Aの代わりに",
+    "inconvenience：不便、迷惑"
+   ],
+   "accent": "🇺🇸 アメリカ英語",
+   "audio": "audio/hpp4J3VqNfWAUOO0d1Us_3645a82a1a80.mp3"
+  }
+ ],
+ "listening_171": [
+  {
+   "no": 171,
+   "en": "Didn't you already order lunch?",
+   "a": "もうお昼を注文しませんでしたか。",
+   "b": "もうお昼を食べませんでしたか。",
+   "ans": "A",
+   "words": [
+    "Didn't you ~?：〜しなかったのですか",
+    "already：もう、すでに",
+    "order：注文する"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/Xb7hH8MSUJpSbSDYk0k2_d141230b0c0a.mp3"
+  },
+  {
+   "no": 172,
+   "en": "Thank you all for coming today. I'm happy to announce that our new app was downloaded over fifty thousand times in its first week. To celebrate, we'll have a team dinner next Friday. Please let Mary know by Wednesday if you can join.",
+   "a": "お集まりいただきありがとうございます。新しいアプリが最初の1週間で5万回以上ダウンロードされました。お祝いに来週の金曜日、チームで夕食会を開きます。参加できる方は水曜日までにメアリーへ。",
+   "b": "お集まりいただきありがとうございます。新しいアプリが最初の1か月で5千回以上ダウンロードされました。お祝いに来週の木曜日、チームで昼食会を開きます。参加できる方は火曜日までにメアリーへ。",
+   "ans": "A",
+   "words": [
+    "announce：発表する、知らせる",
+    "download：ダウンロードする",
+    "celebrate：祝う",
+    "let A know：Aに知らせる",
+    "join：参加する"
+   ],
+   "accent": "🇬🇧 イギリス英語",
+   "audio": "audio/JBFqnCBsd6RMkjVDRZzb_f29c2362781f.mp3"
   }
  ]
 }

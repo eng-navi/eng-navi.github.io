@@ -208,6 +208,42 @@ REELS = [
               "B",
               ["factory tour：工場見学", "package：包装", "for safety reasons：安全のため", "hair net：ヘアネット", "hand out：配る", "machine：機械"]),
          ]),
+    dict(intro="🎧 1回で聞き取れるか、試してみよう。\n今日は「会議の長さ」と「配達業者からの留守電」です。", tags="#TOEICリスニング #TOEIC対策 #英語耳",
+         items=[
+             (167, None, "How long will the meeting last?",
+              "会議はどのくらい続きますか。", "会議はいつ始まりますか。", "A",
+              ["How long ~?：どのくらいの時間〜", "last：続く"]),
+             (168, None, "Hello, this is Ken from Quick Delivery. We tried to deliver your package this morning, but no one was home. "
+              "We'll try again tomorrow between two and four. If that time doesn't work, please call us back at this number.",
+              "クイック配送のケンです。今朝お荷物をお届けにうかがいましたが、ご不在でした。明日の2時から4時の間に再度うかがいます。ご都合が悪ければ、この番号に折り返しお電話ください。",
+              "クイック配送のケンです。今朝お荷物をお届けにうかがいましたが、ご不在でした。明日の午前10時から12時の間に再度うかがいます。ご都合が悪ければ、メールでご連絡ください。",
+              "A",
+              ["deliver：配達する", "package：荷物", "try again：もう一度試みる", "work：(時間などが)都合がよい", "call A back：Aに折り返し電話する"]),
+         ]),
+    dict(intro="🎧 申し出の言い方、聞き取れる?\n今日は「〜しましょうか?」と「駅のアナウンス」です。", tags="#TOEIC #リスニング #英語学習",
+         items=[
+             (169, None, "Would you like me to print the report?",
+              "報告書を提出しましょうか。", "報告書を印刷しましょうか。", "B",
+              ["Would you like me to ~?：〜しましょうか", "print：印刷する"]),
+             (170, None, "Attention, passengers. The six-fifteen express to Riverside has been delayed by twenty minutes due to maintenance work. "
+              "It will now depart from platform three instead of platform five. We apologize for the inconvenience.",
+              "乗客の皆様にお知らせします。6時15分発リバーサイド行きの急行は、点検作業のため10分遅れております。発車は5番線から3番線に変更となります。ご迷惑をおかけして申し訳ございません。",
+              "乗客の皆様にお知らせします。6時15分発リバーサイド行きの急行は、点検作業のため20分遅れております。発車は5番線ではなく3番線からとなります。ご迷惑をおかけして申し訳ございません。",
+              "B",
+              ["passenger：乗客", "express：急行", "be delayed：遅れている", "maintenance work：点検作業", "depart：出発する", "instead of A：Aの代わりに", "inconvenience：不便、迷惑"]),
+         ]),
+    dict(intro="🎧 否定の疑問文、意外と聞き取りにくい!\n今日は「お昼の注文」と「社内のお祝いのお知らせ」です。", tags="#TOEICリスニング #ビジネス英語 #スキマ時間",
+         items=[
+             (171, None, "Didn't you already order lunch?",
+              "もうお昼を注文しませんでしたか。", "もうお昼を食べませんでしたか。", "A",
+              ["Didn't you ~?：〜しなかったのですか", "already：もう、すでに", "order：注文する"]),
+             (172, None, "Thank you all for coming today. I'm happy to announce that our new app was downloaded over fifty thousand times in its first week. "
+              "To celebrate, we'll have a team dinner next Friday. Please let Mary know by Wednesday if you can join.",
+              "お集まりいただきありがとうございます。新しいアプリが最初の1週間で5万回以上ダウンロードされました。お祝いに来週の金曜日、チームで夕食会を開きます。参加できる方は水曜日までにメアリーへ。",
+              "お集まりいただきありがとうございます。新しいアプリが最初の1か月で5千回以上ダウンロードされました。お祝いに来週の木曜日、チームで昼食会を開きます。参加できる方は火曜日までにメアリーへ。",
+              "A",
+              ["announce：発表する、知らせる", "download：ダウンロードする", "celebrate：祝う", "let A know：Aに知らせる", "join：参加する"]),
+         ]),
 ]
 
 

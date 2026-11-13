@@ -150,6 +150,33 @@ REELS = [
               "何があっても、あなたの味方だよ。", "I'll support you no matter what.",
               ["no matter what happens(何が起きても)の happens が省略された形", "no matter how / where / who も同じ仲間", "whatever とほぼ同じ意味"]),
          ]),
+    dict(intro="人との関わりで使える熟語です🤝\n今日は「〜に我慢強い」「〜の観点から」の2つ。", tags="#英単語 #英検2級 #大学受験",
+         items=[
+             (185, "be patient with A", "Aに対して我慢強い、辛抱強い", "に我慢強い",
+              "その先生は生徒にとても辛抱強い。", "The teacher is very patient with her students.",
+              ["前置詞は with", "名詞の patient は「患者」の意味", "反対は impatient(短気な)"]),
+             (186, "in terms of A", "Aの観点から、Aの点では", "の観点から",
+              "値段の点では、こちらの方がいい。", "In terms of price, this one is better.",
+              ["長文で「〜の面では」と訳すとスムーズ", "term は「言葉、期間、条件」など意味が多い", "in the long term で「長い目で見れば」"]),
+         ]),
+    dict(intro="TOEICにも出る、使える熟語です💼\n今日は「〜に都合がつく」「〜しようと申し出る」の2つ。", tags="#英単語 #TOEIC #英語学習",
+         items=[
+             (187, "be available for A", "Aに都合がつく、Aに対応できる", "に都合がつく",
+              "明日の打ち合わせに都合はつきますか。", "Are you available for a meeting tomorrow?",
+              ["人に使うと「手が空いている」", "物に使うと「手に入る、利用できる」", "名詞は availability(空き状況)"]),
+             (188, "offer to do", "〜しようと申し出る", "しようと申し出る",
+              "彼は駅まで送ると申し出てくれた。", "He offered to drive me to the station.",
+              ["to のあとは動詞の原形", "offer A B で「AにBを提供する」の形も", "名詞で「申し出、提案」"]),
+         ]),
+    dict(intro="英作文でも使える熟語です✍️\n今日は「きっと〜する」「心に留めておく」の2つ。", tags="#英作文 #英単語 #英検2級",
+         items=[
+             (189, "be certain to do", "きっと〜する", "きっとする",
+              "彼女はきっと試験に合格するだろう。", "She is certain to pass the exam.",
+              ["be sure to do とほぼ同じ意味", "be certain of A で「Aを確信している」", "副詞は certainly(確かに)"]),
+             (190, "bear A in mind", "Aを心に留めておく", "を心に留めておく",
+              "安全が第一だということを心に留めておいて。", "Please bear in mind that safety comes first.",
+              ["keep A in mind と同じ意味", "A が長いときは bear in mind that ~ の形になる", "bear には「運ぶ、耐える」などの意味も"]),
+         ]),
 ]
 ITEMS = [it for r in REELS for it in r["items"]]
 
