@@ -11,6 +11,7 @@ export type QuizProps = { q: string; q_ja: string; choices: string[]; answer: nu
 
 const W = 1080;
 export const JP = "'Hiragino Maru Gothic ProN', 'Hiragino Sans', sans-serif";
+export const JPB = "'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif";  // 問題文用の太いゴシック
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
 
 const BG = { office: Office, bedroom: Bedroom, lab: Lab };
@@ -88,10 +89,10 @@ export const Intro = ({ p }: { p: QuizProps }) => {
         <line x1={0} y1={0} x2={0} y2={-140} stroke="#e0533c" strokeWidth={10} strokeLinecap="round" transform={`rotate(${a})`} />
         <text y={45} textAnchor="middle" fontSize={150 * (0.8 + 0.2 * pop)} fontWeight={900} fontFamily={EN} fill="#1d1d22">{n}</text>
       </svg>
-      <div style={{ marginTop: 40, width: 820, padding: "32px 40px", borderRadius: 40, background: "#e0533c", textAlign: "center",
+      <div style={{ marginTop: 40, width: 860, padding: "32px 36px", borderRadius: 40, background: "#e0533c", textAlign: "center",
                     transform: `translateY(${(1 - inQ) * 500}px)`, opacity: inQ }}>
-        <div style={{ fontFamily: JP, fontWeight: 800, fontSize: 56, color: "white", lineHeight: 1.35, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
-        <div style={{ fontFamily: EN, fontWeight: 700, fontSize: 34, color: "#ffe6df", marginTop: 14 }}>{p.q}</div>
+        <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: 58, color: "white", lineHeight: 1.35, letterSpacing: 2, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
+        <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 44, color: "#fff1ec", marginTop: 16, lineHeight: 1.2 }}>{p.q}</div>
       </div>
       <div style={{ marginTop: 44, fontFamily: JP, fontSize: 36, color: "#c9cbe6", opacity: inQ }}>全文と和訳はコメント欄にあります</div>
     </AbsoluteFill>
@@ -153,8 +154,8 @@ export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
   return (
     <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 30%, #333a73, #0f1124)", alignItems: "center" }}>
       <div style={{ marginTop: 280, width: 820, padding: "30px 34px", borderRadius: 34, background: "#e0533c", textAlign: "center",
-                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: JP, fontWeight: 800, fontSize: 50, color: "white", lineHeight: 1.35, whiteSpace: "pre-line" }}>Q. {p.q_ja}
-        <div style={{ fontFamily: EN, fontWeight: 700, fontSize: 32, color: "#ffe6df", marginTop: 12 }}>{p.q}</div></div>
+                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: JPB, fontWeight: 800, fontSize: 52, color: "white", lineHeight: 1.35, letterSpacing: 2, whiteSpace: "pre-line" }}>Q. {p.q_ja}
+        <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 40, color: "#fff1ec", marginTop: 12, lineHeight: 1.2 }}>{p.q}</div></div>
       {p.choices.map((c, i) => {
         const slide = spring({ frame: f - i * 5, fps, config: { damping: 14 } });
         return (

@@ -1,5 +1,5 @@
 import { AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { Choices, Intro, JP, QuizProps } from "../quiz/QuizShort";
+import { Choices, Intro, JP, JPB, QuizProps } from "../quiz/QuizShort";
 import { Body, Eyes, Head, Mouth } from "./Face";
 import { Backdrop, Defs, Insert } from "./Sets";
 
@@ -87,9 +87,11 @@ export const IfShort = (p: IfProps) => {
       <Sequence durationInFrames={fr(p.intro)}><Intro p={p} /><Audio src={staticFile(p.tick)} /></Sequence>
       {p.shots.map((s, i) => <Sequence key={i} from={fr(s.start)} durationInFrames={fr(s.dur)}><ShotView s={s} /></Sequence>)}
       <Sequence from={fr(p.intro)} durationInFrames={fr(p.choiceAt - p.intro)}>
-        <div style={{ position: "absolute", top: 230, left: 130, right: 130, padding: "16px 26px", borderRadius: 28, background: "rgba(224,83,60,0.92)", color: "white", textAlign: "center" }}>
-          <div style={{ fontFamily: JP, fontWeight: 800, fontSize: 40, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
-          <div style={{ fontFamily: EN, fontWeight: 700, fontSize: 26, color: "#ffe6df", marginTop: 6 }}>{p.q}</div></div>
+        <div style={{ position: "absolute", top: 220, left: 110, right: 110, padding: "16px 22px", borderRadius: 28, background: "rgba(224,83,60,0.94)", color: "white", textAlign: "center",
+                      boxShadow: "0 10px 30px rgba(0,0,0,0.35)" }}>
+          <div style={{ fontFamily: JPB, fontWeight: 800, whiteSpace: "nowrap", letterSpacing: 1,
+                        fontSize: Math.min(48, Math.floor(790 / (p.q_ja.replace("\n", "").length + 2))) }}>Q. {p.q_ja.replace("\n", "")}</div>
+          <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 34, color: "#fff1ec", marginTop: 6, lineHeight: 1.15 }}>{p.q}</div></div>
         <Captions words={p.words} offset={0} />
         <Audio src={staticFile(p.story)} />
       </Sequence>
