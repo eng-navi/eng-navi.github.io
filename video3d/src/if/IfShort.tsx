@@ -1,7 +1,7 @@
 import { AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { Choices, Intro, JP, JPB, QuizProps } from "../quiz/QuizShort";
+import { Choices, Intro, JP, JPB, QuizProps, fitJP } from "../quiz/QuizShort";
 import { Body, Eyes, Hat, Head, Lens, Mouth } from "./Face";
-import { Backdrop, Defs, Insert } from "./Sets";
+import { Backdrop, Defs, Insert, OceanFX } from "./Sets";
 
 // 1カット(2〜3秒)の指定。type で構図、cam でカメラ、wipe で切り替え方を変える
 export type Shot = {
@@ -17,11 +17,12 @@ export type Shot = {
   left?: string; right?: string;    // split の左右の文字
   focus?: [number, number];         // lens でのぞく位置
   zoom?: number;                    // 絵の拡大率(正体を隠したいときに大きく)
+  sonar?: string;                   // ソナー風の枠とラベル
 };
 export type Word = { text: string; start: number; end: number; hl?: boolean; ja?: string };
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
-  no?: string; mystery?: string; jaHints?: boolean;
+  no?: string; mystery?: string; mysteryBg?: string; jaHints?: boolean;
   hook?: string; coverShot?: Shot; badge?: string };  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
@@ -70,6 +71,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
         <clipPath id="lensClip"><circle cx={lensX} cy={lensY} r={210} /></clipPath>
         <g clipPath="url(#iris)">
         <Backdrop kind={s.bg} blur={close ? 14 : s.type === "insert" || s.type === "lens" ? 18 : 0} />
+        {s.bg === "ocean" && <OceanFX t={t} />}
         {s.type === "face" && <g transform={`translate(540 ${1080 + bob})`}><Head r={330} eyes={eyes} mouth={mouth} rim={s.rim} detective={det} sci={s.sci} />
           <path d="M-330 360 Q0 260 330 360 L380 900 L-380 900 Z" fill={s.color ?? "#2f6fd6"} />
           {det && <path d="M-200 330 L0 520 L200 330 L150 900 L-150 900 Z" fill="#1d3f35" />}</g>}
@@ -110,6 +112,14 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
         <div style={{ position: "absolute", top: 480, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
           <div style={{ padding: "14px 34px", borderRadius: 40, background: "rgba(20,20,26,0.82)", color: "#f2b33d", fontFamily: EN, fontWeight: 900,
                         fontSize: 54, letterSpacing: 2, transform: `scale(${0.85 + 0.15 * pop})` }}>{s.hud}</div>
+        </div>
+      )}
+      {s.sonar && (  /* ソナー風:四隅の枠、走査線、ラベル */
+        <div style={{ position: "absolute", top: 520, bottom: 560, left: 110, right: 110 }}>
+          {[[0, 0], [1, 0], [0, 1], [1, 1]].map(([x, y], i) => <div key={i} style={{ position: "absolute", [x ? "right" : "left"]: 0, [y ? "bottom" : "top"]: 0, width: 70, height: 70,
+            [`border${y ? "Bottom" : "Top"}`]: "6px solid #bdf3ff", [`border${x ? "Right" : "Left"}`]: "6px solid #bdf3ff", opacity: 0.85 }} />)}
+          <div style={{ position: "absolute", left: 0, right: 0, top: `${(t * 40) % 100}%`, height: 3, background: "rgba(189,243,255,0.45)" }} />
+          <div style={{ position: "absolute", top: -64, left: 0, fontFamily: EN, fontWeight: 800, fontSize: 40, letterSpacing: 6, color: "#bdf3ff" }}>● {s.sonar}</div>
         </div>
       )}
       {s.stamp && (
@@ -168,7 +178,7 @@ const MysteryIntro = ({ p }: { p: IfProps }) => {
                     fontFamily: JPB, fontWeight: 800, fontSize: 44, letterSpacing: 2 }}>{p.kicker ?? ""}{p.title ?? ""} {p.no ?? ""}</div>
       <div style={{ position: "absolute", bottom: 420, width: 860, padding: "26px 32px", borderRadius: 36, background: "#e0533c", textAlign: "center",
                     transform: `translateY(${(1 - box) * 400}px)`, opacity: box }}>
-        <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: 58, color: "white", whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
+        <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: fitJP(p.q_ja, 58, 760), color: "white", whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
         <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 44, color: "#fff1ec", marginTop: 8 }}>{p.q}</div>
       </div>
     </AbsoluteFill>
@@ -178,7 +188,7 @@ const MysteryIntro = ({ p }: { p: IfProps }) => {
 // 謎の絵(冒頭とループの最後で同じ絵を使い、最初に自然につなげる)
 const MysteryImage = ({ p, t }: { p: IfProps; t: number }) => (
   <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", transform: `scale(${3.2 + t * 0.15})`, transformOrigin: "50% 50%", filter: "blur(2px)" }}>
-    <Defs /><Backdrop kind="dark" />{p.mystery && <Insert kind={p.mystery} t={2} />}
+    <Defs /><Backdrop kind={p.mysteryBg ?? "dark"} />{p.mystery && <Insert kind={p.mystery} t={2} />}
     <rect width={W} height={H} fill="url(#vig)" />
   </svg>
 );

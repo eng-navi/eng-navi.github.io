@@ -57,6 +57,13 @@ export const Backdrop = ({ kind, blur = 0 }: { kind: string; blur?: number }) =>
         <rect x={0} y={1220} width={W} height={H - 1220} fill="#0b1c20" />
       </g>
     ),
+    ocean: (
+      <g>
+        <rect width={W} height={H} fill="url(#sea)" />
+        <path d="M0 1700 Q270 1640 540 1690 T1080 1670 L1080 1920 L0 1920 Z" fill="#05121d" />
+        {[120, 380, 760, 960].map((x, i) => <path key={i} d={`M${x} 1700 q-20 -${120 + i * 40} 10 -${220 + i * 50}`} stroke="#0f5132" strokeWidth={18} fill="none" strokeLinecap="round" />)}
+      </g>
+    ),
     dark: (
       <g>
         <rect width={W} height={H} fill="#0d0f18" />
@@ -73,9 +80,25 @@ export const Defs = () => (
     <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#3b3f6e" stopOpacity={0.6} /><stop offset="1" stopColor="#f6c98b" stopOpacity={0} /></linearGradient>
     <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#3d3566" /><stop offset="0.55" stopColor="#e5866a" /><stop offset="1" stopColor="#f7c98e" /></linearGradient>
     <linearGradient id="shadeR" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#fff" stopOpacity={0.15} /><stop offset="0.6" stopColor="#000" stopOpacity={0} /><stop offset="1" stopColor="#000" stopOpacity={0.35} /></linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#1b8ab0" /><stop offset="0.45" stopColor="#0b4f74" /><stop offset="1" stopColor="#031a2c" /></linearGradient>
     <radialGradient id="vig" cx="0.5" cy="0.5" r="0.75"><stop offset="0.55" stopColor="#000" stopOpacity={0} /><stop offset="1" stopColor="#000" stopOpacity={0.75} /></radialGradient>
     <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={5} /><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.07 0" /></filter>
   </defs>
+);
+
+// 海の動き:ゆれる光の筋、のぼる泡、ただよう粒
+export const OceanFX = ({ t }: { t: number }) => (
+  <g>
+    {[0, 1, 2, 3, 4].map((i) => {
+      const x = 120 + i * 220 + Math.sin(t * 0.8 + i) * 40;
+      return <polygon key={i} points={`${x - 30},0 ${x + 30},0 ${x + 160},1400 ${x - 60},1400`} fill="#bfefff" opacity={0.06 + 0.03 * Math.sin(t * 1.3 + i * 2)} />;
+    })}
+    {[...Array(14)].map((_, i) => {
+      const x = (i * 157) % 1080 + Math.sin(t * 2 + i) * 14, y = 1800 - ((t * (60 + (i % 4) * 25) + i * 140) % 1800);
+      return <circle key={i} cx={x} cy={y} r={6 + (i % 3) * 5} fill="none" stroke="#dff7ff" strokeWidth={3} opacity={0.5} />;
+    })}
+    {[...Array(24)].map((_, i) => <circle key={`p${i}`} cx={(i * 263 + t * 12) % 1080} cy={(i * 331 + Math.sin(t + i) * 20) % 1600} r={2.5} fill="#e8fbff" opacity={0.35} />)}
+  </g>
 );
 
 // 物のアップ
@@ -167,6 +190,36 @@ export const Insert = ({ kind, value, t }: { kind: string; value?: string; t: nu
           return Math.abs(x) < 270 - Math.abs(y) * 0.25 && y < 350 ? <ellipse key={i} cx={x} cy={y} rx={11} ry={16} fill="#ffd23f" transform={`rotate(${a * 57} ${x} ${y})`} /> : null;
         })}
         <path d="M-150 -320 L-60 -380 L0 -440 L60 -380 L150 -320 L60 -330 L0 -300 L-60 -330 Z" fill="#2fa36b" />
+      </g>
+    );
+  }
+  if (kind === "seahorse") {  // タツノオトシゴ(ゆらゆら上下)
+    const b = Math.sin(t * 2) * 20;
+    return (
+      <g transform={`translate(540 ${930 + b})`}>
+        <path d="M-20 -330 C90 -360 140 -260 90 -190 C60 -150 20 -150 30 -100 C50 0 120 60 90 170 C60 280 -40 300 -60 230 C-80 170 -10 170 0 220 C10 250 50 230 40 180 C20 100 -60 60 -50 -60 C-45 -130 -120 -150 -110 -220 C-100 -290 -70 -320 -20 -330 Z" fill="#f6a623" />
+        <path d="M80 -250 L190 -230 L185 -205 L80 -215 Z" fill="#f6a623" />
+        <circle cx={20} cy={-260} r={22} fill="#fff" /><circle cx={26} cy={-256} r={11} fill="#111" />
+        {[-60, -10, 40, 90].map((y) => <path key={y} d={`M-30 ${y} q40 -12 70 4`} stroke="#d4860f" strokeWidth={9} fill="none" strokeLinecap="round" />)}
+        <path d="M-60 -60 q-60 30 -40 90 q30 -20 40 -50" fill="#ffd27a" opacity={0.8} />
+        {value && <text y={-400} textAnchor="middle" fontSize={96} fontWeight={900} fill="#ffd23f" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
+  if (kind === "dolphin" || kind === "orca") {  // イルカ/シャチ(泳いで横切る)
+    const orca = kind === "orca";
+    const x = 540 + Math.sin(t * 0.9) * 120, y = 960 + Math.sin(t * 2) * 30;
+    return (
+      <g transform={`translate(${x} ${y}) rotate(${Math.cos(t * 2) * 6})`}>
+        {orca ? <path d="M-380 0 C-300 -150 150 -170 330 -40 C380 -10 380 30 330 40 C150 120 -250 110 -380 0 Z" fill="#14161c" />
+              : <path d="M-380 0 C-300 -140 120 -160 300 -50 C340 -30 360 -20 450 -8 C470 -2 470 12 450 16 C360 24 340 34 300 44 C150 120 -250 100 -380 0 Z" fill="#7fb3d5" />}
+        {orca ? <path d="M-20 -120 L60 -300 L120 -110 Z" fill="#14161c" /> : <path d="M-60 -120 Q-10 -250 90 -140 Q40 -150 30 -110 Z" fill="#6aa0c4" />}
+        {!orca && <path d="M330 20 Q380 40 430 14" stroke="#3d6f8f" strokeWidth={6} fill="none" strokeLinecap="round" />}
+        <path d="M-370 0 L-470 -90 L-440 0 L-470 90 Z" fill={orca ? "#14161c" : "#4f7fa1"} />
+        {orca ? <><ellipse cx={210} cy={-40} rx={60} ry={24} fill="#fff" /><path d="M-60 60 C60 110 200 80 300 30 C200 40 60 40 -60 60 Z" fill="#fff" /></>
+              : <path d="M-220 45 C0 95 200 70 330 30 C200 50 0 45 -220 45 Z" fill="#e3f0f8" />}
+        {orca ? <circle cx={250} cy={-30} r={8} fill="#111" /> : <><circle cx={270} cy={-22} r={13} fill="#fff" /><circle cx={273} cy={-20} r={7} fill="#111" /></>}
+        {value && <text x={0} y={-340} textAnchor="middle" fontSize={96} fontWeight={900} fill="#ffd23f" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
       </g>
     );
   }
