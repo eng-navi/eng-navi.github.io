@@ -8,7 +8,7 @@ export type Scene = { bg: "office" | "bedroom" | "lab"; text: string; audio: str
                       think?: string };
 export type QuizProps = { q: string; q_ja: string; choices: string[]; answer: number; words: string[];
                           intro: number; scenes: Scene[]; choiceAt: number; answerAt: number; total: number; tick: string; bgm: string;
-  kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
+  kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string; choiceSec?: number;
 };
 
 const W = 1080;
@@ -156,7 +156,7 @@ const Story = ({ p, s }: { p: QuizProps; s: Scene }) => {
 export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const left = Math.max(0, 4 - Math.floor(f / fps));
+  const left = Math.max(0, (p.choiceSec ?? 4) - Math.floor(f / fps));
   return (
     <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 30%, ${p.bg1 ?? "#333a73"}, ${p.bg2 ?? "#0f1124"})`, alignItems: "center" }}>
       <div style={{ marginTop: 280, width: 820, padding: "30px 34px", borderRadius: 34, background: "#e0533c", textAlign: "center",

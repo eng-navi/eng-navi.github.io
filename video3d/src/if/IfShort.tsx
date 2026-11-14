@@ -7,7 +7,7 @@ import { Backdrop, Defs, Insert } from "./Sets";
 export type Shot = {
   type: "face" | "eyes" | "full" | "two" | "insert" | "wide" | "lens" | "split" | "silhouette" | "ots";
   start: number; dur: number; bg: string;
-  eyes?: Eyes; mouth?: Mouth; color?: string; rim?: string; det?: boolean;  // det:主人公を探偵の見た目に
+  eyes?: Eyes; mouth?: Mouth; color?: string; rim?: string; det?: boolean; sci?: boolean;  // det:探偵 / sci:博士の見た目
   eyes2?: Eyes; mouth2?: Mouth; color2?: string;
   insert?: string; value?: string; hud?: string;
   cam?: "push" | "pull" | "pan" | "shake" | "whip" | "tilt" | "snap" | "rise";
@@ -16,10 +16,12 @@ export type Shot = {
   mark?: [number, number, number];  // 赤丸で囲む位置 [x, y, 半径]
   left?: string; right?: string;    // split の左右の文字
   focus?: [number, number];         // lens でのぞく位置
+  zoom?: number;                    // 絵の拡大率(正体を隠したいときに大きく)
 };
-export type Word = { text: string; start: number; end: number; hl?: boolean };
+export type Word = { text: string; start: number; end: number; hl?: boolean; ja?: string };
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
-  kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string };
+  kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
+  no?: string; mystery?: string; jaHints?: boolean };  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
@@ -35,6 +37,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
   let scale = { push: interpolate(f, [0, len], [1, 1.12]), pull: interpolate(f, [0, len], [1.18, 1]), pan: 1.06, shake: 1.05, whip: 1.04,
     tilt: interpolate(f, [0, len], [1.02, 1.1]), snap: f < len * 0.45 ? 1 : 1.35, rise: 1.08 }[cam];
   scale *= 0.94 + 0.06 * pop;
+  scale *= s.zoom ?? 1;
   let sx = cam === "pan" ? interpolate(f, [0, len], [-50, 50]) : cam === "shake" ? Math.sin(f * 2.3) * 12 * Math.max(0, 1 - t * 2) : 0;
   if (cam === "whip") sx = interpolate(f, [0, 6], [900, 0], { extrapolateRight: "clamp", easing: (x) => 1 - Math.pow(1 - x, 3) });
   const sy = cam === "rise" ? interpolate(f, [0, len], [80, -40]) : 0;
@@ -66,14 +69,14 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
         <clipPath id="lensClip"><circle cx={lensX} cy={lensY} r={210} /></clipPath>
         <g clipPath="url(#iris)">
         <Backdrop kind={s.bg} blur={close ? 14 : s.type === "insert" || s.type === "lens" ? 18 : 0} />
-        {s.type === "face" && <g transform={`translate(540 ${1080 + bob})`}><Head r={330} eyes={eyes} mouth={mouth} rim={s.rim} detective={det} />
+        {s.type === "face" && <g transform={`translate(540 ${1080 + bob})`}><Head r={330} eyes={eyes} mouth={mouth} rim={s.rim} detective={det} sci={s.sci} />
           <path d="M-330 360 Q0 260 330 360 L380 900 L-380 900 Z" fill={s.color ?? "#2f6fd6"} />
           {det && <path d="M-200 330 L0 520 L200 330 L150 900 L-150 900 Z" fill="#1d3f35" />}</g>}
         {s.type === "eyes" && <g transform="translate(540 960)"><Head r={720} eyes={eyes} mouth="none" rim={s.rim} /></g>}
-        {s.type === "full" && <g transform={`translate(540 ${1560})`}><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} detective={det} pose={det ? "lens" : "stand"} /></g>}
-        {s.type === "wide" && <g transform="translate(540 1500) scale(0.55)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={s.mouth} pose="run" step={f / 3} detective={det} /></g>}
+        {s.type === "full" && <g transform={`translate(540 ${1560})`}><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} detective={det} sci={s.sci} pose={det ? "lens" : "stand"} /></g>}
+        {s.type === "wide" && <g transform="translate(540 1500) scale(0.55)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={s.mouth} pose="run" step={f / 3} detective={det} sci={s.sci} /></g>}
         {s.type === "two" && <>
-          <g transform="translate(300 1600) scale(0.95)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} pose={det ? "lens" : "point"} detective={det} /></g>
+          <g transform="translate(300 1600) scale(0.95)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} pose={det ? "lens" : "point"} detective={det} sci={s.sci} /></g>
           <g transform="translate(800 1620) scale(0.85)"><Body color={s.color2 ?? "#c0392b"} rim="#ffffff" eyes={s.eyes2} mouth={s.mouth2} /></g></>}
         {s.type === "ots" && <>  {/* 肩越し:手前に主人公の後頭部、奥に相手 */}
           <g transform="translate(560 1640) scale(0.95)"><Body color={s.color2 ?? "#c0392b"} rim="#ffffff" eyes={s.eyes2} mouth={s.mouth2} /></g>
@@ -81,7 +84,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
             <path d="M-360 300 Q0 200 360 300 L420 900 L-420 900 Z" fill={s.color ?? "#2f6fd6"} /></g></>}
         {s.type === "silhouette" && <>  {/* 逆光のシルエット */}
           <circle cx={540} cy={900} r={520} fill="#fff4d6" opacity={0.9} />
-          <g transform="translate(540 1560)" style={{ filter: "brightness(0)" }}><Body color={s.color} eyes={eyes} mouth="none" detective={det} pose={det ? "lens" : "stand"} /></g>
+          <g transform="translate(540 1560)" style={{ filter: "brightness(0)" }}><Body color={s.color} eyes={eyes} mouth="none" detective={det} sci={s.sci} pose={det ? "lens" : "stand"} /></g>
           <g transform="translate(540 1060)"><Eye2 kind={eyes} /></g></>}
         {(s.type === "insert" || s.type === "lens") && s.insert && <Insert kind={s.insert} value={s.value} t={t} />}
         {s.type === "lens" && s.insert && <>  {/* 虫めがねでのぞいた部分だけ拡大 */}
@@ -91,7 +94,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
         {s.type === "split" && <>  {/* 画面を左右に分けて比べる */}
           <rect x={0} y={0} width={540} height={H} fill="#1f3b5c" /><rect x={540} y={0} width={540} height={H} fill="#5c1f2b" />
           <rect x={530} y={0} width={20} height={H} fill="#fff" />
-          <g transform={`translate(270 ${1400 + bob}) scale(0.7)`}><Body color={s.color} eyes={eyes} mouth={s.mouth} detective={det} /></g>
+          <g transform={`translate(270 ${1400 + bob}) scale(0.7)`}><Body color={s.color} eyes={eyes} mouth={s.mouth} detective={det} sci={s.sci} /></g>
           <g transform={`translate(810 ${1400 - bob}) scale(0.7)`}><Body color={s.color2 ?? "#c0392b"} rim="#fff" eyes={s.eyes2} mouth={s.mouth2} /></g>
           <text x={270} y={720} textAnchor="middle" fontSize={96} fontWeight={900} fill="#fff" fontFamily={EN}>{s.left}</text>
           <text x={810} y={720} textAnchor="middle" fontSize={96} fontWeight={900} fill="#ffd23f" fontFamily={EN}>{s.right}</text></>}
@@ -125,7 +128,7 @@ const Eye2 = ({ kind }: { kind?: Eyes }) => (
 );
 
 // 1〜3語ずつの字幕(ナレーションの単語のタイミングに合わせる)
-const Captions = ({ words, offset }: { words: Word[]; offset: number }) => {
+const Captions = ({ words, offset, jaHints = false }: { words: Word[]; offset: number; jaHints?: boolean }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps - offset;
@@ -141,8 +144,63 @@ const Captions = ({ words, offset }: { words: Word[]; offset: number }) => {
                   textTransform: "uppercase", lineHeight: 1.1, WebkitTextStroke: "4px #0b0b10", textShadow: "0 8px 20px rgba(0,0,0,0.6)",
                   transform: `scale(${0.85 + 0.15 * k})` }}>
       {g.map((w, i) => <span key={i} style={{ color: w.hl ? "#f2c14a" : "white" }}>{w.text} </span>)}
+      {jaHints && g.some((w) => w.ja) && <div style={{ fontFamily: JPB, fontSize: 40, fontWeight: 800, color: "#fff4c2", WebkitTextStroke: "0px", marginTop: 10,
+                                                       textTransform: "none", textShadow: "0 3px 10px rgba(0,0,0,0.8)" }}>
+        {g.filter((w) => w.ja).map((w) => `${w.text.replace(/[^A-Za-z'-]/g, "")} = ${w.ja}`).join("  ")}</div>}
     </div>
   );
+};
+
+// 科学の冒頭:謎の絵の超アップに「?」。文字は小さく添える
+const MysteryIntro = ({ p }: { p: IfProps }) => {
+  const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const t = f / fps;
+  const q = spring({ frame: f - 3, fps, config: { damping: 7, mass: 0.5 } });
+  const box = spring({ frame: f - 10, fps, config: { damping: 12 } });
+  return (
+    <AbsoluteFill style={{ backgroundColor: "#0d0f18", alignItems: "center" }}>
+      <MysteryImage p={p} t={t} />
+      <div style={{ position: "absolute", top: 560, fontFamily: EN, fontWeight: 900, fontSize: 420, color: "#ffd23f", WebkitTextStroke: "18px #12142a",
+                    paintOrder: "stroke fill", textShadow: "0 20px 50px rgba(0,0,0,0.6)", transform: `scale(${q}) rotate(${(1 - q) * -30}deg)` }}>?</div>
+      <div style={{ position: "absolute", top: 230, padding: "10px 30px", borderRadius: 40, background: "rgba(13,15,24,0.85)", color: "#ffd23f",
+                    fontFamily: JPB, fontWeight: 800, fontSize: 44, letterSpacing: 2 }}>{p.kicker ?? ""}{p.title ?? ""} {p.no ?? ""}</div>
+      <div style={{ position: "absolute", bottom: 420, width: 860, padding: "26px 32px", borderRadius: 36, background: "#e0533c", textAlign: "center",
+                    transform: `translateY(${(1 - box) * 400}px)`, opacity: box }}>
+        <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: 58, color: "white", whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
+        <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 44, color: "#fff1ec", marginTop: 8 }}>{p.q}</div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+// 謎の絵(冒頭とループの最後で同じ絵を使い、最初に自然につなげる)
+const MysteryImage = ({ p, t }: { p: IfProps; t: number }) => (
+  <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", transform: `scale(${3.2 + t * 0.15})`, transformOrigin: "50% 50%", filter: "blur(2px)" }}>
+    <Defs /><Backdrop kind="dark" />{p.mystery && <Insert kind={p.mystery} t={2} />}
+    <rect width={W} height={H} fill="url(#vig)" />
+  </svg>
+);
+
+// 画面の上の残り時間のバーと、シリーズ番号
+const Progress = ({ p }: { p: IfProps }) => {
+  const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const left = Math.max(0, 1 - f / fps / p.total);
+  return (
+    <div style={{ position: "absolute", top: 150, left: 110, right: 110, display: "flex", alignItems: "center", gap: 18 }}>
+      {p.no && <div style={{ fontFamily: EN, fontWeight: 900, fontSize: 34, color: "#ffd23f" }}>{p.no}</div>}
+      <div style={{ flex: 1, height: 10, borderRadius: 5, background: "rgba(255,255,255,0.22)" }}>
+        <div style={{ width: `${left * 100}%`, height: 10, borderRadius: 5, background: "#ffd23f" }} />
+      </div>
+    </div>
+  );
+};
+
+// 最後の0.4秒で冒頭の謎の絵に戻す(気づかずにもう1回見てもらうため)
+const LoopBack = ({ p }: { p: IfProps }) => {
+  const f = useCurrentFrame();
+  return <AbsoluteFill style={{ opacity: Math.min(1, f / 12) }}><MysteryImage p={p} t={0} /></AbsoluteFill>;
 };
 
 export const IfShort = (p: IfProps) => {
@@ -150,7 +208,7 @@ export const IfShort = (p: IfProps) => {
   const fr = (s: number) => Math.round(s * fps);
   return (
     <AbsoluteFill style={{ backgroundColor: "#0d0f18" }}>
-      <Sequence durationInFrames={fr(p.intro)}><Intro p={p} /><Audio src={staticFile(p.tick)} /></Sequence>
+      <Sequence durationInFrames={fr(p.intro)}>{p.mystery ? <MysteryIntro p={p} /> : <Intro p={p} />}<Audio src={staticFile(p.tick)} /></Sequence>
       {p.shots.map((s, i) => <Sequence key={i} from={fr(s.start)} durationInFrames={fr(s.dur)}><ShotView s={s} words={p.words} /></Sequence>)}
       <Sequence from={fr(p.intro)} durationInFrames={fr(p.choiceAt - p.intro)}>
         <div style={{ position: "absolute", top: 220, left: 110, right: 110, padding: "16px 22px", borderRadius: 28, background: "rgba(224,83,60,0.94)", color: "white", textAlign: "center",
@@ -158,11 +216,13 @@ export const IfShort = (p: IfProps) => {
           <div style={{ fontFamily: JPB, fontWeight: 800, whiteSpace: "nowrap", letterSpacing: 1,
                         fontSize: Math.min(48, Math.floor(790 / (p.q_ja.replace("\n", "").length + 2))) }}>Q. {p.q_ja.replace("\n", "")}</div>
           <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 34, color: "#fff1ec", marginTop: 6, lineHeight: 1.15 }}>{p.q}</div></div>
-        <Captions words={p.words} offset={0} />
+        <Captions words={p.words} offset={0} jaHints={p.jaHints} />
         <Audio src={staticFile(p.story)} />
       </Sequence>
       <Sequence from={fr(p.choiceAt)} durationInFrames={fr(p.answerAt - p.choiceAt)}><Choices p={p} end={false} /><Audio src={staticFile(p.tick)} /></Sequence>
       <Sequence from={fr(p.answerAt)}><Choices p={p} end={true} /></Sequence>
+      {p.mystery && <Sequence from={fr(p.total) - 12}><LoopBack p={p} /></Sequence>}
+      <Progress p={p} />
       <Audio src={staticFile(p.sfx)} />
       <Audio src={staticFile(p.bgm)} volume={0.08} />
     </AbsoluteFill>

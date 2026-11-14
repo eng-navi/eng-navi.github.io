@@ -195,6 +195,36 @@ SHORTS.update({
         hook="小さなシール1枚で、OKが4倍に?🏠", tags="#英語リスニング #心理学 #謎解き"),
 })
 
+# ---- やさしい英語の科学クイズ(別アカウント)。英検3級〜準2級の単語、ゆっくり(0.85倍)、15秒前後。声は Sarah(アメリカ英語・女性)、博士のキャラ ----
+SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", speed=0.85, kicker="やさしい英語の", title="科学クイズ", jaHints=True,
+           intro=1.5, choice=3.2, end=1.4, endText="答えはコメント欄で👇", bg1="#1b4f7a", bg2="#0a1624")
+SHORTS.update({
+    "sci001_strawberry": dict(SCI, no="#001", mystery="strawberry",
+        q="What is this?", q_ja="これ、なんでしょう?",
+        choices=["A strawberry", "A tomato"], answer=1, answer_ja="イチゴ",
+        hl=["sweet", "seeds", "outside"],
+        shots=[
+            ("It is red and sweet.", dict(type="insert", bg="dark", insert="strawberry", cam="pull", zoom=2.8)),
+            ("It has about two hundred seeds.", dict(type="insert", bg="dark", insert="strawberry", hud="200 SEEDS", cam="push", zoom=1.9)),
+            ("And the seeds are on the outside!", dict(type="face", bg="lab", sci=True, color="#f4f4f0", eyes="shock", mouth="o", cam="whip")),
+        ],
+        ja=["赤くて、甘い。", "種がおよそ200個ある。", "しかも、種が外側についている!"],
+        gloss=["sweet:甘い", "seed:種", "outside:外側"],
+        hook="これ、なんだかわかる?🔍", tags="#英語リスニング #やさしい英語 #科学クイズ"),
+    "sci002_sky": dict(SCI, no="#002", mystery="prism",
+        q="Why is the sky blue?", q_ja="空が青いのはなぜ?",
+        choices=["The sea paints it blue.", "Blue light spreads out the most."], answer=2, answer_ja="青い光が、いちばん散らばるから。",
+        hl=["sunlight", "colors", "spreads", "everywhere"],
+        shots=[
+            ("Sunlight has many colors.", dict(type="insert", bg="dark", insert="prism", cam="push")),
+            ("Blue light spreads out the most.", dict(type="face", bg="lab", sci=True, color="#f4f4f0", eyes="happy", mouth="grin", cam="whip")),
+            ("So we see blue everywhere!", dict(type="wide", bg="street", sci=True, color="#f4f4f0", eyes="happy", mouth="smile", cam="pan")),
+        ],
+        ja=["太陽の光には、たくさんの色がある。", "青い光が、いちばん散らばる。", "だから、どこを見ても青く見える!"],
+        gloss=["sunlight:太陽の光", "color:色", "spread out:広がる、散らばる", "everywhere:どこでも"],
+        hook="空が青い理由、英語で言える?☀️", tags="#英語リスニング #やさしい英語 #科学クイズ"),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
@@ -290,7 +320,8 @@ def caption(sc):
 def build(name):
     sc = SHORTS[name]
     mr.load_env()
-    out_dir = ROOT / "out" / ("ivy_short" if sc.get("account") == "ivy" else "if_short")
+    out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short"}.get(sc.get("account"), "if_short")
+    T_IN, T_CH, T_END = sc.get("intro", INTRO), sc.get("choice", CHOICE), sc.get("end", END)  # 冒頭・2択・最後の秒数(回ごとに変えられる)
     PUB.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
     lines = [ln for ln, _ in sc["shots"]]
@@ -304,16 +335,22 @@ def build(name):
     for k, (ln, spec) in enumerate(sc["shots"]):
         start = words[wi][1]
         wi += len(ln.split())
-        shots.append({**spec, "start": INTRO + (0 if k == 0 else start - 0.08)})
+        shots.append({**spec, "start": T_IN + (0 if k == 0 else start - 0.08)})
     for k, s in enumerate(shots):
-        end = shots[k + 1]["start"] if k + 1 < len(shots) else INTRO + dur + 0.3
+        end = shots[k + 1]["start"] if k + 1 < len(shots) else T_IN + dur + 0.3
         s["dur"] = round(end - s["start"], 3)
         s["start"] = round(s["start"], 3)
-    choice_at = INTRO + dur + 0.3
-    total = choice_at + CHOICE + END
+    choice_at = T_IN + dur + 0.3
+    total = choice_at + T_CH + T_END
     hl = [h.lower() for h in sc["hl"]]
     wlist = [dict(text=w, start=round(s, 3), end=round(e, 3),
                   hl=any("".join(c for c in w.lower() if c.isalpha()).startswith(h[:5]) for h in hl)) for w, s, e in words]
+    if sc.get("jaHints"):  # 黄色の単語の下に、日本語を小さく出す(gloss から)
+        ja = {g.split(":")[0].lower(): g.split(":", 1)[1].split("、")[0] for g in sc["gloss"] if " " not in g.split(":")[0]}
+        for w in wlist:
+            if w["hl"]:
+                bare = "".join(c for c in w["text"].lower() if c.isalpha())
+                w["ja"] = next((v for k, v in ja.items() if bare.startswith(k[:5])), None)
     # 効果音:カットごとにシュッ、数字が出たらポン、目のアップはドン
     sfx = np.zeros(int(SR * (total + 1)), np.float32)
 
@@ -330,11 +367,11 @@ def build(name):
             put(sample(s.pop("sfx"), 0.5), s["start"] + 0.05)
     put(sample("boom", 0.6), 0.0)
     put(sample("whoosh", 0.35), 0.2)
-    for k in range(3):
+    for k in range(int(T_IN + 0.5)):
         put(sample("tick", 0.06), k * 1.0)
-    for k in range(4):
+    for k in range(int(T_CH)):
         put(sample("tick", 0.06), choice_at + k * 1.0)
-    put(sample("whoosh", 0.35), choice_at + CHOICE - 0.05)  # 「コメント欄で」がシュッと入る
+    put(sample("whoosh", 0.35), choice_at + T_CH - 0.05)  # 「コメント欄で」がシュッと入る
     sf.write(PUB / f"{name}_sfx.wav", sfx, SR)
     bgm = PUB / "bgm.mp3"
     if not bgm.exists():
@@ -342,10 +379,10 @@ def build(name):
         bgm.write_bytes((src if src.exists() else ROOT / "assets" / "manga_bgm" / "cozy-places.mp3").read_bytes())
     tick = PUB / "tick.wav"
     sf.write(tick, np.zeros(int(SR * 0.1), np.float32), SR)  # 時計の音は sfx に入れたので無音
-    props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=INTRO,
-                 scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + CHOICE, 3), total=round(total, 3),
+    props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
+                 scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm="if/bgm.mp3",
-                 **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2") if k in sc})
+                 choiceSec=int(T_CH), **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "jaHints") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"

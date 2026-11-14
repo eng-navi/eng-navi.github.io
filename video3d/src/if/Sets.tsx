@@ -156,6 +156,32 @@ export const Insert = ({ kind, value, t }: { kind: string; value?: string; t: nu
       </g>
     );
   }
+  if (kind === "strawberry") {  // イチゴの表面(種つき)。超アップでも絵になるように
+    return (
+      <g transform="translate(540 980)">
+        <path d="M0 -330 C230 -330 330 -120 300 60 C270 240 120 380 0 400 C-120 380 -270 240 -300 60 C-330 -120 -230 -330 0 -330 Z" fill="#e0263b" />
+        <path d="M-120 -250 C-40 -300 60 -300 140 -250" stroke="#ff6b7a" strokeWidth={30} fill="none" opacity={0.5} strokeLinecap="round" />
+        {[...Array(46)].map((_, i) => {
+          const a = i * 2.39996, rr = 40 * Math.sqrt(i + 1);
+          const x = Math.cos(a) * rr * 1.05, y = Math.sin(a) * rr * 1.15 + 20;
+          return Math.abs(x) < 270 - Math.abs(y) * 0.25 && y < 350 ? <ellipse key={i} cx={x} cy={y} rx={11} ry={16} fill="#ffd23f" transform={`rotate(${a * 57} ${x} ${y})`} /> : null;
+        })}
+        <path d="M-150 -320 L-60 -380 L0 -440 L60 -380 L150 -320 L60 -330 L0 -300 L-60 -330 Z" fill="#2fa36b" />
+      </g>
+    );
+  }
+  if (kind === "prism") {  // 白い光がプリズムで7色に分かれる。青が四方に散る
+    const cols = ["#ff3b30", "#ff9500", "#ffd60a", "#34c759", "#0a84ff", "#5e5ce6", "#bf5af2"];
+    const n = Math.min(1, t / 0.8);
+    return (
+      <g>
+        <path d={`M60 960 L${60 + 420 * n} 960`} stroke="#fff" strokeWidth={26} />
+        <polygon points="480,760 640,1100 320,1100" fill="rgba(200,235,255,0.35)" stroke="#e8f6ff" strokeWidth={8} />
+        {n >= 1 && cols.map((c, i) => <path key={c} d={`M560 960 L1080 ${820 + i * 45}`} stroke={c} strokeWidth={22} opacity={0.9} />)}
+        {n >= 1 && [...Array(10)].map((_, i) => <circle key={i} cx={700 + ((i * 97) % 340)} cy={500 + ((i * 173) % 300) - (t % 1) * 60} r={12} fill="#0a84ff" opacity={0.8} />)}
+      </g>
+    );
+  }
   if (kind === "card") {
     return (
       <g transform={`translate(540 960) rotate(${-4 + 2 * Math.sin(t * 3)})`}>
