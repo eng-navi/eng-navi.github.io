@@ -195,8 +195,8 @@ SHORTS.update({
         hook="小さなシール1枚で、OKが4倍に?🏠", tags="#英語リスニング #心理学 #謎解き"),
 })
 
-# ---- やさしい英語の科学クイズ(別アカウント)。英検3級〜準2級の単語、ゆっくり(0.85倍)、15秒前後。声は Sarah(アメリカ英語・女性)、博士のキャラ ----
-SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", speed=0.85, kicker="やさしい英語の", title="科学クイズ", jaHints=True,
+# ---- やさしい英語の科学クイズ(別アカウント)。英検3級〜準2級の単語、ゆっくり(0.7倍+文のあいだに0.7秒、約105語/分)、短い2〜3文で15秒前後。声は Sarah(アメリカ英語・女性)、博士のキャラ ----
+SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", speed=0.7, gap=0.7, bgm="just-flow", kicker="やさしい英語の", title="科学クイズ", jaHints=True,
            intro=1.5, choice=3.2, end=1.4, endText="答えはコメント欄で👇", bg1="#1b4f7a", bg2="#0a1624")
 SHORTS.update({
     "sci001_strawberry": dict(SCI, no="#001", mystery="strawberry",
@@ -204,24 +204,24 @@ SHORTS.update({
         choices=["A strawberry", "A tomato"], answer=1, answer_ja="イチゴ",
         hl=["sweet", "seeds", "outside"],
         shots=[
-            ("It is red and sweet.", dict(type="insert", bg="dark", insert="strawberry", cam="pull", zoom=2.8)),
-            ("It has about two hundred seeds.", dict(type="insert", bg="dark", insert="strawberry", hud="200 SEEDS", cam="push", zoom=1.9)),
-            ("And the seeds are on the outside!", dict(type="face", bg="lab", sci=True, color="#f4f4f0", eyes="shock", mouth="o", cam="whip")),
+            ("It is red.", dict(type="insert", bg="dark", insert="strawberry", cam="pull", zoom=2.8)),
+            ("It is sweet.", dict(type="insert", bg="dark", insert="strawberry", hud="200 SEEDS", cam="push", zoom=1.9)),
+            ("Its seeds are on the outside!", dict(type="face", bg="lab", sci=True, color="#f4f4f0", eyes="shock", mouth="o", cam="whip")),
         ],
-        ja=["赤くて、甘い。", "種がおよそ200個ある。", "しかも、種が外側についている!"],
+        ja=["赤い。", "甘い。", "種が外側についている!"],
         gloss=["sweet:甘い", "seed:種", "outside:外側"],
         hook="これ、なんだかわかる?🔍", tags="#英語リスニング #やさしい英語 #科学クイズ"),
     "sci002_sky": dict(SCI, no="#002", mystery="prism",
         q="Why is the sky blue?", q_ja="空が青いのはなぜ?",
-        choices=["The sea paints it blue.", "Blue light spreads out the most."], answer=2, answer_ja="青い光が、いちばん散らばるから。",
-        hl=["sunlight", "colors", "spreads", "everywhere"],
+        choices=["Sunlight is only blue.", "Blue light bounces around the most."], answer=2, answer_ja="青い光が、いちばんあちこちに跳ね返るから。",
+        hl=["sunlight", "colors", "spreads", "looks"],
         shots=[
             ("Sunlight has many colors.", dict(type="insert", bg="dark", insert="prism", cam="push")),
             ("Blue light spreads out the most.", dict(type="face", bg="lab", sci=True, color="#f4f4f0", eyes="happy", mouth="grin", cam="whip")),
-            ("So we see blue everywhere!", dict(type="wide", bg="street", sci=True, color="#f4f4f0", eyes="happy", mouth="smile", cam="pan")),
+            ("So the sky looks blue!", dict(type="wide", bg="street", sci=True, color="#f4f4f0", eyes="happy", mouth="smile", cam="pan")),
         ],
-        ja=["太陽の光には、たくさんの色がある。", "青い光が、いちばん散らばる。", "だから、どこを見ても青く見える!"],
-        gloss=["sunlight:太陽の光", "color:色", "spread out:広がる、散らばる", "everywhere:どこでも"],
+        ja=["太陽の光には、たくさんの色がある。", "青い光が、いちばん散らばる。", "だから、空は青く見える!"],
+        gloss=["sunlight:太陽の光", "color:色", "spread out:広がる、散らばる", "look:〜に見える"],
         hook="空が青い理由、英語で言える?☀️", tags="#英語リスニング #やさしい英語 #科学クイズ"),
 })
 
@@ -308,13 +308,17 @@ def comment(sc):
     return "\n".join(out) + "\n"
 
 
+MUSICS = {"the-waves": "The Waves / Otto.mp3", "just-flow": "Just Flow / Hartzmann", "lefty": "Lefty / Blue Wednesday",
+          "tokyo-spring": "Tokyo Spring (wooll Remix) / Yawnathan", "darkside": "Darkside / Oliver Michael",
+          "to-the-moon": "To The Moon / 21 On The Block", "funk-formula": "Funk Formula / Nick Petrov"}
 MUSIC = "Music: The Waves / Otto.mp3 — Music from #Uppbeat (free for Creators!)"
 
 
 def caption(sc):
     sp = "\u3000"
     return "\n".join([sc["hook"], sp, "🎧 25秒の英語、聞き取れる?", "AとBどっち?コメントで答えてね👇",
-                      "正解・全文和訳・単語の意味はコメント欄に📌", sp, sc["tags"], sp, MUSIC])
+                      "正解・全文和訳・単語の意味はコメント欄に📌", sp, sc["tags"], sp,
+                      f"Music: {MUSICS[sc.get('bgm', 'the-waves')]} — Music from #Uppbeat (free for Creators!)"])
 
 
 def build(name):
@@ -325,9 +329,22 @@ def build(name):
     PUB.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
     lines = [ln for ln, _ in sc["shots"]]
-    mp3, words = tts_words(sc["voice"], " ".join(lines), sc.get("speed"))
-    story = PUB / f"{name}_story.mp3"
-    story.write_bytes(mp3.read_bytes())
+    if sc.get("gap"):  # 1文ずつ読み、文のあいだに間を入れる(ゆっくり聞こえる)
+        parts, words, t0 = [], [], 0.0
+        for ln in lines:
+            mp3, ws = tts_words(sc["voice"], ln, sc.get("speed"))
+            raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(mp3), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+                                 capture_output=True, check=True).stdout
+            a = np.frombuffer(raw, np.float32)
+            words += [[w, st + t0, en + t0] for w, st, en in ws]
+            parts += [a, np.zeros(int(SR * sc["gap"]), np.float32)]
+            t0 += len(a) / SR + sc["gap"]
+        story = PUB / f"{name}_story.wav"
+        sf.write(story, np.concatenate(parts[:-1]), SR)
+    else:
+        mp3, words = tts_words(sc["voice"], " ".join(lines), sc.get("speed"))
+        story = PUB / f"{name}_story.mp3"
+        story.write_bytes(mp3.read_bytes())
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(story)],
                                capture_output=True, text=True).stdout)
     # 1行=1カット:その行の最初の単語の時刻で切り替える
@@ -373,15 +390,15 @@ def build(name):
         put(sample("tick", 0.06), choice_at + k * 1.0)
     put(sample("whoosh", 0.35), choice_at + T_CH - 0.05)  # 「コメント欄で」がシュッと入る
     sf.write(PUB / f"{name}_sfx.wav", sfx, SR)
-    bgm = PUB / "bgm.mp3"
+    bgm_id = sc.get("bgm", "the-waves")  # docs/bgm/<id>.mp3。クレジットは MUSICS
+    bgm = PUB / f"bgm_{bgm_id}.mp3"
     if not bgm.exists():
-        src = ROOT / "docs" / "bgm" / "the-waves.mp3"
-        bgm.write_bytes((src if src.exists() else ROOT / "assets" / "manga_bgm" / "cozy-places.mp3").read_bytes())
+        bgm.write_bytes((ROOT / "docs" / "bgm" / f"{bgm_id}.mp3").read_bytes())
     tick = PUB / "tick.wav"
     sf.write(tick, np.zeros(int(SR * 0.1), np.float32), SR)  # 時計の音は sfx に入れたので無音
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
-                 story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm="if/bgm.mp3",
+                 story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
                  choiceSec=int(T_CH), **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "jaHints") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
