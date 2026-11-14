@@ -3104,5 +3104,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 162,
+    "text": "Let's play it by ear and decide when we get there.",
+    "target": "play it by ear",
+    "glossary": [
+      "play it by ear：その場の状況に合わせて決める、臨機応変にやる",
+      "decide：決める"
+    ],
+    "translation": "その場の流れで、着いてから決めよう。",
+    "explanation": "「play it by ear」は「計画を決めずに、その場の状況に合わせてやる」という意味です。\n楽譜を見ずに、耳で聞いて演奏するイメージから来ています。",
+    "audio": "audio/q162.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
