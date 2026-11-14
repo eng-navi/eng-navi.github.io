@@ -177,13 +177,15 @@ export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
                                          fontFamily: EN, fontWeight: 900, fontSize: 110, color: "#1d1d22" }}>{left}</div>}
       {end && (() => {  // シュッと横から入って止まる → 下線が走る → 補足がフッと出る(揺らさない)
         const ease = (x: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
-        const k = ease(f / 7), line = ease((f - 6) / 8), sub = ease((f - 10) / 8);
+        const k = ease(f / 7), line = ease((f - 6) / 8), sub = ease((f - 10) / 8), save = ease((f - 16) / 8);
         return <div style={{ marginTop: 80, textAlign: "center" }}>
           <div style={{ display: "inline-block", transform: `translateX(${(1 - k) * -700}px) skewX(${(1 - k) * -18}deg)`, filter: `blur(${(1 - k) * 14}px)` }}>
             <div style={{ fontFamily: JPB, fontSize: 64, fontWeight: 800, color: "#ffd23f", letterSpacing: 2 }}>{p.endText ?? "正解はコメント欄で👇"}</div>
             <div style={{ height: 8, borderRadius: 4, background: "#ffd23f", marginTop: 10, width: `${line * 100}%` }} />
           </div>
           <div style={{ fontFamily: JP, fontSize: 38, color: "#c9cbe6", marginTop: 26, opacity: sub, transform: `translateY(${(1 - sub) * 24}px)` }}>英文と和訳もコメント欄にあります📌</div>
+          <div style={{ display: "inline-block", marginTop: 40, padding: "14px 34px", borderRadius: 40, background: "rgba(255,255,255,0.12)", border: "3px solid rgba(255,255,255,0.35)",
+                        fontFamily: JPB, fontWeight: 800, fontSize: 42, color: "#fff", opacity: save, transform: `scale(${0.85 + 0.15 * save})` }}>🔖保存して、もう一度聞いてみよう</div>
         </div>;
       })()}
     </AbsoluteFill>

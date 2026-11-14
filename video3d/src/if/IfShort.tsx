@@ -22,8 +22,8 @@ export type Shot = {
 export type Word = { text: string; start: number; end: number; hl?: boolean; ja?: string };
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
-  no?: string; mystery?: string; mysteryBg?: string; jaHints?: boolean;
-  hook?: string; coverShot?: Shot; badge?: string };  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
+  no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; jaHints?: boolean;
+  hook?: string; coverShot?: Shot; badge?: string; hint?: string };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
@@ -175,11 +175,12 @@ const MysteryIntro = ({ p }: { p: IfProps }) => {
       <div style={{ position: "absolute", top: 560, fontFamily: EN, fontWeight: 900, fontSize: 420, color: "#ffd23f", WebkitTextStroke: "18px #12142a",
                     paintOrder: "stroke fill", textShadow: "0 20px 50px rgba(0,0,0,0.6)", transform: `scale(${q}) rotate(${(1 - q) * -30}deg)` }}>?</div>
       <div style={{ position: "absolute", top: 230, padding: "10px 30px", borderRadius: 40, background: "rgba(13,15,24,0.85)", color: "#ffd23f",
-                    fontFamily: JPB, fontWeight: 800, fontSize: 44, letterSpacing: 2 }}>{p.kicker ?? ""}{p.title ?? ""} {p.no ?? ""}</div>
+                    fontFamily: JPB, fontWeight: 800, fontSize: 44, letterSpacing: 2 }}>{p.kicker ?? ""}{p.title ?? ""} {p.no ?? p.caseNo ?? ""}</div>
       <div style={{ position: "absolute", bottom: 420, width: 860, padding: "26px 32px", borderRadius: 36, background: "#e0533c", textAlign: "center",
                     transform: `translateY(${(1 - box) * 400}px)`, opacity: box }}>
         <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: fitJP(p.q_ja, 58, 760), color: "white", whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
         <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 44, color: "#fff1ec", marginTop: 8 }}>{p.q}</div>
+        {p.hint && <div style={{ marginTop: 14, paddingTop: 12, borderTop: "2px solid rgba(255,255,255,0.35)", fontFamily: JPB, fontWeight: 800, fontSize: 40, color: "#ffe066" }}>{p.hint}</div>}
       </div>
     </AbsoluteFill>
   );
@@ -188,7 +189,7 @@ const MysteryIntro = ({ p }: { p: IfProps }) => {
 // 謎の絵(冒頭とループの最後で同じ絵を使い、最初に自然につなげる)
 const MysteryImage = ({ p, t }: { p: IfProps; t: number }) => (
   <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", transform: `scale(${3.2 + t * 0.15})`, transformOrigin: "50% 50%", filter: "blur(2px)" }}>
-    <Defs /><Backdrop kind={p.mysteryBg ?? "dark"} />{p.mystery && <Insert kind={p.mystery} t={2} />}
+    <Defs /><Backdrop kind={p.mysteryBg ?? "dark"} />{p.mystery && <Insert kind={p.mystery} value={p.mysteryValue} t={2} />}
     <rect width={W} height={H} fill="url(#vig)" />
   </svg>
 );

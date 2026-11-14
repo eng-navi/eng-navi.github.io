@@ -127,8 +127,11 @@ SHORTS = {
         tags="#英語リスニング #英検準1級 #科学"),
 }
 
+# ---- 25秒リスニングクイズの新しい回(11/15〜):科学クイズと同じ 1.5秒の謎の絵で入る。mystery / hint を必ず書く
+LISTEN = dict(voice="nPczCjzI2devNBz1zQrb", intro=1.5, mysteryBg="dark", kicker="リスニング", title="クイズ")
+
 # ---- 名探偵アイビーの謎解き(別アカウント・心理学)。声は Alice(イギリス英語・女性)で固定、語りは探偵の一人称 ----
-IVY = dict(voice="Xb7hH8MSUJpSbSDYk0k2", account="ivy", kicker="名探偵アイビーの", title="謎解き", endText="推理の答えはコメント欄で🔍",
+IVY = dict(voice="Xb7hH8MSUJpSbSDYk0k2", account="ivy", intro=1.5, mysteryBg="room", kicker="名探偵アイビーの", title="謎解き", endText="推理の答えはコメント欄で🔍",
            bg1="#1f5a46", bg2="#0b1611", speed=1.1)
 SHORTS.update({
     "case01_decoy": dict(IVY, caseNo="CASE #01",
@@ -172,7 +175,7 @@ SHORTS.update({
         grammar=["No sooner had A 過去分詞 than B 過去形", "「AするとすぐにB」。No sooner が文頭に来るので、had he done のように語順が入れ替わる(倒置)。",
                  "No sooner had he done so than tips rose.(そうするとすぐに、チップが増えた)"],
         hook="ミントを1つ配っただけで、チップが増えた?🍬", tags="#英語リスニング #心理学 #謎解き"),
-    "case03_foot": dict(IVY, caseNo="CASE #03",
+    "case03_foot": dict(IVY, caseNo="CASE #03", mystery="card", mysteryValue="DRIVE SAFELY", hint="👂ヒント:2回目のお願いに注目",
         q="Why did the homeowners finally say yes?", q_ja="住人たちが最後に\nOKしたのはなぜ?",
         choices=["The tiny sticker was a modest gift.", "A small yes made the big yes easier."], answer=2,
         answer_ja="小さなお願いにOKしたことで、大きなお願いにもOKしやすくなったから。",
@@ -473,7 +476,7 @@ def build(name):
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
-                 choiceSec=int(T_CH), **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "jaHints") if k in sc})
+                 choiceSec=int(T_CH), **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "jaHints", "hint") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"
