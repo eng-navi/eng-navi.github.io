@@ -123,8 +123,14 @@ def publish(item):
             except Exception:
                 pass
             time.sleep(15)
-    c = post.api("POST", f"{user}/media", media_type="REELS", video_url=url,
-                 caption=post.keep_blank_lines(with_page_note(item)), share_to_feed="true", **extra)["id"]
+    cap = post.keep_blank_lines(with_page_note(item))
+    try:
+        c = post.api("POST", f"{user}/media", media_type="REELS", video_url=url, caption=cap, share_to_feed="true", **extra)["id"]
+    except Exception as e:  # カバーの指定で失敗したら、カバーなしで出す(投稿を止めない)
+        if not extra:
+            raise
+        print(f"カバーなしで出し直します: {e}")
+        c = post.api("POST", f"{user}/media", media_type="REELS", video_url=url, caption=cap, share_to_feed="true")["id"]
     post.wait_until_ready(c)
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
     if item.get("comment"):
