@@ -69,9 +69,29 @@ def highlight(d, xy, text, words, font, width):
 
 
 def q_banner(d, sc):
-    d.rounded_rectangle((60, 140, W - 60, 330), radius=36, fill=RED)
-    d.text((W / 2, 205), "Q. " + sc["q"], font=m.JP(58), fill=(255, 255, 255), anchor="mm")
-    d.text((W / 2, 280), sc["q_en"], font=m.EN(44), fill=(255, 230, 225), anchor="mm")
+    """漫才のあいだずっと出しておく問題(Instagram の上の表示に重ならない位置)"""
+    d.rounded_rectangle((60, 270, W - 60, 450), radius=36, fill=RED)
+    d.text((W / 2, 332), "Q. " + sc["q"], font=m.JP(56), fill=(255, 255, 255), anchor="mm")
+    d.text((W / 2, 405), sc["q_en"], font=m.EN(42), fill=(255, 230, 225), anchor="mm")
+
+
+def intro_frame(sc, t):
+    """最初の約2.5秒:キャラは出さず、真ん中に大きく問題+3・2・1"""
+    img = g.stage(690)
+    d = ImageDraw.Draw(img)
+    d.rectangle((0, 0, W, H), fill=(244, 236, 226))
+    g.caption(d, "リスニングクイズ", 560, 60, color=RED, box=False)
+    d.rounded_rectangle((60, 640, W - 60, 1000), radius=48, fill=RED)
+    s = 1.0 + max(0, 0.2 - t) * 0.8  # 出た瞬間だけ少し大きく
+    d.text((W / 2, 770), "Q. " + sc["q"], font=m.JP(int(70 * s)), fill=(255, 255, 255), anchor="mm")
+    d.text((W / 2, 900), sc["q_en"], font=m.EN(int(52 * s)), fill=(255, 230, 225), anchor="mm")
+    n = 3 - int(t / 0.8)
+    if n > 0:
+        d.ellipse((W / 2 - 100, 1150, W / 2 + 100, 1350), fill=INK)
+        d.text((W / 2, 1250), str(n), font=m.EN(120), fill=(255, 255, 255), anchor="mm")
+    g.caption(d, "会話を聞いて答えてね", 1500, 52, box=False)
+    d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
+    return img
 
 
 def stage_frame(sc, k, t, i):
@@ -87,10 +107,10 @@ def stage_frame(sc, k, t, i):
     m.owl(d, 790, 1200 + hop("navi"), 250, "smug" if text.startswith("...") else "shock" if "exhausted" in text else "normal", seed=41 + i % 3)
     # 吹き出し(話している方の上)
     cx = 300 if who == "pen" else 790
-    d.rounded_rectangle((70, 440, W - 70, 860), radius=40, fill=(255, 252, 245), outline=INK, width=6)
-    d.polygon([(cx - 30, 858), (cx + 30, 858), (cx, 930)], fill=(255, 252, 245))
-    d.line([(cx - 30, 858), (cx, 930), (cx + 30, 858)], fill=INK, width=6)
-    highlight(d, (W / 2, 560), text, sc["words"], m.EN(62), W - 220)
+    d.rounded_rectangle((70, 520, W - 70, 900), radius=40, fill=(255, 252, 245), outline=INK, width=6)
+    d.polygon([(cx - 30, 898), (cx + 30, 898), (cx, 960)], fill=(255, 252, 245))
+    d.line([(cx - 30, 898), (cx, 960), (cx + 30, 898)], fill=INK, width=6)
+    highlight(d, (W / 2, 640), text, sc["words"], m.EN(62), W - 220)
     d.text((W - 60, H - 60), m.HANDLE, font=m.EN(40), fill=(120, 110, 100), anchor="rm")
     return img
 
@@ -100,7 +120,7 @@ def choice_frame(sc, t, carousel=False):
     d = ImageDraw.Draw(img)
     q_banner(d, sc)
     for n, c in enumerate(sc["choices"]):
-        y = 620 + n * 260
+        y = 640 + n * 260
         d.rounded_rectangle((120, y, W - 120, y + 200), radius=40, fill=(255, 252, 245), outline=INK, width=6)
         d.text((220, y + 100), "①②"[n], font=m.JP(90), fill=RED, anchor="mm")
         d.text((W / 2 + 60, y + 100), c, font=m.JP(76), fill=INK, anchor="mm")
@@ -167,8 +187,9 @@ def build(name):
 
     gap = lambda s: np.zeros(int(SR * s), np.float32)
     scenes, audio = [], []
-    lead = np.concatenate([g.tone(660, 0.15), gap(0.85)])  # 問題を読む時間
-    scenes.append(("stage", 0, len(lead) / SR))
+    tick = lambda: np.concatenate([g.tone(1000, 0.08, 0.06), gap(0.72)])
+    lead = np.concatenate([g.tone(660, 0.15), gap(0.05), tick(), tick(), tick()])[: int(SR * 2.5)]  # 問題+3・2・1
+    scenes.append(("intro", None, len(lead) / SR))
     audio.append(lead)
     for k, (who, text) in enumerate(sc["lines"]):
         clip = np.concatenate([voice(who, text), gap(0.35)])
@@ -193,7 +214,8 @@ def build(name):
         for kind, k, dur in scenes:
             for i in range(round(dur * FPS)):
                 t = i / FPS
-                img = stage_frame(sc, k, t, n // 4) if kind == "stage" else choice_frame(sc, t) if kind == "choice" else words_frame(sc)
+                img = (intro_frame(sc, t) if kind == "intro" else stage_frame(sc, k, t, n // 4) if kind == "stage"
+                       else choice_frame(sc, t) if kind == "choice" else words_frame(sc))
                 p.stdin.write(img.tobytes())
                 n += 1
         p.stdin.close()
