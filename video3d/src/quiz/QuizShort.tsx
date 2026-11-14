@@ -55,7 +55,7 @@ const Highlight = ({ text, words }: { text: string; words: string[] }) => (
 );
 
 // 0〜3秒:時計のカウントダウン+問題
-const Intro = ({ p }: { p: QuizProps }) => {
+export const Intro = ({ p }: { p: QuizProps }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
@@ -128,7 +128,7 @@ const Story = ({ p, s }: { p: QuizProps; s: Scene }) => {
 };
 
 // 2択+カウントダウン → 「正解はコメント欄で」(答えは画面では言わない)
-const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
+export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const left = Math.max(0, 4 - Math.floor(f / fps));

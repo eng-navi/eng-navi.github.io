@@ -1,0 +1,95 @@
+import React from "react";
+// 背景と物のアップ(インサート)。暗めの色+スポットライト+ぼかしで奥行きを出す
+const W = 1080, H = 1920;
+
+export const Backdrop = ({ kind, blur = 0 }: { kind: string; blur?: number }) => {
+  const sets: Record<string, React.ReactElement> = {
+    room: (
+      <g>
+        <rect width={W} height={H} fill="#1c2033" />
+        <rect x={620} y={300} width={360} height={560} fill="#e9946a" opacity={0.9} />
+        <rect x={620} y={300} width={360} height={560} fill="url(#dusk)" />
+        {[0, 1].map((i) => <rect key={i} x={620 + i * 180} y={300} width={12} height={560} fill="#14172a" />)}
+        <rect x={0} y={1250} width={W} height={H - 1250} fill="#141726" />
+        <rect x={60} y={1050} width={360} height={30} rx={8} fill="#6b5240" />
+      </g>
+    ),
+    street: (
+      <g>
+        <rect width={W} height={H} fill="url(#sunset)" />
+        <circle cx={760} cy={900} r={160} fill="#ffe9b8" opacity={0.9} />
+        {[[0, 1080, 220], [180, 1000, 160], [760, 1040, 260], [920, 960, 200]].map(([x, y, w], i) => <rect key={i} x={x} y={y} width={w} height={H} fill="#3a2d4a" opacity={0.8} />)}
+        <rect x={0} y={1300} width={W} height={H - 1300} fill="#2a2235" />
+        <path d="M540 1300 L480 1920 L600 1920 Z" fill="#f4e3c0" opacity={0.25} />
+      </g>
+    ),
+    bank: (
+      <g>
+        <rect width={W} height={H} fill="#13261f" />
+        {[...Array(5)].map((_, i) => <rect key={i} x={80 + i * 200} y={380} width={60} height={760} fill="#1e3a30" />)}
+        <rect x={0} y={1140} width={W} height={60} fill="#2c5244" />
+        <rect x={0} y={1200} width={W} height={H - 1200} fill="#0e1c17" />
+        <text x={540} y={330} textAnchor="middle" fontSize={70} fontWeight={900} fill="#d7b25a" fontFamily="Georgia" letterSpacing={12}>BANK</text>
+      </g>
+    ),
+    dark: (
+      <g>
+        <rect width={W} height={H} fill="#0d0f18" />
+        <polygon points="420,0 660,0 900,1600 180,1600" fill="#fff" opacity={0.06} />
+        <ellipse cx={540} cy={1560} rx={360} ry={70} fill="#fff" opacity={0.06} />
+      </g>
+    ),
+  };
+  return <g style={{ filter: blur ? `blur(${blur}px)` : undefined }}>{sets[kind] ?? sets.dark}</g>;
+};
+
+export const Defs = () => (
+  <defs>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#3b3f6e" stopOpacity={0.6} /><stop offset="1" stopColor="#f6c98b" stopOpacity={0} /></linearGradient>
+    <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#3d3566" /><stop offset="0.55" stopColor="#e5866a" /><stop offset="1" stopColor="#f7c98e" /></linearGradient>
+    <linearGradient id="shadeR" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#fff" stopOpacity={0.15} /><stop offset="0.6" stopColor="#000" stopOpacity={0} /><stop offset="1" stopColor="#000" stopOpacity={0.35} /></linearGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.5" r="0.75"><stop offset="0.55" stopColor="#000" stopOpacity={0} /><stop offset="1" stopColor="#000" stopOpacity={0.75} /></radialGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={5} /><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.07 0" /></filter>
+  </defs>
+);
+
+// 物のアップ
+export const Insert = ({ kind, value, t }: { kind: string; value?: string; t: number }) => {
+  if (kind === "coin") {
+    const spin = Math.cos(t * 6);
+    return (
+      <g transform="translate(540 900)">
+        <ellipse cx={0} cy={330} rx={260} ry={40} fill="rgba(0,0,0,0.4)" />
+        <g transform={`scale(${Math.max(0.15, Math.abs(spin))} 1)`}>
+          <circle r={260} fill="#d9a63a" /><circle r={225} fill="#f2c45a" stroke="#b9862a" strokeWidth={10} />
+          <text y={70} textAnchor="middle" fontSize={210} fontWeight={900} fill="#b9862a" fontFamily="Georgia">$</text>
+        </g>
+        {value && <text x={0} y={-330} textAnchor="middle" fontSize={150} fontWeight={900} fill="#f2b33d" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
+  if (kind === "chart") {
+    const n = Math.min(1, t / 1.2);
+    const pts = [...Array(21)].map((_, i) => [140 + i * 40, 1500 - Math.pow(2, i / 2.2) * 2.2]).filter((_, i) => i / 20 <= n);
+    return (
+      <g>
+        <rect x={100} y={500} width={880} height={1060} rx={30} fill="#f7f1e3" />
+        {[...Array(6)].map((_, i) => <line key={i} x1={140} y1={600 + i * 180} x2={940} y2={600 + i * 180} stroke="#d8cfbb" strokeWidth={3} />)}
+        <polyline points={pts.map((p) => p.join(",")).join(" ")} fill="none" stroke="#2fa36b" strokeWidth={18} strokeLinecap="round" strokeLinejoin="round" />
+        <text x={540} y={590} textAnchor="middle" fontSize={64} fontWeight={900} fill="#1d1d22" fontFamily="Arial">{value ?? ""}</text>
+      </g>
+    );
+  }
+  if (kind === "phone") {
+    return (
+      <g transform="translate(540 1000) rotate(-8)">
+        <rect x={-230} y={-430} width={460} height={860} rx={60} fill="#15161c" />
+        <rect x={-200} y={-390} width={400} height={780} rx={36} fill="#22314a" />
+        <text y={-150} textAnchor="middle" fontSize={44} fill="#9fb3d1" fontFamily="Arial" fontWeight={700}>BALANCE</text>
+        <text y={-40} textAnchor="middle" fontSize={92} fill="#fff" fontFamily="Arial" fontWeight={900}>{value}</text>
+        <rect x={-150} y={60} width={300} height={90} rx={45} fill="#2fa36b" /><text y={120} textAnchor="middle" fontSize={44} fill="#fff" fontFamily="Arial" fontWeight={800}>+ INTEREST</text>
+      </g>
+    );
+  }
+  return null;
+};
