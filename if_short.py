@@ -245,7 +245,7 @@ def comment(sc):
     sp = "\u3000"
     left = list(sc["gloss"])
     out = [f"Q. {sc['q_ja'].replace(chr(10), '')}", sc["q"], sp,
-           f"{'推理の答え' if sc.get('account') == 'ivy' else '答え'}:{'AB'[sc['answer'] - 1]}「{sc['choices'][sc['answer'] - 1]}」", f"({sc['answer_ja']})", sp, "【全文と和訳】", sp]
+           f"{'推理の答え' if sc.get('account') == 'ivy' else '答え'}:{'AB'[sc['answer'] - 1]}", sc["choices"][sc["answer"] - 1], sc["answer_ja"], sp, "【全文と和訳】", sp]
     for k, ((ln, _), ja) in enumerate(zip(sc["shots"], sc["ja"])):
         low = ln.lower()
         mine = [g for g in left if g.split(":")[0].split()[0].lower()[:5] in low][:3]
