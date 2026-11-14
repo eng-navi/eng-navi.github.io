@@ -3122,5 +3122,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 163,
+    "category": "語彙",
+    "question": "All employees must ( ) with the new safety rules.",
+    "options": [
+      "comply",
+      "compose"
+    ],
+    "answer": 1,
+    "translation": "全社員が新しい安全規則に従わなければならない。",
+    "explanation": "comply with A で「Aに従う、Aを守る」という意味です。\n規則(rules)と相性がいいのは comply です。compose は「構成する、作曲する」です。\n\nしたがって、①comply が正解。",
+    "audio": "audio/q163.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
