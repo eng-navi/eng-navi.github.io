@@ -39,6 +39,15 @@ jobs:
           IVY_IG_USER_ID: ${{ secrets.IVY_IG_USER_ID }}
           IVY_IG_ACCESS_TOKEN: ${{ secrets.IVY_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: 科学クイズ(@mokumoku_kun)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 sci_post.py run
+        env:
+          SCI_IG_USER_ID: ${{ secrets.SCI_IG_USER_ID }}
+          SCI_IG_ACCESS_TOKEN: ${{ secrets.SCI_IG_ACCESS_TOKEN }}
+          SITE_URL: https://eng-navi.github.io
       - name: quizify(@quizify_english)
         if: always()
         run: |

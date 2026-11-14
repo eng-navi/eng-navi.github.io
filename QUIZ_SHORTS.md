@@ -9,7 +9,7 @@
 |---|---|---|---|---|---|---|---|
 | 25秒リスニングクイズ | 旧4コマ(MANGA_IG_*) | Brian / Lily | 英検2級〜1級 | 25秒前後(上限30) | 3秒の時計 / 4秒 | out/if_short/ | `python3 manga_post.py addif <name> "YYYY-MM-DD HH:MM"` |
 | 名探偵アイビーの謎解き | @vocab_flicks(IVY_IG_*) | Alice(イギリス英語・女性)、探偵の一人称 | 英検2級〜1級+文の形1つ | 25秒前後(上限30) | 3秒の時計+CASE番号 / 4秒 | out/ivy_short/ | `python3 ivy_post.py add <name> "..."` |
-| やさしい英語の科学クイズ | 未接続(使っていない古いアカウントをつなぐ予定) | Sarah(アメリカ英語・女性)、0.7倍+文のあいだ0.7秒(約110語/分)、博士のキャラ、曲は Cycles / Tunnel / Vapour を回して反応を見る(assets/bgm/、公開しない) | 英検3級〜準2級 | 10〜15秒 | 1.5秒の謎の絵 / 3秒 | out/sci_short/ | つないだら ivy_post.py と同じ形で作る |
+| やさしい英語の科学クイズ | @mokumoku_kun(SCI_IG_*) | Sarah(アメリカ英語・女性)、0.7倍+文のあいだ0.7秒(約110語/分)、博士のキャラ、曲は Cycles / Tunnel / Vapour を回して反応を見る(assets/bgm/、公開しない) | 英検3級〜準2級 | 10〜15秒 | 1.5秒の謎の絵 / 3秒 | out/sci_short/ | `python3 sci_post.py add <name> "..."` |
 
 共通の設定は `IVY = dict(...)` `SCI = dict(...)` にまとめてある。新しい回は `dict(IVY, ...)` のように書く。
 
