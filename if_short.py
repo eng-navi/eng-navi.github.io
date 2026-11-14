@@ -460,6 +460,50 @@ SHORTS.update({
 })
 SHORTS["geo001_quake"]["mysteryMap"] = {"from": [138, 36, 6], "hl": ["392"], "overlay": "jp_plates"}
 
+SHORTS.update({
+    "geo002_length": dict(GEO, no="#002", cover=3, hint="👂ヒント:2文目の数字に注目", mysteryMap={"from": [137, 35, 5], "hl": ["392"]},
+        q="Why is January so different in Okinawa and Hokkaido?", q_ja="1月の沖縄と北海道、\nなぜこんなにちがう?",
+        choices=["Sapporo enjoys mild weather in January.", "Japan stretches a long way from north to south."], answer=2,
+        answer_ja="日本が、南北にとても長いから。",
+        hl=["narrow", "stretches", "kilometers", "freezing", "meanwhile", "mild", "climates"],
+        shots=[
+            ("Japan is a long, narrow country.", dict(type="map", bg="dark", map={"from": [138, 36, 4.5], "to": [136, 35, 6], "hl": ["392"]})),
+            ("It stretches about three thousand kilometers.", dict(type="map", bg="dark", hud="≈ 3,000 km", map={"from": [136, 35, 6], "hl": ["392"],
+                "arrows": [[127.7, 26.2, 145.5, 44.2]]})),
+            ("In January, Sapporo is freezing.", dict(type="map", bg="dark", map={"from": [142, 43.5, 9], "to": [141.4, 43.1, 15], "hl": ["392"],
+                "dots": [[141.35, 43.06]], "labels": [[141.35, 44.0, "SAPPORO  −3°C"]]})),
+            ("Meanwhile, Naha enjoys a mild seventeen degrees.", dict(type="map", bg="dark", map={"from": [128.5, 27, 9], "to": [127.7, 26.3, 15], "hl": ["392"],
+                "dots": [[127.68, 26.21]], "labels": [[127.68, 27.0, "NAHA  17°C"]]})),
+            ("One country, two completely different climates.", dict(type="map", bg="dark", map={"from": [135, 35, 7], "to": [135, 35, 5], "hl": ["392"],
+                "dots": [[141.35, 43.06], [127.68, 26.21]], "labels": [[141.35, 44.6, "−3°C"], [127.68, 27.6, "17°C"]]})),
+        ],
+        ja=["日本は、細長い国だ。", "南北におよそ3,000キロのびている。", "1月の札幌は、凍えるほど寒い。",
+            "一方で那覇は、おだやかな17度。", "1つの国に、まったくちがう2つの気候。"],
+        gloss=["narrow:細長い、狭い", "stretch:のびる、広がる", "freezing:凍えるほど寒い", "meanwhile:一方で", "mild:おだやかな", "climate:気候"],
+        hook="1月の沖縄と北海道、気温差は何度?❄️☀️", tags="#英語リスニング #やさしい英語 #地理"),
+    "geo003_typhoon": dict(GEO, no="#003", cover=3, hint="👂ヒント:3文目と4文目に注目", mysteryMap={"from": [132, 22, 4.5], "dots": [[135, 15]]},
+        q="Why do so many typhoons hit Japan in late summer?", q_ja="夏の終わりに台風が\n日本へ来るのはなぜ?",
+        choices=["Warm seas create them, and winds carry them north.", "Japan heats the ocean near the Philippines."], answer=1,
+        answer_ja="暖かい海で生まれ、風に北へ運ばれるから。",
+        hl=["born", "tropical", "heats", "steering", "curve", "season"],
+        shots=[
+            ("Typhoons are born over warm tropical seas.", dict(type="map", bg="dark", map={"from": [134, 20, 4.5], "to": [135, 17, 6.5],
+                "dots": [[135, 15], [140, 17], [130, 14]], "labels": [[136, 12, "WARM SEA"]]})),
+            ("Late summer heats the ocean near the Philippines.", dict(type="map", bg="dark", hud="≈ 30°C", map={"from": [128, 15, 6], "to": [127, 15, 7],
+                "hl": ["608"], "labels": [[122, 9, "PHILIPPINES"]]})),
+            ("Steering winds then push them north.", dict(type="map", bg="dark", map={"from": [131, 22, 5.5], "dots": [[133, 16]],
+                "arrows": [[133, 16, 128, 23], [128, 23, 129, 29]]})),
+            ("Many curve straight toward Japan.", dict(type="map", bg="dark", map={"from": [132, 28, 5.5], "to": [134, 31, 6.5], "hl": ["392"],
+                "arrows": [[128, 24, 131, 31], [131, 31, 139, 36]]})),
+            ("So late summer means typhoon season.", dict(type="map", bg="dark", hud="AUG–SEP", map={"from": [134, 30, 5], "to": [134, 28, 4], "hl": ["392"],
+                "dots": [[133, 16], [129, 24], [133, 31]]})),
+        ],
+        ja=["台風は、暖かい熱帯の海の上で生まれる。", "夏の終わりには、フィリピン近くの海があたたまる。", "そして、風が台風を北へ押し流す。",
+            "その多くが、日本に向かってカーブする。", "だから夏の終わりは、台風の季節になる。"],
+        gloss=["be born:生まれる", "tropical:熱帯の", "heat:温める", "steer:(向きを)導く", "curve:曲がる", "season:季節"],
+        hook="台風が夏の終わりに来る理由、英語で言える?🌀", tags="#英語リスニング #やさしい英語 #地理"),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
