@@ -1,8 +1,8 @@
 """やさしい英語の科学クイズ(@mokumoku_kun)にリールを予約投稿する。予約表は sci_schedule.json(日本時間)。
 
-    python3 ivy_post.py add sci001_strawberry "2026-11-15 19:00"   # if_short.py で作った動画を公開して予約に追加(Mac で実行)
-    python3 ivy_post.py list
-    python3 ivy_post.py run       # 時間になった予約を投稿(GitHub Actions が15分おきに実行)
+    python3 sci_post.py add sci001_strawberry "2026-11-15 19:00"   # if_short.py で作った動画を公開して予約に追加(Mac で実行)
+    python3 sci_post.py list
+    python3 sci_post.py run       # 時間になった予約を投稿(GitHub Actions が15分おきに実行)
 
 投稿のしかたは manga_post.py と同じ(リール+ストーリー+正解・和訳のコメント)。トークンは SCI_IG_*。
 """
