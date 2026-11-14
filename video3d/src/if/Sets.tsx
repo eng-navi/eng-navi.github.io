@@ -170,6 +170,21 @@ export const Insert = ({ kind, value, t }: { kind: string; value?: string; t: nu
       </g>
     );
   }
+  if (kind === "octopus") {  // タコ(8本の足がゆらゆら)
+    return (
+      <g transform="translate(540 900)">
+        {[...Array(8)].map((_, i) => {
+          const x0 = -175 + i * 50, w = Math.sin(t * 3 + i) * 40;
+          return <path key={i} d={`M${x0} 120 C${x0 + w} 260 ${x0 - w - (i - 3.5) * 30} 380 ${x0 + (i - 3.5) * 60} 480`} stroke="#9b59b6" strokeWidth={46} fill="none" strokeLinecap="round" />;
+        })}
+        <ellipse cx={0} cy={-40} rx={230} ry={250} fill="#a463c7" />
+        <ellipse cx={-70} cy={-150} rx={60} ry={34} fill="#fff" opacity={0.15} />
+        <circle cx={-80} cy={20} r={42} fill="#fff" /><circle cx={80} cy={20} r={42} fill="#fff" />
+        <circle cx={-72} cy={28} r={20} fill="#111" /><circle cx={88} cy={28} r={20} fill="#111" />
+        {value && <text y={-340} textAnchor="middle" fontSize={110} fontWeight={900} fill="#ffd23f" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
   if (kind === "prism") {  // 白い光がプリズムで7色に分かれる。青が四方に散る
     const cols = ["#ff3b30", "#ff9500", "#ffd60a", "#34c759", "#0a84ff", "#5e5ce6", "#bf5af2"];
     const n = Math.min(1, t / 0.8);

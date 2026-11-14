@@ -223,6 +223,18 @@ SHORTS.update({
         ja=["太陽の光には、たくさんの色がある。", "青い光が、いちばん散らばる。", "だから、空は青く見える!"],
         gloss=["sunlight:太陽の光", "color:色", "spread out:広がる、散らばる", "look:〜に見える"],
         hook="空が青い理由、英語で言える?☀️", tags="#英語リスニング #やさしい英語 #科学クイズ"),
+    "sci003_octopus": dict(SCI, no="#003", mystery="octopus", bgm="tunnel", cover=0,
+        q="How many hearts does an octopus have?", q_ja="タコの心臓はいくつ?",
+        choices=["Three", "Eight"], answer=1, answer_ja="3つ",
+        hl=["arms", "blood", "heart"],
+        shots=[
+            ("An octopus has eight arms.", dict(type="insert", bg="dark", insert="octopus", value="8 ARMS", cam="pull")),
+            ("Its blood is blue.", dict(type="face", bg="lab", sci=True, color="#f4f4f0", eyes="shock", mouth="o", cam="whip")),
+            ("And it has more than one heart!", dict(type="insert", bg="dark", insert="octopus", value="? HEARTS", cam="push")),
+        ],
+        ja=["タコには、8本の腕(足)がある。", "血は青い。", "しかも、心臓が1つではない!"],
+        gloss=["arm:腕(タコの足)", "blood:血", "heart:心臓"],
+        hook="タコの心臓、いくつあると思う?🐙", tags="#英語リスニング #やさしい英語 #科学クイズ"),
 })
 
 
