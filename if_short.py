@@ -240,7 +240,7 @@ SHORTS.update({
 # ---- ゆっくり英語の海クイズ(別アカウント)。海の生き物だけ。英検3級〜準1級の単語を混ぜる(やさしい2+難しい1、難しい語は日本語ヒント)
 # 声は男女を交互に(George / Matilda)して反応を比べる。0.75倍+文のあいだ0.6秒
 GEORGE, MATILDA = "JBFqnCBsd6RMkjVDRZzb", "XrExE9yKIg1WjnnlVkGX"
-SEA = dict(account="sea", speed=0.75, gap=0.6, bgm="lantern", mysteryBg="ocean", kicker="ゆっくり英語の", title="海クイズ", jaHints=True,
+SEA = dict(account="sea", speed=0.7, gap=0.8, bgm="lantern", mysteryBg="ocean", kicker="ゆっくり英語の", title="海クイズ", jaHints=True,
            intro=1.5, choice=3.2, end=1.4, endText="答えはコメント欄で👇", bg1="#0b6a8f", bg2="#031a2c")
 SHORTS.update({
     "sea001_seahorse": dict(SEA, voice=GEORGE, no="#001", mystery="seahorse", cover=0,
