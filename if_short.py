@@ -188,6 +188,21 @@ def synth(kind, dur):
     return np.zeros(len(t), np.float32)
 
 
+def comment(sc):
+    """コメント欄の文。英文→和訳→注釈(1文に3個まで)→全角スペースの行(これが無いと Instagram で改行が消える)"""
+    sp = "\u3000"
+    left = list(sc["gloss"])
+    out = [f"Q. {sc['q_ja'].replace(chr(10), '')}", sc["q"], sp,
+           f"答え:{'AB'[sc['answer'] - 1]}「{sc['choices'][sc['answer'] - 1]}」", sp, "【全文と和訳】", sp]
+    for k, ((ln, _), ja) in enumerate(zip(sc["shots"], sc["ja"])):
+        low = ln.lower()
+        mine = [g for g in left if g.split(":")[0].split()[0].lower()[:5] in low][:3]
+        left = [g for g in left if g not in mine]
+        out += [f"{'①②③④⑤⑥⑦⑧⑨⑩'[k]} {ln}", ja] + [f"　▶ {g.replace(':', ' … ', 1)}" for g in mine] + [sp]
+    out += ["🎧 わからなかった単語は保存して、もう一度聞いてみてね", sp, sc["tags"]]
+    return "\n".join(out) + "\n"
+
+
 def build(name):
     sc = SHORTS[name]
     mr.load_env()
@@ -228,6 +243,8 @@ def build(name):
             put(sample("boom", 0.6), s["start"])
         if s.get("sfx"):
             put(sample(s.pop("sfx"), 0.5), s["start"] + 0.05)
+    put(sample("boom", 0.6), 0.0)
+    put(sample("whoosh", 0.35), 0.2)
     for k in range(3):
         put(sample("tick", 0.06), k * 1.0)
     for k in range(4):
@@ -247,13 +264,7 @@ def build(name):
     out = OUT / f"{name}.mp4"
     subprocess.run(["npx", "remotion", "render", "src/index.ts", "IfShort", str(out), f"--props={pf}"], cwd=V3D, check=True,
                    stdout=subprocess.DEVNULL)
-    sp = "　"
-    txt = ["--------------------------------------", f"Q. {sc['q']}", f"({sc['q_ja'].replace(chr(10), '')})", sp,
-           f"答え:{'AB'[sc['answer'] - 1]} {sc['choices'][sc['answer'] - 1]}", sp]
-    for ln, ja in zip(lines, sc["ja"]):
-        txt += [ln, ja, sp]
-    txt += sc["gloss"] + ["--------------------------------------"]
-    out.with_suffix(".txt").write_text("\n".join(txt) + "\n")
+    out.with_suffix(".txt").write_text(comment(sc))
     warn = f"  ⚠ {MAX_SEC}秒を超えています。台本を短くしてください" if total > MAX_SEC else ""
     print(f"✓ {out}({total:.1f}秒・{len(shots)}カット){warn}")
 

@@ -62,21 +62,38 @@ export const Intro = ({ p }: { p: QuizProps }) => {
   const n = Math.max(1, 3 - Math.floor(t));
   const a = (t % 1) * 360;
   const pop = spring({ frame: f % fps, fps, config: { damping: 9 } });
+  // 0秒で「クイズ」がドンと落ちてくる→揺れ→光の帯。時計と問題は少し遅れて出す
+  const slam = spring({ frame: f, fps, config: { damping: 8, mass: 0.6 } });
+  const shake = f < 10 ? Math.sin(f * 2.4) * (10 - f) * 2 : 0;
+  const wob = Math.sin(t * 5) * 3;
+  const rays = t * 25;
+  const inQ = spring({ frame: f - 8, fps, config: { damping: 12 } });
+  const inC = spring({ frame: f - 4, fps, config: { damping: 10 } });
   return (
-    <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 40%, #2b3160, #12142a)", alignItems: "center" }}>
-      <div style={{ marginTop: 300, fontFamily: JP, fontSize: 54, color: "#f2b33d", fontWeight: 800, letterSpacing: 4 }}>リスニングクイズ</div>
-      <svg width={420} height={420} viewBox="-210 -210 420 420" style={{ marginTop: 50 }}>
+    <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 30%, #3a2f7a, #12142a)", alignItems: "center", transform: `translateX(${shake}px)` }}>
+      <svg width={1080} height={1080} viewBox="-540 -540 1080 1080" style={{ position: "absolute", top: 60, opacity: 0.16 }}>
+        {[...Array(16)].map((_, i) => <polygon key={i} points="0,0 -60,-560 60,-560" fill="#f2b33d" transform={`rotate(${i * 22.5 + rays})`} />)}
+      </svg>
+      <div style={{ marginTop: 340, textAlign: "center", transform: `scale(${(2.6 - 1.6 * slam) * (1 + 0.04 * Math.sin(t * 9))}) rotate(${-4 + wob}deg)`, opacity: Math.min(1, slam * 2) }}>
+        <div style={{ fontFamily: JP, fontSize: 84, fontWeight: 900, color: "white", letterSpacing: 8, WebkitTextStroke: "10px #12142a", paintOrder: "stroke fill" }}>リスニング</div>
+        <div style={{ fontFamily: JP, fontSize: 260, fontWeight: 900, color: "#ffd23f", lineHeight: 1.05,
+                      WebkitTextStroke: "22px #12142a", paintOrder: "stroke fill", textShadow: "0 16px 0 #c2410c, 0 30px 50px rgba(0,0,0,0.6)" }}>
+          クイズ
+        </div>
+      </div>
+      <svg width={300} height={300} viewBox="-210 -210 420 420" style={{ marginTop: 40, transform: `scale(${inC})` }}>
         <circle r={180} fill="#fffaf0" stroke="#f2b33d" strokeWidth={16} />
         {[...Array(12)].map((_, i) => <line key={i} x1={0} y1={-150} x2={0} y2={-165} stroke="#1d1d22" strokeWidth={8} transform={`rotate(${i * 30})`} />)}
         <path d={`M0 0 L0 -180 A180 180 0 ${a > 180 ? 1 : 0} 1 ${180 * Math.sin((a * Math.PI) / 180)} ${-180 * Math.cos((a * Math.PI) / 180)} Z`} fill="#f2b33d" opacity={0.35} />
         <line x1={0} y1={0} x2={0} y2={-140} stroke="#e0533c" strokeWidth={10} strokeLinecap="round" transform={`rotate(${a})`} />
         <text y={45} textAnchor="middle" fontSize={150 * (0.8 + 0.2 * pop)} fontWeight={900} fontFamily={EN} fill="#1d1d22">{n}</text>
       </svg>
-      <div style={{ marginTop: 70, width: 820, padding: "36px 40px", borderRadius: 40, background: "#e0533c", textAlign: "center" }}>
+      <div style={{ marginTop: 40, width: 820, padding: "32px 40px", borderRadius: 40, background: "#e0533c", textAlign: "center",
+                    transform: `translateY(${(1 - inQ) * 500}px)`, opacity: inQ }}>
         <div style={{ fontFamily: JP, fontWeight: 800, fontSize: 56, color: "white", lineHeight: 1.35, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
         <div style={{ fontFamily: EN, fontWeight: 700, fontSize: 34, color: "#ffe6df", marginTop: 14 }}>{p.q}</div>
       </div>
-      <div style={{ marginTop: 60, fontFamily: JP, fontSize: 38, color: "#c9cbe6" }}>全文と和訳はコメント欄にあります</div>
+      <div style={{ marginTop: 44, fontFamily: JP, fontSize: 36, color: "#c9cbe6", opacity: inQ }}>全文と和訳はコメント欄にあります</div>
     </AbsoluteFill>
   );
 };
