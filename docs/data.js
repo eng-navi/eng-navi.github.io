@@ -3141,5 +3141,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 164,
+    "category": "分詞",
+    "question": "The man ( ) by the window is my uncle.",
+    "options": [
+      "standing",
+      "stood"
+    ],
+    "answer": 1,
+    "translation": "窓のそばに立っている男性は、私のおじです。",
+    "explanation": "「〜している男性」のように、名詞を後ろから説明するときは現在分詞(-ing)を使います。\nstood は過去形・過去分詞で、「立たされた」のような受け身の意味になってしまいます。\n\nしたがって、①standing が正解。",
+    "audio": "audio/q164.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
