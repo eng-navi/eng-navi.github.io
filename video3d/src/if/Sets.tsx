@@ -193,6 +193,60 @@ export const Insert = ({ kind, value, t }: { kind: string; value?: string; t: nu
       </g>
     );
   }
+  if (kind === "flamingo") {  // フラミンゴ(片足立ち、首がゆれる)
+    const sw = Math.sin(t * 1.5) * 8;
+    return (
+      <g transform="translate(560 900)">
+        <path d="M-20 160 L-30 520 M20 160 L60 330 L-10 380" stroke="#e86a92" strokeWidth={14} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <ellipse cx={0} cy={80} rx={190} ry={120} fill="#ff7aa8" />
+        <path d="M-150 60 Q-60 10 60 60 Q-40 110 -150 60 Z" fill="#ff5c95" />
+        <path d={`M150 40 C230 -60 120 -170 140 -260 C150 -330 ${230 + sw} -360 ${250 + sw} -300`} stroke="#ff7aa8" strokeWidth={42} fill="none" strokeLinecap="round" />
+        <circle cx={250 + sw} cy={-300} r={46} fill="#ff7aa8" />
+        <path d={`M${280 + sw} -300 L${360 + sw} -270 Q${340 + sw} -230 ${290 + sw} -250 Z`} fill="#222" />
+        <circle cx={250 + sw} cy={-310} r={9} fill="#111" />
+        {value && <text x={-40} y={-420} textAnchor="middle" fontSize={100} fontWeight={900} fill="#ffd23f" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
+  if (kind === "onion") {  // タマネギ(切ると気体がもわっと上がる)
+    return (
+      <g transform="translate(540 1000)">
+        <path d="M0 -330 C40 -250 20 -220 10 -200 C200 -180 300 -40 270 100 C240 250 120 320 0 320 C-120 320 -240 250 -270 100 C-300 -40 -200 -180 -10 -200 C-20 -220 -40 -250 0 -330 Z" fill="#c77dbb" />
+        {[-150, -70, 0, 70, 150].map((x) => <path key={x} d={`M${x * 0.2} -190 Q${x * 1.3} 60 ${x * 0.3} 315`} stroke="#a05a96" strokeWidth={8} fill="none" />)}
+        {[0, 1, 2].map((i) => <path key={i} d={`M${-80 + i * 80} -360 q30 -60 0 -120 q-30 -60 0 -120`} stroke="#d7f2c4" strokeWidth={14} fill="none" strokeLinecap="round"
+          opacity={0.6} transform={`translate(0 ${-((t * 120 + i * 60) % 180)})`} />)}
+        {value && <text y={-560} textAnchor="middle" fontSize={100} fontWeight={900} fill="#ffd23f" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
+  if (kind === "sunflower") {  // ヒマワリ(太陽のほうへ向きを変える)
+    const turn = Math.sin(t * 0.8) * 18;
+    return (
+      <g transform="translate(540 1000)">
+        <path d="M0 0 Q20 300 0 620" stroke="#3f8f3a" strokeWidth={30} fill="none" />
+        <path d="M5 330 Q120 260 200 320 Q110 380 5 330 Z" fill="#4caf50" />
+        <g transform={`rotate(${turn})`}>
+          {[...Array(16)].map((_, i) => <ellipse key={i} cx={0} cy={-230} rx={50} ry={110} fill="#ffcc1a" transform={`rotate(${i * 22.5})`} />)}
+          <circle r={170} fill="#6b3f1d" />
+          {[...Array(30)].map((_, i) => { const a = i * 2.4, r = 14 * Math.sqrt(i + 1); return <circle key={i} cx={Math.cos(a) * r} cy={Math.sin(a) * r} r={9} fill="#4a2a12" />; })}
+        </g>
+        {value && <text y={-450} textAnchor="middle" fontSize={100} fontWeight={900} fill="#ffd23f" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
+  if (kind === "jellyfish") {  // クラゲ(ふわふわ上下、足がゆれる)
+    const b = Math.sin(t * 1.6) * 30, p = 1 + Math.sin(t * 3.2) * 0.05;
+    return (
+      <g transform={`translate(540 ${880 + b})`}>
+        {[...Array(7)].map((_, i) => { const x = -150 + i * 50, w = Math.sin(t * 2.5 + i) * 30;
+          return <path key={i} d={`M${x} 40 C${x + w} 200 ${x - w} 320 ${x + w * 0.5} 470`} stroke="#ffb3e6" strokeWidth={10} fill="none" opacity={0.8} strokeLinecap="round" />; })}
+        <path d={`M-210 40 C-210 ${-230 * p} 210 ${-230 * p} 210 40 Q105 80 0 40 Q-105 80 -210 40 Z`} fill="#ff9ad5" opacity={0.85} />
+        <path d="M-140 -40 C-120 -150 120 -150 140 -40" stroke="#fff" strokeWidth={10} fill="none" opacity={0.5} />
+        <circle cx={0} cy={-20} r={40} fill="#ffd6f0" opacity={0.9} />
+        {value && <text y={-330} textAnchor="middle" fontSize={100} fontWeight={900} fill="#ffd23f" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
   if (kind === "seahorse") {  // タツノオトシゴ(ゆらゆら上下)
     const b = Math.sin(t * 2) * 20;
     return (
