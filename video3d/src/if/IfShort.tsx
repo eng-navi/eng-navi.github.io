@@ -2,10 +2,12 @@ import { AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurr
 import { Choices, Intro, JP, JPB, QuizProps, fitJP } from "../quiz/QuizShort";
 import { Body, Eyes, Hat, Head, Lens, Mouth } from "./Face";
 import { Backdrop, Defs, Insert, OceanFX } from "./Sets";
+import { MapSpec, MapView } from "./Map";
 
 // 1カット(2〜3秒)の指定。type で構図、cam でカメラ、wipe で切り替え方を変える
 export type Shot = {
-  type: "face" | "eyes" | "full" | "two" | "insert" | "wide" | "lens" | "split" | "silhouette" | "ots";
+  type: "face" | "eyes" | "full" | "two" | "insert" | "wide" | "lens" | "split" | "silhouette" | "ots" | "map";
+  map?: MapSpec;                    // type="map" の地図(カメラ・光らせる国・線・矢印・ラベル)
   start: number; dur: number; bg: string;
   eyes?: Eyes; mouth?: Mouth; color?: string; rim?: string; det?: boolean; sci?: boolean;  // det:探偵 / sci:博士の見た目
   eyes2?: Eyes; mouth2?: Mouth; color2?: string;
@@ -22,7 +24,7 @@ export type Shot = {
 export type Word = { text: string; start: number; end: number; hl?: boolean; ja?: string };
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
-  no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; jaHints?: boolean;
+  no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; mysteryMap?: MapSpec; jaHints?: boolean;
   hook?: string; coverShot?: Shot; badge?: string; hint?: string };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
@@ -64,6 +66,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
   const det = s.det;
   return (
     <AbsoluteFill style={{ transform: `translateX(${slideX}px)` }}>
+      {s.type === "map" && s.map ? <MapView m={s.map} f={f} len={len} /> : (
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}
            style={{ transform: `translate(${sx}px, ${sy}px) scale(${scale}) rotate(${rot}deg)`, transformOrigin: "50% 55%", filter: blurWhip ? `blur(${blurWhip}px)` : undefined }}>
         <Defs />
@@ -108,6 +111,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
         <rect width={W} height={H} filter="url(#grain)" opacity={0.6} />
         {snapFlash > 0 && <rect width={W} height={H} fill="#fff" opacity={snapFlash} />}
       </svg>
+      )}
       {s.hud && (
         <div style={{ position: "absolute", top: 480, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
           <div style={{ padding: "14px 34px", borderRadius: 40, background: "rgba(20,20,26,0.82)", color: "#f2b33d", fontFamily: EN, fontWeight: 900,
@@ -187,7 +191,9 @@ const MysteryIntro = ({ p }: { p: IfProps }) => {
 };
 
 // 謎の絵(冒頭とループの最後で同じ絵を使い、最初に自然につなげる)
-const MysteryImage = ({ p, t }: { p: IfProps; t: number }) => (
+const MysteryImage = ({ p, t }: { p: IfProps; t: number }) => p.mysteryMap ? (
+  <AbsoluteFill style={{ transform: `scale(${1.15 + t * 0.05})`, filter: "blur(3px)" }}><MapView m={p.mysteryMap} f={0} len={30} /></AbsoluteFill>
+) : (
   <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", transform: `scale(${3.2 + t * 0.15})`, transformOrigin: "50% 50%", filter: "blur(2px)" }}>
     <Defs /><Backdrop kind={p.mysteryBg ?? "dark"} />{p.mystery && <Insert kind={p.mystery} value={p.mysteryValue} t={2} />}
     <rect width={W} height={H} fill="url(#vig)" />

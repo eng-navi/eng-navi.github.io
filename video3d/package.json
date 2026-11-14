@@ -12,14 +12,19 @@
     "@react-three/fiber": "^9.8.2",
     "@remotion/cli": "^4.0.543",
     "@remotion/three": "^4.0.543",
+    "d3-geo": "^3.1.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "remotion": "^4.0.543",
-    "three": "^0.187.0"
+    "three": "^0.187.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@types/d3-geo": "^3.1.0",
     "@types/react": "^19.3.0",
     "@types/three": "^0.187.0",
+    "@types/topojson-client": "^3.1.5",
     "typescript": "^7.0.2"
   }
 }

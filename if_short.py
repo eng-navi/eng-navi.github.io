@@ -430,6 +430,36 @@ SHORTS.update({
         hook="年をとると、若返るクラゲ?🪼", tags="#英語リスニング #やさしい英語 #海の生き物"),
 })
 
+# ---- ゆっくり英語の地理クイズ(試作)。衛星写真の地図アニメ。英検3級〜準1級の単語を混ぜる。声は Daniel(イギリス英語・ニュース風)
+GEO = dict(voice="onwK4e9ZLuTAKqWW03F9", account="geo", speed=0.8, gap=0.4, bgm="tunnel", kicker="ゆっくり英語の", title="地理クイズ", jaHints=True,
+           intro=1.5, choice=4.2, end=1.4, endText="答えはコメント欄で👇", bg1="#123a5a", bg2="#06131f", mystery="map")
+SHORTS.update({
+    "geo001_quake": dict(GEO, no="#001", mysteryMap=dict(from_=None), cover=3, hint="👂ヒント:3文目に注目",
+        q="Why does Japan have so many earthquakes?", q_ja="日本で地震が\n多いのはなぜ?",
+        choices=["Japan lies where moving plates collide.", "Japan has four huge mountains."], answer=1,
+        answer_ja="動くプレートが、ぶつかり合う場所にあるから。",
+        hl=["huge", "plates", "centimeters", "collide", "pressure", "slips", "quakes"],
+        shots=[
+            ("Japan sits on four huge plates.", dict(type="map", bg="dark", map={"from": [135, 30, 1.3], "to": [138, 36, 8], "hl": ["392"], "overlay": "jp_plates",
+                                                                              "labels": [[138.5, 38, "JAPAN"]]})),
+            ("They move a few centimeters each year.", dict(type="map", bg="dark", hud="≈ 8 cm / YEAR", map={"from": [140, 35, 7], "to": [140, 35, 7.6], "overlay": "jp_plates",
+                "arrows": [[158, 36, 149, 37.5], [137, 23, 133.5, 27.5]],
+                "labels": [[152, 31, "PACIFIC"], [132, 22, "PHILIPPINE SEA"], [125, 40, "EURASIAN"], [146, 46.5, "N. AMERICAN"]]})),
+            ("Where they collide, pressure builds.", dict(type="map", bg="dark", map={"from": [141.5, 37.5, 13], "to": [142, 37.5, 16], "overlay": "jp_plates",
+                "arrows": [[149, 37.5, 144.2, 37.8]], "labels": [[145.5, 41.2, "JAPAN TRENCH"]]})),
+            ("Then the rock slips, and the ground shakes!", dict(type="map", bg="dark", map={"from": [138, 36, 9.5], "hl": ["392"], "shake": True,
+                "dots": [[142.4, 38.3], [135.0, 34.6], [136.9, 37.5], [130.8, 32.8], [141.0, 42.7]]})),
+            ("So Japan gets one-fifth of the world's strong quakes.", dict(type="map", bg="dark", hud="≈ 1/5 OF M6+ QUAKES", map={"from": [138, 36, 8], "to": [140, 33, 3.8], "hl": ["392"],
+                "dots": [[142.4, 38.3], [135.0, 34.6], [136.9, 37.5], [130.8, 32.8]]})),
+        ],
+        ja=["日本は、4枚の巨大なプレートの上にある。", "プレートは、1年に数センチ動く。", "ぶつかり合う所で、圧力がたまる。",
+            "そして岩がずれて、地面がゆれる!", "だから日本では、世界の強い地震の約5分の1が起きる。"],
+        gloss=["huge:巨大な", "plate:プレート(地球の表面をおおう岩の板)", "collide:ぶつかり合う", "pressure:圧力", "slip:すべる、ずれる",
+               "quake:地震(earthquake の短い言い方)"],
+        hook="日本で地震が多い理由、英語で言える?🌏", tags="#英語リスニング #やさしい英語 #地理"),
+})
+SHORTS["geo001_quake"]["mysteryMap"] = {"from": [138, 36, 6], "hl": ["392"], "overlay": "jp_plates"}
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
@@ -546,7 +576,7 @@ def cover(name, sc, props, shots, out_dir):
 def build(name):
     sc = SHORTS[name]
     mr.load_env()
-    out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short", "sea": "sea_short"}.get(sc.get("account"), "if_short")
+    out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short", "sea": "sea_short", "geo": "geo_short"}.get(sc.get("account"), "if_short")
     T_IN, T_CH, T_END = sc.get("intro", INTRO), sc.get("choice", CHOICE), sc.get("end", END)  # 冒頭・2択・最後の秒数(回ごとに変えられる)
     PUB.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -585,7 +615,7 @@ def build(name):
     wlist = [dict(text=w, start=round(s, 3), end=round(e, 3),
                   hl=any("".join(c for c in w.lower() if c.isalpha()).startswith(h[:5]) for h in hl)) for w, s, e in words]
     if sc.get("jaHints"):  # 黄色の単語の下に、日本語を小さく出す(gloss から)
-        ja = {g.split(":")[0].lower(): g.split(":", 1)[1].split("、")[0] for g in sc["gloss"] if " " not in g.split(":")[0]}
+        ja = {g.split(":")[0].lower(): g.split(":", 1)[1].split("、")[0].split("(")[0] for g in sc["gloss"] if " " not in g.split(":")[0]}
         for w in wlist:
             if w["hl"]:
                 bare = "".join(c for c in w["text"].lower() if c.isalpha())
@@ -622,7 +652,7 @@ def build(name):
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
-                 choiceSec=int(T_CH), **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "jaHints", "hint") if k in sc})
+                 choiceSec=int(T_CH), **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "jaHints", "hint") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"
