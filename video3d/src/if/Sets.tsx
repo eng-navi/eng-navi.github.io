@@ -32,6 +32,31 @@ export const Backdrop = ({ kind, blur = 0 }: { kind: string; blur?: number }) =>
         <text x={540} y={330} textAnchor="middle" fontSize={70} fontWeight={900} fill="#d7b25a" fontFamily="Georgia" letterSpacing={12}>BANK</text>
       </g>
     ),
+    office: (
+      <g>
+        <rect width={W} height={H} fill="#1d2a38" />
+        {[0, 1, 2].map((i) => <rect key={i} x={90 + i * 320} y={360} width={260} height={420} fill="#9cc3d9" opacity={0.35} />)}
+        <rect x={0} y={1180} width={W} height={H - 1180} fill="#16202b" />
+        <rect x={40} y={1080} width={1000} height={40} rx={10} fill="#8a6a4c" />
+        <rect x={700} y={900} width={240} height={170} rx={12} fill="#0f141b" /><rect x={715} y={915} width={210} height={140} fill="#3a6ea5" opacity={0.7} />
+      </g>
+    ),
+    bedroom: (
+      <g>
+        <rect width={W} height={H} fill="#141a33" />
+        <rect x={620} y={300} width={340} height={480} fill="#0b1026" /><circle cx={820} cy={460} r={70} fill="#f4ecc8" opacity={0.85} />
+        <rect x={0} y={1300} width={W} height={H - 1300} fill="#10142a" />
+        <rect x={80} y={1180} width={640} height={160} rx={30} fill="#3d4a8a" /><rect x={100} y={1130} width={180} height={80} rx={30} fill="#e8e4f4" />
+      </g>
+    ),
+    lab: (
+      <g>
+        <rect width={W} height={H} fill="#10262c" />
+        {[...Array(4)].map((_, i) => <rect key={i} x={80} y={420 + i * 170} width={920} height={14} fill="#2b4d55" />)}
+        {[...Array(7)].map((_, i) => <rect key={i} x={120 + i * 125} y={340 + (i % 4) * 170} width={50} height={80} rx={12} fill={["#4fd1c5", "#f6ad55", "#9f7aea"][i % 3]} opacity={0.7} />)}
+        <rect x={0} y={1220} width={W} height={H - 1220} fill="#0b1c20" />
+      </g>
+    ),
     dark: (
       <g>
         <rect width={W} height={H} fill="#0d0f18" />
@@ -88,6 +113,38 @@ export const Insert = ({ kind, value, t }: { kind: string; value?: string; t: nu
         <text y={-150} textAnchor="middle" fontSize={44} fill="#9fb3d1" fontFamily="Arial" fontWeight={700}>BALANCE</text>
         <text y={-40} textAnchor="middle" fontSize={92} fill="#fff" fontFamily="Arial" fontWeight={900}>{value}</text>
         <rect x={-150} y={60} width={300} height={90} rx={45} fill="#2fa36b" /><text y={120} textAnchor="middle" fontSize={44} fill="#fff" fontFamily="Arial" fontWeight={800}>+ INTEREST</text>
+      </g>
+    );
+  }
+  if (kind === "brain") {
+    const pulse = 0.5 + 0.5 * Math.sin(t * 8);
+    return (
+      <g transform="translate(540 960)">
+        <ellipse cx={0} cy={0} rx={330} ry={260} fill="#f2a7b8" stroke="#c46a82" strokeWidth={14} />
+        <path d="M-250 -60 Q-150 -170 -40 -80 T180 -90 M-260 70 Q-120 -10 0 80 T250 40 M0 -250 Q-40 0 20 250" fill="none" stroke="#c46a82" strokeWidth={12} strokeLinecap="round" />
+        {[[-180, -120], [120, -40], [-60, 120], [200, 110], [-220, 40]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r={20 + 14 * pulse} fill="#fff6a8" opacity={0.4 + 0.6 * ((pulse + i * 0.3) % 1)} />)}
+        {value && <text y={-340} textAnchor="middle" fontSize={96} fontWeight={900} fill="#f2b33d" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
+  if (kind === "clock") {
+    const a = t * 240;
+    return (
+      <g transform="translate(540 980)">
+        <circle r={300} fill="#fbf7ee" stroke="#e0533c" strokeWidth={26} />
+        {[...Array(12)].map((_, i) => <line key={i} x1={0} y1={-250} x2={0} y2={-220} stroke="#1d1d22" strokeWidth={10} transform={`rotate(${i * 30})`} />)}
+        <line x1={0} y1={0} x2={0} y2={-200} stroke="#1d1d22" strokeWidth={16} strokeLinecap="round" transform={`rotate(${a})`} />
+        <line x1={0} y1={0} x2={0} y2={-130} stroke="#1d1d22" strokeWidth={20} strokeLinecap="round" transform={`rotate(${a / 12})`} />
+        {value && <text y={-370} textAnchor="middle" fontSize={130} fontWeight={900} fill="#f2b33d" fontFamily="Arial" stroke="#1d1d22" strokeWidth={8} paintOrder="stroke">{value}</text>}
+      </g>
+    );
+  }
+  if (kind === "card") {
+    return (
+      <g transform={`translate(540 960) rotate(${-4 + 2 * Math.sin(t * 3)})`}>
+        <rect x={-400} y={-220} width={800} height={440} rx={40} fill="#fbf7ee" />
+        <rect x={-400} y={-220} width={800} height={90} rx={40} fill="#e0533c" />
+        <text y={60} textAnchor="middle" fontSize={value && value.length > 12 ? 74 : 100} fontWeight={900} fill="#1d1d22" fontFamily="Arial">{value}</text>
       </g>
     );
   }

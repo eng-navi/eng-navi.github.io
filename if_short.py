@@ -10,6 +10,16 @@
   ・効果音(カットごとのシュッ、数字のポン、衝撃) → 自動で入れる
   ・数字が増えていく表示                         → hud
 流れ:時計の 3・2・1 と問題 → 物語 → 2択+4・3・2・1 →「正解はコメント欄で」
+
+台本のルール(全部の回で守る):
+  ・正解は音声の言い換え。まちがいの選択肢に、音声と同じ単語を入れる(英検と同じ。聞けた人だけ当たる)
+  ・正解は A と B を回ごとに入れ替える
+  ・台本は8行前後、全体で25秒以内(超えたら警告を出す)
+  ・テーマとは別に、英検2級〜1級の単語を毎回6〜8個まんべんなく入れ、hl(黄色の字幕)と gloss(コメント欄の単語リスト)に載せる
+  ・問題の日本語は大きく上、英語は小さく下。改行位置は q_ja に \n で入れる
+
+効果音:assets/sfx/ に whoosh / pop / boom / tick / laugh / cash / gasp / ding(.wav か .mp3)を置くとそちらを使う。
+無いものはプログラムで作った音で代用する。カットに sfx="laugh" のように書くと、そのカットで鳴らす。
 """
 import base64
 import hashlib
@@ -31,43 +41,99 @@ PUB = V3D / "public" / "if"
 OUT = ROOT / "out" / "if_short"
 CACHE = ROOT / "out" / "voice_cache"
 SR = 44100
-INTRO, CHOICE, END = 3.0, 4.2, 2.4
+INTRO, CHOICE, END = 3.0, 4.2, 1.8
+SPEED = 1.1
+SFX_DIR = ROOT / "assets" / "sfx"
+MAX_SEC = 25
 
 SHORTS = {
     "compound": dict(
         voice="nPczCjzI2devNBz1zQrb",  # Brian
-        q="Why does Sam's money grow so fast?", q_ja="サムのお金が、\nどんどん増えるのはなぜ?",
-        choices=["He won the lottery.", "His interest earns interest."], answer=2,
-        hl=["doubled", "interest", "compound", "nobody", "laughing"],
+        q="Why did Sam's savings grow so rapidly?", q_ja="サムの貯金が、\nなぜ急に増えたの?",
+        choices=["His colleagues invested in him.", "His gains kept producing new gains."], answer=2,
+        hl=["savings", "deposit", "modest", "colleagues", "ridicule", "astonishing", "generate", "economists"],
         shots=[
-            ("What if your money doubled every day?", dict(type="face", bg="room", eyes="shock", mouth="o", hud="DAY 1 · $1")),
-            ("Sam starts with one dollar.", dict(type="insert", bg="dark", insert="coin", value="$1")),
-            ("Day five. Sixteen dollars.", dict(type="full", bg="room", eyes="smug", mouth="smile", hud="DAY 5 · $16")),
-            ("His friends laugh at him.", dict(type="two", bg="street", eyes="worried", mouth="wavy", eyes2="squint", mouth2="grin")),
-            ("Day fifteen.", dict(type="wide", bg="street", eyes="normal", mouth="flat", hud="DAY 15 · $16,384", cam="pan")),
-            ("Sixteen thousand dollars!", dict(type="eyes", bg="dark", eyes="shock", cam="shake")),
-            ("Day twenty-one. Over a million.", dict(type="insert", bg="bank", insert="phone", value="$1,048,576", hud="DAY 21")),
-            ("Now nobody is laughing.", dict(type="two", bg="bank", eyes="glasses", mouth="grin", eyes2="shock", mouth2="o")),
-            ("The secret? Interest that earns interest.", dict(type="insert", bg="bank", insert="chart", value="INTEREST × INTEREST")),
-            ("It's called compound interest.", dict(type="face", bg="bank", eyes="glasses", mouth="grin", cam="pull")),
+            ("What if your savings doubled daily?", dict(type="face", bg="room", eyes="shock", mouth="o", hud="DAY 1 · $1")),
+            ("Sam deposits a modest one dollar.", dict(type="insert", bg="dark", insert="coin", value="$1", sfx="ding")),
+            ("Colleagues ridicule him.", dict(type="two", bg="office", eyes="worried", mouth="wavy", eyes2="squint", mouth2="grin", sfx="laugh")),
+            ("Day fifteen: sixteen thousand dollars!", dict(type="eyes", bg="dark", eyes="shock", hud="DAY 15 · $16,384", cam="shake")),
+            ("Day twenty-one: an astonishing million.", dict(type="insert", bg="bank", insert="phone", value="$1,048,576", hud="DAY 21", sfx="cash")),
+            ("Returns generate more returns.", dict(type="insert", bg="bank", insert="chart", value="RETURNS → RETURNS")),
+            ("Economists call it compound interest.", dict(type="face", bg="bank", eyes="glasses", mouth="grin", cam="pull")),
         ],
-        ja=["もしお金が毎日2倍になったら?", "サムは1ドルから始める。", "5日目、16ドル。", "友だちは彼を笑う。", "15日目。",
-            "1万6千ドル!", "21日目、100万ドル超え。", "もう誰も笑っていない。", "秘密は?利子が利子を生むこと。", "それは「複利」と呼ばれる。"],
-        gloss=["double:2倍になる", "laugh at A:Aを笑う", "nobody:誰も〜ない", "interest:利子、利息", "earn:(お金を)生む、稼ぐ", "compound interest:複利"],
+        ja=["もし貯金が毎日2倍になったら?", "サムは、ささやかな1ドルを預ける。", "同僚たちは彼をあざ笑う。", "15日目、1万6千ドル!",
+            "21日目、驚きの100万ドル。", "利益がさらに利益を生む。", "経済学者はそれを「複利」と呼ぶ。"],
+        gloss=["savings:貯金", "deposit:預金する", "modest:ささやかな、控えめな", "colleague:同僚", "ridicule:あざ笑う",
+               "astonishing:驚くべき", "return:(投資の)利益", "generate:生み出す", "economist:経済学者",
+               "compound interest:複利"],
         tags="#英語リスニング #英検準1級 #お金の勉強"),
+    "spotlight": dict(
+        voice="pFZP5JQG7iQjIQuC4Bku",  # Lily
+        q="Why was Emma's worry unnecessary?", q_ja="エマの心配が\nいらなかったのはなぜ?",
+        choices=["People notice us far less than we assume.", "Everyone was staring at her coffee."], answer=1,
+        hl=["spills", "convinced", "staring", "crimson", "embarrassment", "hardly", "vastly", "overestimate", "observe"],
+        shots=[
+            ("Emma spills coffee on her shirt.", dict(type="full", bg="office", eyes="shock", mouth="o", color="#d6457a", sfx="gasp")),
+            ("She's convinced everyone is staring.", dict(type="eyes", bg="dark", eyes="worried", cam="shake", color="#d6457a")),
+            ("Her face turns crimson with embarrassment.", dict(type="face", bg="office", eyes="squint", mouth="wavy", color="#d6457a", rim="#ff5a5a")),
+            ("In reality, hardly anyone noticed.", dict(type="two", bg="office", eyes="worried", mouth="flat", eyes2="normal", mouth2="smile", color="#d6457a")),
+            ("We vastly overestimate how much others observe us.", dict(type="insert", bg="dark", insert="card", value="OVERESTIMATE")),
+            ("Psychologists call it the spotlight effect.", dict(type="face", bg="office", eyes="glasses", mouth="smile", color="#d6457a", cam="pull")),
+        ],
+        ja=["エマはシャツにコーヒーをこぼす。", "みんなに見られていると思い込む。", "恥ずかしさで顔が真っ赤になる。",
+            "実際には、ほとんど誰も気づいていなかった。", "私たちは、他人にどれだけ見られているかを大きく見積もりすぎる。", "心理学者はそれを「スポットライト効果」と呼ぶ。"],
+        gloss=["spill:こぼす", "be convinced (that) ~:〜だと思い込む", "stare:じっと見る", "crimson:真っ赤な", "embarrassment:恥ずかしさ",
+               "hardly:ほとんど〜ない", "vastly:大幅に", "overestimate:過大評価する", "observe:観察する"],
+        tags="#英語リスニング #英検準1級 #心理学"),
+    "twominute": dict(
+        voice="nPczCjzI2devNBz1zQrb",
+        q="What finally helped Ken start exercising?", q_ja="ケンが運動を\n始められたのはなぜ?",
+        choices=["He spent thirty minutes at the gym.", "He made the first step ridiculously small."], answer=2,
+        hl=["procrastinates", "daunting", "threshold", "trivial", "momentum", "consistency", "intensity"],
+        shots=[
+            ("Ken always procrastinates on exercise.", dict(type="full", bg="room", eyes="squint", mouth="flat")),
+            ("Thirty minutes at the gym feels daunting.", dict(type="insert", bg="dark", insert="clock", value="30:00", sfx="boom")),
+            ("So he lowers the threshold: two minutes.", dict(type="insert", bg="dark", insert="clock", value="2:00", sfx="ding")),
+            ("Shoes on. One push-up. Done.", dict(type="face", bg="room", eyes="happy", mouth="grin", hud="DAY 1")),
+            ("The trivial start builds momentum.", dict(type="wide", bg="street", eyes="happy", mouth="smile", hud="DAY 7", cam="pan")),
+            ("Consistency beats intensity: the two-minute rule.", dict(type="face", bg="street", eyes="glasses", mouth="grin", cam="pull")),
+        ],
+        ja=["ケンはいつも運動を先延ばしにする。", "ジムで30分は、気が重い。", "そこで、ハードルを下げる。2分だけ。", "靴をはく。腕立て1回。終わり。",
+            "ささいな始まりが、勢いを生む。", "激しさより継続。それが「2分ルール」。"],
+        gloss=["procrastinate:先延ばしにする", "daunting:気が重くなる、ひるませる", "threshold:基準、しきい値", "trivial:ささいな",
+               "momentum:勢い", "consistency:継続、一貫性", "intensity:激しさ"],
+        tags="#英語リスニング #英検準1級 #自己啓発"),
+    "sleep": dict(
+        voice="pFZP5JQG7iQjIQuC4Bku",
+        q="Why did Ana get a better score?", q_ja="アナのほうが\n点数が高かったのはなぜ?",
+        choices=["Her brain kept learning while she rested.", "She stayed up all night reviewing."], answer=1,
+        hl=["cram", "consolidates", "neurons", "outperforms", "idle", "retain"],
+        shots=[
+            ("Two students cram for the same exam.", dict(type="two", bg="room", eyes="worried", mouth="flat", eyes2="normal", mouth2="smile", color2="#d6457a")),
+            ("Lee stays up all night.", dict(type="eyes", bg="dark", eyes="squint", hud="3:00 AM")),
+            ("Ana goes to bed early.", dict(type="full", bg="bedroom", eyes="happy", mouth="smile", color="#d6457a")),
+            ("Asleep, her neurons consolidate memories.", dict(type="insert", bg="dark", insert="brain", value="SAVING...")),
+            ("Next day, Ana outperforms Lee.", dict(type="two", bg="room", eyes="shock", mouth="o", eyes2="happy", mouth2="grin", color2="#d6457a", hud="LEE 61 · ANA 92", sfx="gasp")),
+            ("Sleep isn't idle. It's how we retain knowledge.", dict(type="face", bg="lab", eyes="glasses", mouth="smile", color="#d6457a", cam="pull")),
+        ],
+        ja=["2人の学生が同じ試験のために詰め込み勉強をする。", "リーは徹夜する。", "アナは早く寝る。", "眠っているあいだ、神経細胞が記憶を定着させる。",
+            "翌日、アナはリーより良い成績をとる。", "睡眠はむだではない。知識を保つための時間だ。"],
+        gloss=["cram:詰め込み勉強をする", "stay up all night:徹夜する", "consolidate:強化する、定着させる", "neuron:神経細胞",
+               "outperform:〜より良い成績をあげる", "idle:何もしていない、むだな", "retain:保持する"],
+        tags="#英語リスニング #英検準1級 #科学"),
 }
 
 
 def tts_words(voice, text):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
     CACHE.mkdir(parents=True, exist_ok=True)
-    key = hashlib.sha1(f"ts|{voice}|{text}".encode()).hexdigest()[:14]
+    key = hashlib.sha1(f"ts|{voice}|{SPEED}|{text}".encode()).hexdigest()[:14]
     js, mp3 = CACHE / f"ts_{key}.json", CACHE / f"ts_{key}.mp3"
     if not js.exists():
         req = urllib.request.Request(
             f"https://api.elevenlabs.io/v1/text-to-speech/{voice}/with-timestamps?output_format=mp3_44100_128",
             data=json.dumps({"text": text, "model_id": "eleven_multilingual_v2",
-                             "voice_settings": {"stability": 0.45, "similarity_boost": 0.75, "speed": 1.0}}).encode(),
+                             "voice_settings": {"stability": 0.45, "similarity_boost": 0.75, "speed": SPEED}}).encode(),
             headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"], "Content-Type": "application/json"})
         d = json.load(urllib.request.urlopen(req))
         mp3.write_bytes(base64.b64decode(d["audio_base64"]))
@@ -88,6 +154,22 @@ def tts_words(voice, text):
     return mp3, words
 
 
+_SFX = {}
+
+
+def sample(kind, dur):
+    """assets/sfx/ に素材があればそれを、無ければ synth の音を返す"""
+    if kind not in _SFX:
+        f = next((p for p in [SFX_DIR / f"{kind}.wav", SFX_DIR / f"{kind}.mp3"] if p.exists()), None)
+        if f:
+            raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(f), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+                                 capture_output=True, check=True).stdout
+            _SFX[kind] = 0.6 * np.frombuffer(raw, np.float32)
+        else:
+            _SFX[kind] = synth(kind, dur)
+    return _SFX[kind]
+
+
 def synth(kind, dur):
     t = np.arange(int(SR * dur)) / SR
     if kind == "whoosh":  # 帯域を動かしたノイズ
@@ -99,6 +181,8 @@ def synth(kind, dur):
         return (0.28 * np.sin(2 * np.pi * (500 + 900 * t / dur) * t) * np.exp(-t * 25)).astype(np.float32)
     if kind == "boom":
         return (0.5 * np.sin(2 * np.pi * (90 - 40 * t) * t) * np.exp(-t * 6)).astype(np.float32)
+    if kind == "ding":
+        return (0.22 * (np.sin(2 * np.pi * 1320 * t) + 0.5 * np.sin(2 * np.pi * 1980 * t)) * np.exp(-t * 7)).astype(np.float32)
     if kind == "tick":
         return (0.25 * np.sin(2 * np.pi * 1400 * t) * np.exp(-t * 60)).astype(np.float32)
     return np.zeros(len(t), np.float32)
@@ -137,15 +221,17 @@ def build(name):
         i = int(t * SR)
         sfx[i:i + len(a)] += a[:len(sfx) - i]
     for s in shots:
-        put(synth("whoosh", 0.35), max(0, s["start"] - 0.12))
+        put(sample("whoosh", 0.35), max(0, s["start"] - 0.12))
         if s.get("hud"):
-            put(synth("pop", 0.15), s["start"] + 0.1)
+            put(sample("pop", 0.15), s["start"] + 0.1)
         if s["type"] == "eyes":
-            put(synth("boom", 0.6), s["start"])
+            put(sample("boom", 0.6), s["start"])
+        if s.get("sfx"):
+            put(sample(s.pop("sfx"), 0.5), s["start"] + 0.05)
     for k in range(3):
-        put(synth("tick", 0.06), k * 1.0)
+        put(sample("tick", 0.06), k * 1.0)
     for k in range(4):
-        put(synth("tick", 0.06), choice_at + k * 1.0)
+        put(sample("tick", 0.06), choice_at + k * 1.0)
     sf.write(PUB / f"{name}_sfx.wav", sfx, SR)
     bgm = PUB / "bgm.mp3"
     if not bgm.exists():
@@ -168,8 +254,10 @@ def build(name):
         txt += [ln, ja, sp]
     txt += sc["gloss"] + ["--------------------------------------"]
     out.with_suffix(".txt").write_text("\n".join(txt) + "\n")
-    print(f"✓ {out}({total:.1f}秒・{len(shots)}カット)")
+    warn = f"  ⚠ {MAX_SEC}秒を超えています。台本を短くしてください" if total > MAX_SEC else ""
+    print(f"✓ {out}({total:.1f}秒・{len(shots)}カット){warn}")
 
 
 if __name__ == "__main__":
-    build(sys.argv[1] if len(sys.argv) > 1 else "compound")
+    for n in (sys.argv[1:] or ["compound"]):
+        build(n)
