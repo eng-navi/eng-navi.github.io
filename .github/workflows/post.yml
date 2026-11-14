@@ -57,6 +57,15 @@ jobs:
           SEA_IG_USER_ID: ${{ secrets.SEA_IG_USER_ID }}
           SEA_IG_ACCESS_TOKEN: ${{ secrets.SEA_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: 地理クイズ(@geoquizenglish)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 geo_post.py run
+        env:
+          GEO_IG_USER_ID: ${{ secrets.GEO_IG_USER_ID }}
+          GEO_IG_ACCESS_TOKEN: ${{ secrets.GEO_IG_ACCESS_TOKEN }}
+          SITE_URL: https://eng-navi.github.io
       - name: quizify(@quizify_english)
         if: always()
         run: |

@@ -1,4 +1,4 @@
-# Instagram・Threads のトークン(有効期限60日)を毎週延長し、Secret を更新する(eng_navi・4コマ・quizify_english・名探偵アイビー・科学クイズ・海クイズ・Threads 2つ)
+# Instagram・Threads のトークン(有効期限60日)を毎週延長し、Secret を更新する(eng_navi・4コマ・quizify_english・名探偵アイビー・科学クイズ・海クイズ・地理クイズ・Threads 2つ)
 name: トークン更新
 on:
   schedule:
@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name: [IG, MANGA_IG, QUIZIFY_IG, IVY_IG, SCI_IG, SEA_IG]
+        name: [IG, MANGA_IG, QUIZIFY_IG, IVY_IG, SCI_IG, SEA_IG, GEO_IG]
     steps:
       - uses: actions/checkout@v4
       - run: python3 post.py --refresh-token

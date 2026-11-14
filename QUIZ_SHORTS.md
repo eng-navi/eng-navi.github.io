@@ -10,6 +10,7 @@
 | 25秒リスニングクイズ | 旧4コマ(MANGA_IG_*) | Brian / Lily | 英検2級〜1級 | 25秒前後(上限30) | 3秒の時計 / 4秒 | out/if_short/ | `python3 manga_post.py addif <name> "YYYY-MM-DD HH:MM"` |
 | 名探偵アイビーの謎解き | @vocab_flicks(IVY_IG_*) | Alice(イギリス英語・女性)、探偵の一人称 | 英検2級〜1級+文の形1つ | 25秒前後(上限30) | 3秒の時計+CASE番号 / 4秒 | out/ivy_short/ | `python3 ivy_post.py add <name> "..."` |
 | ゆっくり英語の海クイズ | @rio_devlog(SEA_IG_*) | George(男)と Matilda(女)を交互に、0.7倍+文のあいだ0.8秒(約100語/分)、曲は Lantern / Sailing Home / Death Of The Whales | 英検3級〜準1級(やさしい2+難しい1、難しい語に日本語ヒント) | 15秒前後 | 1.5秒の謎の絵(海の背景)/ 3秒 | out/sea_short/ | `python3 sea_post.py add <name> "..."` |
+| ゆっくり英語の地理クイズ | @geoquizenglish(GEO_IG_*) | Daniel(イギリス英語)、0.8倍+文のあいだ0.4秒 | 英検3級〜準1級 | 25秒前後 | 1.5秒のぼかした地図(`mysteryMap`)/ 4秒 | out/geo_short/ | `python3 geo_post.py add <name> "..."` |
 | やさしい英語の科学クイズ | @mokumoku_kun(SCI_IG_*) | Sarah(アメリカ英語・女性)、0.7倍+文のあいだ0.7秒(約110語/分)、博士のキャラ、曲は Cycles / Tunnel / Vapour を回して反応を見る(assets/bgm/、公開しない) | 英検3級〜準2級 | 10〜15秒 | 1.5秒の謎の絵 / 3秒 | out/sci_short/ | `python3 sci_post.py add <name> "..."` |
 
 共通の設定は `IVY = dict(...)` `SCI = dict(...)` にまとめてある。新しい回は `dict(IVY, ...)` のように書く。
@@ -37,6 +38,14 @@
 - キャラ:`eyes`(normal / shock / worried / smug / happy / squint / angry / glasses)、`mouth`(smile / o / flat / grin / wavy / none)、`color`、2人目は `eyes2` `mouth2` `color2`
 - 探偵の見た目は `det=True`、博士は `sci=True`
 - 演出:`hud`(上に数字)、`stamp`(「CLUE 1」「SOLVED」)、`mark=[x, y, 半径]`(赤丸)、`zoom`(正体を隠す拡大)、`focus=[x, y]`(lens でのぞく位置)、`sfx`(laugh / cash / gasp / ding / boom)
+
+## 地図(地理クイズ)
+
+`type="map"`、`map={"from": [経度, 緯度, 倍率], "to": [...], "hl": ["392"], "overlay": "jp_plates", "arrows": [[経1,緯1,経2,緯2]], "labels": [[経,緯,"文字"]], "dots": [[経,緯]], "shake": True}`
+- 倍率1で世界の横幅が画面いっぱい。日本の全体は 8 前後、海溝などの寄りは 13〜16
+- hl は ISO の数字コード(日本 392、アメリカ 840、イギリス 826、中国 156、フランス 250 など)
+- 衛星写真は video3d/public/geo/(world.jpg+細かい eastasia.jpg)。ほかの地域に寄る回は、その地域の細かい写真を足す
+- 線(overlay)は Map.tsx の OVERLAYS に足す
 
 ## 冒頭・ヒント・最後(全シリーズ共通、11/14〜)
 
