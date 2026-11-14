@@ -48,7 +48,7 @@ THEMES = {
     "blue": dict(
         bar=(173, 200, 209), bg=(253, 253, 253), accent=(172, 199, 209), hl=(222, 233, 237), ink=(30, 30, 30),
         x=172, num_dx=-20, title=["TOEICでよく出る"], title_size=86, title_weight=500,
-        q_size=67, q_pitch=82, q_max_w=828, hl_style="full",
+        q_size=97, q_pitch=120, q_max_w=850, hl_style="full",  # 緑と同じ大きさ(11/14 小さくて読まれにくかったため)
         opt_size=88, opt_max_w=760, opt_pitch=100,
     ),
 }
