@@ -2,7 +2,7 @@
 
     .venv-tts/bin/python quiz_short.py zeigarnik      # out/quiz_short/zeigarnik.mp4 と .txt(コメント欄用)
 
-流れ:時計の 3・2・1 と問題 → 物語(ナレーション+字幕)→ 3択+3・2・1 → 答え。
+流れ:時計の 3・2・1 と問題 → 物語(ナレーション+字幕)→ 2択+3・2・1 →「正解はコメント欄で」(画面では答えを言わない)。
 台本は SHORTS に書くだけ。音声は ElevenLabs(保存して使い回す)、仕上げは Remotion(video3d/)。
 """
 import json
@@ -21,12 +21,12 @@ V3D = ROOT / "video3d"
 PUB = V3D / "public" / "qs"
 OUT = ROOT / "out" / "quiz_short"
 VOICE, SPEED = "nPczCjzI2devNBz1zQrb", 1.0  # Brian(アメリカ英語・男性)。回ごとに変えてもよい
-INTRO, GAP, CHOICE, ANSWER = 3.0, 0.35, 3.4, 2.6
+INTRO, GAP, CHOICE, ANSWER = 3.0, 0.35, 3.4, 2.4
 
 SHORTS = {
     "zeigarnik": dict(
         q="Why can't Mia stop thinking about one task?", q_ja="ミアが1つの仕事を忘れられないのはなぜ?",
-        choices=["Her boss called her about it.", "Unfinished tasks stay in our minds.", "She wrote it down."], answer=2,
+        choices=["Her boss called her about it.", "Unfinished tasks stay in our minds."], answer=2,
         words=["unfinished", "psychologists", "effect"],
         scenes=[
             dict(bg="office", text="Mia finished nine tasks today.", people=[dict(x=380, y=1500, color="#2f6fd6", badge="9/10")]),
@@ -81,7 +81,7 @@ def build(name):
     # コメント欄に入れる文(英文と和訳を並べる。空行は全角スペース)
     sp = "　"
     lines = ["--------------------------------------", f"Q. {sc['q']}", f"({sc['q_ja']})", sp,
-             f"答え:{'ABC'[sc['answer'] - 1]} {sc['choices'][sc['answer'] - 1]}", sp]
+             f"答え:{'AB'[sc['answer'] - 1]} {sc['choices'][sc['answer'] - 1]}", sp]
     for s, ja in zip(sc["scenes"], sc["ja"]):
         lines += [s["text"], ja, sp]
     lines += sc["gloss"] + ["--------------------------------------"]

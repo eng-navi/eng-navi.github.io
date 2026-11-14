@@ -6,7 +6,7 @@ export const Stickman = ({ x, y, s = 1, color = "#2f6fd6", badge, pose = "stand"
   return (
     <g transform={`translate(${x} ${y + bob}) scale(${flip ? -s : s} ${s}) rotate(${lie ? -90 : 0})`}>
       {/* 影 */}
-      {!lie && <ellipse cx={0} cy={6} rx={70} ry={14} fill="rgba(0,0,0,0.18)" />}
+      {!lie && <ellipse cx={0} cy={6} rx={80} ry={16} fill="rgba(0,0,0,0.35)" filter="url(#soft)" />}
       {/* 脚 */}
       {pose === "sit" ? (
         <path d="M-18 -120 L-20 -60 L40 -60 L40 0 M18 -120 L20 -60 L70 -60 L70 0" stroke="#1d1d22" strokeWidth={20} fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -15,6 +15,8 @@ export const Stickman = ({ x, y, s = 1, color = "#2f6fd6", badge, pose = "stand"
       )}
       {/* 体(服) */}
       <rect x={-44} y={-250} width={88} height={140} rx={34} fill={color} />
+      <rect x={-44} y={-250} width={88} height={140} rx={34} fill="url(#bodyShade)" />
+      <path d="M-22 -250 L0 -222 L22 -250" stroke="rgba(255,255,255,0.55)" strokeWidth={6} fill="none" />
       {/* 腕 */}
       {pose === "think" ? (
         <path d="M-40 -220 L-70 -150 M40 -220 L60 -180 L30 -280" stroke={color} strokeWidth={22} fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -23,7 +25,8 @@ export const Stickman = ({ x, y, s = 1, color = "#2f6fd6", badge, pose = "stand"
       )}
       {/* 頭 */}
       <circle cx={0} cy={-320} r={70} fill="#141418" />
-      <circle cx={-22} cy={-338} r={14} fill="rgba(255,255,255,0.12)" />
+      <circle cx={0} cy={-320} r={70} fill="url(#rim)" />
+      <ellipse cx={-26} cy={-346} rx={20} ry={12} fill="rgba(255,255,255,0.16)" />
       {/* バッジ */}
       {badge && (
         <g transform={`rotate(${lie ? 90 : 0} 0 -440) scale(${flip ? -1 : 1} 1)`}>
