@@ -21,7 +21,8 @@ export type Shot = {
 export type Word = { text: string; start: number; end: number; hl?: boolean; ja?: string };
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
-  no?: string; mystery?: string; jaHints?: boolean };  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
+  no?: string; mystery?: string; jaHints?: boolean;
+  hook?: string; coverShot?: Shot; badge?: string };  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
@@ -228,3 +229,19 @@ export const IfShort = (p: IfProps) => {
     </AbsoluteFill>
   );
 };
+
+// リールのカバー画像(1枚)。その回で一番目を引くカット+大きなつかみの一言。プロフィールの一覧で切れないよう真ん中に寄せる
+export const IfCover = (p: IfProps) => (
+  <AbsoluteFill style={{ backgroundColor: "#0d0f18" }}>
+    {p.coverShot && <Sequence from={-4}>{/* 静止画は1秒1コマなので、dur を長くしてカメラの動きを止める */}
+      <ShotView s={{ ...p.coverShot, start: 0, dur: 100, cam: "push", wipe: undefined, stamp: undefined, hud: undefined }} words={[]} /></Sequence>}
+    <AbsoluteFill style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.5) 100%)" }} />
+    <div style={{ position: "absolute", top: 330, left: 90, right: 90, display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}>
+      {p.badge && <div style={{ padding: "8px 26px", border: "7px solid #ff3b30", borderRadius: 14, color: "#ff3b30", background: "rgba(255,244,230,0.95)",
+                                fontFamily: EN, fontWeight: 900, fontSize: 52, letterSpacing: 3, transform: "rotate(-6deg)" }}>{p.badge}</div>}
+      <div style={{ fontFamily: JPB, fontWeight: 900, fontSize: Math.min(124, Math.floor(860 / Math.max(5, ...(p.hook ?? "").split("\n").map((l) => [...l].length)))), lineHeight: 1.25,
+                    color: "#ffd23f", textAlign: "center", WebkitTextStroke: "14px #12142a", paintOrder: "stroke fill",
+                    textShadow: "0 12px 0 #c2410c, 0 24px 40px rgba(0,0,0,0.6)", whiteSpace: "pre-line" }}>{p.hook}</div>
+    </div>
+  </AbsoluteFill>
+);

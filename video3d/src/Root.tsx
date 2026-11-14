@@ -1,6 +1,6 @@
-import { Composition } from "remotion";
+import { Composition, Still } from "remotion";
 import { QuizShort, QuizProps } from "./quiz/QuizShort";
-import { IfShort, IfProps } from "./if/IfShort";
+import { IfCover, IfShort, IfProps } from "./if/IfShort";
 import { PenScene } from "./PenScene";
 
 // リールと同じ縦長 1080×1920・30fps
@@ -16,6 +16,7 @@ export const Root = () => (
     defaultProps={{} as IfProps}
     calculateMetadata={({ props }) => ({ durationInFrames: Math.round((props as IfProps).total * 30) })}
   />
+  <Still id="IfCover" component={IfCover} width={1080} height={1920} defaultProps={{} as IfProps} />
   <Composition
     id="QuizShort"
     component={QuizShort}

@@ -322,6 +322,21 @@ def caption(sc):
                       f"Music: {MUSICS[sc.get('bgm', 'the-waves')]} — Music from #Uppbeat (free for Creators!)"])
 
 
+def cover(name, sc, props, shots, out_dir):
+    """カバー画像(out_dir/<name>_cover.jpg)。cover=カット番号で指定、無ければ顔・虫めがね・分割・目のアップの最初のカット"""
+    k = sc.get("cover")
+    if k is None:  # 顔 > 虫めがね > 分割 > 目のアップ の順で、最初に出てくるカット
+        k = next((i for t in ("face", "lens", "split", "eyes") for i, s in enumerate(shots) if s["type"] == t), 0)
+    hook = sc["hook"]
+    if "\n" not in hook and len(hook) > 9:  # 読点か「vs」のあとで改行
+        hook = hook.replace("、", "、\n", 1) if "、" in hook else hook.replace(" vs ", "\nvs ", 1)
+    cp = dict(props, coverShot=shots[k], hook=hook, badge=sc.get("caseNo") or sc.get("no"))
+    pf = out_dir / f"{name}_cover.json"
+    pf.write_text(json.dumps(cp, ensure_ascii=False))
+    subprocess.run(["npx", "remotion", "still", "src/index.ts", "IfCover", str(out_dir / f"{name}_cover.jpg"), f"--props={pf}",
+                    "--image-format=jpeg", "--jpeg-quality=90"], cwd=V3D, check=True, stdout=subprocess.DEVNULL)
+
+
 def build(name):
     sc = SHORTS[name]
     mr.load_env()
@@ -407,6 +422,7 @@ def build(name):
     out = out_dir / f"{name}.mp4"
     subprocess.run(["npx", "remotion", "render", "src/index.ts", "IfShort", str(out), f"--props={pf}"], cwd=V3D, check=True,
                    stdout=subprocess.DEVNULL)
+    cover(name, sc, props, shots, out_dir)
     out.with_suffix(".txt").write_text(comment(sc))
     warn = f"  ⚠ {MAX_SEC}秒を超えています。台本を短くしてください" if total > MAX_SEC else ""
     print(f"✓ {out}({total:.1f}秒・{len(shots)}カット){warn}")

@@ -69,12 +69,23 @@ def add_if(name, at):
     key = f"if_{name}"
     dst = ROOT / "docs" / "manga" / f"{key}_reel.mp4"
     shutil.copy(src, dst)
+    paths = [str(dst), str(SCHEDULE)] + publish_cover(src, key)
     items = [s for s in load(SCHEDULE, []) if s["key"] != key]
-    items.append({"key": key, "at": at, "caption": if_short.caption(sc), "comment": if_short.comment(sc)})
+    items.append({"key": key, "at": at, "caption": if_short.caption(sc), "comment": if_short.comment(sc), "cover": len(paths) > 2})
     items.sort(key=lambda s: s["at"])
     SCHEDULE.write_text(json.dumps(items, ensure_ascii=False, indent=2) + "\n")
-    push([str(dst), str(SCHEDULE)], f"リスニングクイズ {key} を {at} に予約")
+    push(paths, f"リスニングクイズ {key} を {at} に予約")
     print(f"✓ {key} を {at} に予約しました")
+
+
+def publish_cover(src, key):
+    """動画の横にカバー画像(<name>_cover.jpg)があれば docs/manga/<key>_cover.jpg に公開する"""
+    c = src.with_name(src.stem + "_cover.jpg")
+    if not c.exists():
+        return []
+    dst = ROOT / "docs" / "manga" / f"{key}_cover.jpg"
+    shutil.copy(c, dst)
+    return [str(dst)]
 
 
 PAGE_NOTE = "🔊 セリフを何回でも聞ける音声ページは、プロフィールのリンクから"
@@ -101,8 +112,19 @@ def publish(item):
             pass
         time.sleep(15)
     user = os.environ["IG_USER_ID"]
+    extra = {}
+    if item.get("cover"):  # カバー画像(反映を待ってから指定)
+        cover = url.replace("_reel.mp4", "_cover.jpg")
+        for _ in range(20):
+            try:
+                if urllib.request.urlopen(urllib.request.Request(cover, method="HEAD")).status == 200:
+                    extra["cover_url"] = cover
+                    break
+            except Exception:
+                pass
+            time.sleep(15)
     c = post.api("POST", f"{user}/media", media_type="REELS", video_url=url,
-                 caption=post.keep_blank_lines(with_page_note(item)), share_to_feed="true")["id"]
+                 caption=post.keep_blank_lines(with_page_note(item)), share_to_feed="true", **extra)["id"]
     post.wait_until_ready(c)
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
     if item.get("comment"):

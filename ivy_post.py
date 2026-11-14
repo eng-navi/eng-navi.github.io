@@ -38,11 +38,12 @@ def add(name, at):
     key = f"ivy_{name}"
     dst = ROOT / "docs" / "manga" / f"{key}_reel.mp4"
     shutil.copy(src, dst)
+    paths = [str(dst), str(mp.SCHEDULE)] + mp.publish_cover(src, key)
     items = [s for s in mp.load(mp.SCHEDULE, []) if s["key"] != key]
-    items.append({"key": key, "at": at, "caption": if_short.caption(sc), "comment": if_short.comment(sc)})
+    items.append({"key": key, "at": at, "caption": if_short.caption(sc), "comment": if_short.comment(sc), "cover": len(paths) > 2})
     items.sort(key=lambda s: s["at"])
     mp.SCHEDULE.write_text(json.dumps(items, ensure_ascii=False, indent=2) + "\n")
-    mp.push([str(dst), str(mp.SCHEDULE)], f"名探偵アイビー {key} を {at} に予約")
+    mp.push(paths, f"名探偵アイビー {key} を {at} に予約")
     print(f"✓ {key} を {at} に予約しました")
 
 
