@@ -334,6 +334,7 @@ def build(name):
         put(sample("tick", 0.06), k * 1.0)
     for k in range(4):
         put(sample("tick", 0.06), choice_at + k * 1.0)
+    put(sample("whoosh", 0.35), choice_at + CHOICE - 0.05)  # 「コメント欄で」がシュッと入る
     sf.write(PUB / f"{name}_sfx.wav", sfx, SR)
     bgm = PUB / "bgm.mp3"
     if not bgm.exists():

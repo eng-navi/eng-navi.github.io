@@ -157,7 +157,6 @@ export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const left = Math.max(0, 4 - Math.floor(f / fps));
-  const pulse = 1 + Math.sin(f / 4) * 0.03;
   return (
     <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 30%, ${p.bg1 ?? "#333a73"}, ${p.bg2 ?? "#0f1124"})`, alignItems: "center" }}>
       <div style={{ marginTop: 280, width: 820, padding: "30px 34px", borderRadius: 34, background: "#e0533c", textAlign: "center",
@@ -176,10 +175,17 @@ export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
       {!end && left > 0 && <div style={{ marginTop: 80, width: 180, height: 180, borderRadius: 90, background: "#f2b33d", display: "flex",
                                          boxShadow: "0 0 50px rgba(242,179,61,0.6)", alignItems: "center", justifyContent: "center",
                                          fontFamily: EN, fontWeight: 900, fontSize: 110, color: "#1d1d22" }}>{left}</div>}
-      {end && <div style={{ marginTop: 80, textAlign: "center", transform: `scale(${pulse})` }}>
-        <div style={{ fontFamily: JP, fontSize: 64, fontWeight: 800, color: "#f2b33d" }}>{p.endText ?? "正解はコメント欄で👇"}</div>
-        <div style={{ fontFamily: JP, fontSize: 38, color: "#c9cbe6", marginTop: 24 }}>英文と和訳もコメント欄にあります📌</div>
-      </div>}
+      {end && (() => {  // シュッと横から入って止まる → 下線が走る → 補足がフッと出る(揺らさない)
+        const ease = (x: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+        const k = ease(f / 7), line = ease((f - 6) / 8), sub = ease((f - 10) / 8);
+        return <div style={{ marginTop: 80, textAlign: "center" }}>
+          <div style={{ display: "inline-block", transform: `translateX(${(1 - k) * -700}px) skewX(${(1 - k) * -18}deg)`, filter: `blur(${(1 - k) * 14}px)` }}>
+            <div style={{ fontFamily: JPB, fontSize: 64, fontWeight: 800, color: "#ffd23f", letterSpacing: 2 }}>{p.endText ?? "正解はコメント欄で👇"}</div>
+            <div style={{ height: 8, borderRadius: 4, background: "#ffd23f", marginTop: 10, width: `${line * 100}%` }} />
+          </div>
+          <div style={{ fontFamily: JP, fontSize: 38, color: "#c9cbe6", marginTop: 26, opacity: sub, transform: `translateY(${(1 - sub) * 24}px)` }}>英文と和訳もコメント欄にあります📌</div>
+        </div>;
+      })()}
     </AbsoluteFill>
   );
 };
