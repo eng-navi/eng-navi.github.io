@@ -139,6 +139,23 @@ export const Insert = ({ kind, value, t }: { kind: string; value?: string; t: nu
       </g>
     );
   }
+  if (kind === "menu") {  // 値段表。value は "SMALL $3|MEDIUM $6.50|LARGE $7"。2つ目以降は時間差で出る
+    const rows = (value ?? "").split("|");
+    return (
+      <g>
+        <rect x={140} y={520} width={800} height={160 + rows.length * 190} rx={30} fill="#2b1d14" stroke="#d9a63a" strokeWidth={10} />
+        <text x={540} y={630} textAnchor="middle" fontSize={70} fontWeight={900} fill="#ffd23f" fontFamily="Arial" letterSpacing={6}>POPCORN</text>
+        {rows.map((r, i) => {
+          const [name, price] = r.split(" ");
+          const show = Math.min(1, Math.max(0, (t - i * 0.35) * 4));
+          return <g key={i} opacity={show} transform={`translate(0 ${(1 - show) * 30})`}>
+            <text x={210} y={790 + i * 190} fontSize={72} fontWeight={800} fill="#fbf7ee" fontFamily="Arial">{name}</text>
+            <text x={870} y={790 + i * 190} textAnchor="end" fontSize={80} fontWeight={900} fill={i === rows.length - 1 ? "#ffd23f" : "#fbf7ee"} fontFamily="Arial">{price}</text>
+          </g>;
+        })}
+      </g>
+    );
+  }
   if (kind === "card") {
     return (
       <g transform={`translate(540 960) rotate(${-4 + 2 * Math.sin(t * 3)})`}>

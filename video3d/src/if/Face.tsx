@@ -36,11 +36,35 @@ const MouthShape = ({ kind }: { kind: Mouth }) => {
   }
 };
 
-// 頭と顔。r は頭の半径。rim はふち取りの色(右下にずらしたシール風)
-export const Head = ({ r = 200, eyes = "normal", mouth = "smile", rim = "#f2a65a", look = 0 }: { r?: number; eyes?: Eyes; mouth?: Mouth; rim?: string; look?: number }) => {
+// 探偵の鹿撃ち帽(ツイード柄)と、肩までの赤茶の髪
+const Hair = ({ color }: { color: string }) => (
+  <path d="M-205 -40 Q-235 120 -170 210 L-120 200 Q-170 90 -150 -40 Z M205 -40 Q235 120 170 210 L120 200 Q170 90 150 -40 Z" fill={color} />
+);
+export const Hat = () => (
+  <g>
+    <path d="M-230 -70 Q-120 -40 0 -45 Q120 -40 230 -70 L210 -40 Q0 -10 -210 -40 Z" fill="#4a3520" />
+    <path d="M-195 -60 Q-205 -250 0 -255 Q205 -250 195 -60 Q0 -30 -195 -60 Z" fill="#7a5a35" />
+    {[-140, -70, 0, 70, 140].map((x) => <path key={x} d={`M${x} -250 Q${x * 1.1} -150 ${x * 1.05} -45`} stroke="#5e4427" strokeWidth={8} fill="none" />)}
+    {[-200, -150, -100].map((y) => <path key={y} d={`M-190 ${y} Q0 ${y - 25} 190 ${y}`} stroke="#5e4427" strokeWidth={6} fill="none" />)}
+    <path d="M-195 -60 Q0 -30 195 -60" stroke="#2d6a4f" strokeWidth={22} fill="none" />
+    <circle cx={0} cy={-258} r={16} fill="#5e4427" />
+  </g>
+);
+export const Lens = ({ x = 0, y = 0, r = 70, rot = -30 }: { x?: number; y?: number; r?: number; rot?: number }) => (
+  <g transform={`translate(${x} ${y}) rotate(${rot})`}>
+    <rect x={-12} y={r} width={24} height={r * 1.4} rx={10} fill="#5a3b1e" />
+    <circle r={r} fill="rgba(200,235,255,0.25)" stroke="#d9a63a" strokeWidth={r * 0.2} />
+    <path d={`M${-r * 0.5} ${-r * 0.3} Q${-r * 0.3} ${-r * 0.6} 0 ${-r * 0.6}`} stroke="#fff" strokeWidth={r * 0.1} fill="none" opacity={0.7} strokeLinecap="round" />
+  </g>
+);
+
+// 頭と顔。r は頭の半径。rim はふち取りの色(右下にずらしたシール風)。detective で帽子と髪
+export const Head = ({ r = 200, eyes = "normal", mouth = "smile", rim = "#f2a65a", look = 0, detective = false }:
+  { r?: number; eyes?: Eyes; mouth?: Mouth; rim?: string; look?: number; detective?: boolean }) => {
   const k = r / 200;
   return (
     <g>
+      {detective && <g transform={`scale(${k})`}><Hair color="#8c3b22" /></g>}
       <circle cx={10 * k} cy={8 * k} r={r + 10 * k} fill={rim} />
       <circle cx={0} cy={0} r={r} fill="#0f0f12" />
       <ellipse cx={-70 * k} cy={-90 * k} rx={40 * k} ry={22 * k} fill="rgba(255,255,255,0.08)" />
@@ -49,13 +73,14 @@ export const Head = ({ r = 200, eyes = "normal", mouth = "smile", rim = "#f2a65a
         {eyes === "glasses" && <path d="M-24 0 L24 0" stroke="#e8f6ff" strokeWidth={6} />}
         <MouthShape kind={mouth} />
       </g>
+      {detective && <g transform={`scale(${k})`}><Hat /></g>}
     </g>
   );
 };
 
 // 全身(小さめのショット用)。服はパーカー風
-export const Body = ({ color = "#2f6fd6", rim = "#f2a65a", eyes = "normal" as Eyes, mouth = "smile" as Mouth, pose = "stand", step = 0 }:
-  { color?: string; rim?: string; eyes?: Eyes; mouth?: Mouth; pose?: "stand" | "run" | "point"; step?: number }) => {
+export const Body = ({ color = "#2f6fd6", rim = "#f2a65a", eyes = "normal" as Eyes, mouth = "smile" as Mouth, pose = "stand", step = 0, detective = false }:
+  { color?: string; rim?: string; eyes?: Eyes; mouth?: Mouth; pose?: "stand" | "run" | "point" | "lens"; step?: number; detective?: boolean }) => {
   const sw = pose === "run" ? Math.sin(step) * 40 : 0;
   return (
     <g>
@@ -65,8 +90,11 @@ export const Body = ({ color = "#2f6fd6", rim = "#f2a65a", eyes = "normal" as Ey
       <rect x={-66} y={-380} width={132} height={220} rx={52} fill={color} />
       <rect x={-66} y={-380} width={132} height={220} rx={52} fill="url(#shadeR)" />
       <path d="M-18 -380 L0 -340 L18 -380" stroke="rgba(255,255,255,0.6)" strokeWidth={8} fill="none" />
-      <path d={pose === "point" ? "M-58 -340 L-90 -220 M58 -340 L170 -400" : `M-58 -340 L${-92 + sw} -210 M58 -340 L${92 - sw} -210`} stroke={color} strokeWidth={34} strokeLinecap="round" fill="none" />
-      <g transform="translate(0 -500)"><Head r={120} eyes={eyes} mouth={mouth} rim={rim} /></g>
+      {detective && <path d="M-80 -370 L-110 -120 L110 -120 L80 -370 Z" fill={color} opacity={0.9} />}
+      {detective && <rect x={-70} y={-250} width={140} height={22} fill="#3b2a1a" />}
+      <path d={pose === "point" || pose === "lens" ? "M-58 -340 L-90 -220 M58 -340 L170 -400" : `M-58 -340 L${-92 + sw} -210 M58 -340 L${92 - sw} -210`} stroke={color} strokeWidth={34} strokeLinecap="round" fill="none" />
+      <g transform="translate(0 -500)"><Head r={120} eyes={eyes} mouth={mouth} rim={rim} detective={detective} /></g>
+      {pose === "lens" && <Lens x={200} y={-470} r={60} rot={-20} />}
     </g>
   );
 };

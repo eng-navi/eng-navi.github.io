@@ -127,17 +127,65 @@ SHORTS = {
         tags="#英語リスニング #英検準1級 #科学"),
 }
 
+# ---- 名探偵アイビーの謎解き(別アカウント・心理学)。声は Alice(イギリス英語・女性)で固定、語りは探偵の一人称 ----
+IVY = dict(voice="Xb7hH8MSUJpSbSDYk0k2", account="ivy", kicker="名探偵アイビーの", title="謎解き", endText="推理の答えはコメント欄で🔍",
+           bg1="#1f5a46", bg2="#0b1611", speed=1.1)
+SHORTS.update({
+    "case01_decoy": dict(IVY, caseNo="CASE #01",
+        q="Why did large popcorn sales suddenly soar?", q_ja="Lサイズのポップコーンが\n急に売れたのはなぜ?",
+        choices=["A pricey medium made the large look like a bargain.", "The large popcorn suddenly became cheaper."], answer=1,
+        answer_ja="高いMサイズを置いたことで、Lサイズがお得に見えたから。",
+        hl=["tripled", "baffled", "pricey", "bargain", "soared", "deliberately", "inferior", "steers", "decoy"],
+        shots=[
+            ("What if one tiny change tripled your sales?", dict(type="face", bg="dark", det=True, color="#2d6a4f", eyes="smug", mouth="smile", cam="whip")),
+            ("A baffled owner couldn't sell large popcorn.", dict(type="insert", bg="room", insert="menu", value="SMALL $3|LARGE $7", cam="pan", stamp="CLUE 1")),
+            ("So I added a pricey medium.", dict(type="lens", bg="room", insert="menu", value="SMALL $3|MEDIUM $6.50|LARGE $7", wipe="slide", focus=[640, 960])),
+            ("Suddenly, the large seemed like a bargain.", dict(type="split", bg="dark", left="$6.50", right="$7", eyes="worried", mouth="flat", eyes2="happy", mouth2="grin", cam="tilt")),
+            ("Sales soared overnight.", dict(type="insert", bg="bank", insert="chart", value="LARGE SALES", hud="+300%", cam="snap")),
+            ("A deliberately inferior option steers our choice.", dict(type="ots", bg="room", det=True, color="#2d6a4f", eyes2="shock", mouth2="o", cam="push", mark=[560, 1140, 170])),
+            ("Elementary: the decoy effect.", dict(type="silhouette", bg="dark", det=True, eyes="smug", wipe="iris", stamp="SOLVED")),
+        ],
+        ja=["もし、ほんの小さな変化で売上が3倍になったら?", "困り果てた店主は、Lサイズのポップコーンを売れずにいた。", "そこで私は、高めのMサイズを加えた。",
+            "すると突然、Lサイズがお買い得に見えた。", "売上は一夜で急上昇。", "わざと劣った選択肢を置くと、私たちの選択は誘導される。", "初歩的なことだよ。「おとり効果」だ。"],
+        gloss=["triple:3倍にする", "baffled:困惑した、途方に暮れた", "pricey:値段が高い", "bargain:お買い得品", "soar:急上昇する",
+               "deliberately:わざと、意図的に", "inferior:劣った", "steer:(ある方向へ)導く", "decoy:おとり", "elementary:初歩的な"],
+        grammar=["What if + 過去形 〜?", "「もし〜したらどうなる?」と、仮の話を持ちかける形。", "動詞を過去形(tripled)にすると「現実ではないけれど、もしも」の気持ちが出る。"],
+        hook="映画館のポップコーン、Lだけ急に売れた理由は?🍿", tags="#英語リスニング #心理学 #謎解き"),
+    "case02_mint": dict(IVY, caseNo="CASE #02",
+        q="Why did Leo's tips suddenly increase?", q_ja="レオのチップが、\n急に増えたのはなぜ?",
+        choices=["Customers loved the taste of the mints.", "Customers felt they owed him something."], answer=2,
+        answer_ja="お客さんが「お返しをしなきゃ」と感じたから。",
+        hl=["meager", "scrutinized", "sooner", "fourteen", "triggers", "urge", "reciprocate", "reciprocity"],
+        shots=[
+            ("Leo the waiter earned meager tips.", dict(type="full", bg="room", eyes="worried", mouth="flat", color="#2f6fd6", hud="TIPS $", wipe="iris")),
+            ("So I scrutinized his routine.", dict(type="ots", bg="room", det=True, color="#2d6a4f", eyes2="worried", mouth2="flat", color2="#2f6fd6", cam="tilt")),
+            ("My advice? Offer a free mint.", dict(type="face", bg="dark", det=True, color="#2d6a4f", eyes="smug", mouth="grin", cam="whip", stamp="CLUE 1")),
+            ("No sooner had he done so than tips rose.", dict(type="insert", bg="bank", insert="coin", value="+3%", cam="push")),
+            ("Two mints? Tips jumped fourteen percent.", dict(type="split", bg="dark", left="1 MINT", right="2 MINTS", eyes="normal", mouth="smile", eyes2="shock", mouth2="o", color="#2f6fd6", color2="#2f6fd6", cam="snap")),
+            ("A gift triggers an urge to reciprocate.", dict(type="lens", bg="dark", insert="card", value="RECIPROCATE", focus=[540, 1010])),
+            ("Case closed: reciprocity.", dict(type="silhouette", bg="dark", det=True, eyes="smug", wipe="iris", stamp="SOLVED")),
+        ],
+        ja=["ウェイターのレオは、わずかなチップしかもらえなかった。", "そこで私は、彼の仕事ぶりを細かく調べた。", "私の助言?無料のミントを出すこと。",
+            "そうするとすぐに、チップが増えた。", "ミント2つなら?チップは14%も跳ね上がった。", "贈り物は、お返しをしたい衝動を引き起こす。", "事件解決。「返報性」だ。"],
+        gloss=["meager:わずかな、乏しい", "scrutinize:細かく調べる", "routine:いつもの手順", "trigger:引き起こす",
+               "urge:衝動", "reciprocate:お返しをする", "reciprocity:返報性、相互関係"],
+        grammar=["No sooner had A 過去分詞 than B 過去形", "「AするとすぐにB」。No sooner が文頭に来るので、had he done のように語順が入れ替わる(倒置)。",
+                 "No sooner had he done so than tips rose.(そうするとすぐに、チップが増えた)"],
+        hook="ミントを1つ配っただけで、チップが増えた?🍬", tags="#英語リスニング #心理学 #謎解き"),
+})
 
-def tts_words(voice, text):
+
+def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
     CACHE.mkdir(parents=True, exist_ok=True)
-    key = hashlib.sha1(f"ts|{voice}|{SPEED}|{text}".encode()).hexdigest()[:14]
+    speed = speed or SPEED
+    key = hashlib.sha1(f"ts|{voice}|{speed}|{text}".encode()).hexdigest()[:14]
     js, mp3 = CACHE / f"ts_{key}.json", CACHE / f"ts_{key}.mp3"
     if not js.exists():
         req = urllib.request.Request(
             f"https://api.elevenlabs.io/v1/text-to-speech/{voice}/with-timestamps?output_format=mp3_44100_128",
             data=json.dumps({"text": text, "model_id": "eleven_multilingual_v2",
-                             "voice_settings": {"stability": 0.45, "similarity_boost": 0.75, "speed": SPEED}}).encode(),
+                             "voice_settings": {"stability": 0.45, "similarity_boost": 0.75, "speed": speed}}).encode(),
             headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"], "Content-Type": "application/json"})
         d = json.load(urllib.request.urlopen(req))
         mp3.write_bytes(base64.b64decode(d["audio_base64"]))
@@ -197,12 +245,14 @@ def comment(sc):
     sp = "\u3000"
     left = list(sc["gloss"])
     out = [f"Q. {sc['q_ja'].replace(chr(10), '')}", sc["q"], sp,
-           f"答え:{'AB'[sc['answer'] - 1]}「{sc['choices'][sc['answer'] - 1]}」", f"({sc['answer_ja']})", sp, "【全文と和訳】", sp]
+           f"{'推理の答え' if sc.get('account') == 'ivy' else '答え'}:{'AB'[sc['answer'] - 1]}「{sc['choices'][sc['answer'] - 1]}」", f"({sc['answer_ja']})", sp, "【全文と和訳】", sp]
     for k, ((ln, _), ja) in enumerate(zip(sc["shots"], sc["ja"])):
         low = ln.lower()
         mine = [g for g in left if g.split(":")[0].split()[0].lower()[:5] in low][:3]
         left = [g for g in left if g not in mine]
         out += [f"{'①②③④⑤⑥⑦⑧⑨⑩'[k]} {ln}", ja] + [f"　▶ {g.replace(':', ' … ', 1)}" for g in mine] + [sp]
+    if sc.get("grammar"):
+        out += ["【今日の文の形】", sc["grammar"][0]] + sc["grammar"][1:] + [sp]
     out += ["🎧 わからなかった単語は保存して、もう一度聞いてみてね", sp, sc["tags"]]
     return "\n".join(out) + "\n"
 
@@ -219,10 +269,11 @@ def caption(sc):
 def build(name):
     sc = SHORTS[name]
     mr.load_env()
+    out_dir = ROOT / "out" / ("ivy_short" if sc.get("account") == "ivy" else "if_short")
     PUB.mkdir(parents=True, exist_ok=True)
-    OUT.mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
     lines = [ln for ln, _ in sc["shots"]]
-    mp3, words = tts_words(sc["voice"], " ".join(lines))
+    mp3, words = tts_words(sc["voice"], " ".join(lines), sc.get("speed"))
     story = PUB / f"{name}_story.mp3"
     story.write_bytes(mp3.read_bytes())
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(story)],
@@ -271,10 +322,11 @@ def build(name):
     sf.write(tick, np.zeros(int(SR * 0.1), np.float32), SR)  # 時計の音は sfx に入れたので無音
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=INTRO,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + CHOICE, 3), total=round(total, 3),
-                 story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm="if/bgm.mp3")
-    pf = OUT / f"{name}.json"
+                 story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm="if/bgm.mp3",
+                 **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2") if k in sc})
+    pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
-    out = OUT / f"{name}.mp4"
+    out = out_dir / f"{name}.mp4"
     subprocess.run(["npx", "remotion", "render", "src/index.ts", "IfShort", str(out), f"--props={pf}"], cwd=V3D, check=True,
                    stdout=subprocess.DEVNULL)
     out.with_suffix(".txt").write_text(comment(sc))

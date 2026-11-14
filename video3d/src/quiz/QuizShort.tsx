@@ -7,10 +7,13 @@ export type Scene = { bg: "office" | "bedroom" | "lab"; text: string; audio: str
                       people: { x: number; y: number; color?: string; badge?: string; pose?: "stand" | "sit" | "lie" | "think"; flip?: boolean }[];
                       think?: string };
 export type QuizProps = { q: string; q_ja: string; choices: string[]; answer: number; words: string[];
-                          intro: number; scenes: Scene[]; choiceAt: number; answerAt: number; total: number; tick: string; bgm: string };
+                          intro: number; scenes: Scene[]; choiceAt: number; answerAt: number; total: number; tick: string; bgm: string;
+  kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
+};
 
 const W = 1080;
 export const JP = "'Hiragino Maru Gothic ProN', 'Hiragino Sans', sans-serif";
+export const fitJP = (text: string, max: number, width: number) => Math.min(max, Math.floor(width / (Math.max(...text.split("\n").map((l) => l.length)) + 2)));
 export const JPB = "'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif";  // 問題文用の太いゴシック
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
 
@@ -71,17 +74,21 @@ export const Intro = ({ p }: { p: QuizProps }) => {
   const inQ = spring({ frame: f - 8, fps, config: { damping: 12 } });
   const inC = spring({ frame: f - 4, fps, config: { damping: 10 } });
   return (
-    <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 30%, #3a2f7a, #12142a)", alignItems: "center", transform: `translateX(${shake}px)` }}>
+    <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 30%, ${p.bg1 ?? "#3a2f7a"}, ${p.bg2 ?? "#12142a"})`, alignItems: "center", transform: `translateX(${shake}px)` }}>
       <svg width={1080} height={1080} viewBox="-540 -540 1080 1080" style={{ position: "absolute", top: 60, opacity: 0.16 }}>
         {[...Array(16)].map((_, i) => <polygon key={i} points="0,0 -60,-560 60,-560" fill="#f2b33d" transform={`rotate(${i * 22.5 + rays})`} />)}
       </svg>
       <div style={{ marginTop: 340, textAlign: "center", transform: `scale(${(2.6 - 1.6 * slam) * (1 + 0.04 * Math.sin(t * 9))}) rotate(${-4 + wob}deg)`, opacity: Math.min(1, slam * 2) }}>
-        <div style={{ fontFamily: JP, fontSize: 84, fontWeight: 900, color: "white", letterSpacing: 8, WebkitTextStroke: "10px #12142a", paintOrder: "stroke fill" }}>リスニング</div>
+        <div style={{ fontFamily: JP, fontSize: 84, fontWeight: 900, color: "white", letterSpacing: 8, WebkitTextStroke: "10px #12142a", paintOrder: "stroke fill" }}>{p.kicker ?? "リスニング"}</div>
         <div style={{ fontFamily: JP, fontSize: 260, fontWeight: 900, color: "#ffd23f", lineHeight: 1.05,
                       WebkitTextStroke: "22px #12142a", paintOrder: "stroke fill", textShadow: "0 16px 0 #c2410c, 0 30px 50px rgba(0,0,0,0.6)" }}>
-          クイズ
+          {p.title ?? "クイズ"}
         </div>
       </div>
+      {p.caseNo && <div style={{ position: "absolute", top: 150, right: 90, padding: "8px 26px", border: "8px solid #ff3b30", borderRadius: 14, color: "#ff3b30",
+                                 background: "rgba(255,244,230,0.95)", fontFamily: EN, fontWeight: 900, fontSize: 60, letterSpacing: 4,
+                                 transform: `scale(${2.4 - 1.4 * spring({ frame: f - 14, fps, config: { damping: 9, mass: 0.5 } })}) rotate(12deg)`,
+                                 opacity: f < 14 ? 0 : 1 }}>{p.caseNo}</div>}
       <svg width={300} height={300} viewBox="-210 -210 420 420" style={{ marginTop: 40, transform: `scale(${inC})` }}>
         <circle r={180} fill="#fffaf0" stroke="#f2b33d" strokeWidth={16} />
         {[...Array(12)].map((_, i) => <line key={i} x1={0} y1={-150} x2={0} y2={-165} stroke="#1d1d22" strokeWidth={8} transform={`rotate(${i * 30})`} />)}
@@ -91,7 +98,7 @@ export const Intro = ({ p }: { p: QuizProps }) => {
       </svg>
       <div style={{ marginTop: 40, width: 860, padding: "32px 36px", borderRadius: 40, background: "#e0533c", textAlign: "center",
                     transform: `translateY(${(1 - inQ) * 500}px)`, opacity: inQ }}>
-        <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: 58, color: "white", lineHeight: 1.35, letterSpacing: 2, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
+        <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: fitJP(p.q_ja, 58, 760), color: "white", lineHeight: 1.35, letterSpacing: 2, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
         <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 44, color: "#fff1ec", marginTop: 16, lineHeight: 1.2 }}>{p.q}</div>
       </div>
       <div style={{ marginTop: 44, fontFamily: JP, fontSize: 36, color: "#c9cbe6", opacity: inQ }}>全文と和訳はコメント欄にあります</div>
@@ -152,9 +159,9 @@ export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
   const left = Math.max(0, 4 - Math.floor(f / fps));
   const pulse = 1 + Math.sin(f / 4) * 0.03;
   return (
-    <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 30%, #333a73, #0f1124)", alignItems: "center" }}>
+    <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 30%, ${p.bg1 ?? "#333a73"}, ${p.bg2 ?? "#0f1124"})`, alignItems: "center" }}>
       <div style={{ marginTop: 280, width: 820, padding: "30px 34px", borderRadius: 34, background: "#e0533c", textAlign: "center",
-                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: JPB, fontWeight: 800, fontSize: 52, color: "white", lineHeight: 1.35, letterSpacing: 2, whiteSpace: "pre-line" }}>Q. {p.q_ja}
+                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: JPB, fontWeight: 800, fontSize: fitJP(p.q_ja, 52, 740), color: "white", lineHeight: 1.35, letterSpacing: 2, whiteSpace: "pre-line" }}>Q. {p.q_ja}
         <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 40, color: "#fff1ec", marginTop: 12, lineHeight: 1.2 }}>{p.q}</div></div>
       {p.choices.map((c, i) => {
         const slide = spring({ frame: f - i * 5, fps, config: { damping: 14 } });
@@ -170,7 +177,7 @@ export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
                                          boxShadow: "0 0 50px rgba(242,179,61,0.6)", alignItems: "center", justifyContent: "center",
                                          fontFamily: EN, fontWeight: 900, fontSize: 110, color: "#1d1d22" }}>{left}</div>}
       {end && <div style={{ marginTop: 80, textAlign: "center", transform: `scale(${pulse})` }}>
-        <div style={{ fontFamily: JP, fontSize: 64, fontWeight: 800, color: "#f2b33d" }}>正解はコメント欄で👇</div>
+        <div style={{ fontFamily: JP, fontSize: 64, fontWeight: 800, color: "#f2b33d" }}>{p.endText ?? "正解はコメント欄で👇"}</div>
         <div style={{ fontFamily: JP, fontSize: 38, color: "#c9cbe6", marginTop: 24 }}>英文と和訳もコメント欄にあります📌</div>
       </div>}
     </AbsoluteFill>

@@ -1,52 +1,106 @@
 import { AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Choices, Intro, JP, JPB, QuizProps } from "../quiz/QuizShort";
-import { Body, Eyes, Head, Mouth } from "./Face";
+import { Body, Eyes, Hat, Head, Lens, Mouth } from "./Face";
 import { Backdrop, Defs, Insert } from "./Sets";
 
-// 1カット(2〜3秒)の指定。type で構図を変える
+// 1カット(2〜3秒)の指定。type で構図、cam でカメラ、wipe で切り替え方を変える
 export type Shot = {
-  type: "face" | "eyes" | "full" | "two" | "insert" | "wide";
+  type: "face" | "eyes" | "full" | "two" | "insert" | "wide" | "lens" | "split" | "silhouette" | "ots";
   start: number; dur: number; bg: string;
-  eyes?: Eyes; mouth?: Mouth; color?: string; rim?: string;
+  eyes?: Eyes; mouth?: Mouth; color?: string; rim?: string; det?: boolean;  // det:主人公を探偵の見た目に
   eyes2?: Eyes; mouth2?: Mouth; color2?: string;
-  insert?: string; value?: string; hud?: string; cam?: "push" | "pull" | "pan" | "shake";
+  insert?: string; value?: string; hud?: string;
+  cam?: "push" | "pull" | "pan" | "shake" | "whip" | "tilt" | "snap" | "rise";
+  wipe?: "iris" | "slide";
+  stamp?: string;              // 「CLUE 1/3」などのスタンプ
+  mark?: [number, number, number];  // 赤丸で囲む位置 [x, y, 半径]
+  left?: string; right?: string;    // split の左右の文字
+  focus?: [number, number];         // lens でのぞく位置
 };
 export type Word = { text: string; start: number; end: number; hl?: boolean };
-export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string };
+export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
+  kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string };
 
 const W = 1080, H = 1920;
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
 
-// 1カットを描く
-const ShotView = ({ s }: { s: Shot }) => {
+// 1カットを描く。words は口パク用(ナレーション中は口が動く)
+const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
   const len = s.dur * fps;
-  const pop = spring({ frame: f, fps, config: { damping: 13, mass: 0.6 } }); // カットの入りで少し寄る
-  const camMove = { push: interpolate(f, [0, len], [1, 1.12]), pull: interpolate(f, [0, len], [1.14, 1]), pan: 1.06, shake: 1.05 }[s.cam ?? "push"];
-  const sx = s.cam === "pan" ? interpolate(f, [0, len], [-40, 40]) : s.cam === "shake" ? Math.sin(f * 2.3) * 10 * Math.max(0, 1 - t * 2) : 0;
-  const scale = camMove * (0.94 + 0.06 * pop);
+  const pop = spring({ frame: f, fps, config: { damping: 13, mass: 0.6 } });
+  const cam = s.cam ?? "push";
+  let scale = { push: interpolate(f, [0, len], [1, 1.12]), pull: interpolate(f, [0, len], [1.18, 1]), pan: 1.06, shake: 1.05, whip: 1.04,
+    tilt: interpolate(f, [0, len], [1.02, 1.1]), snap: f < len * 0.45 ? 1 : 1.35, rise: 1.08 }[cam];
+  scale *= 0.94 + 0.06 * pop;
+  let sx = cam === "pan" ? interpolate(f, [0, len], [-50, 50]) : cam === "shake" ? Math.sin(f * 2.3) * 12 * Math.max(0, 1 - t * 2) : 0;
+  if (cam === "whip") sx = interpolate(f, [0, 6], [900, 0], { extrapolateRight: "clamp", easing: (x) => 1 - Math.pow(1 - x, 3) });
+  const sy = cam === "rise" ? interpolate(f, [0, len], [80, -40]) : 0;
+  const rot = cam === "tilt" ? interpolate(f, [0, len], [-4, -8]) : 0;
+  const blurWhip = cam === "whip" && f < 6 ? (6 - f) * 4 : 0;
+  const snapFlash = cam === "snap" && Math.abs(f - Math.round(len * 0.45)) < 2 ? 0.5 : 0;
+  // 口パク:ナレーションの単語が鳴っている間、4フレームごとに口を開け閉め
+  const gt = s.start + t;
+  const talking = words.some((w) => gt >= w.start && gt <= w.end);
+  const mouth = talking && Math.floor(f / 4) % 2 === 0 ? ("o" as Mouth) : s.mouth;
   const blink = (f % 75) < 3 && s.eyes !== "happy" && s.eyes !== "squint";
   const eyes = blink ? ("happy" as Eyes) : s.eyes;
   const bob = Math.sin(f / 6) * 6;
-  const close = s.type === "face" || s.type === "eyes";
+  const close = ["face", "eyes", "ots", "silhouette"].includes(s.type);
+  const iris = s.wipe === "iris" ? interpolate(f, [0, 9], [0, 1300], { extrapolateRight: "clamp" }) : 2000;
+  const slideX = s.wipe === "slide" ? interpolate(f, [0, 7], [W, 0], { extrapolateRight: "clamp" }) : 0;
+  const markK = s.mark ? interpolate(f, [len * 0.25, len * 0.55], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
+  const stampK = spring({ frame: f - 6, fps, config: { damping: 9, mass: 0.5 } });
+  const [fx, fy] = s.focus ?? [540, 900];
+  const settle = interpolate(f, [0, 18], [1, 0.15], { extrapolateRight: "clamp" });
+  const lensX = fx + Math.sin(t * 2.2) * 260 * settle, lensY = fy + Math.cos(t * 1.7) * 140 * settle;
+  const det = s.det;
   return (
-    <AbsoluteFill>
-      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ transform: `translateX(${sx}px) scale(${scale})`, transformOrigin: "50% 55%" }}>
+    <AbsoluteFill style={{ transform: `translateX(${slideX}px)` }}>
+      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}
+           style={{ transform: `translate(${sx}px, ${sy}px) scale(${scale}) rotate(${rot}deg)`, transformOrigin: "50% 55%", filter: blurWhip ? `blur(${blurWhip}px)` : undefined }}>
         <Defs />
-        <Backdrop kind={s.bg} blur={close ? 14 : s.type === "insert" ? 18 : 0} />
-        {s.type === "face" && <g transform={`translate(540 ${1080 + bob})`}><Head r={330} eyes={eyes} mouth={s.mouth} rim={s.rim} />
-          <path d="M-330 360 Q0 260 330 360 L380 900 L-380 900 Z" fill={s.color ?? "#2f6fd6"} /></g>}
+        <clipPath id="iris"><circle cx={540} cy={900} r={iris} /></clipPath>
+        <clipPath id="lensClip"><circle cx={lensX} cy={lensY} r={210} /></clipPath>
+        <g clipPath="url(#iris)">
+        <Backdrop kind={s.bg} blur={close ? 14 : s.type === "insert" || s.type === "lens" ? 18 : 0} />
+        {s.type === "face" && <g transform={`translate(540 ${1080 + bob})`}><Head r={330} eyes={eyes} mouth={mouth} rim={s.rim} detective={det} />
+          <path d="M-330 360 Q0 260 330 360 L380 900 L-380 900 Z" fill={s.color ?? "#2f6fd6"} />
+          {det && <path d="M-200 330 L0 520 L200 330 L150 900 L-150 900 Z" fill="#1d3f35" />}</g>}
         {s.type === "eyes" && <g transform="translate(540 960)"><Head r={720} eyes={eyes} mouth="none" rim={s.rim} /></g>}
-        {s.type === "full" && <g transform={`translate(540 ${1560})`}><Body color={s.color} rim={s.rim} eyes={eyes} mouth={s.mouth} /></g>}
-        {s.type === "wide" && <g transform="translate(540 1500) scale(0.55)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={s.mouth} pose="run" step={f / 3} /></g>}
+        {s.type === "full" && <g transform={`translate(540 ${1560})`}><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} detective={det} pose={det ? "lens" : "stand"} /></g>}
+        {s.type === "wide" && <g transform="translate(540 1500) scale(0.55)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={s.mouth} pose="run" step={f / 3} detective={det} /></g>}
         {s.type === "two" && <>
-          <g transform="translate(300 1600) scale(0.95)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={s.mouth} pose="point" /></g>
+          <g transform="translate(300 1600) scale(0.95)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} pose={det ? "lens" : "point"} detective={det} /></g>
           <g transform="translate(800 1620) scale(0.85)"><Body color={s.color2 ?? "#c0392b"} rim="#ffffff" eyes={s.eyes2} mouth={s.mouth2} /></g></>}
-        {s.type === "insert" && s.insert && <Insert kind={s.insert} value={s.value} t={t} />}
+        {s.type === "ots" && <>  {/* 肩越し:手前に主人公の後頭部、奥に相手 */}
+          <g transform="translate(560 1640) scale(0.95)"><Body color={s.color2 ?? "#c0392b"} rim="#ffffff" eyes={s.eyes2} mouth={s.mouth2} /></g>
+          <g transform={`translate(250 ${1500 + bob})`}><circle r={330} fill="#0f0f12" />{det && <g transform="scale(1.65)"><Hat /></g>}
+            <path d="M-360 300 Q0 200 360 300 L420 900 L-420 900 Z" fill={s.color ?? "#2f6fd6"} /></g></>}
+        {s.type === "silhouette" && <>  {/* 逆光のシルエット */}
+          <circle cx={540} cy={900} r={520} fill="#fff4d6" opacity={0.9} />
+          <g transform="translate(540 1560)" style={{ filter: "brightness(0)" }}><Body color={s.color} eyes={eyes} mouth="none" detective={det} pose={det ? "lens" : "stand"} /></g>
+          <g transform="translate(540 1060)"><Eye2 kind={eyes} /></g></>}
+        {(s.type === "insert" || s.type === "lens") && s.insert && <Insert kind={s.insert} value={s.value} t={t} />}
+        {s.type === "lens" && s.insert && <>  {/* 虫めがねでのぞいた部分だけ拡大 */}
+          <g clipPath="url(#lensClip)"><rect width={W} height={H} fill="#fbf7ee" />
+            <g transform={`translate(${lensX} ${lensY}) scale(1.45) translate(${-lensX} ${-lensY})`}><Insert kind={s.insert} value={s.value} t={t} /></g></g>
+          <Lens x={lensX} y={lensY} r={210} rot={-30} /></>}
+        {s.type === "split" && <>  {/* 画面を左右に分けて比べる */}
+          <rect x={0} y={0} width={540} height={H} fill="#1f3b5c" /><rect x={540} y={0} width={540} height={H} fill="#5c1f2b" />
+          <rect x={530} y={0} width={20} height={H} fill="#fff" />
+          <g transform={`translate(270 ${1400 + bob}) scale(0.7)`}><Body color={s.color} eyes={eyes} mouth={s.mouth} detective={det} /></g>
+          <g transform={`translate(810 ${1400 - bob}) scale(0.7)`}><Body color={s.color2 ?? "#c0392b"} rim="#fff" eyes={s.eyes2} mouth={s.mouth2} /></g>
+          <text x={270} y={720} textAnchor="middle" fontSize={96} fontWeight={900} fill="#fff" fontFamily={EN}>{s.left}</text>
+          <text x={810} y={720} textAnchor="middle" fontSize={96} fontWeight={900} fill="#ffd23f" fontFamily={EN}>{s.right}</text></>}
+        {s.mark && <circle cx={s.mark[0]} cy={s.mark[1]} r={s.mark[2]} fill="none" stroke="#ff3b30" strokeWidth={16} strokeLinecap="round"
+          strokeDasharray={2 * Math.PI * s.mark[2]} strokeDashoffset={(1 - markK) * 2 * Math.PI * s.mark[2]} transform={`rotate(-90 ${s.mark[0]} ${s.mark[1]})`} />}
+        </g>
         <rect width={W} height={H} fill="url(#vig)" />
         <rect width={W} height={H} filter="url(#grain)" opacity={0.6} />
+        {snapFlash > 0 && <rect width={W} height={H} fill="#fff" opacity={snapFlash} />}
       </svg>
       {s.hud && (
         <div style={{ position: "absolute", top: 480, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
@@ -54,9 +108,21 @@ const ShotView = ({ s }: { s: Shot }) => {
                         fontSize: 54, letterSpacing: 2, transform: `scale(${0.85 + 0.15 * pop})` }}>{s.hud}</div>
         </div>
       )}
+      {s.stamp && (
+        <div style={{ position: "absolute", top: 560, right: 110, padding: "10px 28px", border: "8px solid #ff3b30", borderRadius: 16, color: "#ff3b30",
+                      fontFamily: EN, fontWeight: 900, fontSize: 64, letterSpacing: 4, background: "rgba(255,244,230,0.92)",
+                      transform: `scale(${2.2 - 1.2 * stampK}) rotate(-12deg)`, opacity: Math.min(1, stampK * 2) }}>{s.stamp}</div>
+      )}
     </AbsoluteFill>
   );
 };
+
+// シルエットの白い目だけ
+const Eye2 = ({ kind }: { kind?: Eyes }) => (
+  <g>{[-50, 50].map((x) => kind === "squint" || kind === "smug"
+    ? <path key={x} d={`M${x - 24} 0 Q${x} -14 ${x + 24} 0`} stroke="#fff" strokeWidth={12} fill="none" strokeLinecap="round" />
+    : <ellipse key={x} cx={x} cy={0} rx={18} ry={22} fill="#fff" />)}</g>
+);
 
 // 1〜3語ずつの字幕(ナレーションの単語のタイミングに合わせる)
 const Captions = ({ words, offset }: { words: Word[]; offset: number }) => {
@@ -85,7 +151,7 @@ export const IfShort = (p: IfProps) => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#0d0f18" }}>
       <Sequence durationInFrames={fr(p.intro)}><Intro p={p} /><Audio src={staticFile(p.tick)} /></Sequence>
-      {p.shots.map((s, i) => <Sequence key={i} from={fr(s.start)} durationInFrames={fr(s.dur)}><ShotView s={s} /></Sequence>)}
+      {p.shots.map((s, i) => <Sequence key={i} from={fr(s.start)} durationInFrames={fr(s.dur)}><ShotView s={s} words={p.words} /></Sequence>)}
       <Sequence from={fr(p.intro)} durationInFrames={fr(p.choiceAt - p.intro)}>
         <div style={{ position: "absolute", top: 220, left: 110, right: 110, padding: "16px 22px", borderRadius: 28, background: "rgba(224,83,60,0.94)", color: "white", textAlign: "center",
                       boxShadow: "0 10px 30px rgba(0,0,0,0.35)" }}>
