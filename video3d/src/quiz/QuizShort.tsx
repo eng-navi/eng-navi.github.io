@@ -10,7 +10,7 @@ export type QuizProps = { q: string; q_ja: string; choices: string[]; answer: nu
                           intro: number; scenes: Scene[]; choiceAt: number; answerAt: number; total: number; tick: string; bgm: string };
 
 const W = 1080;
-const JP = "'Hiragino Maru Gothic ProN', 'Hiragino Sans', sans-serif";
+export const JP = "'Hiragino Maru Gothic ProN', 'Hiragino Sans', sans-serif";
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
 
 const BG = { office: Office, bedroom: Bedroom, lab: Lab };
@@ -64,7 +64,7 @@ export const Intro = ({ p }: { p: QuizProps }) => {
   const pop = spring({ frame: f % fps, fps, config: { damping: 9 } });
   return (
     <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 40%, #2b3160, #12142a)", alignItems: "center" }}>
-      <div style={{ marginTop: 300, fontFamily: JP, fontSize: 54, color: "#f2b33d", fontWeight: 800, letterSpacing: 4 }}>LISTENING QUIZ</div>
+      <div style={{ marginTop: 300, fontFamily: JP, fontSize: 54, color: "#f2b33d", fontWeight: 800, letterSpacing: 4 }}>リスニングクイズ</div>
       <svg width={420} height={420} viewBox="-210 -210 420 420" style={{ marginTop: 50 }}>
         <circle r={180} fill="#fffaf0" stroke="#f2b33d" strokeWidth={16} />
         {[...Array(12)].map((_, i) => <line key={i} x1={0} y1={-150} x2={0} y2={-165} stroke="#1d1d22" strokeWidth={8} transform={`rotate(${i * 30})`} />)}
@@ -72,9 +72,9 @@ export const Intro = ({ p }: { p: QuizProps }) => {
         <line x1={0} y1={0} x2={0} y2={-140} stroke="#e0533c" strokeWidth={10} strokeLinecap="round" transform={`rotate(${a})`} />
         <text y={45} textAnchor="middle" fontSize={150 * (0.8 + 0.2 * pop)} fontWeight={900} fontFamily={EN} fill="#1d1d22">{n}</text>
       </svg>
-      <div style={{ marginTop: 70, width: 920, padding: "36px 40px", borderRadius: 40, background: "#e0533c", textAlign: "center" }}>
-        <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 58, color: "white", lineHeight: 1.25 }}>Q. {p.q}</div>
-        <div style={{ fontFamily: JP, fontSize: 40, color: "#ffe6df", marginTop: 14 }}>{p.q_ja}</div>
+      <div style={{ marginTop: 70, width: 820, padding: "36px 40px", borderRadius: 40, background: "#e0533c", textAlign: "center" }}>
+        <div style={{ fontFamily: JP, fontWeight: 800, fontSize: 56, color: "white", lineHeight: 1.35, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
+        <div style={{ fontFamily: EN, fontWeight: 700, fontSize: 34, color: "#ffe6df", marginTop: 14 }}>{p.q}</div>
       </div>
       <div style={{ marginTop: 60, fontFamily: JP, fontSize: 38, color: "#c9cbe6" }}>全文と和訳はコメント欄にあります</div>
     </AbsoluteFill>
@@ -135,15 +135,15 @@ export const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
   const pulse = 1 + Math.sin(f / 4) * 0.03;
   return (
     <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 30%, #333a73, #0f1124)", alignItems: "center" }}>
-      <div style={{ marginTop: 280, width: 940, padding: "30px 34px", borderRadius: 34, background: "#e0533c", textAlign: "center",
-                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: EN, fontWeight: 800, fontSize: 50, color: "white" }}>Q. {p.q}
-        <div style={{ fontFamily: JP, fontWeight: 600, fontSize: 36, color: "#ffe6df", marginTop: 12 }}>{p.q_ja}</div></div>
+      <div style={{ marginTop: 280, width: 820, padding: "30px 34px", borderRadius: 34, background: "#e0533c", textAlign: "center",
+                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: JP, fontWeight: 800, fontSize: 50, color: "white", lineHeight: 1.35, whiteSpace: "pre-line" }}>Q. {p.q_ja}
+        <div style={{ fontFamily: EN, fontWeight: 700, fontSize: 32, color: "#ffe6df", marginTop: 12 }}>{p.q}</div></div>
       {p.choices.map((c, i) => {
         const slide = spring({ frame: f - i * 5, fps, config: { damping: 14 } });
         return (
-          <div key={i} style={{ marginTop: 50, width: 920, padding: "40px 44px", borderRadius: 36, display: "flex", gap: 30, alignItems: "center",
+          <div key={i} style={{ marginTop: 50, width: 820, padding: "36px 40px", borderRadius: 36, display: "flex", gap: 30, alignItems: "center",
                                 background: "linear-gradient(180deg, #fffdf7, #f1e9d8)", boxShadow: "0 12px 30px rgba(0,0,0,0.35)",
-                                transform: `translateX(${(1 - (end ? 1 : slide)) * 400}px)`, fontFamily: EN, fontWeight: 800, fontSize: 52, color: "#1d1d22" }}>
+                                transform: `translateX(${(1 - (end ? 1 : slide)) * 400}px)`, fontFamily: EN, fontWeight: 800, fontSize: 46, color: "#1d1d22" }}>
             <span style={{ fontSize: 70, fontWeight: 900, color: "#e0533c" }}>{"AB"[i]}</span>{c}
           </div>
         );

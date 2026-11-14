@@ -36,7 +36,7 @@ INTRO, CHOICE, END = 3.0, 4.2, 2.4
 SHORTS = {
     "compound": dict(
         voice="nPczCjzI2devNBz1zQrb",  # Brian
-        q="Why does Sam's money grow so fast?", q_ja="サムのお金が、どんどん増えるのはなぜ?",
+        q="Why does Sam's money grow so fast?", q_ja="サムのお金が、\nどんどん増えるのはなぜ?",
         choices=["He won the lottery.", "His interest earns interest."], answer=2,
         hl=["doubled", "interest", "compound", "nobody", "laughing"],
         shots=[
@@ -162,7 +162,7 @@ def build(name):
     subprocess.run(["npx", "remotion", "render", "src/index.ts", "IfShort", str(out), f"--props={pf}"], cwd=V3D, check=True,
                    stdout=subprocess.DEVNULL)
     sp = "　"
-    txt = ["--------------------------------------", f"Q. {sc['q']}", f"({sc['q_ja']})", sp,
+    txt = ["--------------------------------------", f"Q. {sc['q']}", f"({sc['q_ja'].replace(chr(10), '')})", sp,
            f"答え:{'AB'[sc['answer'] - 1]} {sc['choices'][sc['answer'] - 1]}", sp]
     for ln, ja in zip(lines, sc["ja"]):
         txt += [ln, ja, sp]

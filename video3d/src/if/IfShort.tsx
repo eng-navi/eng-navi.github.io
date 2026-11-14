@@ -1,5 +1,5 @@
 import { AbsoluteFill, Audio, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { Choices, Intro, QuizProps } from "../quiz/QuizShort";
+import { Choices, Intro, JP, QuizProps } from "../quiz/QuizShort";
 import { Body, Eyes, Head, Mouth } from "./Face";
 import { Backdrop, Defs, Insert } from "./Sets";
 
@@ -71,7 +71,7 @@ const Captions = ({ words, offset }: { words: Word[]; offset: number }) => {
   if (!g) return null;
   const k = spring({ frame: Math.round((t - g[0].start) * fps), fps, config: { damping: 12 } });
   return (
-    <div style={{ position: "absolute", bottom: 380, left: 40, right: 40, textAlign: "center", fontFamily: EN, fontWeight: 900, fontSize: 92,
+    <div style={{ position: "absolute", bottom: 380, left: 140, right: 140, textAlign: "center", fontFamily: EN, fontWeight: 900, fontSize: 76,
                   textTransform: "uppercase", lineHeight: 1.1, WebkitTextStroke: "4px #0b0b10", textShadow: "0 8px 20px rgba(0,0,0,0.6)",
                   transform: `scale(${0.85 + 0.15 * k})` }}>
       {g.map((w, i) => <span key={i} style={{ color: w.hl ? "#f2c14a" : "white" }}>{w.text} </span>)}
@@ -87,8 +87,9 @@ export const IfShort = (p: IfProps) => {
       <Sequence durationInFrames={fr(p.intro)}><Intro p={p} /><Audio src={staticFile(p.tick)} /></Sequence>
       {p.shots.map((s, i) => <Sequence key={i} from={fr(s.start)} durationInFrames={fr(s.dur)}><ShotView s={s} /></Sequence>)}
       <Sequence from={fr(p.intro)} durationInFrames={fr(p.choiceAt - p.intro)}>
-        <div style={{ position: "absolute", top: 230, left: 60, right: 60, padding: "16px 26px", borderRadius: 28, background: "rgba(224,83,60,0.92)",
-                      fontFamily: EN, fontWeight: 800, fontSize: 38, color: "white", textAlign: "center" }}>Q. {p.q}</div>
+        <div style={{ position: "absolute", top: 230, left: 130, right: 130, padding: "16px 26px", borderRadius: 28, background: "rgba(224,83,60,0.92)", color: "white", textAlign: "center" }}>
+          <div style={{ fontFamily: JP, fontWeight: 800, fontSize: 40, whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
+          <div style={{ fontFamily: EN, fontWeight: 700, fontSize: 26, color: "#ffe6df", marginTop: 6 }}>{p.q}</div></div>
         <Captions words={p.words} offset={0} />
         <Audio src={staticFile(p.story)} />
       </Sequence>
