@@ -196,7 +196,7 @@ SHORTS.update({
 })
 
 # ---- やさしい英語の科学クイズ(別アカウント)。英検3級〜準2級の単語、ゆっくり(0.7倍+文のあいだに0.7秒、約105語/分)、短い2〜3文で15秒前後。声は Sarah(アメリカ英語・女性)、博士のキャラ ----
-SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", speed=0.7, gap=0.7, bgm="just-flow", kicker="やさしい英語の", title="科学クイズ", jaHints=True,
+SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", speed=0.7, gap=0.7, bgm="cycles", kicker="やさしい英語の", title="科学クイズ", jaHints=True,
            intro=1.5, choice=3.2, end=1.4, endText="答えはコメント欄で👇", bg1="#1b4f7a", bg2="#0a1624")
 SHORTS.update({
     "sci001_strawberry": dict(SCI, no="#001", mystery="strawberry",
@@ -211,7 +211,7 @@ SHORTS.update({
         ja=["赤い。", "甘い。", "種が外側についている!"],
         gloss=["sweet:甘い", "seed:種", "outside:外側"],
         hook="これ、なんだかわかる?🔍", tags="#英語リスニング #やさしい英語 #科学クイズ"),
-    "sci002_sky": dict(SCI, no="#002", mystery="prism",
+    "sci002_sky": dict(SCI, no="#002", mystery="prism", bgm="vapour",
         q="Why is the sky blue?", q_ja="空が青いのはなぜ?",
         choices=["Sunlight is only blue.", "Blue light bounces around the most."], answer=2, answer_ja="青い光が、いちばんあちこちに跳ね返るから。",
         hl=["sunlight", "colors", "spreads", "looks"],
@@ -310,7 +310,8 @@ def comment(sc):
 
 MUSICS = {"the-waves": "The Waves / Otto.mp3", "just-flow": "Just Flow / Hartzmann", "lefty": "Lefty / Blue Wednesday",
           "tokyo-spring": "Tokyo Spring (wooll Remix) / Yawnathan", "darkside": "Darkside / Oliver Michael",
-          "to-the-moon": "To The Moon / 21 On The Block", "funk-formula": "Funk Formula / Nick Petrov"}
+          "to-the-moon": "To The Moon / 21 On The Block", "funk-formula": "Funk Formula / Nick Petrov",
+          "cycles": "Cycles / DADA", "tunnel": "Tunnel / Danijel Zambo", "vapour": "Vapour / Simon Folwar"}  # 下3つは assets/bgm/(公開しない)
 MUSIC = "Music: The Waves / Otto.mp3 — Music from #Uppbeat (free for Creators!)"
 
 
@@ -393,7 +394,8 @@ def build(name):
     bgm_id = sc.get("bgm", "the-waves")  # docs/bgm/<id>.mp3。クレジットは MUSICS
     bgm = PUB / f"bgm_{bgm_id}.mp3"
     if not bgm.exists():
-        bgm.write_bytes((ROOT / "docs" / "bgm" / f"{bgm_id}.mp3").read_bytes())
+        src = ROOT / "docs" / "bgm" / f"{bgm_id}.mp3"
+        bgm.write_bytes((src if src.exists() else ROOT / "assets" / "bgm" / f"{bgm_id}.mp3").read_bytes())
     tick = PUB / "tick.wav"
     sf.write(tick, np.zeros(int(SR * 0.1), np.float32), SR)  # 時計の音は sfx に入れたので無音
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
