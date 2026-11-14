@@ -179,8 +179,19 @@ def archive_items(kind):
     return [it for v in sorted(d[kind].values(), key=lambda v: v["date"]) for it in v.get("items", [])]
 
 
+def reel5_post(item):
+    """25秒リスニングクイズのリール(manga_posted.json)に出てくる単語の5選。リールへのリンクは返信に"""
+    log = json.loads((ROOT / "manga_posted.json").read_text())
+    link = log.get(item["reel"], {}).get("permalink")
+    if not link:
+        return None  # リールがまだ投稿されていない
+    return [(item["head"], {}), f"この5語が全部入った25秒リスニング、聞き取れる?🎧\n2択クイズで腕試し👇\n{link}"]
+
+
 def extra_posts(item):
-    kind, idx = item["kind"], item["idx"]
+    kind, idx = item["kind"], item.get("idx", 0)
+    if kind == "reel5":
+        return reel5_post(item)
     if kind.startswith("list5_"):
         return list5_posts(kind[6:], idx)
     if kind == "quote":
@@ -312,7 +323,8 @@ def run():
                   and datetime.fromisoformat(v["posted_at"]) + DELAY <= now), key=lambda k: ig[k]["posted_at"])
     if not due:  # Instagram の回がなければ、アーカイブの予約を見る
         q = [x for x in mp.load(QUEUE, []) if x["key"] not in done
-             and datetime.strptime(x["at"], "%Y-%m-%d %H:%M").replace(tzinfo=th.JST) <= now]
+             and datetime.strptime(x["at"], "%Y-%m-%d %H:%M").replace(tzinfo=th.JST) <= now
+             and (x["kind"] != "reel5" or reel5_post(x))]
         if not q:
             print("時間になった quizify の Threads はありません")
             return

@@ -312,6 +312,13 @@
     "idx": 10
   },
   {
+    "key": "reel5_compound",
+    "at": "2026-11-14 19:45",
+    "kind": "reel5",
+    "reel": "if_compound",
+    "head": "25秒の英語に出てくる\n英検2級〜1級レベル「お金の英単語」5選💰\n\n① colleague … 同僚\n② ridicule … あざ笑う\n③ astonishing … 驚くべき\n④ generate … 生み出す\n⑤ economist … 経済学者\n\n全部わかった人は上級者👏"
+  },
+  {
     "key": "v4_list5_black_17",
     "at": "2026-11-14 21:00",
     "kind": "list5_black",
@@ -324,10 +331,24 @@
     "idx": 18
   },
   {
+    "key": "reel5_spotlight",
+    "at": "2026-11-15 09:30",
+    "kind": "reel5",
+    "reel": "if_spotlight",
+    "head": "25秒の英語に出てくる\n英検2級〜1級レベル「心理学の英単語」5選🧠\n\n① crimson … 真っ赤な\n② embarrassment … 恥ずかしさ\n③ hardly … ほとんど〜ない\n④ overestimate … 過大評価する\n⑤ observe … 観察する\n\n全部わかった人は上級者👏"
+  },
+  {
     "key": "v4_list5_white_11",
     "at": "2026-11-15 12:00",
     "kind": "list5_white",
     "idx": 11
+  },
+  {
+    "key": "reel5_sleep",
+    "at": "2026-11-15 15:30",
+    "kind": "reel5",
+    "reel": "if_sleep",
+    "head": "25秒の英語に出てくる\n英検2級〜1級レベル「科学の英単語」5選🔬\n\n① cram … 詰め込み勉強をする\n② consolidate … 強化する、定着させる\n③ neuron … 神経細胞\n④ outperform … 〜より良い成績をあげる\n⑤ retain … 保持する\n\n全部わかった人は上級者👏"
   },
   {
     "key": "v4_list5_listening_11",
