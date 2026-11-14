@@ -172,6 +172,27 @@ SHORTS.update({
         grammar=["No sooner had A 過去分詞 than B 過去形", "「AするとすぐにB」。No sooner が文頭に来るので、had he done のように語順が入れ替わる(倒置)。",
                  "No sooner had he done so than tips rose.(そうするとすぐに、チップが増えた)"],
         hook="ミントを1つ配っただけで、チップが増えた?🍬", tags="#英語リスニング #心理学 #謎解き"),
+    "case03_foot": dict(IVY, caseNo="CASE #03",
+        q="Why did the homeowners finally say yes?", q_ja="住人たちが最後に\nOKしたのはなぜ?",
+        choices=["The tiny sticker was a modest gift.", "A small yes made the big yes easier."], answer=2,
+        answer_ja="小さなお願いにOKしたことで、大きなお願いにもOKしやすくなったから。",
+        hl=["lawn", "flatly", "modest", "favor", "complied", "commit", "strive", "consistent"],
+        shots=[
+            ("Would you allow an ugly sign on your lawn?", dict(type="face", bg="dark", det=True, color="#2d6a4f", eyes="smug", mouth="smile", cam="whip")),
+            ("Most homeowners flatly refused.", dict(type="two", bg="street", det=True, color="#2d6a4f", eyes="worried", mouth="flat", eyes2="angry", mouth2="flat", hud="YES 17%", cam="pan")),
+            ("So I began with a modest favor: a tiny sticker.", dict(type="lens", bg="street", insert="card", value="DRIVE SAFELY", focus=[540, 1010], wipe="slide")),
+            ("Two weeks later, I asked for the sign.", dict(type="insert", bg="dark", insert="clock", value="2 WEEKS", cam="rise")),
+            ("This time, most of them complied!", dict(type="split", bg="dark", left="17%", right="76%", eyes="worried", mouth="flat", eyes2="happy", mouth2="grin", cam="snap")),
+            ("Once we commit, we strive to stay consistent.", dict(type="ots", bg="street", det=True, color="#2d6a4f", eyes2="normal", mouth2="smile", cam="tilt", mark=[560, 1140, 170])),
+            ("The foot-in-the-door technique. Case closed.", dict(type="silhouette", bg="dark", det=True, eyes="smug", wipe="iris", stamp="SOLVED")),
+        ],
+        ja=["芝生に、見苦しい看板を置かせてくれる?", "ほとんどの住人は、きっぱり断った。", "そこで私は、ささやかなお願いから始めた。小さなシールだ。",
+            "2週間後、看板をお願いした。", "今度は、ほとんどの人が応じた!", "いったん引き受けると、私たちは一貫した態度でいようと努める。", "「フット・イン・ザ・ドア」の手法。事件解決。"],
+        gloss=["lawn:芝生", "homeowner:家主、住人", "flatly:きっぱりと", "modest:ささやかな", "favor:お願い", "comply:応じる、従う",
+               "commit:(約束して)関わる", "strive:努力する", "consistent:一貫した", "technique:手法"],
+        grammar=["Once + 主語 + 動詞, 〜", "「いったん〜すると」。once は「一度」のほかに、接続詞として「いったん〜すると」の意味になる。",
+                 "Once we commit, we strive to stay consistent.(いったん引き受けると、一貫していようと努める)"],
+        hook="小さなシール1枚で、OKが4倍に?🏠", tags="#英語リスニング #心理学 #謎解き"),
 })
 
 
