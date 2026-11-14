@@ -30,6 +30,15 @@ jobs:
           MANGA_IG_USER_ID: ${{ secrets.MANGA_IG_USER_ID }}
           MANGA_IG_ACCESS_TOKEN: ${{ secrets.MANGA_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: 名探偵アイビー(@vocab_flicks)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 ivy_post.py run
+        env:
+          IVY_IG_USER_ID: ${{ secrets.IVY_IG_USER_ID }}
+          IVY_IG_ACCESS_TOKEN: ${{ secrets.IVY_IG_ACCESS_TOKEN }}
+          SITE_URL: https://eng-navi.github.io
       - name: quizify(@quizify_english)
         if: always()
         run: |
