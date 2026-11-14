@@ -131,12 +131,13 @@ const Story = ({ p, s }: { p: QuizProps; s: Scene }) => {
 const Choices = ({ p, end }: { p: QuizProps; end: boolean }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const left = Math.max(0, 3 - Math.floor(f / fps));
+  const left = Math.max(0, 4 - Math.floor(f / fps));
   const pulse = 1 + Math.sin(f / 4) * 0.03;
   return (
     <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 30%, #333a73, #0f1124)", alignItems: "center" }}>
       <div style={{ marginTop: 280, width: 940, padding: "30px 34px", borderRadius: 34, background: "#e0533c", textAlign: "center",
-                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: EN, fontWeight: 800, fontSize: 50, color: "white" }}>Q. {p.q}</div>
+                    boxShadow: "0 14px 40px rgba(0,0,0,0.45)", fontFamily: EN, fontWeight: 800, fontSize: 50, color: "white" }}>Q. {p.q}
+        <div style={{ fontFamily: JP, fontWeight: 600, fontSize: 36, color: "#ffe6df", marginTop: 12 }}>{p.q_ja}</div></div>
       {p.choices.map((c, i) => {
         const slide = spring({ frame: f - i * 5, fps, config: { damping: 14 } });
         return (

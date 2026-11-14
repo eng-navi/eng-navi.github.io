@@ -21,7 +21,7 @@ V3D = ROOT / "video3d"
 PUB = V3D / "public" / "qs"
 OUT = ROOT / "out" / "quiz_short"
 VOICE, SPEED = "nPczCjzI2devNBz1zQrb", 1.0  # Brian(アメリカ英語・男性)。回ごとに変えてもよい
-INTRO, GAP, CHOICE, ANSWER = 3.0, 0.35, 3.4, 2.4
+INTRO, GAP, CHOICE, ANSWER = 3.0, 0.35, 4.2, 2.4  # 選択肢は4秒(4・3・2・1)
 
 SHORTS = {
     "zeigarnik": dict(
@@ -46,8 +46,8 @@ def tick_track(path):
     sr = 44100
     t = np.arange(int(sr * 0.06)) / sr
     click = (0.25 * np.sin(2 * np.pi * 1400 * t) * np.exp(-t * 60)).astype(np.float32)
-    out = np.zeros(int(sr * 3.0), np.float32)
-    for s in (0.0, 1.0, 2.0):
+    out = np.zeros(int(sr * 4.0), np.float32)
+    for s in (0.0, 1.0, 2.0, 3.0):
         out[int(s * sr):int(s * sr) + len(click)] += click
     sf.write(path, out, sr)
 
