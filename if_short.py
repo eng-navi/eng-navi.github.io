@@ -51,6 +51,7 @@ SHORTS = {
         voice="nPczCjzI2devNBz1zQrb",  # Brian
         q="Why did Sam's savings grow so rapidly?", q_ja="サムの貯金が、\nなぜ急に増えたの?",
         choices=["His colleagues invested in him.", "His gains kept producing new gains."], answer=2,
+        answer_ja="利益が、次々と新しい利益を生み続けたから。", hook="貯金が毎日2倍になったら…?💰",
         hl=["savings", "deposit", "modest", "colleagues", "ridicule", "astonishing", "generate", "economists"],
         shots=[
             ("What if your savings doubled daily?", dict(type="face", bg="room", eyes="shock", mouth="o", hud="DAY 1 · $1")),
@@ -71,6 +72,7 @@ SHORTS = {
         voice="pFZP5JQG7iQjIQuC4Bku",  # Lily
         q="Why was Emma's worry unnecessary?", q_ja="エマの心配が\nいらなかったのはなぜ?",
         choices=["People notice us far less than we assume.", "Everyone was staring at her coffee."], answer=1,
+        answer_ja="人は、私たちが思うほど他人を見ていないから。", hook="服にコーヒーをこぼしたら、みんな見てる…?☕",
         hl=["spills", "convinced", "staring", "crimson", "embarrassment", "hardly", "vastly", "overestimate", "observe"],
         shots=[
             ("Emma spills coffee on her shirt.", dict(type="full", bg="office", eyes="shock", mouth="o", color="#d6457a", sfx="gasp")),
@@ -89,6 +91,7 @@ SHORTS = {
         voice="nPczCjzI2devNBz1zQrb",
         q="What finally helped Ken start exercising?", q_ja="ケンが運動を\n始められたのはなぜ?",
         choices=["He spent thirty minutes at the gym.", "He made the first step ridiculously small."], answer=2,
+        answer_ja="最初の一歩を、ばかばかしいほど小さくしたから。", hook="運動が続かない人、これ試して🏃",
         hl=["procrastinates", "daunting", "threshold", "trivial", "momentum", "consistency", "intensity"],
         shots=[
             ("Ken always procrastinates on exercise.", dict(type="full", bg="room", eyes="squint", mouth="flat")),
@@ -107,6 +110,7 @@ SHORTS = {
         voice="pFZP5JQG7iQjIQuC4Bku",
         q="Why did Ana get a better score?", q_ja="アナのほうが\n点数が高かったのはなぜ?",
         choices=["Her brain kept learning while she rested.", "She stayed up all night reviewing."], answer=1,
+        answer_ja="休んでいるあいだも、脳が学び続けていたから。", hook="徹夜 vs 早寝、点数が高いのはどっち?😴",
         hl=["cram", "consolidates", "neurons", "outperforms", "idle", "retain"],
         shots=[
             ("Two students cram for the same exam.", dict(type="two", bg="room", eyes="worried", mouth="flat", eyes2="normal", mouth2="smile", color2="#d6457a")),
@@ -193,7 +197,7 @@ def comment(sc):
     sp = "\u3000"
     left = list(sc["gloss"])
     out = [f"Q. {sc['q_ja'].replace(chr(10), '')}", sc["q"], sp,
-           f"答え:{'AB'[sc['answer'] - 1]}「{sc['choices'][sc['answer'] - 1]}」", sp, "【全文と和訳】", sp]
+           f"答え:{'AB'[sc['answer'] - 1]}「{sc['choices'][sc['answer'] - 1]}」", f"({sc['answer_ja']})", sp, "【全文と和訳】", sp]
     for k, ((ln, _), ja) in enumerate(zip(sc["shots"], sc["ja"])):
         low = ln.lower()
         mine = [g for g in left if g.split(":")[0].split()[0].lower()[:5] in low][:3]
@@ -201,6 +205,15 @@ def comment(sc):
         out += [f"{'①②③④⑤⑥⑦⑧⑨⑩'[k]} {ln}", ja] + [f"　▶ {g.replace(':', ' … ', 1)}" for g in mine] + [sp]
     out += ["🎧 わからなかった単語は保存して、もう一度聞いてみてね", sp, sc["tags"]]
     return "\n".join(out) + "\n"
+
+
+MUSIC = "Music: The Waves / Otto.mp3 — Music from #Uppbeat (free for Creators!)"
+
+
+def caption(sc):
+    sp = "\u3000"
+    return "\n".join([sc["hook"], sp, "🎧 25秒の英語、聞き取れる?", "AとBどっち?コメントで答えてね👇",
+                      "正解・全文和訳・単語の意味はコメント欄に📌", sp, sc["tags"], sp, MUSIC])
 
 
 def build(name):

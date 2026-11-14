@@ -1,6 +1,7 @@
 """4コマのアカウント(@yonkoma_eigo)にリールを予約投稿する。予約表は manga_schedule.json(日本時間)。
 
     python3 manga_post.py add company_cafeteria "2026-10-26 19:00"   # 動画を公開して予約に追加(Mac で実行)
+    python3 manga_post.py addif compound "2026-11-14 19:00"   # 25秒リスニングクイズ(if_short.py)を予約
     python3 manga_post.py list
     python3 manga_post.py run       # 時間になった予約を投稿(GitHub Actions が15分おきに実行)
 
@@ -58,6 +59,24 @@ def add(key, at, caption):
     print(f"✓ {key} を {at} に予約しました")
 
 
+def add_if(name, at):
+    """if_short.py の動画(25秒リスニングクイズ)を予約に追加。投稿後に正解・和訳のコメントを付ける"""
+    import if_short
+    sc = if_short.SHORTS[name]
+    src = ROOT / "out" / "if_short" / f"{name}.mp4"
+    if not src.exists():
+        sys.exit(f"{src} がありません(if_short.py で作ってください)")
+    key = f"if_{name}"
+    dst = ROOT / "docs" / "manga" / f"{key}_reel.mp4"
+    shutil.copy(src, dst)
+    items = [s for s in load(SCHEDULE, []) if s["key"] != key]
+    items.append({"key": key, "at": at, "caption": if_short.caption(sc), "comment": if_short.comment(sc)})
+    items.sort(key=lambda s: s["at"])
+    SCHEDULE.write_text(json.dumps(items, ensure_ascii=False, indent=2) + "\n")
+    push([str(dst), str(SCHEDULE)], f"リスニングクイズ {key} を {at} に予約")
+    print(f"✓ {key} を {at} に予約しました")
+
+
 PAGE_NOTE = "🔊 セリフを何回でも聞ける音声ページは、プロフィールのリンクから"
 
 
@@ -86,6 +105,11 @@ def publish(item):
                  caption=post.keep_blank_lines(with_page_note(item)), share_to_feed="true")["id"]
     post.wait_until_ready(c)
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
+    if item.get("comment"):
+        try:
+            post.api("POST", f"{mid}/comments", message=post.keep_blank_lines(item["comment"]))
+        except Exception as e:
+            print(f"コメントを付けられませんでした: {e}")
     story = post.post_story(url)
     link = post.api("GET", mid, fields="permalink").get("permalink")
     log = load(LOG, {})
@@ -114,6 +138,8 @@ def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "list"
     if cmd == "add":
         add(sys.argv[2], sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else sys.stdin.read())
+    elif cmd == "addif":
+        add_if(sys.argv[2], sys.argv[3])
     elif cmd == "run":
         run()
     else:
