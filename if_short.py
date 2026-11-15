@@ -1439,7 +1439,7 @@ SHORTS.update({
 
 # ==== お金×テックの英語(Vox 風コラージュ、別アカウント予定、out/vox_short)====
 # 人物は似顔絵(写真は使わない)。人物の回と、お金の宣伝(アフィリエイト)は同じ回に入れない。投資の助言はしない
-VOX = dict(POL, account="vox", voice="TX3LPaxmHKxFdv7VOQHJ", hook_voice="4lOQ7A2l7HPuG7UIHiKA", mystery="collage", bgm="cycles",
+VOX = dict(POL, account="vox", voice="TX3LPaxmHKxFdv7VOQHJ", hook_voice="4lOQ7A2l7HPuG7UIHiKA", mystery="collage", bgm="cycles", capBand=True, speed=0.85, stretch=1.0, gap=0.35,
            bg1="#3b3129", bg2="#120e0b")
 SHORTS.update({
     "vox001_amazon": dict(VOX, no="#001", cover=1, hint="👂ヒント:3文目に注目",
@@ -1449,7 +1449,7 @@ SHORTS.update({
         answer_ja="本は、どんなお店にも置ききれないほど種類が多かったから。",
         hl=["quit", "Wall", "garage", "titles", "offer"],
         shots=[
-            ("In 1994, Jeff Bezos quit his Wall Street job.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+            ("In 1994, Jeff Bezos quit his Wall Street job.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
                 {"kind": "person", "who": "bezos", "x": 400, "y": 820, "w": 440, "rot": -5}, {"kind": "label", "text": "1994", "x": 780, "y": 560, "w": 300, "rot": 4},
                 {"kind": "money", "x": 760, "y": 1260, "w": 280, "rot": 10}, {"kind": "stamp", "text": "QUIT", "x": 700, "y": 980, "w": 260, "rot": -14}]})),
             ("He started Amazon in his garage, selling books.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
@@ -1458,7 +1458,7 @@ SHORTS.update({
             ("Why books? No store could hold millions of titles.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
                 {"kind": "books", "x": 300, "y": 700, "w": 300, "rot": -9}, {"kind": "books", "x": 760, "y": 760, "w": 300, "rot": 8}, {"kind": "books", "x": 540, "y": 1120, "w": 340, "rot": -3},
                 {"kind": "label", "text": "MILLIONS OF TITLES", "x": 540, "y": 1460, "w": 720, "rot": -2}]})),
-            ("An online store could offer them all.", dict(type="collage", bg="dark", collage={"bg": "gray", "items": [
+            ("An online store could offer them all.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
                 {"kind": "box", "text": "BOOKS", "x": 380, "y": 820, "w": 400, "rot": -6}, {"kind": "chart", "text": "ONLINE", "x": 740, "y": 1180, "w": 400, "rot": 6},
                 {"kind": "stamp", "text": "ALL OF THEM", "x": 560, "y": 1500, "w": 520, "rot": -8}]})),
         ],
@@ -1473,7 +1473,7 @@ SHORTS.update({
         answer_ja="株を売ると税金がかかるが、借りればかからないから。",
         hl=["stock", "cash", "taxes", "borrow", "collateral", "income"],
         shots=[
-            ("Many billionaires own lots of stock, but little cash.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
+            ("Many billionaires own lots of stock, but little cash.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
                 {"kind": "figure", "x": 360, "y": 860, "w": 420}, {"kind": "chart", "text": "STOCK", "x": 760, "y": 720, "w": 380, "rot": 6},
                 {"kind": "coin", "x": 760, "y": 1220, "w": 160}, {"kind": "label", "text": "LITTLE CASH", "x": 640, "y": 1440, "w": 480, "rot": -3}]})),
             ("Selling stock would mean paying big taxes.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
@@ -1483,7 +1483,7 @@ SHORTS.update({
                 {"kind": "bank", "x": 360, "y": 760, "w": 420, "rot": -4}, {"kind": "money", "x": 760, "y": 820, "w": 300, "rot": 9},
                 {"kind": "doc", "text": "LOAN", "x": 560, "y": 1260, "w": 380, "rot": -3}, {"kind": "arrow", "x": 520, "y": 820, "x2": 640, "y2": 820},
                 {"kind": "label", "text": "COLLATERAL", "x": 540, "y": 1580, "w": 520, "rot": 2}]})),
-            ("Loans aren't income, so they aren't taxed.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
+            ("Loans aren't income, so they aren't taxed.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "dark", "items": [
                 {"kind": "doc", "text": "LOAN", "x": 380, "y": 860, "w": 360, "rot": -6}, {"kind": "figure", "x": 760, "y": 900, "w": 380},
                 {"kind": "stamp", "text": "NO TAX", "x": 560, "y": 1360, "w": 400, "rot": -10}]})),
         ],
@@ -1707,7 +1707,7 @@ def build(name):
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
-                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "mysteryCollage", "jaHints", "hint", "karaoke") if k in sc})
+                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "mysteryCollage", "jaHints", "hint", "karaoke", "capBand") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"

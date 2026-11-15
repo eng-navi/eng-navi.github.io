@@ -12,7 +12,7 @@ export type CItem = {
   x: number; y: number; w?: number; rot?: number; at?: number;  // at:出てくるまでのフレーム数
   text?: string; who?: string; color?: string; x2?: number; y2?: number;
 };
-export type CollageSpec = { bg?: "grid" | "parchment" | "gray"; items: CItem[]; push?: number };
+export type CollageSpec = { bg?: "grid" | "parchment" | "gray" | "dark"; items: CItem[]; push?: number };
 
 const ease = (x: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
 const pop = (x: number) => (x <= 0 ? 0 : x >= 1 ? 1 : 1 + 2.2 * Math.pow(x - 1, 3) + 1.2 * Math.pow(x - 1, 2));
@@ -102,7 +102,8 @@ const Item = ({ it, k }: { it: CItem; k: number }) => {
 export const CollageView = ({ c, f }: { c: CollageSpec; f: number }) => {
   const { fps } = useVideoConfig();
   const still = fps < 5;  // カバー画像(1秒1コマ)では全部出した状態で描く
-  const zoom = 1 + (c.push ?? 0.06) * Math.min(1, f / 90);
+  const zoom = 1 + (c.push ?? 0.08) * Math.min(1, f / 90);
+  const panX = still ? 0 : Math.sin(f / 70) * 18;  // ゆっくり横に流れる
   const bg = c.bg ?? "grid";
   return (
     <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute" }}>
@@ -113,26 +114,33 @@ export const CollageView = ({ c, f }: { c: CollageSpec; f: number }) => {
         <marker id="cah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d62828" /></marker>
         <linearGradient id="ray" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff" stopOpacity={0.35} /><stop offset="1" stopColor="#fff" stopOpacity={0} /></linearGradient>
       </defs>
-      <g transform={`translate(${W / 2} ${H / 2}) scale(${zoom}) translate(${-W / 2} ${-H / 2})`}>
-        <rect width={W} height={H} fill={bg === "parchment" ? "#e9dcc0" : bg === "gray" ? "#cfcfcf" : "#f6f6f2"} />
+      <g transform={`translate(${W / 2 + panX} ${H / 2}) scale(${zoom}) translate(${-W / 2} ${-H / 2})`}>
+        <rect width={W} height={H} fill={bg === "parchment" ? "#e9dcc0" : bg === "gray" ? "#cfcfcf" : bg === "dark" ? "#2b2724" : "#f6f6f2"} />
         {bg === "grid" && [...Array(40)].map((_, i) => <g key={i}><line x1={i * 54} y1={0} x2={i * 54} y2={H} stroke="#dfe3e8" strokeWidth={2} /><line x1={0} y1={i * 54} x2={W} y2={i * 54} stroke="#dfe3e8" strokeWidth={2} /></g>)}
         <rect width={W} height={H} filter="url(#paper)" />
-        <polygon points="-200,0 380,0 1300,1920 700,1920" fill="url(#ray)" />
+        {bg === "dark" && <ellipse cx={540} cy={820} rx={620} ry={760} fill="#fff7e0" opacity={0.16} />}
+        <g transform={`translate(${still ? 0 : (f % 240) * 0.9 - 60} 0)`}><polygon points="-200,0 380,0 1300,1920 700,1920" fill="url(#ray)" />
+          <polygon points="520,0 640,0 1500,1920 1380,1920" fill="url(#ray)" opacity={0.6} /></g>
         {c.items.map((it, i) => {
           const at = it.at ?? 4 + i * 7;
           const k = still ? 1 : ease((f - at) / 9);
           const p = still ? 1 : pop((f - at) / 9);
           if (k <= 0) return null;
-          const r = (it.rot ?? 0) + (1 - k) * 14;
-          const dy = (1 - k) * -120;
-          const yy = 300 + (it.y - 300) * 0.82;  // 下の字幕と重ならないよう、少し上に寄せる
-          return <g key={i} transform={`translate(${it.x} ${yy + dy}) rotate(${it.kind === "arrow" ? 0 : r}) scale(${it.kind === "arrow" ? 1 : 0.6 + 0.4 * p})`} opacity={Math.min(1, k * 2)}>
+          // 入り方:左右から滑り込む(スタンプは上から叩きつける)。入ったあとも、ふわっと浮いてわずかに揺れる
+          const stamp = it.kind === "stamp" || it.kind === "label";
+          const fl = still ? 0 : Math.sin((f + i * 13) / 22) * 6, wob = still ? 0 : Math.sin((f + i * 7) / 40) * 1.2;
+          const r = (it.rot ?? 0) + (1 - k) * (i % 2 ? -16 : 16) + wob;
+          const dx = stamp ? 0 : (1 - k) * (i % 2 ? -420 : 420);
+          const sc = stamp ? 1 + (1 - p) * 0.9 : 0.75 + 0.25 * p;
+          const yy = 300 + (it.y - 300) * 0.82 + fl;  // 下の字幕と重ならないよう、少し上に寄せる
+          return <g key={i} transform={`translate(${it.x + dx} ${yy}) rotate(${it.kind === "arrow" ? 0 : r}) scale(${it.kind === "arrow" ? 1 : sc})`} opacity={Math.min(1, k * 2)}>
             <Item it={it} k={k} />
             {(it.kind === "person" || it.kind === "doc" || it.kind === "news") && <Tape x={0} y={-(it.w ?? 360) * (it.kind === "person" ? 0.62 : 0.6)} />}
           </g>;
         })}
       </g>
-      <rect width={W} height={H} fill="none" stroke="#000" strokeOpacity={0.15} strokeWidth={120} filter="url(#csh)" />
+      <rect width={W} height={H} fill="none" stroke="#000" strokeOpacity={bg === "dark" ? 0.45 : 0.2} strokeWidth={160} filter="url(#csh)" />
+      <rect width={W} height={H} filter="url(#paper)" opacity={0.5} />
     </svg>
   );
 };

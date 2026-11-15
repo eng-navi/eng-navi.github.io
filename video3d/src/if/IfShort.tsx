@@ -27,7 +27,7 @@ export type Word = { text: string; start: number; end: number; hl?: boolean; ja?
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
   no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; mysteryMap?: MapSpec; mysteryCollage?: CollageSpec; jaHints?: boolean;
-  hook?: string; coverShot?: Shot; badge?: string; hint?: string; hookAudio?: string | null; karaoke?: boolean };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
+  hook?: string; coverShot?: Shot; badge?: string; hint?: string; hookAudio?: string | null; karaoke?: boolean; capBand?: boolean };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
@@ -145,7 +145,7 @@ const Eye2 = ({ kind }: { kind?: Eyes }) => (
 );
 
 // カラオケ式の字幕:1文をその場に表示し、読んだ単語から色が変わる(英語に慣れていない人向け。飛び出す動きはなし)
-const Karaoke = ({ words }: { words: Word[] }) => {
+const Karaoke = ({ words, band = false }: { words: Word[]; band?: boolean }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
@@ -161,7 +161,7 @@ const Karaoke = ({ words }: { words: Word[] }) => {
   const jas = g.filter((w) => w.ja);
   return (
     <div style={{ position: "absolute", bottom: 300, left: 90, right: 90, textAlign: "center", opacity: fade, transform: `translateY(${(1 - fade) * 14}px)`,
-                  background: "rgba(14,14,20,0.72)", borderRadius: 28, padding: "20px 26px" }}>
+                  background: band ? "rgba(14,14,20,0.72)" : "transparent", borderRadius: 28, padding: "20px 26px" }}>
       <div style={{ fontFamily: EN, fontWeight: 900, fontSize: 64, lineHeight: 1.22, textShadow: "0 6px 18px rgba(0,0,0,0.65)", WebkitTextStroke: "3px #0b0b10", paintOrder: "stroke fill" }}>
         {g.map((w, i) => {
           const said = t >= w.start;
@@ -268,7 +268,7 @@ export const IfShort = (p: IfProps) => {
           <div style={{ fontFamily: JPB, fontWeight: 800, whiteSpace: "nowrap", letterSpacing: 1,
                         fontSize: Math.min(48, Math.floor(790 / (p.q_ja.replace("\n", "").length + 2))) }}>Q. {p.q_ja.replace("\n", "")}</div>
           <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 34, color: "#fff1ec", marginTop: 6, lineHeight: 1.15 }}>{p.q}</div></div>
-        {p.karaoke ? <Karaoke words={p.words} /> : <Captions words={p.words} offset={0} jaHints={p.jaHints} />}
+        {p.karaoke ? <Karaoke words={p.words} band={p.capBand} /> : <Captions words={p.words} offset={0} jaHints={p.jaHints} />}
         <Audio src={staticFile(p.story)} />
       </Sequence>
       <Sequence from={fr(p.choiceAt)} durationInFrames={fr(p.answerAt - p.choiceAt)}><Choices p={p} end={false} /><Audio src={staticFile(p.tick)} /></Sequence>
