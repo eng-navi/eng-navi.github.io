@@ -1221,12 +1221,12 @@ SHORTS.update({
         hook="イルカは魚じゃない?息のしかたは…🐬", tags=SE),
 })
 
-# ---- 地図(塗り分け)+日本語のフック+英語(Knowledgia 風)。声:英語 Eric(爽やか・クール)、フック Shizuka ----
+# ---- 地図(塗り分け)+日本語のフック+英語(Knowledgia 風)。別アカウント予定、出力は out/map_short/。声:英語 Eric(爽やか・クール)、フック Shizuka ----
 SEAC = {"702": "#e8332a", "458": "#f2b632", "360": "#3fa34d", "764": "#e98a3a", "704": "#c76b96", "608": "#5b8fd6", "104": "#9b7fd1",
         "116": "#7cc4a8", "418": "#d9a3a3", "96": "#f2b632", "156": "#b5734f", "356": "#d8b26a", "36": "#c9a26b", "626": "#3fa34d", "598": "#8fbf6a"}
-POL = dict(GEO, voice="cjVigY5qzO86Huf0OWal", hook_voice="WQz3clzUdMqvBf0jswZQ", speed=0.85, gap=0.4, bgm="tunnel")
+POL = dict(GEO, account="map", voice="cjVigY5qzO86Huf0OWal", hook_voice="WQz3clzUdMqvBf0jswZQ", speed=0.85, gap=0.4, bgm="tunnel")
 SHORTS.update({
-    "geo013_singapore": dict(POL, gap=0.3, no="#013", cover=1, hint="👂ヒント:2文目と3文目に注目",
+    "map001_singapore": dict(POL, gap=0.3, no="#001", cover=1, hint="👂ヒント:2文目と3文目に注目",
         mysteryMap={"from": [103.8, 1.35, 12], "style": "political", "colors": SEAC},
         q="Why did tiny Singapore become so rich?", q_ja="なぜシンガポールは、\nこんなに豊かになった?",
         choices=["It was rich in natural resources.", "It sits on a key shipping route."], answer=2,
@@ -1377,7 +1377,7 @@ def cover(name, sc, props, shots, out_dir):
 def build(name):
     sc = SHORTS[name]
     mr.load_env()
-    out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short", "sea": "sea_short", "geo": "geo_short"}.get(sc.get("account"), "if_short")
+    out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short", "sea": "sea_short", "geo": "geo_short", "map": "map_short"}.get(sc.get("account"), "if_short")
     T_IN, T_CH, T_END = sc.get("intro", INTRO), sc.get("choice", CHOICE), sc.get("end", END)  # 冒頭・2択・最後の秒数(回ごとに変えられる)
     hook_audio = None
     if sc.get("hook_voice"):  # 冒頭の問いを日本語の声で読む(冒頭の長さを声に合わせる)
