@@ -66,6 +66,15 @@ jobs:
           GEO_IG_USER_ID: ${{ secrets.GEO_IG_USER_ID }}
           GEO_IG_ACCESS_TOKEN: ${{ secrets.GEO_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: お金とテック(@money_tech_english)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 vox_post.py run
+        env:
+          VOX_IG_USER_ID: ${{ secrets.VOX_IG_USER_ID }}
+          VOX_IG_ACCESS_TOKEN: ${{ secrets.VOX_IG_ACCESS_TOKEN }}
+          SITE_URL: https://eng-navi.github.io
       - name: quizify(@quizify_english)
         if: always()
         run: |
