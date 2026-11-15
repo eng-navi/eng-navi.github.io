@@ -63,10 +63,11 @@ def add_if(name, at):
     """if_short.py の動画(25秒リスニングクイズ)を予約に追加。投稿後に正解・和訳のコメントを付ける"""
     import if_short
     sc = if_short.SHORTS[name]
-    src = ROOT / "out" / "if_short" / f"{name}.mp4"
+    folder, pre = ("map_short", "map") if sc.get("account") == "map" else ("if_short", "if")  # 11/15〜 このアカウントは「地図で聞く英語」
+    src = ROOT / "out" / folder / f"{name}.mp4"
     if not src.exists():
         sys.exit(f"{src} がありません(if_short.py で作ってください)")
-    key = f"if_{name}"
+    key = f"{pre}_{name}"
     dst = ROOT / "docs" / "manga" / f"{key}_reel.mp4"
     shutil.copy(src, dst)
     paths = [str(dst), str(SCHEDULE)] + publish_cover(src, key)
