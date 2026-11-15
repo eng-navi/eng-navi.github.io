@@ -41,7 +41,7 @@ PUB = V3D / "public" / "if"
 OUT = ROOT / "out" / "if_short"
 CACHE = ROOT / "out" / "voice_cache"
 SR = 44100
-INTRO, CHOICE, END = 3.0, 4.2, 1.8
+INTRO, CHOICE, END = 3.0, 4.2, 2.6  # END:最後の「コメント欄で」を読める長さに(11/15)
 SPEED = 1.1
 SFX_DIR = ROOT / "assets" / "sfx"
 MAX_SEC = 25
@@ -200,7 +200,7 @@ SHORTS.update({
 
 # ---- やさしい英語の科学クイズ(別アカウント)。英検3級〜準2級の単語、ゆっくり(0.7倍+文のあいだに0.7秒、約105語/分)、短い2〜3文で15秒前後。声は Sarah(アメリカ英語・女性)、博士のキャラ ----
 SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", speed=0.7, gap=0.7, bgm="cycles", kicker="やさしい英語の", title="科学クイズ", jaHints=True,
-           intro=1.5, choice=3.2, end=1.4, endText="答えはコメント欄で👇", bg1="#1b4f7a", bg2="#0a1624")
+           intro=1.5, choice=3.2, end=2.6, endText="答えはコメント欄で👇", bg1="#1b4f7a", bg2="#0a1624")
 SHORTS.update({
     "sci001_strawberry": dict(SCI, no="#001", mystery="strawberry",
         q="What is this?", q_ja="これ、なんでしょう?",
@@ -244,7 +244,7 @@ SHORTS.update({
 # 声は男女を交互に(George / Matilda)して反応を比べる。0.75倍+文のあいだ0.6秒
 GEORGE, MATILDA = "JBFqnCBsd6RMkjVDRZzb", "XrExE9yKIg1WjnnlVkGX"
 SEA = dict(account="sea", speed=0.7, gap=0.8, bgm="lantern", mysteryBg="ocean", kicker="ゆっくり英語の", title="海クイズ", jaHints=True,
-           intro=1.5, choice=3.2, end=1.4, endText="答えはコメント欄で👇", bg1="#0b6a8f", bg2="#031a2c")
+           intro=1.5, choice=3.2, end=2.6, endText="答えはコメント欄で👇", bg1="#0b6a8f", bg2="#031a2c")
 SHORTS.update({
     "sea001_seahorse": dict(SEA, voice=GEORGE, no="#001", mystery="seahorse", cover=0,
         q="Who gives birth to baby seahorses?", q_ja="タツノオトシゴの赤ちゃんを\n産むのはどっち?",
@@ -432,7 +432,7 @@ SHORTS.update({
 
 # ---- ゆっくり英語の地理クイズ(試作)。衛星写真の地図アニメ。英検3級〜準1級の単語を混ぜる。声は Daniel(イギリス英語・ニュース風)
 GEO = dict(voice="onwK4e9ZLuTAKqWW03F9", account="geo", speed=0.8, gap=0.4, bgm="tunnel", kicker="ゆっくり英語の", title="地理クイズ", jaHints=True,
-           intro=1.5, choice=4.2, end=1.4, endText="答えはコメント欄で👇", bg1="#123a5a", bg2="#06131f", mystery="map")
+           intro=1.5, choice=4.2, end=2.6, endText="答えはコメント欄で👇", bg1="#123a5a", bg2="#06131f", mystery="map")
 SHORTS.update({
     "geo001_quake": dict(GEO, no="#001", mysteryMap=dict(from_=None), cover=3, hint="👂ヒント:3文目に注目",
         q="Why does Japan have so many earthquakes?", q_ja="日本で地震が\n多いのはなぜ?",
@@ -1221,6 +1221,38 @@ SHORTS.update({
         hook="イルカは魚じゃない?息のしかたは…🐬", tags=SE),
 })
 
+# ---- 地図(塗り分け)+日本語のフック+英語(Knowledgia 風)。声:英語 Eric(爽やか・クール)、フック Shizuka ----
+SEAC = {"702": "#e8332a", "458": "#f2b632", "360": "#3fa34d", "764": "#e98a3a", "704": "#c76b96", "608": "#5b8fd6", "104": "#9b7fd1",
+        "116": "#7cc4a8", "418": "#d9a3a3", "96": "#f2b632", "156": "#b5734f", "356": "#d8b26a", "36": "#c9a26b", "626": "#3fa34d", "598": "#8fbf6a"}
+POL = dict(GEO, voice="cjVigY5qzO86Huf0OWal", hook_voice="WQz3clzUdMqvBf0jswZQ", speed=0.85, gap=0.4, bgm="tunnel")
+SHORTS.update({
+    "geo013_singapore": dict(POL, gap=0.3, no="#013", cover=1, hint="👂ヒント:2文目と3文目に注目",
+        mysteryMap={"from": [103.8, 1.35, 12], "style": "political", "colors": SEAC},
+        q="Why did tiny Singapore become so rich?", q_ja="なぜシンガポールは、\nこんなに豊かになった?",
+        choices=["It was rich in natural resources.", "It sits on a key shipping route."], answer=2,
+        answer_ja="世界の重要な航路の上にあるから。",
+        hl=["independent", "resources", "priceless", "advantage", "location", "strait", "trade", "hub"],
+        shots=[
+            ("In 1965, Singapore became independent, with no resources.", dict(type="map", bg="dark", hud="1965", map={"style": "political", "colors": SEAC,
+                "from": [110, 6, 4.2], "to": [103.8, 1.35, 14], "labels": [[103.8, 2.3, "SINGAPORE"]], "icons": [[103.8, 0.5, "🇸🇬"]]})),
+            ("But it had one priceless advantage: location.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
+                "from": [103.8, 1.35, 40], "to": [103.82, 1.35, 130], "glow": ["702"], "icons": [[103.82, 1.47, "📍"]], "labels": [[103.82, 1.2, "SINGAPORE"]]})),
+            ("It sits beside the Strait of Malacca.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
+                "from": [100.5, 3.2, 8], "to": [100.5, 3.0, 11], "glow": ["702"], "arrows": [[97.2, 5.8, 103.3, 1.4]],
+                "labels": [[95.6, 3.4, "STRAIT OF"], [95.6, 1.3, "MALACCA"]]})),
+            ("A huge share of world sea trade passes here.", dict(type="map", bg="dark", hud="WORLD SEA TRADE", map={"style": "political", "colors": SEAC,
+                "from": [98, 5, 3.6], "to": [100, 5, 4.2], "arrows": [[80, 6, 94, 6.5], [94, 6.5, 103.4, 1.4], [104.4, 1.6, 114, 10]],
+                "icons": [[88, 3.8, "🚢"], [110, 4.5, "🚢"]]})),
+            ("Location turned a tiny island into a global hub.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
+                "from": [104, 3, 7], "to": [106, 6, 4.2], "glow": ["702"], "labels": [[103.8, 3.2, "GLOBAL HUB"]],
+                "arrows": [[103.8, 1.35, 121, 22], [103.8, 1.35, 82, 8], [103.8, 1.35, 125, -8]]})),
+        ],
+        ja=["1965年、シンガポールは、資源のないまま独立した。", "でも、かけがえのない強みが1つあった。「場所」だ。", "マラッカ海峡のすぐそばにある。",
+            "世界の海の貿易の大きな部分が、ここを通る。", "場所が、小さな島を世界の拠点に変えた。"],
+        gloss=["independent:独立した", "resource:資源", "priceless:かけがえのない", "advantage:強み", "location:場所、位置", "strait:海峡", "trade:貿易", "hub:拠点、中心地"],
+        hook="なぜシンガポールは、こんなに豊かになった?🇸🇬", tags="#英語リスニング #やさしい英語 #地理"),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
@@ -1347,6 +1379,14 @@ def build(name):
     mr.load_env()
     out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short", "sea": "sea_short", "geo": "geo_short"}.get(sc.get("account"), "if_short")
     T_IN, T_CH, T_END = sc.get("intro", INTRO), sc.get("choice", CHOICE), sc.get("end", END)  # 冒頭・2択・最後の秒数(回ごとに変えられる)
+    hook_audio = None
+    if sc.get("hook_voice"):  # 冒頭の問いを日本語の声で読む(冒頭の長さを声に合わせる)
+        hm, _ = tts_words(sc["hook_voice"], sc["q_ja"].replace("\n", ""), 1.0)
+        hook = PUB / f"{name}_hook.mp3"
+        hook.write_bytes(hm.read_bytes())
+        hd = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(hook)], capture_output=True, text=True).stdout)
+        T_IN = max(T_IN, hd + 0.45)
+        hook_audio = f"if/{hook.name}"
     PUB.mkdir(parents=True, exist_ok=True)
     out_dir.mkdir(parents=True, exist_ok=True)
     lines = [ln for ln, _ in sc["shots"]]
@@ -1399,6 +1439,9 @@ def build(name):
         put(sample("whoosh", 0.35), max(0, s["start"] - 0.12))
         if s.get("hud"):
             put(sample("pop", 0.15), s["start"] + 0.1)
+        mp = s.get("map") or {}
+        for j in range(len(mp.get("labels", [])) + len(mp.get("icons", []))):  # 地図のラベル・アイコンが出るたびにポン
+            put(sample("pop", 0.15), s["start"] + 0.25 + 0.18 * j)
         if s["type"] == "eyes":
             put(sample("boom", 0.6), s["start"])
         if s.get("sfx"):
@@ -1421,7 +1464,7 @@ def build(name):
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
-                 choiceSec=int(T_CH), **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "jaHints", "hint") if k in sc})
+                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "jaHints", "hint") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"

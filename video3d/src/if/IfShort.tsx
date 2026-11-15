@@ -25,7 +25,7 @@ export type Word = { text: string; start: number; end: number; hl?: boolean; ja?
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
   no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; mysteryMap?: MapSpec; jaHints?: boolean;
-  hook?: string; coverShot?: Shot; badge?: string; hint?: string };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
+  hook?: string; coverShot?: Shot; badge?: string; hint?: string; hookAudio?: string | null };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
@@ -226,7 +226,7 @@ export const IfShort = (p: IfProps) => {
   const fr = (s: number) => Math.round(s * fps);
   return (
     <AbsoluteFill style={{ backgroundColor: "#0d0f18" }}>
-      <Sequence durationInFrames={fr(p.intro)}>{p.mystery ? <MysteryIntro p={p} /> : <Intro p={p} />}<Audio src={staticFile(p.tick)} /></Sequence>
+      <Sequence durationInFrames={fr(p.intro)}>{p.mystery ? <MysteryIntro p={p} /> : <Intro p={p} />}<Audio src={staticFile(p.tick)} />{p.hookAudio && <Audio src={staticFile(p.hookAudio)} />}</Sequence>
       {p.shots.map((s, i) => <Sequence key={i} from={fr(s.start)} durationInFrames={fr(s.dur)}><ShotView s={s} words={p.words} /></Sequence>)}
       <Sequence from={fr(p.intro)} durationInFrames={fr(p.choiceAt - p.intro)}>
         <div style={{ position: "absolute", top: 220, left: 110, right: 110, padding: "16px 22px", borderRadius: 28, background: "rgba(224,83,60,0.94)", color: "white", textAlign: "center",
