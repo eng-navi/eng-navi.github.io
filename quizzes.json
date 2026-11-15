@@ -2201,5 +2201,274 @@
     "translation": "そのホテルは、宿泊客に無料の空港シャトルを提供している。",
     "explanation": "airport shuttle で「空港までの送迎バス」という意味になります。\nshelter は「避難所、雨宿りの場所」なので、意味が通りません。\n\nしたがって、②shuttle が正解。",
     "caption": "ホテルの「無料の〜」に入るのは?🚐\n旅行の場面でよく出る語です。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC単語 #旅行英語"
+  },
+  {
+    "no": 167,
+    "category": "時制",
+    "question": "This soup ( ) too much salt.",
+    "options": [
+      "is containing",
+      "contains"
+    ],
+    "answer": 2,
+    "translation": "このスープは塩が多すぎる。",
+    "explanation": "contain(含んでいる)は「状態」を表す動詞なので、ふつう進行形にしません。\n「〜を含んでいる」と訳せても、is containing は使わないのがポイントです。\n\nしたがって、②contains が正解。",
+    "caption": "「含んでいる」なのに進行形じゃない?🍲\n状態動詞の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #時制"
+  },
+  {
+    "no": 168,
+    "text": "Her nerves were written all over her face before the interview.",
+    "target": "written all over her face",
+    "translation": "面接の前、彼女の緊張は顔にはっきり出ていた。",
+    "glossary": [
+      "be written all over X's face：Xの顔にはっきり表れている",
+      "nerves：緊張",
+      "interview：面接"
+    ],
+    "explanation": "「be written all over one's face」は「(気持ちが)顔にはっきり出ている」という意味です。\n顔に文字で書いてあるくらい、隠せていないイメージです。",
+    "caption": "written all over her face、どんな意味?😳\n答えと解説はコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 169,
+    "category": "動詞",
+    "question": "Our café ( ) fresh bread every morning.",
+    "options": [
+      "bake",
+      "bakes"
+    ],
+    "answer": 2,
+    "translation": "当店のカフェでは、毎朝焼きたてのパンを焼いています。",
+    "explanation": "主語の Our café は3人称単数で、毎朝の習慣なので現在形です。\n3人称単数・現在形では、動詞に s がつきます。\n\nしたがって、②bakes が正解。",
+    "caption": "bake じゃダメ?🥐\n主語をよく見るのがコツです。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #英文法"
+  },
+  {
+    "no": 170,
+    "category": "受動態",
+    "question": "Our new office is ( ) right now.",
+    "options": [
+      "building",
+      "being built"
+    ],
+    "answer": 2,
+    "translation": "私たちの新しいオフィスは、今まさに建設中だ。",
+    "explanation": "オフィスは「建てる」側ではなく「建てられる」側なので、受動態にします。\n「今〜されている途中」は be being done(進行形の受動態)で表します。\n\nしたがって、②being built が正解。",
+    "caption": "building じゃダメなの?🏗️\n進行形の受動態の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #受動態"
+  },
+  {
+    "no": 171,
+    "text": "There's no denying that the new manager has changed the team for the better.",
+    "target": "There's no denying that",
+    "translation": "新しい部長がチームを良い方向に変えたことは、否定できない。",
+    "glossary": [
+      "There's no denying that SV：〜は否定できない",
+      "for the better：良い方向に",
+      "manager：部長、責任者"
+    ],
+    "explanation": "「There's no denying that ~」は「〜ということは否定できない、間違いない」という意味です。\n「否定することはできない」から、強く認める言い方になります。",
+    "caption": "There's no denying、どう訳す?🤔\n会議でもよく聞く表現です。答えはコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 172,
+    "category": "態",
+    "question": "The meeting room ( ) every Friday afternoon.",
+    "options": [
+      "cleans",
+      "is cleaned"
+    ],
+    "answer": 2,
+    "translation": "会議室は、毎週金曜日の午後に掃除される。",
+    "explanation": "会議室は「掃除する」側ではなく「掃除される」側です。\nまた、空所の後ろに目的語がありません。こういうときは受動態(be + 過去分詞)を選びます。\n\nしたがって、②is cleaned が正解。",
+    "caption": "「掃除する」?「掃除される」?🧹\n態を見分ける問題です。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #受動態"
+  },
+  {
+    "no": 173,
+    "category": "助動詞",
+    "question": "He ( ) be tired. He slept for ten hours.",
+    "options": [
+      "can't",
+      "must"
+    ],
+    "answer": 1,
+    "translation": "彼が疲れているはずがない。10時間も寝たのだから。",
+    "explanation": "10時間寝たのだから「疲れているはずがない」と強く否定する場面です。\ncan't(cannot)には「〜のはずがない」という意味があります。\nmust だと「疲れているにちがいない」と逆の意味になります。\n\nしたがって、①can't が正解。",
+    "caption": "must じゃないの?😴\n「〜のはずがない」の助動詞です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+  },
+  {
+    "no": 174,
+    "text": "Remote work came into fashion faster than anyone expected.",
+    "target": "came into fashion",
+    "translation": "リモートワークは、誰の予想よりも早くはやり始めた。",
+    "glossary": [
+      "come into fashion：はやり始める",
+      "remote work：リモートワーク",
+      "expect：予想する"
+    ],
+    "explanation": "「come into fashion」は「流行し始める、はやる」という意味です。\n反対は「go out of fashion(すたれる)」です。",
+    "caption": "came into fashion、どんな意味?👗\n反対の言い方もコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 175,
+    "category": "動名詞",
+    "question": "The manager is considering ( ) a new office.",
+    "options": [
+      "to open",
+      "opening"
+    ],
+    "answer": 2,
+    "translation": "部長は、新しいオフィスを開くことを検討している。",
+    "explanation": "consider(〜を検討する)は、後ろに動名詞(-ing)をとる動詞です。\nto 不定詞はとらないので、to open は使えません。\n\nしたがって、②opening が正解。",
+    "caption": "to open じゃないの?🏢\nTOEIC 頻出の動詞の形です。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #動名詞"
+  },
+  {
+    "no": 176,
+    "category": "助動詞",
+    "question": "I ( ) jog every morning, but now I'm too busy.",
+    "options": [
+      "used to",
+      "am used to"
+    ],
+    "answer": 1,
+    "translation": "以前は毎朝ジョギングしていたが、今は忙しすぎる。",
+    "explanation": "「(今はしていないが)以前はよく〜した」は used to do で表します。\nam used to は「〜に慣れている」という別の意味で、後ろは doing(動名詞)になります。\n\nしたがって、①used to が正解。",
+    "caption": "used to と be used to、どっち?🏃\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+  },
+  {
+    "no": 177,
+    "text": "Joining the debate club helped me step out of my comfort zone.",
+    "target": "step out of my comfort zone",
+    "translation": "ディベート部に入ったことで、自分の殻を破ることができた。",
+    "glossary": [
+      "step out of one's comfort zone：自分の殻を破る、慣れた場所から一歩出る",
+      "debate club：ディベート部"
+    ],
+    "explanation": "「step out of one's comfort zone」は「居心地のいい場所から一歩外に出る」=「新しいことに挑戦する、殻を破る」という意味です。",
+    "caption": "comfort zone から出るって?🚪\n自己啓発でもよく使う表現です。答えはコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 178,
+    "category": "前置詞・接続詞",
+    "question": "Please turn off your phone ( ) the presentation.",
+    "options": [
+      "during",
+      "while"
+    ],
+    "answer": 1,
+    "translation": "発表の間は、携帯電話の電源を切ってください。",
+    "explanation": "空所の後ろは the presentation という名詞なので、前置詞が入ります。\nduring は前置詞、while は接続詞で、後ろに「主語+動詞」が必要です。\n\nしたがって、①during が正解。",
+    "caption": "during と while、どっち?📱\n後ろの形を見るのがコツです。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #前置詞"
+  },
+  {
+    "no": 179,
+    "category": "助動詞",
+    "question": "You ( ) brought an umbrella. It's pouring now.",
+    "options": [
+      "must have",
+      "should have"
+    ],
+    "answer": 2,
+    "translation": "傘を持ってくるべきだったのに。今は土砂降りだ。",
+    "explanation": "「〜すべきだったのに(実際にはしなかった)」という後悔は should have done で表します。\nmust have done は「〜したにちがいない」という推量です。\n\nしたがって、②should have が正解。",
+    "caption": "must have じゃないの?☔\n後悔を表す助動詞の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+  },
+  {
+    "no": 180,
+    "text": "The plan is popular, but it's not without its critics.",
+    "target": "not without its critics",
+    "translation": "その計画は人気があるが、批判する人がいないわけではない。",
+    "glossary": [
+      "be not without (one's) critics：批判する人がいないわけではない",
+      "popular：人気がある"
+    ],
+    "explanation": "「not without ~」は「〜がないわけではない」という二重否定です。\n「not without its critics」で「批判もある」とやわらかく伝えます。",
+    "caption": "not without its critics、どう訳す?🧐\n二重否定に注意!答えはコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 181,
+    "category": "接続詞",
+    "question": "( ) otherwise noted, all prices include tax.",
+    "options": [
+      "Unless",
+      "Once"
+    ],
+    "answer": 1,
+    "translation": "特に記載がない限り、すべての価格は税込みです。",
+    "explanation": "unless otherwise noted で「特に記載がない限り」という決まった言い方です。\nonce は「いったん〜すれば」で、意味が通りません。\n\nしたがって、①Unless が正解。",
+    "caption": "TOEIC の決まり文句、わかる?🧾\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #接続詞"
+  },
+  {
+    "no": 182,
+    "category": "助動詞",
+    "question": "I couldn't help ( ) at his joke.",
+    "options": [
+      "to laugh",
+      "laughing"
+    ],
+    "answer": 2,
+    "translation": "彼の冗談に、思わず笑ってしまった。",
+    "explanation": "cannot help doing で「〜せずにはいられない」という意味です。\nこの help は「避ける」という意味なので、後ろは -ing(動名詞)になります。\n\nしたがって、②laughing が正解。",
+    "caption": "to laugh じゃないの?😂\n「〜せずにはいられない」の形です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+  },
+  {
+    "no": 183,
+    "text": "The loud ticking of the clock really got on my nerves.",
+    "target": "got on my nerves",
+    "translation": "時計の大きなカチカチという音に、本当にイライラした。",
+    "glossary": [
+      "get on X's nerves：Xをイライラさせる",
+      "ticking：(時計の)カチカチという音"
+    ],
+    "explanation": "「get on one's nerves」は「〜の神経にさわる」=「イライラさせる」という意味です。\n主語には、イライラの原因(音・人・態度など)が来ます。",
+    "caption": "got on my nerves、どんな気持ち?😤\n答えと解説はコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 184,
+    "category": "前置詞",
+    "question": "Sales have been growing ( ) last spring.",
+    "options": [
+      "since",
+      "until"
+    ],
+    "answer": 1,
+    "translation": "売上は、去年の春からずっと伸び続けている。",
+    "explanation": "have been growing(現在完了進行形)は、過去から今まで続いていることを表します。\n「〜以来ずっと」の since がぴったりです。\nuntil は「〜までずっと」で、今も続いている文と合いません。\n\nしたがって、①since が正解。",
+    "caption": "since と until、どっち?📈\n時制がヒントです。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #前置詞"
+  },
+  {
+    "no": 185,
+    "category": "受動態",
+    "question": "The puppy was ( ) by my sister while we were away.",
+    "options": [
+      "looked after",
+      "looked"
+    ],
+    "answer": 1,
+    "translation": "私たちが留守の間、子犬は姉に世話をされた。",
+    "explanation": "look after(〜の世話をする)のような動詞のカタマリは、受動態にしても after を残します。\nbe looked after by ~ で「〜に世話をされる」です。\n\nしたがって、①looked after が正解。",
+    "caption": "after はいる?いらない?🐶\n群動詞の受動態の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #受動態"
+  },
+  {
+    "no": 186,
+    "text": "Summer vacation is just around the corner, so let's make some plans.",
+    "target": "just around the corner",
+    "translation": "夏休みはもうすぐだから、何か計画を立てよう。",
+    "glossary": [
+      "be just around the corner：もうすぐだ、間近に迫っている",
+      "make plans：計画を立てる"
+    ],
+    "explanation": "「around the corner」は「角を曲がったすぐ先」という意味から、時間的に「もうすぐ」という意味でも使います。",
+    "caption": "around the corner、時間で使うと?⏰\n答えはコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 187,
+    "category": "前置詞",
+    "question": "The team discussed the plan ( ) coffee.",
+    "options": [
+      "over",
+      "through"
+    ],
+    "answer": 1,
+    "translation": "チームは、コーヒーを飲みながらその計画について話し合った。",
+    "explanation": "over coffee で「コーヒーを飲みながら」という意味になります。\nover lunch(ランチを食べながら)も同じ使い方です。\nthrough は「〜を通じて」で、意味が通りません。\n\nしたがって、①over が正解。",
+    "caption": "「コーヒーを飲みながら」の前置詞は?☕\n意外な使い方です。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #前置詞"
   }
 ]
