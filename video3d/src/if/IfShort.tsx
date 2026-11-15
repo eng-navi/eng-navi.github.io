@@ -3,10 +3,12 @@ import { Choices, Intro, JP, JPB, QuizProps, fitJP } from "../quiz/QuizShort";
 import { Body, Eyes, Hat, Head, Lens, Mouth } from "./Face";
 import { Backdrop, Defs, Insert, OceanFX } from "./Sets";
 import { MapSpec, MapView } from "./Map";
+import { CollageSpec, CollageView } from "./Collage";
 
 // 1カット(2〜3秒)の指定。type で構図、cam でカメラ、wipe で切り替え方を変える
 export type Shot = {
-  type: "face" | "eyes" | "full" | "two" | "insert" | "wide" | "lens" | "split" | "silhouette" | "ots" | "map";
+  type: "face" | "eyes" | "full" | "two" | "insert" | "wide" | "lens" | "split" | "silhouette" | "ots" | "map" | "collage";
+  collage?: CollageSpec;            // type="collage" の Vox 風コラージュ
   map?: MapSpec;                    // type="map" の地図(カメラ・光らせる国・線・矢印・ラベル)
   start: number; dur: number; bg: string;
   eyes?: Eyes; mouth?: Mouth; color?: string; rim?: string; det?: boolean; sci?: boolean;  // det:探偵 / sci:博士の見た目
@@ -24,7 +26,7 @@ export type Shot = {
 export type Word = { text: string; start: number; end: number; hl?: boolean; ja?: string };
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
-  no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; mysteryMap?: MapSpec; jaHints?: boolean;
+  no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; mysteryMap?: MapSpec; mysteryCollage?: CollageSpec; jaHints?: boolean;
   hook?: string; coverShot?: Shot; badge?: string; hint?: string; hookAudio?: string | null; karaoke?: boolean };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
@@ -66,7 +68,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
   const det = s.det;
   return (
     <AbsoluteFill style={{ transform: `translateX(${slideX}px)` }}>
-      {s.type === "map" && s.map ? <MapView m={s.map} f={f} len={len} /> : (
+      {s.type === "collage" && s.collage ? <CollageView c={s.collage} f={f} /> : s.type === "map" && s.map ? <MapView m={s.map} f={f} len={len} /> : (
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}
            style={{ transform: `translate(${sx}px, ${sy}px) scale(${scale}) rotate(${rot}deg)`, transformOrigin: "50% 55%", filter: blurWhip ? `blur(${blurWhip}px)` : undefined }}>
         <Defs />
@@ -158,7 +160,8 @@ const Karaoke = ({ words }: { words: Word[] }) => {
   const fade = Math.min(1, (t - (g[0].start - 0.15)) / 0.2);
   const jas = g.filter((w) => w.ja);
   return (
-    <div style={{ position: "absolute", bottom: 330, left: 110, right: 110, textAlign: "center", opacity: fade, transform: `translateY(${(1 - fade) * 14}px)` }}>
+    <div style={{ position: "absolute", bottom: 300, left: 90, right: 90, textAlign: "center", opacity: fade, transform: `translateY(${(1 - fade) * 14}px)`,
+                  background: "rgba(14,14,20,0.72)", borderRadius: 28, padding: "20px 26px" }}>
       <div style={{ fontFamily: EN, fontWeight: 900, fontSize: 64, lineHeight: 1.22, textShadow: "0 6px 18px rgba(0,0,0,0.65)", WebkitTextStroke: "3px #0b0b10", paintOrder: "stroke fill" }}>
         {g.map((w, i) => {
           const said = t >= w.start;
@@ -220,7 +223,9 @@ const MysteryIntro = ({ p }: { p: IfProps }) => {
 };
 
 // 謎の絵(冒頭とループの最後で同じ絵を使い、最初に自然につなげる)
-const MysteryImage = ({ p, t }: { p: IfProps; t: number }) => p.mysteryMap ? (
+const MysteryImage = ({ p, t }: { p: IfProps; t: number }) => p.mysteryCollage ? (
+  <AbsoluteFill style={{ transform: `scale(${1.25 + t * 0.05})`, filter: "blur(4px)" }}><CollageView c={p.mysteryCollage} f={200} /></AbsoluteFill>
+) : p.mysteryMap ? (
   <AbsoluteFill style={{ transform: `scale(${1.15 + t * 0.05})`, filter: "blur(3px)" }}><MapView m={p.mysteryMap} f={0} len={30} /></AbsoluteFill>
 ) : (
   <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", transform: `scale(${3.2 + t * 0.15})`, transformOrigin: "50% 50%", filter: "blur(2px)" }}>

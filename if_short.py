@@ -1437,6 +1437,62 @@ SHORTS.update({
         hook="マダガスカルの動物が独特な理由は?🐒", tags=MT),
 })
 
+# ==== お金×テックの英語(Vox 風コラージュ、別アカウント予定、out/vox_short)====
+# 人物は似顔絵(写真は使わない)。人物の回と、お金の宣伝(アフィリエイト)は同じ回に入れない。投資の助言はしない
+VOX = dict(POL, account="vox", voice="TX3LPaxmHKxFdv7VOQHJ", hook_voice="4lOQ7A2l7HPuG7UIHiKA", mystery="collage", bgm="cycles",
+           bg1="#3b3129", bg2="#120e0b")
+SHORTS.update({
+    "vox001_amazon": dict(VOX, no="#001", cover=1, hint="👂ヒント:3文目に注目",
+        mysteryCollage={"bg": "grid", "items": [{"kind": "person", "who": "bezos", "x": 540, "y": 860, "w": 460, "rot": -4}, {"kind": "books", "x": 760, "y": 1300, "w": 330, "rot": 8}]},
+        q="Why did Amazon start by selling only books?", q_ja="なぜアマゾンは、\n本から始めたの?",
+        choices=["Books offered a huge selection no store could match.", "Bezos quit his job to write millions of books."], answer=1,
+        answer_ja="本は、どんなお店にも置ききれないほど種類が多かったから。",
+        hl=["quit", "high-paying", "garage", "titles", "offer"],
+        shots=[
+            ("In 1994, Jeff Bezos quit a high-paying Wall Street job.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "person", "who": "bezos", "x": 400, "y": 820, "w": 440, "rot": -5}, {"kind": "label", "text": "1994", "x": 780, "y": 560, "w": 300, "rot": 4},
+                {"kind": "money", "x": 760, "y": 1260, "w": 280, "rot": 10}, {"kind": "stamp", "text": "QUIT", "x": 700, "y": 980, "w": 260, "rot": -14}]})),
+            ("He started Amazon in his garage, selling books.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
+                {"kind": "garage", "x": 380, "y": 760, "w": 460, "rot": -6}, {"kind": "books", "x": 720, "y": 1180, "w": 380, "rot": 7},
+                {"kind": "arrow", "x": 520, "y": 960, "x2": 640, "y2": 1060}, {"kind": "label", "text": "GARAGE", "x": 420, "y": 470, "w": 340, "rot": -3}]})),
+            ("Why books? No store could hold millions of titles.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "books", "x": 300, "y": 700, "w": 300, "rot": -9}, {"kind": "books", "x": 760, "y": 760, "w": 300, "rot": 8}, {"kind": "books", "x": 540, "y": 1120, "w": 340, "rot": -3},
+                {"kind": "label", "text": "MILLIONS OF TITLES", "x": 540, "y": 1460, "w": 720, "rot": -2}]})),
+            ("An online store could offer them all.", dict(type="collage", bg="dark", collage={"bg": "gray", "items": [
+                {"kind": "box", "text": "BOOKS", "x": 380, "y": 820, "w": 400, "rot": -6}, {"kind": "chart", "text": "ONLINE", "x": 740, "y": 1180, "w": 400, "rot": 6},
+                {"kind": "stamp", "text": "ALL OF THEM", "x": 560, "y": 1500, "w": 520, "rot": -8}]})),
+        ],
+        ja=["1994年、ジェフ・ベゾスはウォール街の高給の仕事を辞めた。", "自宅のガレージで、本を売るアマゾンを始めた。",
+            "なぜ本?何百万ものタイトルは、どんなお店にも置ききれない。", "ネットのお店なら、そのすべてを並べられた。"],
+        gloss=["quit:辞める", "high-paying:給料の高い", "garage:ガレージ、車庫", "title:(本の)タイトル、作品", "offer:提供する"],
+        hook="アマゾンが本から始めた理由、知ってる?📦", tags="#英語リスニング #やさしい英語 #テック"),
+    "vox002_borrow": dict(VOX, no="#002", cover=2, hint="👂ヒント:2文目と3文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "figure", "x": 540, "y": 860, "w": 460}, {"kind": "money", "x": 760, "y": 1300, "w": 300, "rot": 8}]},
+        q="Why do some billionaires live on borrowed money?", q_ja="なぜ大富豪は、\nお金を借りて暮らすの?",
+        choices=["Billionaires have lots of cash to lend.", "Borrowing avoids the taxes that selling would bring."], answer=2,
+        answer_ja="株を売ると税金がかかるが、借りればかからないから。",
+        hl=["stock", "cash", "taxes", "borrow", "collateral", "income"],
+        shots=[
+            ("Many billionaires own lots of stock, but little cash.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
+                {"kind": "figure", "x": 360, "y": 860, "w": 420}, {"kind": "chart", "text": "STOCK", "x": 760, "y": 720, "w": 380, "rot": 6},
+                {"kind": "coin", "x": 760, "y": 1220, "w": 160}, {"kind": "label", "text": "LITTLE CASH", "x": 640, "y": 1440, "w": 480, "rot": -3}]})),
+            ("Selling stock would mean paying big taxes.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "chart", "text": "SELL?", "x": 380, "y": 780, "w": 420, "rot": -5, "color": "#d62828"}, {"kind": "doc", "text": "TAX BILL", "x": 740, "y": 1100, "w": 360, "rot": 7},
+                {"kind": "stamp", "text": "TAX", "x": 380, "y": 1300, "w": 240, "rot": -12}]})),
+            ("So instead, they borrow money, using the stock as collateral.", dict(type="collage", bg="dark", collage={"bg": "gray", "items": [
+                {"kind": "bank", "x": 360, "y": 760, "w": 420, "rot": -4}, {"kind": "money", "x": 760, "y": 820, "w": 300, "rot": 9},
+                {"kind": "doc", "text": "LOAN", "x": 560, "y": 1260, "w": 380, "rot": -3}, {"kind": "arrow", "x": 520, "y": 820, "x2": 640, "y2": 820},
+                {"kind": "label", "text": "COLLATERAL", "x": 540, "y": 1580, "w": 520, "rot": 2}]})),
+            ("Loans aren't income, so they aren't taxed.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
+                {"kind": "doc", "text": "LOAN", "x": 380, "y": 860, "w": 360, "rot": -6}, {"kind": "figure", "x": 760, "y": 900, "w": 380},
+                {"kind": "stamp", "text": "NO TAX", "x": 560, "y": 1360, "w": 400, "rot": -10}]})),
+        ],
+        ja=["多くの大富豪は、株はたくさん持っているが、現金は少ない。", "株を売れば、多額の税金を払うことになる。",
+            "そこで代わりに、株を担保にしてお金を借りる。", "借りたお金は収入ではないので、税金がかからない。"],
+        gloss=["stock:株", "cash:現金", "tax:税金", "borrow:借りる", "collateral:担保", "income:収入"],
+        hook="大富豪が「借金」で暮らす理由は?💸", tags="#英語リスニング #やさしい英語 #お金の勉強"),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
@@ -1563,7 +1619,7 @@ def cover(name, sc, props, shots, out_dir):
 def build(name):
     sc = SHORTS[name]
     mr.load_env()
-    out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short", "sea": "sea_short", "geo": "geo_short", "map": "map_short"}.get(sc.get("account"), "if_short")
+    out_dir = ROOT / "out" / {"ivy": "ivy_short", "sci": "sci_short", "sea": "sea_short", "geo": "geo_short", "map": "map_short", "vox": "vox_short"}.get(sc.get("account"), "if_short")
     T_IN, T_CH, T_END = sc.get("intro", INTRO), sc.get("choice", CHOICE), sc.get("end", END)  # 冒頭・2択・最後の秒数(回ごとに変えられる)
     hook_audio = None
     if sc.get("hook_voice"):  # 冒頭の問いを日本語の声で読む(冒頭の長さを声に合わせる)
@@ -1651,7 +1707,7 @@ def build(name):
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
-                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "jaHints", "hint", "karaoke") if k in sc})
+                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "mysteryCollage", "jaHints", "hint", "karaoke") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"
