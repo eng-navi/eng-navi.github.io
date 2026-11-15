@@ -137,7 +137,7 @@ def publish_video(no):
     dst = ROOT / "docs" / "videos" / f"q{no}.mp4"
     if dst.exists():
         return
-    src = ROOT / "out" / dst.name
+    src = ROOT / "out" / "eng_navi" / dst.name
     if not src.exists():
         subprocess.run([sys.executable, "render.py", "quizzes.json", str(no)], cwd=ROOT, check=True)
     dst.parent.mkdir(parents=True, exist_ok=True)

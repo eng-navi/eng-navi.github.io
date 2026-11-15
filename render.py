@@ -17,7 +17,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 ROOT = Path(__file__).parent
 FONTS = ROOT / "fonts"
-OUT = ROOT / "out"
+OUT = ROOT / "out" / "eng_navi"  # eng_navi のリール(11/15 に out 直下から移動)
 BGM = ROOT / "assets" / "bgm.m4a"
 
 W, H, FPS, DURATION = 1080, 1920, 30, 6.25
@@ -234,7 +234,7 @@ class Video:
 
 
 def render(q):
-    OUT.mkdir(exist_ok=True)
+    OUT.mkdir(parents=True, exist_ok=True)
     out = OUT / f"q{q['no']}.mp4"
     video = Video(q)
 

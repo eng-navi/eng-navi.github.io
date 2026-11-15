@@ -12,7 +12,7 @@ Instagram (@eng_navi) 向けの英語クイズ動画を作るプロジェクト�
 ## 作業の流れ
 1. `source/` のスクショを読み、出題ポイントを拾う
 2. `quizzes.json` に追記(question は括弧を `( )` で書く)
-3. `python3 render.py quizzes.json <no>` で動画を書き出す → `out/q<no>.mp4`
+3. `python3 render.py quizzes.json <no>` で動画を書き出す → `out/eng_navi/q<no>.mp4`
 
 ## 投稿の文章
 キャプションは毎回書き下ろす(同じ文の使い回しは凍結・シャドウバンの原因になるため禁止)。quizzes.json の `caption` に入れる。
