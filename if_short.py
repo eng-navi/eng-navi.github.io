@@ -1166,6 +1166,46 @@ SHORTS.update({
         hook="日本の冬を暖める、黒い流れ?🌊", tags=GE),
 })
 
+# ==== 海クイズ 1日3本に(11/15〜17 の 18:15) ====
+SHORTS.update({
+    "sea011_taste": dict(SEA, voice=GEORGE, no="#011", mystery="octopus", cover=0, bgm="sailing",
+        q="What can an octopus's arms do?", q_ja="タコの腕に\nできることは?",
+        choices=["They have hundreds of eyes.", "They can taste things."], answer=2, answer_ja="味を感じることができる。",
+        hl=["arms", "suckers", "taste"],
+        shots=[
+            ("An octopus has eight arms.", dict(type="insert", bg="ocean", insert="octopus", value="8 ARMS", cam="pull", sonar="OCTOPUS")),
+            ("Each arm has hundreds of suckers.", dict(type="lens", bg="ocean", insert="octopus", focus=[460, 1150], wipe="slide")),
+            ("The suckers can taste what they touch!", dict(type="insert", bg="ocean", insert="octopus", value="TASTE!", cam="push")),
+        ],
+        ja=["タコには、8本の腕がある。", "1本の腕に、何百もの吸盤がある。", "吸盤は、さわった物の味がわかる!"],
+        gloss=["arm:腕", "sucker:吸盤", "taste:味わう"],
+        hook="タコの腕は、味がわかる?🐙", tags=SE),
+    "sea012_glow": dict(SEA, voice=MATILDA, no="#012", mystery="jellyfish", cover=0, bgm="lantern",
+        q="What can some jellyfish do in the dark?", q_ja="暗い海で、\nクラゲができることは?",
+        choices=["They can glow.", "They make the sea very dark."], answer=1, answer_ja="光ることができる。",
+        hl=["deep", "light", "glow"],
+        shots=[
+            ("The deep sea is very dark.", dict(type="insert", bg="ocean", insert="card", value="DEEP SEA", cam="rise", sonar="DEEP SEA")),
+            ("Some jellyfish make their own light.", dict(type="insert", bg="ocean", insert="jellyfish", cam="pull")),
+            ("They glow blue and green!", dict(type="insert", bg="ocean", insert="jellyfish", value="GLOW!", cam="push")),
+        ],
+        ja=["深い海は、とても暗い。", "自分で光を作るクラゲもいる。", "青や緑に光る!"],
+        gloss=["deep:深い", "light:光", "glow:光る"],
+        hook="暗い海で光るクラゲがいる?✨", tags=SE),
+    "sea013_fast": dict(SEA, voice=GEORGE, no="#013", mystery="orca", cover=0, bgm="whales",
+        q="How fast can an orca swim?", q_ja="シャチは\nどれくらい速く泳げる?",
+        choices=["Slowly, because they are heavy.", "About fifty kilometers an hour."], answer=2, answer_ja="時速約50キロ",
+        hl=["heavy", "swimmers", "kilometers"],
+        shots=[
+            ("Orcas are big and heavy.", dict(type="insert", bg="ocean", insert="orca", cam="pull", sonar="ORCA")),
+            ("But they are very fast swimmers.", dict(type="insert", bg="ocean", insert="orca", cam="pan")),
+            ("They can swim about fifty kilometers an hour!", dict(type="insert", bg="ocean", insert="orca", value="50 km/h", cam="snap")),
+        ],
+        ja=["シャチは、大きくて重い。", "でも、とても速く泳ぐ。", "時速約50キロで泳げる!"],
+        gloss=["heavy:重い", "swimmer:泳ぐ生き物", "kilometer:キロメートル"],
+        hook="シャチは時速何キロで泳げる?🐋", tags=SE),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
