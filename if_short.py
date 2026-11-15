@@ -1447,9 +1447,9 @@ SHORTS.update({
         q="Why did Amazon start by selling only books?", q_ja="なぜアマゾンは、\n本から始めたの?",
         choices=["Books offered a huge selection no store could match.", "Bezos quit his job to write millions of books."], answer=1,
         answer_ja="本は、どんなお店にも置ききれないほど種類が多かったから。",
-        hl=["quit", "high-paying", "garage", "titles", "offer"],
+        hl=["quit", "Wall", "garage", "titles", "offer"],
         shots=[
-            ("In 1994, Jeff Bezos quit a high-paying Wall Street job.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+            ("In 1994, Jeff Bezos quit his Wall Street job.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
                 {"kind": "person", "who": "bezos", "x": 400, "y": 820, "w": 440, "rot": -5}, {"kind": "label", "text": "1994", "x": 780, "y": 560, "w": 300, "rot": 4},
                 {"kind": "money", "x": 760, "y": 1260, "w": 280, "rot": 10}, {"kind": "stamp", "text": "QUIT", "x": 700, "y": 980, "w": 260, "rot": -14}]})),
             ("He started Amazon in his garage, selling books.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
@@ -1462,9 +1462,9 @@ SHORTS.update({
                 {"kind": "box", "text": "BOOKS", "x": 380, "y": 820, "w": 400, "rot": -6}, {"kind": "chart", "text": "ONLINE", "x": 740, "y": 1180, "w": 400, "rot": 6},
                 {"kind": "stamp", "text": "ALL OF THEM", "x": 560, "y": 1500, "w": 520, "rot": -8}]})),
         ],
-        ja=["1994年、ジェフ・ベゾスはウォール街の高給の仕事を辞めた。", "自宅のガレージで、本を売るアマゾンを始めた。",
+        ja=["1994年、ジェフ・ベゾスはウォール街の仕事を辞めた。", "自宅のガレージで、本を売るアマゾンを始めた。",
             "なぜ本?何百万ものタイトルは、どんなお店にも置ききれない。", "ネットのお店なら、そのすべてを並べられた。"],
-        gloss=["quit:辞める", "high-paying:給料の高い", "garage:ガレージ、車庫", "title:(本の)タイトル、作品", "offer:提供する"],
+        gloss=["quit:辞める", "Wall Street:ウォール街(ニューヨークの金融街)", "garage:ガレージ、車庫", "title:(本の)タイトル、作品", "offer:提供する"],
         hook="アマゾンが本から始めた理由、知ってる?📦", tags="#英語リスニング #やさしい英語 #テック"),
     "vox002_borrow": dict(VOX, no="#002", cover=2, hint="👂ヒント:2文目と3文目に注目",
         mysteryCollage={"bg": "parchment", "items": [{"kind": "figure", "x": 540, "y": 860, "w": 460}, {"kind": "money", "x": 760, "y": 1300, "w": 300, "rot": 8}]},
