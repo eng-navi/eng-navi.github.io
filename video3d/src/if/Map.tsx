@@ -21,7 +21,10 @@ const OVERLAYS: Record<string, [number, number][][]> = {
     [[139.3, 34.8], [140.5, 34.6], [142.5, 35.5]],                           // 相模トラフ
     [[138.5, 35], [138, 37.2], [139.2, 40.5], [139.8, 44], [141.5, 48]],      // 北米(オホーツク)とユーラシア(アムール)の境
   ],
+  nile: [[[32.9, 22.0], [32.9, 24.1], [32.6, 25.7], [31.7, 26.6], [31.2, 27.2], [30.8, 28.5], [31.24, 30.04], [30.9, 31.4]],
+         [[31.24, 30.04], [31.8, 31.4]]],
 };
+const OVERLAY_COLOR: Record<string, string> = { nile: "#2a7fd8" };  // 指定がなければ赤
 
 export type MapSpec = {
   from: [number, number, number]; to?: [number, number, number];  // [経度, 緯度, 倍率(1で世界の横幅が画面いっぱい)]
@@ -94,8 +97,8 @@ export const MapView = ({ m, f, len }: { m: MapSpec; f: number; len: number }) =
             <path d={path(c as never) ?? ""} fill="none" stroke="#fff" strokeWidth={sw * 3.2} /></g> : null;
         })}
         {m.overlay && (OVERLAYS[m.overlay] ?? []).map((line, i) => (
-          <path key={i} d={"M" + line.map(([lo, la]) => (proj([lo, la]) as number[]).join(" ")).join(" L")} fill="none" stroke={red}
-                strokeWidth={sw * 3} strokeDasharray="1" pathLength={1} strokeDashoffset={1 - draw} strokeLinecap="round" />
+          <path key={i} d={"M" + line.map(([lo, la]) => (proj([lo, la]) as number[]).join(" ")).join(" L")} fill="none" stroke={OVERLAY_COLOR[m.overlay!] ?? red}
+                strokeWidth={sw * (m.overlay === "nile" ? 7 : 3)} strokeDasharray="1" pathLength={1} strokeDashoffset={1 - draw} strokeLinecap="round" />
         ))}
       </g>
       {(m.arrows ?? []).map(([a, b, c, d], i) => {

@@ -1251,6 +1251,51 @@ SHORTS.update({
         hook="なぜシンガポールは、こんなに豊かになった?🇸🇬", tags="#英語リスニング #やさしい英語 #地理"),
 })
 
+# ==== 地図で聞く英語(旧4コマのアカウント、11/15〜)====
+AMC = {"591": "#e8332a", "170": "#f2b632", "188": "#3fa34d", "558": "#7cc4a8", "222": "#9b7fd1", "320": "#e98a3a", "484": "#c76b96", "840": "#5b8fd6",
+       "124": "#b5734f", "76": "#3fa34d", "604": "#d9a3a3", "152": "#e98a3a", "32": "#8fbf6a", "862": "#c9a26b", "218": "#d8b26a", "68": "#9b7fd1", "192": "#e98a3a"}
+MEC = {"818": "#f2b632", "434": "#c9a26b", "729": "#e98a3a", "682": "#8fbf6a", "400": "#c76b96", "788": "#9b7fd1", "12": "#d8b26a", "148": "#d9a3a3", "231": "#7cc4a8", "232": "#5b8fd6", "887": "#b5734f"}
+SHORTS.update({
+    "map002_panama": dict(POL, no="#002", cover=1, hint="👂ヒント:2文目と3文目に注目",
+        mysteryMap={"from": [-79.6, 9.0, 20], "style": "political", "colors": AMC},
+        q="Why is tiny Panama so important?", q_ja="なぜ小さなパナマが、\nそんなに重要なの?",
+        choices=["It has a canal that saves ships a long trip.", "Ships sail around Panama every year."], answer=1,
+        answer_ja="船の長い旅を短くする運河があるから。",
+        hl=["sailed", "narrow", "canal", "journey", "vital", "shortcut"],
+        shots=[
+            ("Before 1914, ships sailed around South America.", dict(type="map", bg="dark", hud="BEFORE 1914", map={"style": "political", "colors": AMC,
+                "from": [-80, 0, 1.7], "to": [-75, -10, 1.9], "arrows": [[-70, 35, -38, -8], [-38, -8, -66, -56], [-66, -56, -82, -12], [-82, -12, -122, 35]]})),
+            ("Then Panama opened a canal through its narrow land.", dict(type="map", bg="dark", map={"style": "political", "colors": AMC,
+                "from": [-80, 8, 8], "to": [-79.7, 9.1, 30], "glow": ["591"], "labels": [[-79.7, 9.9, "PANAMA"]], "icons": [[-79.7, 8.6, "🚢"]]})),
+            ("It cut the journey by about thirteen thousand kilometers.", dict(type="map", bg="dark", hud="−13,000 km", map={"style": "political", "colors": AMC,
+                "from": [-90, 15, 2.6], "arrows": [[-72, 35, -79.6, 9.6], [-79.6, 9.0, -120, 33]], "glow": ["591"]})),
+            ("Now a tiny country controls a vital shortcut.", dict(type="map", bg="dark", map={"style": "political", "colors": AMC,
+                "from": [-80, 9, 14], "to": [-80, 9, 10], "glow": ["591"], "labels": [[-80, 10.6, "SHORTCUT"]], "icons": [[-80.6, 8.3, "🇵🇦"]]})),
+        ],
+        ja=["1914年より前、船は南アメリカを回っていた。", "そこでパナマは、細い陸地に運河を開いた。", "旅は、約1万3千キロも短くなった。", "今、小さな国が、重要な近道をにぎっている。"],
+        gloss=["sail:航海する", "narrow:細い", "canal:運河", "journey:旅", "vital:きわめて重要な", "shortcut:近道"],
+        hook="なぜ小さなパナマが、世界にとって重要?🚢", tags="#英語リスニング #やさしい英語 #地理"),
+    "map003_nile": dict(POL, no="#003", cover=2, hint="👂ヒント:3文目に注目",
+        mysteryMap={"from": [31, 27, 8], "style": "political", "colors": MEC, "overlay": "nile"},
+        q="Why do most Egyptians live near one river?", q_ja="エジプトの人の多くが\n1本の川の近くに住むのはなぜ?",
+        choices=["The desert has more water than the river.", "The river gives water and good farmland."], answer=2,
+        answer_ja="川が水と良い農地をくれるから。",
+        hl=["dry", "desert", "flows", "banks", "fertile", "soil", "percent"],
+        shots=[
+            ("Most of Egypt is dry, empty desert.", dict(type="map", bg="dark", map={"style": "political", "colors": MEC,
+                "from": [25, 25, 3.5], "to": [29, 26.5, 7], "labels": [[28, 25, "EGYPT"]], "icons": [[26.5, 23.5, "🏜️"]]})),
+            ("But the Nile River flows straight through it.", dict(type="map", bg="dark", map={"style": "political", "colors": MEC,
+                "from": [31, 27, 8], "overlay": "nile", "labels": [[33.6, 27, "NILE"]]})),
+            ("Its banks offer water and fertile soil.", dict(type="map", bg="dark", map={"style": "political", "colors": MEC,
+                "from": [31.3, 28.5, 16], "to": [31.2, 29.5, 20], "overlay": "nile", "icons": [[30.5, 28.6, "🌾"], [32.0, 29.4, "💧"]]})),
+            ("So about ninety-five percent of Egyptians live along it.", dict(type="map", bg="dark", hud="≈ 95%", map={"style": "political", "colors": MEC,
+                "from": [31, 28, 10], "to": [30, 27, 7], "overlay": "nile", "dots": [[31.24, 30.04], [32.6, 25.7], [31.2, 27.2], [32.9, 24.1]]})),
+        ],
+        ja=["エジプトの大部分は、乾いた何もない砂漠だ。", "でも、ナイル川がまっすぐ流れている。", "川岸には、水と肥えた土がある。", "だから、エジプトの人の約95%が、川沿いに住んでいる。"],
+        gloss=["dry:乾いた", "desert:砂漠", "flow:流れる", "bank:川岸", "fertile:肥えた", "soil:土", "percent:パーセント"],
+        hook="エジプトの人がナイル川沿いに住む理由は?🏜️", tags="#英語リスニング #やさしい英語 #地理"),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
