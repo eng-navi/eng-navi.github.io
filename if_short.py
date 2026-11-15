@@ -1330,6 +1330,8 @@ def comment(sc):
         out += [f"{'①②③④⑤⑥⑦⑧⑨⑩'[k]} {ln}", ja] + [f"　▶ {g.replace(':', ' … ', 1)}" for g in mine] + [sp]
     if sc.get("grammar"):
         out += ["【今日の文の形】", sc["grammar"][0]] + sc["grammar"][1:] + [sp]
+    out += ["【英文まとめ】", " ".join(ln for ln, _ in sc["shots"]), sp,   # 通して読み返したい人向け
+            "【和訳まとめ】", "".join(sc["ja"]), sp]
     out += ["🎧 わからなかった単語は保存して、もう一度聞いてみてね", sp, sc["tags"]]
     return "\n".join(out) + "\n"
 
