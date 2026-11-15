@@ -3197,5 +3197,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 167,
+    "category": "時制",
+    "question": "This soup ( ) too much salt.",
+    "options": [
+      "is containing",
+      "contains"
+    ],
+    "answer": 2,
+    "translation": "このスープは塩が多すぎる。",
+    "explanation": "contain(含んでいる)は「状態」を表す動詞なので、ふつう進行形にしません。\n「〜を含んでいる」と訳せても、is containing は使わないのがポイントです。\n\nしたがって、②contains が正解。",
+    "audio": "audio/q167.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
