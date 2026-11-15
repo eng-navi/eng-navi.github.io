@@ -131,8 +131,8 @@ SHORTS = {
 LISTEN = dict(voice="nPczCjzI2devNBz1zQrb", intro=1.5, mysteryBg="dark", kicker="リスニング", title="クイズ", speed=0.9, gap=0.3)  # 少しゆっくり(約115〜120語/分)
 
 # ---- 名探偵アイビーの謎解き(別アカウント・心理学)。声は Alice(イギリス英語・女性)で固定、語りは探偵の一人称 ----
-IVY = dict(voice="Xb7hH8MSUJpSbSDYk0k2", account="ivy", intro=1.5, mysteryBg="room", hook_voice="WQz3clzUdMqvBf0jswZQ", karaoke=True, choice=3.6, kicker="名探偵アイビーの", title="謎解き", endText="推理の答えはコメント欄で🔍",
-           bg1="#1f5a46", bg2="#0b1611", speed=0.9, gap=0.3)  # 11/15〜 少しゆっくり
+IVY = dict(voice="Xb7hH8MSUJpSbSDYk0k2", account="ivy", intro=1.5, mysteryBg="room", hook_voice="WQz3clzUdMqvBf0jswZQ", karaoke=True, choice=3.2, stretch=1.08, kicker="名探偵アイビーの", title="謎解き", endText="推理の答えはコメント欄で🔍",
+           bg1="#1f5a46", bg2="#0b1611", speed=0.9, gap=0.22)  # 11/15〜 少しゆっくり
 SHORTS.update({
     "case01_decoy": dict(IVY, caseNo="CASE #01",
         q="Why did large popcorn sales suddenly soar?", q_ja="Lサイズのポップコーンが\n急に売れたのはなぜ?",
