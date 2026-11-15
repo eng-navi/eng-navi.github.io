@@ -3178,5 +3178,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 166,
+    "category": "語彙",
+    "question": "The hotel offers a free airport ( ) for its guests.",
+    "options": [
+      "shelter",
+      "shuttle"
+    ],
+    "answer": 2,
+    "translation": "そのホテルは、宿泊客に無料の空港シャトルを提供している。",
+    "explanation": "airport shuttle で「空港までの送迎バス」という意味になります。\nshelter は「避難所、雨宿りの場所」なので、意味が通りません。\n\nしたがって、②shuttle が正解。",
+    "audio": "audio/q166.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
