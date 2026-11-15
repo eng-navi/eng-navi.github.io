@@ -1439,7 +1439,7 @@ SHORTS.update({
 
 # ==== お金×テックの英語(Vox 風コラージュ、別アカウント予定、out/vox_short)====
 # 人物は似顔絵(写真は使わない)。人物の回と、お金の宣伝(アフィリエイト)は同じ回に入れない。投資の助言はしない
-VOX = dict(POL, account="vox", voice="TX3LPaxmHKxFdv7VOQHJ", hook_voice="4lOQ7A2l7HPuG7UIHiKA", mystery="collage", bgm="cycles", capBand=True, speed=0.85, stretch=1.0, gap=0.35,
+VOX = dict(POL, account="vox", voice="TX3LPaxmHKxFdv7VOQHJ", hook_voice="4lOQ7A2l7HPuG7UIHiKA", mystery="collage", bgm="cycles", capBand=False, speed=0.85, stretch=1.0, gap=0.35,
            bg1="#3b3129", bg2="#120e0b")
 SHORTS.update({
     "vox001_amazon": dict(VOX, no="#001", cover=1, hint="👂ヒント:3文目に注目",
