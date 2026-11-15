@@ -1439,7 +1439,7 @@ SHORTS.update({
 
 # ==== お金×テックの英語(Vox 風コラージュ、別アカウント予定、out/vox_short)====
 # 人物は似顔絵(写真は使わない)。人物の回と、お金の宣伝(アフィリエイト)は同じ回に入れない。投資の助言はしない
-VOX = dict(POL, account="vox", voice="TX3LPaxmHKxFdv7VOQHJ", hook_voice="4lOQ7A2l7HPuG7UIHiKA", mystery="collage", bgm="cycles", capBand=False, speed=0.85, stretch=1.0, gap=0.35,
+VOX = dict(POL, account="vox", voice="TX3LPaxmHKxFdv7VOQHJ", hook_voice="4lOQ7A2l7HPuG7UIHiKA", mystery="collage", bgm="cycles", capBand=False, capStroke=9, speed=0.85, stretch=1.0, gap=0.35,
            bg1="#3b3129", bg2="#120e0b")
 SHORTS.update({
     "vox001_amazon": dict(VOX, no="#001", cover=1, hint="👂ヒント:3文目に注目",
@@ -1726,7 +1726,7 @@ def build(name):
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
-                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "mysteryCollage", "jaHints", "hint", "karaoke", "capBand") if k in sc})
+                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "mysteryCollage", "jaHints", "hint", "karaoke", "capBand", "capStroke") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"
