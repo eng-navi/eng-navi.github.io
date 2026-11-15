@@ -2470,5 +2470,121 @@
     "translation": "チームは、コーヒーを飲みながらその計画について話し合った。",
     "explanation": "over coffee で「コーヒーを飲みながら」という意味になります。\nover lunch(ランチを食べながら)も同じ使い方です。\nthrough は「〜を通じて」で、意味が通りません。\n\nしたがって、①over が正解。",
     "caption": "「コーヒーを飲みながら」の前置詞は?☕\n意外な使い方です。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #前置詞"
+  },
+  {
+    "no": 188,
+    "category": "時制",
+    "question": "By next April, I ( ) here for ten years.",
+    "options": [
+      "will have worked",
+      "have worked"
+    ],
+    "answer": 1,
+    "translation": "来年の4月で、私はここで10年働いたことになる。",
+    "explanation": "By next April(来年の4月までに)と、未来のある時点までの継続を表しています。\n未来の時点を基準にするときは、未来完了 will have done を使います。\nhave worked は「今」までの継続です。\n\nしたがって、①will have worked が正解。",
+    "caption": "have worked じゃダメ?📅\n未来の時点がポイントです。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #時制"
+  },
+  {
+    "no": 189,
+    "text": "Nobody can deny that, on top of that, he speaks three languages.",
+    "target": "on top of that",
+    "translation": "そのうえ、彼が3か国語を話せることは誰も否定できない。",
+    "glossary": [
+      "on top of that：そのうえ、さらに",
+      "deny：否定する"
+    ],
+    "explanation": "「on top of that」は「その上に重ねて」=「そのうえ、さらに」という意味です。\n良いことにも悪いことにも使えます。",
+    "caption": "on top of that、どう訳す?📚\n答えと解説はコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 190,
+    "category": "前置詞・接続詞",
+    "question": "The event was held ( ) the heavy rain.",
+    "options": [
+      "although",
+      "despite"
+    ],
+    "answer": 2,
+    "translation": "大雨にもかかわらず、イベントは開催された。",
+    "explanation": "空所の後ろは the heavy rain という名詞なので、前置詞の despite が入ります。\nalthough は接続詞で、後ろに「主語+動詞」が必要です。\n\nしたがって、②despite が正解。",
+    "caption": "although と despite、どっち?☔\n後ろの形を見るのがコツです。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #前置詞"
+  },
+  {
+    "no": 191,
+    "category": "助動詞",
+    "question": "She ( ) have left already. Her bag is gone.",
+    "options": [
+      "must",
+      "should"
+    ],
+    "answer": 1,
+    "translation": "彼女はもう帰ったにちがいない。かばんがなくなっている。",
+    "explanation": "かばんがない、という証拠から「帰ったにちがいない」と推量しています。\n過去のことへの強い推量は must have done です。\nshould have done は「〜すべきだったのに」という後悔です。\n\nしたがって、①must が正解。",
+    "caption": "should じゃないの?👜\n過去の推量の助動詞です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+  },
+  {
+    "no": 192,
+    "text": "This rare stamp is hard to come by these days.",
+    "target": "hard to come by",
+    "translation": "この珍しい切手は、最近では手に入りにくい。",
+    "glossary": [
+      "be hard to come by：手に入りにくい",
+      "rare：珍しい",
+      "these days：最近"
+    ],
+    "explanation": "「come by」には「手に入れる」という意味があります。\n「hard to come by」で「手に入りにくい」となります。",
+    "caption": "hard to come by、どんな意味?🔍\n答えと解説はコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 193,
+    "category": "前置詞",
+    "question": "The new store will open ( ) the river next year.",
+    "options": [
+      "along",
+      "at"
+    ],
+    "answer": 1,
+    "translation": "新しい店は、来年川沿いにオープンする。",
+    "explanation": "川のように長いものに「沿って」いるときは along を使います。\nat は「ある一点」を指すイメージなので、長い川には合いません。\n\nしたがって、①along が正解。",
+    "caption": "「川沿いに」の前置詞は?🏞️\nイメージで選ぶ問題です。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #前置詞"
+  },
+  {
+    "no": 194,
+    "category": "助動詞",
+    "question": "You had better ( ) late again.",
+    "options": [
+      "not be",
+      "be not"
+    ],
+    "answer": 1,
+    "translation": "もう遅刻しないほうがいい。",
+    "explanation": "had better は2語で1つの助動詞のように働きます。\n否定は had better not do の形で、not の位置は better のすぐ後ろです。\n\nしたがって、①not be が正解。",
+    "caption": "not の位置、どっち?⏰\nhad better の否定です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+  },
+  {
+    "no": 195,
+    "text": "His bad mood seems to stem from a lack of sleep.",
+    "target": "stem from",
+    "translation": "彼の機嫌の悪さは、睡眠不足から来ているようだ。",
+    "glossary": [
+      "stem from X：Xから生じる、Xに由来する",
+      "mood：機嫌",
+      "lack of X：Xの不足"
+    ],
+    "explanation": "「stem」は植物の「茎」のこと。茎から伸びるように「〜から生じる」という意味になります。\n原因を説明するときによく使います。",
+    "caption": "stem from、どう訳す?🌱\n答えと解説はコメント欄で👇\n\n#英語フレーズ #英検準1級 #英語イディオム"
+  },
+  {
+    "no": 196,
+    "category": "前置詞",
+    "question": "Many people applied ( ) the job.",
+    "options": [
+      "for",
+      "to"
+    ],
+    "answer": 1,
+    "translation": "多くの人がその仕事に応募した。",
+    "explanation": "「(仕事・職)に応募する」は apply for です。\napply to は「(会社・学校など)に申し込む」や「〜に当てはまる」で使います。\n\nしたがって、①for が正解。",
+    "caption": "apply for と apply to、どっち?💼\nTOEIC 頻出の組み合わせです。\n①か②か、コメントで答えてね\n\n#TOEIC #TOEIC文法 #前置詞"
   }
 ]
