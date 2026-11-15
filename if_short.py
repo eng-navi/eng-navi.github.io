@@ -1224,7 +1224,7 @@ SHORTS.update({
 # ---- 地図(塗り分け)+日本語のフック+英語(Knowledgia 風)。別アカウント予定、出力は out/map_short/。声:英語 Eric(爽やか・クール)、フック Shizuka ----
 SEAC = {"702": "#e8332a", "458": "#f2b632", "360": "#3fa34d", "764": "#e98a3a", "704": "#c76b96", "608": "#5b8fd6", "104": "#9b7fd1",
         "116": "#7cc4a8", "418": "#d9a3a3", "96": "#f2b632", "156": "#b5734f", "356": "#d8b26a", "36": "#c9a26b", "626": "#3fa34d", "598": "#8fbf6a"}
-POL = dict(GEO, account="map", voice="cjVigY5qzO86Huf0OWal", hook_voice="WQz3clzUdMqvBf0jswZQ", speed=0.75, gap=0.4, stretch=0.88, bgm="tunnel", karaoke=True, choice=3.6)  # 声の速さはそのまま、文のあいだを長めに(約110語/分)
+POL = dict(GEO, kicker="", title="", account="map", voice="cjVigY5qzO86Huf0OWal", hook_voice="WQz3clzUdMqvBf0jswZQ", speed=0.75, gap=0.4, stretch=0.88, bgm="tunnel", karaoke=True, choice=3.6)  # 声の速さはそのまま、文のあいだを長めに(約110語/分)
 SHORTS.update({
     "map001_singapore": dict(POL, no="#001", cover=1, hint="👂ヒント:2文目と3文目に注目",
         mysteryMap={"from": [103.8, 1.35, 12], "style": "political", "colors": SEAC},

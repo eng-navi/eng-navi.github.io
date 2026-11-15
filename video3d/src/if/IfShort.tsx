@@ -207,8 +207,8 @@ const MysteryIntro = ({ p }: { p: IfProps }) => {
       <MysteryImage p={p} t={t} />
       <div style={{ position: "absolute", top: 560, fontFamily: EN, fontWeight: 900, fontSize: 420, color: "#ffd23f", WebkitTextStroke: "18px #12142a",
                     paintOrder: "stroke fill", textShadow: "0 20px 50px rgba(0,0,0,0.6)", transform: `scale(${q}) rotate(${(1 - q) * -30}deg)` }}>?</div>
-      <div style={{ position: "absolute", top: 230, padding: "10px 30px", borderRadius: 40, background: "rgba(13,15,24,0.85)", color: "#ffd23f",
-                    fontFamily: JPB, fontWeight: 800, fontSize: 44, letterSpacing: 2 }}>{p.kicker ?? ""}{p.title ?? ""} {p.no ?? p.caseNo ?? ""}</div>
+      {(p.kicker || p.title) && <div style={{ position: "absolute", top: 230, padding: "10px 30px", borderRadius: 40, background: "rgba(13,15,24,0.85)", color: "#ffd23f",
+                    fontFamily: JPB, fontWeight: 800, fontSize: 44, letterSpacing: 2 }}>{p.kicker ?? ""}{p.title ?? ""} {p.no ?? p.caseNo ?? ""}</div>}
       <div style={{ position: "absolute", bottom: 420, width: 860, padding: "26px 32px", borderRadius: 36, background: "#e0533c", textAlign: "center",
                     transform: `translateY(${(1 - box) * 400}px)`, opacity: box }}>
         <div style={{ fontFamily: JPB, fontWeight: 800, fontSize: fitJP(p.q_ja, 58, 760), color: "white", whiteSpace: "pre-line" }}>Q. {p.q_ja}</div>
