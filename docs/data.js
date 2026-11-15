@@ -3160,5 +3160,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 165,
+    "text": "Our vacation plans are still up in the air.",
+    "target": "up in the air",
+    "glossary": [
+      "up in the air：(計画などが)未定で、宙に浮いて",
+      "vacation plans：休暇の予定"
+    ],
+    "translation": "私たちの休暇の予定は、まだ決まっていない。",
+    "explanation": "「up in the air」は「(計画などが)まだ決まっていない」という意味です。\n空中に浮いたままで、着地していないイメージです。",
+    "audio": "audio/q165.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
