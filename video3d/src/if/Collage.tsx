@@ -8,9 +8,9 @@ const SERIF = "Georgia, 'Times New Roman', serif";
 const SANS = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
 
 export type CItem = {
-  kind: "person" | "figure" | "books" | "garage" | "box" | "bank" | "money" | "chart" | "doc" | "news" | "label" | "stamp" | "coin" | "house" | "arrow";
+  kind: "photo" | "person" | "figure" | "books" | "garage" | "box" | "bank" | "money" | "chart" | "doc" | "news" | "label" | "stamp" | "coin" | "house" | "arrow";
   x: number; y: number; w?: number; rot?: number; at?: number;  // at:出てくるまでのフレーム数
-  text?: string; who?: string; color?: string; x2?: number; y2?: number;
+  text?: string; who?: string; color?: string; x2?: number; y2?: number; src?: string;  // src:写真(自由に使えるライセンスのもの。data URI)
 };
 export type CollageSpec = { bg?: "grid" | "parchment" | "gray" | "dark"; items: CItem[]; push?: number };
 
@@ -60,6 +60,8 @@ const Item = ({ it, k }: { it: CItem; k: number }) => {
   const w = it.w ?? 360;
   const t = it.text ?? "";
   switch (it.kind) {
+    case "photo": return <Cut w={w} h={w * 1.25}>  {/* 写真のプリント(少しモノクロ寄り) */}
+      <image href={it.src} x={-w / 2 + 18} y={-w * 0.625 + 18} width={w - 36} height={w * 1.25 - 90} preserveAspectRatio="xMidYMid slice" filter="url(#bw)" /></Cut>;
     case "person": return <Cut w={w} h={w * 1.25}><g transform={`translate(0 ${-w * 0.05}) scale(${w / 460})`}><Face who={it.who} /></g></Cut>;
     case "figure": return <g transform={`scale(${w / 460})`}><Face who="" /></g>;
     case "books": return <Cut w={w} h={w * 0.8}>{[0, 1, 2, 3].map((i) => <rect key={i} x={-w * 0.36} y={w * 0.22 - i * w * 0.14} width={w * 0.72 - i * 12} height={w * 0.12} rx={6}
@@ -111,6 +113,7 @@ export const CollageView = ({ c, f }: { c: CollageSpec; f: number }) => {
         <filter id="csh" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="10" /></filter>
         <filter id="csh2" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="10" dy="14" stdDeviation="8" floodOpacity="0.3" /></filter>
         <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves={3} seed={3} /><feColorMatrix values="0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0.12 0" /></filter>
+        <filter id="bw"><feColorMatrix type="saturate" values="0.15" /><feComponentTransfer><feFuncR type="linear" slope="1.15" intercept="-0.05" /><feFuncG type="linear" slope="1.15" intercept="-0.05" /><feFuncB type="linear" slope="1.1" intercept="-0.03" /></feComponentTransfer></filter>
         <marker id="cah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.5" markerHeight="3.5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d62828" /></marker>
         <linearGradient id="ray" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff" stopOpacity={0.35} /><stop offset="1" stopColor="#fff" stopOpacity={0} /></linearGradient>
       </defs>
@@ -135,7 +138,7 @@ export const CollageView = ({ c, f }: { c: CollageSpec; f: number }) => {
           const yy = 300 + (it.y - 300) * 0.82 + fl;  // 下の字幕と重ならないよう、少し上に寄せる
           return <g key={i} transform={`translate(${it.x + dx} ${yy}) rotate(${it.kind === "arrow" ? 0 : r}) scale(${it.kind === "arrow" ? 1 : sc})`} opacity={Math.min(1, k * 2)}>
             <Item it={it} k={k} />
-            {(it.kind === "person" || it.kind === "doc" || it.kind === "news") && <Tape x={0} y={-(it.w ?? 360) * (it.kind === "person" ? 0.62 : 0.6)} />}
+            {(it.kind === "person" || it.kind === "photo" || it.kind === "doc" || it.kind === "news") && <Tape x={0} y={-(it.w ?? 360) * (it.kind === "person" || it.kind === "photo" ? 0.62 : 0.6)} />}
           </g>;
         })}
       </g>

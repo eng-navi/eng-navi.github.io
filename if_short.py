@@ -1493,6 +1493,14 @@ SHORTS.update({
         hook="大富豪が「借金」で暮らす理由は?💸", tags="#英語リスニング #やさしい英語 #お金の勉強"),
 })
 
+import copy as _copy
+_v = _copy.deepcopy(SHORTS["vox001_amazon"])  # 写真版(似顔絵の代わりに CC BY の写真)
+_v["shots"][0][1]["collage"]["items"][0] = {"kind": "photo", "file": "bezos_2016_s.jpg", "x": 400, "y": 820, "w": 440, "rot": -5}
+_v["mysteryCollage"]["items"][0] = {"kind": "photo", "file": "bezos_2016_s.jpg", "x": 540, "y": 860, "w": 460, "rot": -4}
+_v["credit"] = "DoD photo by Senior Master Sgt. Adrian Cadiz, CC BY 2.0 (via Wikimedia Commons)"
+_v["cover"] = 0
+SHORTS["vox001b_amazon_photo"] = _v
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
@@ -1590,7 +1598,8 @@ def caption(sc):
     sp = "\u3000"
     return "\n".join([sc["hook"], sp, "🎧 この英語、聞き取れる?", "AとBどっち?コメントで答えてね👇",
                       "正解・全文和訳・単語の意味はコメント欄に📌", sp, sc["tags"], sp,
-                      f"Music: {MUSICS[sc.get('bgm', 'the-waves')]} — Music from #Uppbeat (free for Creators!)"])
+                      f"Music: {MUSICS[sc.get('bgm', 'the-waves')]} — Music from #Uppbeat (free for Creators!)"]
+                     + ([f"Photo: {sc['credit']}"] if sc.get("credit") else []))
 
 
 def cover(name, sc, props, shots, out_dir):
@@ -1704,6 +1713,16 @@ def build(name):
         bgm.write_bytes((src if src.exists() else ROOT / "assets" / "bgm" / f"{bgm_id}.mp3").read_bytes())
     tick = PUB / "tick.wav"
     sf.write(tick, np.zeros(int(SR * 0.1), np.float32), SR)  # 時計の音は sfx に入れたので無音
+    def _photo(it):  # collage の photo(file=assets/photos/…)を data URI にする
+        if not it.get("file"):
+            return it
+        b64 = base64.b64encode((ROOT / "assets" / "photos" / it["file"]).read_bytes()).decode()
+        return {**{k: v for k, v in it.items() if k != "file"}, "src": "data:image/jpeg;base64," + b64}
+    for sh in shots:
+        if sh.get("collage"):
+            sh["collage"] = {**sh["collage"], "items": [_photo(it) for it in sh["collage"]["items"]]}
+    if sc.get("mysteryCollage"):
+        sc = {**sc, "mysteryCollage": {**sc["mysteryCollage"], "items": [_photo(it) for it in sc["mysteryCollage"]["items"]]}}
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
