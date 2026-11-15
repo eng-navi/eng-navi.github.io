@@ -1206,6 +1206,21 @@ SHORTS.update({
         hook="シャチは時速何キロで泳げる?🐋", tags=SE),
 })
 
+SHORTS.update({
+    "sea014_breathe": dict(SEA, voice=MATILDA, no="#014", mystery="dolphin", cover=0, bgm="sailing",
+        q="How do dolphins breathe?", q_ja="イルカは\nどうやって息をする?",
+        choices=["Through a hole on their head.", "Like fish, under the sea."], answer=1, answer_ja="頭の上の穴から。",
+        hl=["sea", "fish", "breathe"],
+        shots=[
+            ("Dolphins live in the sea.", dict(type="insert", bg="ocean", insert="dolphin", cam="pan", sonar="DOLPHIN")),
+            ("But they are not fish.", dict(type="insert", bg="ocean", insert="card", value="NOT FISH", cam="push")),
+            ("They breathe air through a hole on their head!", dict(type="insert", bg="ocean", insert="dolphin", value="AIR!", cam="snap")),
+        ],
+        ja=["イルカは、海にすんでいる。", "でも、魚ではない。", "頭の上の穴から、空気を吸う!"],
+        gloss=["sea:海", "fish:魚", "breathe:呼吸する"],
+        hook="イルカは魚じゃない?息のしかたは…🐬", tags=SE),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
