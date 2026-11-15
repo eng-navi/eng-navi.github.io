@@ -1224,32 +1224,30 @@ SHORTS.update({
 # ---- 地図(塗り分け)+日本語のフック+英語(Knowledgia 風)。別アカウント予定、出力は out/map_short/。声:英語 Eric(爽やか・クール)、フック Shizuka ----
 SEAC = {"702": "#e8332a", "458": "#f2b632", "360": "#3fa34d", "764": "#e98a3a", "704": "#c76b96", "608": "#5b8fd6", "104": "#9b7fd1",
         "116": "#7cc4a8", "418": "#d9a3a3", "96": "#f2b632", "156": "#b5734f", "356": "#d8b26a", "36": "#c9a26b", "626": "#3fa34d", "598": "#8fbf6a"}
-POL = dict(GEO, account="map", voice="cjVigY5qzO86Huf0OWal", hook_voice="WQz3clzUdMqvBf0jswZQ", speed=0.85, gap=0.4, bgm="tunnel")
+POL = dict(GEO, account="map", voice="cjVigY5qzO86Huf0OWal", hook_voice="WQz3clzUdMqvBf0jswZQ", speed=0.75, gap=0.4, stretch=0.88, bgm="tunnel", karaoke=True, choice=3.6)  # 声の速さはそのまま、文のあいだを長めに(約110語/分)
 SHORTS.update({
-    "map001_singapore": dict(POL, gap=0.3, no="#001", cover=1, hint="👂ヒント:2文目と3文目に注目",
+    "map001_singapore": dict(POL, no="#001", cover=1, hint="👂ヒント:2文目と3文目に注目",
         mysteryMap={"from": [103.8, 1.35, 12], "style": "political", "colors": SEAC},
         q="Why did tiny Singapore become so rich?", q_ja="なぜシンガポールは、\nこんなに豊かになった?",
         choices=["It was rich in natural resources.", "It sits on a key shipping route."], answer=2,
         answer_ja="世界の重要な航路の上にあるから。",
-        hl=["independent", "resources", "priceless", "advantage", "location", "strait", "trade", "hub"],
+        hl=["independent", "resources", "priceless", "location", "strait", "trade", "hub"],
         shots=[
             ("In 1965, Singapore became independent, with no resources.", dict(type="map", bg="dark", hud="1965", map={"style": "political", "colors": SEAC,
-                "from": [110, 6, 4.2], "to": [103.8, 1.35, 14], "labels": [[103.8, 2.3, "SINGAPORE"]], "icons": [[103.8, 0.5, "🇸🇬"]]})),
-            ("But it had one priceless advantage: location.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
-                "from": [103.8, 1.35, 40], "to": [103.82, 1.35, 130], "glow": ["702"], "icons": [[103.82, 1.47, "📍"]], "labels": [[103.82, 1.2, "SINGAPORE"]]})),
-            ("It sits beside the Strait of Malacca.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
-                "from": [100.5, 3.2, 8], "to": [100.5, 3.0, 11], "glow": ["702"], "arrows": [[97.2, 5.8, 103.3, 1.4]],
-                "labels": [[95.6, 3.4, "STRAIT OF"], [95.6, 1.3, "MALACCA"]]})),
+                "from": [110, 6, 4.2], "to": [103.82, 1.35, 60], "glow": ["702"], "labels": [[103.82, 1.6, "SINGAPORE"]], "icons": [[103.82, 1.2, "🇸🇬"]]})),
+            ("But it had a priceless location, beside the Strait of Malacca.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
+                "from": [103.82, 1.35, 60], "to": [100.5, 3.0, 11], "glow": ["702"], "arrows": [[97.2, 5.8, 103.3, 1.4]],
+                "labels": [[95.6, 3.4, "STRAIT OF"], [95.6, 1.3, "MALACCA"]], "icons": [[103.82, 2.0, "📍"]]})),
             ("A huge share of world sea trade passes here.", dict(type="map", bg="dark", hud="WORLD SEA TRADE", map={"style": "political", "colors": SEAC,
                 "from": [98, 5, 3.6], "to": [100, 5, 4.2], "arrows": [[80, 6, 94, 6.5], [94, 6.5, 103.4, 1.4], [104.4, 1.6, 114, 10]],
                 "icons": [[88, 3.8, "🚢"], [110, 4.5, "🚢"]]})),
-            ("Location turned a tiny island into a global hub.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
+            ("Location made a tiny island a global hub.", dict(type="map", bg="dark", map={"style": "political", "colors": SEAC,
                 "from": [104, 3, 7], "to": [106, 6, 4.2], "glow": ["702"], "labels": [[103.8, 3.2, "GLOBAL HUB"]],
                 "arrows": [[103.8, 1.35, 121, 22], [103.8, 1.35, 82, 8], [103.8, 1.35, 125, -8]]})),
         ],
-        ja=["1965年、シンガポールは、資源のないまま独立した。", "でも、かけがえのない強みが1つあった。「場所」だ。", "マラッカ海峡のすぐそばにある。",
-            "世界の海の貿易の大きな部分が、ここを通る。", "場所が、小さな島を世界の拠点に変えた。"],
-        gloss=["independent:独立した", "resource:資源", "priceless:かけがえのない", "advantage:強み", "location:場所、位置", "strait:海峡", "trade:貿易", "hub:拠点、中心地"],
+        ja=["1965年、シンガポールは、資源のないまま独立した。", "でも、かけがえのない場所にあった。マラッカ海峡のすぐそばだ。",
+            "世界の海の貿易の大きな部分が、ここを通る。", "場所が、小さな島を世界の拠点にした。"],
+        gloss=["independent:独立した", "resource:資源", "priceless:かけがえのない", "location:場所、位置", "strait:海峡", "trade:貿易", "hub:拠点、中心地"],
         hook="なぜシンガポールは、こんなに豊かになった?🇸🇬", tags="#英語リスニング #やさしい英語 #地理"),
 })
 
@@ -1394,10 +1392,11 @@ def build(name):
         parts, words, t0 = [], [], 0.0
         for ln in lines:
             mp3, ws = tts_words(sc["voice"], ln, sc.get("speed"))
-            raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(mp3), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+            st_ = sc.get("stretch", 1.0)  # 1より小さいと、声の高さを変えずにゆっくりにする(読み上げ後に引き伸ばす)
+            raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(mp3), "-af", f"atempo={st_}", "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
                                  capture_output=True, check=True).stdout
             a = np.frombuffer(raw, np.float32)
-            words += [[w, st + t0, en + t0] for w, st, en in ws]
+            words += [[w, st / st_ + t0, en / st_ + t0] for w, st, en in ws]
             parts += [a, np.zeros(int(SR * sc["gap"]), np.float32)]
             t0 += len(a) / SR + sc["gap"]
         story = PUB / f"{name}_story.wav"
@@ -1464,7 +1463,7 @@ def build(name):
     props = dict(q=sc["q"], q_ja=sc["q_ja"], choices=sc["choices"], answer=sc["answer"], words=wlist, intro=T_IN,
                  scenes=[], shots=shots, choiceAt=round(choice_at, 3), answerAt=round(choice_at + T_CH, 3), total=round(total, 3),
                  story=f"if/{story.name}", sfx=f"if/{name}_sfx.wav", tick="if/tick.wav", bgm=f"if/{bgm.name}",
-                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "jaHints", "hint") if k in sc})
+                 choiceSec=int(T_CH), hookAudio=hook_audio, **{k: sc[k] for k in ("kicker", "title", "caseNo", "endText", "bg1", "bg2", "no", "mystery", "mysteryBg", "mysteryValue", "mysteryMap", "jaHints", "hint", "karaoke") if k in sc})
     pf = out_dir / f"{name}.json"
     pf.write_text(json.dumps(props, ensure_ascii=False))
     out = out_dir / f"{name}.mp4"

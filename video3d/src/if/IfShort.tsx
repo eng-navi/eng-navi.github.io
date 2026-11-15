@@ -25,7 +25,7 @@ export type Word = { text: string; start: number; end: number; hl?: boolean; ja?
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
   kicker?: string; title?: string; caseNo?: string; endText?: string; bg1?: string; bg2?: string;
   no?: string; mystery?: string; mysteryBg?: string; mysteryValue?: string; mysteryMap?: MapSpec; jaHints?: boolean;
-  hook?: string; coverShot?: Shot; badge?: string; hint?: string; hookAudio?: string | null };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
+  hook?: string; coverShot?: Shot; badge?: string; hint?: string; hookAudio?: string | null; karaoke?: boolean };  // hint:冒頭の問いの下の聞きどころ  // カバー画像用  // no:シリーズ番号 / mystery:冒頭とループの謎の絵 / jaHints:字幕に単語の日本語
 
 const W = 1080, H = 1920;
 const EN = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
@@ -142,6 +142,35 @@ const Eye2 = ({ kind }: { kind?: Eyes }) => (
     : <ellipse key={x} cx={x} cy={0} rx={18} ry={22} fill="#fff" />)}</g>
 );
 
+// カラオケ式の字幕:1文をその場に表示し、読んだ単語から色が変わる(英語に慣れていない人向け。飛び出す動きはなし)
+const Karaoke = ({ words }: { words: Word[] }) => {
+  const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const t = f / fps;
+  const sents: Word[][] = [];
+  let cur: Word[] = [];
+  words.forEach((w) => { cur.push(w); if (/[.?!]$/.test(w.text)) { sents.push(cur); cur = []; } });
+  if (cur.length) sents.push(cur);
+  const si = sents.findIndex((g, i) => t >= g[0].start - 0.15 && (i + 1 >= sents.length || t < sents[i + 1][0].start - 0.15));
+  if (si < 0) return null;
+  const g = sents[si];
+  if (t > g[g.length - 1].end + 0.6 && si + 1 >= sents.length) return null;
+  const fade = Math.min(1, (t - (g[0].start - 0.15)) / 0.2);
+  const jas = g.filter((w) => w.ja);
+  return (
+    <div style={{ position: "absolute", bottom: 330, left: 110, right: 110, textAlign: "center", opacity: fade, transform: `translateY(${(1 - fade) * 14}px)` }}>
+      <div style={{ fontFamily: EN, fontWeight: 900, fontSize: 64, lineHeight: 1.22, textShadow: "0 6px 18px rgba(0,0,0,0.65)", WebkitTextStroke: "3px #0b0b10", paintOrder: "stroke fill" }}>
+        {g.map((w, i) => {
+          const said = t >= w.start;
+          return <span key={i} style={{ color: said ? (w.hl ? "#ffd23f" : "#ffffff") : "rgba(255,255,255,0.45)" }}>{w.text} </span>;
+        })}
+      </div>
+      {jas.length > 0 && <div style={{ fontFamily: JPB, fontSize: 38, fontWeight: 800, color: "#fff4c2", marginTop: 12, textShadow: "0 3px 10px rgba(0,0,0,0.8)" }}>
+        {jas.map((w) => `${w.text.replace(/[^A-Za-z'-]/g, "")} = ${w.ja}`).join("  ")}</div>}
+    </div>
+  );
+};
+
 // 1〜3語ずつの字幕(ナレーションの単語のタイミングに合わせる)
 const Captions = ({ words, offset, jaHints = false }: { words: Word[]; offset: number; jaHints?: boolean }) => {
   const f = useCurrentFrame();
@@ -234,7 +263,7 @@ export const IfShort = (p: IfProps) => {
           <div style={{ fontFamily: JPB, fontWeight: 800, whiteSpace: "nowrap", letterSpacing: 1,
                         fontSize: Math.min(48, Math.floor(790 / (p.q_ja.replace("\n", "").length + 2))) }}>Q. {p.q_ja.replace("\n", "")}</div>
           <div style={{ fontFamily: EN, fontWeight: 800, fontSize: 34, color: "#fff1ec", marginTop: 6, lineHeight: 1.15 }}>{p.q}</div></div>
-        <Captions words={p.words} offset={0} jaHints={p.jaHints} />
+        {p.karaoke ? <Karaoke words={p.words} /> : <Captions words={p.words} offset={0} jaHints={p.jaHints} />}
         <Audio src={staticFile(p.story)} />
       </Sequence>
       <Sequence from={fr(p.choiceAt)} durationInFrames={fr(p.answerAt - p.choiceAt)}><Choices p={p} end={false} /><Audio src={staticFile(p.tick)} /></Sequence>
