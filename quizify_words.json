@@ -1226,27 +1226,6 @@
    "source": null
   },
   {
-   "word": "obsessed",
-   "no": 313,
-   "status": "投稿済み",
-   "date": "2026-11-14",
-   "source": null
-  },
-  {
-   "word": "uphold",
-   "no": 314,
-   "status": "投稿済み",
-   "date": "2026-11-14",
-   "source": null
-  },
-  {
-   "word": "overthrow",
-   "no": 315,
-   "status": "投稿済み",
-   "date": "2026-11-14",
-   "source": null
-  },
-  {
    "word": "itinerary",
    "no": 316,
    "status": "予定",
@@ -1265,6 +1244,27 @@
    "no": 318,
    "status": "予定",
    "date": "2026-11-13",
+   "source": null
+  },
+  {
+   "word": "obsessed",
+   "no": 313,
+   "status": "投稿済み",
+   "date": "2026-11-14",
+   "source": null
+  },
+  {
+   "word": "uphold",
+   "no": 314,
+   "status": "投稿済み",
+   "date": "2026-11-14",
+   "source": null
+  },
+  {
+   "word": "overthrow",
+   "no": 315,
+   "status": "投稿済み",
+   "date": "2026-11-14",
    "source": null
   }
  ],
@@ -2071,6 +2071,146 @@
    "word": "bear A in mind",
    "no": 190,
    "status": "投稿済み",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "notice A doing",
+   "no": 191,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "refer to A",
+   "no": 192,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "approach A",
+   "no": 193,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "wonder if ~",
+   "no": 194,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "solve a problem",
+   "no": 195,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "It occurs to A that ~",
+   "no": 196,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "argue that ~",
+   "no": 197,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "claim that ~",
+   "no": 198,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "express oneself",
+   "no": 199,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "draw a conclusion",
+   "no": 200,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "supply A with B",
+   "no": 201,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "prefer A to B",
+   "no": 202,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "mention A",
+   "no": 203,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "contact A",
+   "no": 204,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "apply for A",
+   "no": 205,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "search for A",
+   "no": 206,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "connect A to B",
+   "no": 207,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "suffer from A",
+   "no": 208,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "take advantage of A",
+   "no": 209,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "have an impact on A",
+   "no": 210,
+   "status": "予定",
    "date": "2026-11-15",
    "source": null
   }
