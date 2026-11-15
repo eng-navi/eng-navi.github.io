@@ -67,8 +67,17 @@ const SciHair = () => (
   </g>
 );
 
-export const Head = ({ r = 200, eyes = "normal", mouth = "smile", rim = "#f2a65a", look = 0, detective = false, sci = false }:
-  { r?: number; eyes?: Eyes; mouth?: Mouth; rim?: string; look?: number; detective?: boolean; sci?: boolean }) => {
+// 帽子(中折れ帽・キャップ)
+const OtherHat = ({ kind }: { kind: string }) => kind === "fedora" ? (
+  <g><ellipse cx={0} cy={-150} rx={280} ry={46} fill="#1d1d22" /><path d="M-160 -150 Q-170 -330 0 -320 Q170 -330 160 -150 Z" fill="#26262c" />
+    <path d="M-160 -175 Q0 -150 160 -175 L160 -150 Q0 -128 -160 -150 Z" fill="#8a2b2b" /><path d="M-60 -315 Q0 -280 60 -315" stroke="#1d1d22" strokeWidth={14} fill="none" /></g>
+) : (
+  <g><path d="M-190 -110 Q-200 -300 0 -300 Q200 -300 190 -110 Z" fill="#e8332a" /><path d="M150 -120 Q330 -110 360 -70 Q250 -60 140 -90 Z" fill="#c62828" />
+    <circle cx={0} cy={-298} r={16} fill="#c62828" /></g>
+);
+
+export const Head = ({ r = 200, eyes = "normal", mouth = "smile", rim = "#f2a65a", look = 0, detective = false, sci = false, hat, glint = -1 }:
+  { r?: number; eyes?: Eyes; mouth?: Mouth; rim?: string; look?: number; detective?: boolean; sci?: boolean; hat?: string; glint?: number }) => {
   const k = r / 200;
   return (
     <g>
@@ -82,6 +91,13 @@ export const Head = ({ r = 200, eyes = "normal", mouth = "smile", rim = "#f2a65a
         <MouthShape kind={mouth} />
       </g>
       {detective && <g transform={`scale(${k})`}><Hat /></g>}
+      {hat && <g transform={`scale(${k})`}><OtherHat kind={hat} /></g>}
+      {(eyes === "glasses" || sci) && glint >= 0 && glint < 0.35 && (  /* めがねがピカーン */
+        <g transform={`scale(${k}) translate(${look * 30} -10)`}>
+          {[-62, 62].map((x) => <g key={x}><clipPath id={`gl${x}`}><circle cx={x} cy={0} r={46} /></clipPath>
+            <rect x={x - 120 + glint * 680} y={-60} width={34} height={120} fill="#fff" opacity={0.9} transform={`skewX(-25)`} clipPath={`url(#gl${x})`} /></g>)}
+          <path d={`M${80 + glint * 200} -40 l10 -26 l10 26 l26 10 l-26 10 l-10 26 l-10 -26 l-26 -10 Z`} fill="#fff" opacity={1 - glint * 2.5} />
+        </g>)}
       {sci && <g transform={`scale(${k})`}><SciHair />
         <g transform={`translate(${look * 30} -10)`} fill="none" stroke="#d9a63a" strokeWidth={9}><circle cx={-62} cy={0} r={46} /><circle cx={62} cy={0} r={46} /><path d="M-16 0 L16 0" /></g></g>}
     </g>
@@ -89,8 +105,10 @@ export const Head = ({ r = 200, eyes = "normal", mouth = "smile", rim = "#f2a65a
 };
 
 // 全身(小さめのショット用)。服はパーカー風
-export const Body = ({ color = "#2f6fd6", rim = "#f2a65a", eyes = "normal" as Eyes, mouth = "smile" as Mouth, pose = "stand", step = 0, detective = false, sci = false }:
-  { color?: string; rim?: string; eyes?: Eyes; mouth?: Mouth; pose?: "stand" | "run" | "point" | "lens"; step?: number; detective?: boolean; sci?: boolean }) => {
+export const Body = ({ color = "#2f6fd6", rim = "#f2a65a", eyes = "normal" as Eyes, mouth = "smile" as Mouth, pose = "stand", step = 0, detective = false, sci = false,
+  act, t = 0, hat, glint = -1, prop }:
+  { color?: string; rim?: string; eyes?: Eyes; mouth?: Mouth; pose?: "stand" | "run" | "point" | "lens"; step?: number; detective?: boolean; sci?: boolean;
+    act?: string; t?: number; hat?: string; glint?: number; prop?: string }) => {
   const sw = pose === "run" ? Math.sin(step) * 40 : 0;
   return (
     <g>
@@ -104,8 +122,19 @@ export const Body = ({ color = "#2f6fd6", rim = "#f2a65a", eyes = "normal" as Ey
       {detective && <rect x={-70} y={-250} width={140} height={22} fill="#3b2a1a" />}
       {sci && <><path d="M-78 -375 L-104 -120 L104 -120 L78 -375 Z" fill="#f4f4f0" /><path d="M-30 -380 L0 -300 L30 -380 M0 -300 L0 -130" stroke="#c9c9c2" strokeWidth={8} fill="none" />
         <rect x={30} y={-300} width={34} height={40} rx={6} fill="#4fd1c5" /></>}
-      <path d={pose === "point" || pose === "lens" ? "M-58 -340 L-90 -220 M58 -340 L170 -400" : `M-58 -340 L${-92 + sw} -210 M58 -340 L${92 - sw} -210`} stroke={color} strokeWidth={34} strokeLinecap="round" fill="none" />
-      <g transform="translate(0 -500)"><Head r={120} eyes={eyes} mouth={mouth} rim={rim} detective={detective} sci={sci} /></g>
+      {act && (() => {  // 手振り(wave/think/shrug/hold/cheer)。holdはスマホ・マグを持つ
+        const w = Math.sin(t * 9);
+        const R = act === "wave" ? [150 + w * 30, -500] : act === "think" ? [30, -440] : act === "shrug" ? [150, -400 - w * 10] : act === "hold" ? [70, -430] : act === "cheer" ? [120 + w * 10, -560] : [92, -210];
+        const L = act === "shrug" ? [-150, -400 - w * 10] : act === "cheer" ? [-120 - w * 10, -560] : [-92, -210];
+        return <g><path d={`M-58 -340 L${L[0]} ${L[1]} M58 -340 L${R[0]} ${R[1]}`} stroke={color} strokeWidth={34} strokeLinecap="round" fill="none" />
+          <circle cx={R[0]} cy={R[1]} r={22} fill="#0f0f12" /><circle cx={L[0]} cy={L[1]} r={22} fill="#0f0f12" />
+          {act === "hold" && prop === "phone" && <g transform={`translate(${R[0] + 10} ${R[1] - 60})`}><rect x={-34} y={-60} width={68} height={120} rx={12} fill="#15161c" /><rect x={-28} y={-52} width={56} height={100} rx={8} fill="#5b8fd6" /></g>}
+          {act === "hold" && prop === "mug" && <g transform={`translate(${R[0] + 16} ${R[1] - 30})`}><rect x={-30} y={-40} width={60} height={70} rx={10} fill="#f4f4f0" /><path d="M30 -25 Q60 -10 30 15" stroke="#f4f4f0" strokeWidth={10} fill="none" />
+            {[0, 1].map((i) => <path key={i} d={`M${-10 + i * 20} -50 q10 -20 0 -40`} stroke="#fff" strokeWidth={5} fill="none" opacity={0.5 + 0.4 * Math.sin(t * 4 + i)} />)}</g>}
+        </g>;
+      })()}
+      {!act && <path d={pose === "point" || pose === "lens" ? "M-58 -340 L-90 -220 M58 -340 L170 -400" : `M-58 -340 L${-92 + sw} -210 M58 -340 L${92 - sw} -210`} stroke={color} strokeWidth={34} strokeLinecap="round" fill="none" />}
+      <g transform="translate(0 -500)"><Head r={120} eyes={eyes} mouth={mouth} rim={rim} detective={detective} sci={sci} hat={hat} glint={glint} /></g>
       {pose === "lens" && <Lens x={200} y={-470} r={60} rot={-20} />}
     </g>
   );

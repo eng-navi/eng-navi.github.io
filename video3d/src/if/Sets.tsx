@@ -64,6 +64,60 @@ export const Backdrop = ({ kind, blur = 0 }: { kind: string; blur?: number }) =>
         {[120, 380, 760, 960].map((x, i) => <path key={i} d={`M${x} 1700 q-20 -${120 + i * 40} 10 -${220 + i * 50}`} stroke="#0f5132" strokeWidth={18} fill="none" strokeLinecap="round" />)}
       </g>
     ),
+    field: (  // 夕焼けのサッカー場
+      <g>
+        <rect width={W} height={H} fill="url(#sunset)" />
+        <circle cx={300} cy={760} r={130} fill="#ffe3a1" opacity={0.9} />
+        <rect x={0} y={1080} width={W} height={H - 1080} fill="#3f8f4a" />
+        {[0, 1, 2, 3, 4].map((i) => <rect key={i} x={0} y={1080 + i * 170} width={W} height={85} fill="#4a9c55" />)}
+        <path d="M120 1120 L120 900 L560 900 L560 1120" stroke="#fff" strokeWidth={12} fill="none" />
+        {[...Array(9)].map((_, i) => <line key={i} x1={120 + i * 55} y1={900} x2={120 + i * 55} y2={1120} stroke="#fff" strokeWidth={3} opacity={0.5} />)}
+        {[60, 980].map((x) => <g key={x}><rect x={x - 8} y={520} width={16} height={560} fill="#555" /><rect x={x - 50} y={500} width={100} height={40} fill="#fff9e0" /></g>)}
+      </g>
+    ),
+    road: (  // 夕焼けの道
+      <g>
+        <rect width={W} height={H} fill="url(#sunset)" />
+        <circle cx={540} cy={1000} r={190} fill="#ffd27a" opacity={0.95} />
+        <rect x={0} y={1080} width={W} height={H - 1080} fill="#3b3346" />
+        <path d="M440 1080 L640 1080 L1080 1920 L0 1920 Z" fill="#54485e" />
+        {[0, 1, 2, 3].map((i) => <rect key={i} x={530 - i * 8} y={1150 + i * 190} width={20 + i * 16} height={70 + i * 30} fill="#f4e3c0" opacity={0.8} />)}
+        {[[80, 860, 120], [880, 880, 140]].map(([x, y, w], i) => <rect key={i} x={x} y={y} width={w} height={220} fill="#2c2536" />)}
+      </g>
+    ),
+    rain: (  // 夜の雨の街
+      <g>
+        <rect width={W} height={H} fill="#1b2433" />
+        {[[0, 700, 260], [240, 820, 220], [700, 650, 380]].map(([x, y, w], i) => <rect key={i} x={x} y={y} width={w} height={H} fill="#141b27" />)}
+        {[...Array(24)].map((_, i) => <rect key={i} x={30 + (i * 97) % 1000} y={760 + (i * 53) % 400} width={22} height={30} fill="#ffd97a" opacity={0.35} />)}
+        <rect x={0} y={1300} width={W} height={H - 1300} fill="#0f141d" />
+        <rect x={0} y={1300} width={W} height={20} fill="#3a4a63" opacity={0.6} />
+      </g>
+    ),
+    space: (
+      <g>
+        <rect width={W} height={H} fill="#070a1a" />
+        {[...Array(80)].map((_, i) => <circle key={i} cx={(i * 137) % W} cy={(i * 241) % H} r={1 + (i % 3)} fill="#fff" opacity={0.4 + (i % 5) * 0.12} />)}
+        <circle cx={820} cy={1500} r={420} fill="#2f6fd6" /><path d="M520 1300 Q700 1380 760 1520 Q820 1650 1000 1700" stroke="#3fa34d" strokeWidth={90} fill="none" opacity={0.8} />
+      </g>
+    ),
+    classroom: (
+      <g>
+        <rect width={W} height={H} fill="#f3e6cf" />
+        <rect x={140} y={420} width={800} height={460} rx={10} fill="#2f5d4a" stroke="#8a6a4c" strokeWidth={22} />
+        <path d="M220 560 L460 560 M220 640 L620 640 M220 720 L520 720" stroke="#e8f1e9" strokeWidth={10} opacity={0.7} />
+        <rect x={0} y={1250} width={W} height={H - 1250} fill="#c9a77a" />
+        {[200, 620].map((x) => <rect key={x} x={x} y={1150} width={260} height={30} fill="#8a6a4c" />)}
+      </g>
+    ),
+    kitchen: (
+      <g>
+        <rect width={W} height={H} fill="#fbf1e2" />
+        {[...Array(6)].map((_, i) => <rect key={i} x={i * 180} y={300} width={170} height={300} rx={10} fill="#e9d8bf" />)}
+        <rect x={0} y={1050} width={W} height={60} fill="#b98d62" /><rect x={0} y={1110} width={W} height={H - 1110} fill="#e2cfb3" />
+        <rect x={700} y={820} width={240} height={230} rx={14} fill="#cfd8dc" /><circle cx={820} cy={935} r={70} fill="#9aa7ad" />
+      </g>
+    ),
     dark: (
       <g>
         <rect width={W} height={H} fill="#0d0f18" />

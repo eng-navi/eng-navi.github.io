@@ -22,6 +22,9 @@ export type Shot = {
   focus?: [number, number];         // lens でのぞく位置
   zoom?: number;                    // 絵の拡大率(正体を隠したいときに大きく)
   sonar?: string;                   // ソナー風の枠とラベル
+  act?: string; prop?: string; hat?: string;   // 手振り(wave/think/shrug/hold/cheer)・持ち物(phone/mug)・帽子(fedora/cap)
+  eyesTo?: Eyes; mouthTo?: Mouth;   // カットの途中で表情が変わる
+  speed?: boolean;                  // スピード線
 };
 export type Word = { text: string; start: number; end: number; hl?: boolean; ja?: string };
 export type IfProps = QuizProps & { shots: Shot[]; words: Word[]; story: string; sfx: string;
@@ -53,9 +56,12 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
   // 口パク:ナレーションの単語が鳴っている間、4フレームごとに口を開け閉め
   const gt = s.start + t;
   const talking = words.some((w) => gt >= w.start && gt <= w.end);
-  const mouth = talking && Math.floor(f / 4) % 2 === 0 ? ("o" as Mouth) : s.mouth;
-  const blink = (f % 75) < 3 && s.eyes !== "happy" && s.eyes !== "squint";
-  const eyes = blink ? ("happy" as Eyes) : s.eyes;
+  const half = f > len * 0.5;
+  const eyesB = half && s.eyesTo ? s.eyesTo : s.eyes, mouthB = half && s.mouthTo ? s.mouthTo : s.mouth;
+  const mouth = talking && Math.floor(f / 4) % 2 === 0 ? ("o" as Mouth) : mouthB;
+  const blink = (f % 75) < 3 && eyesB !== "happy" && eyesB !== "squint";
+  const eyes = blink ? ("happy" as Eyes) : eyesB;
+  const gl = (f % 70) / 70;  // めがねの光
   const bob = Math.sin(f / 6) * 6;
   const close = ["face", "eyes", "ots", "silhouette"].includes(s.type);
   const iris = s.wipe === "iris" ? interpolate(f, [0, 9], [0, 1300], { extrapolateRight: "clamp" }) : 2000;
@@ -77,14 +83,16 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
         <g clipPath="url(#iris)">
         <Backdrop kind={s.bg} blur={close ? 14 : s.type === "insert" || s.type === "lens" ? 18 : 0} />
         {s.bg === "ocean" && <OceanFX t={t} />}
-        {s.type === "face" && <g transform={`translate(540 ${1080 + bob})`}><Head r={330} eyes={eyes} mouth={mouth} rim={s.rim} detective={det} sci={s.sci} />
+        {s.type === "face" && <g transform={`translate(540 ${1080 + bob})`}><Head r={330} eyes={eyes} mouth={mouth} rim={s.rim} detective={det} sci={s.sci} hat={s.hat} glint={gl} />
           <path d="M-330 360 Q0 260 330 360 L380 900 L-380 900 Z" fill={s.color ?? "#2f6fd6"} />
           {det && <path d="M-200 330 L0 520 L200 330 L150 900 L-150 900 Z" fill="#1d3f35" />}</g>}
         {s.type === "eyes" && <g transform="translate(540 960)"><Head r={720} eyes={eyes} mouth="none" rim={s.rim} /></g>}
-        {s.type === "full" && <g transform={`translate(540 ${1560})`}><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} detective={det} sci={s.sci} pose={det ? "lens" : "stand"} /></g>}
-        {s.type === "wide" && <g transform="translate(540 1500) scale(0.55)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={s.mouth} pose="run" step={f / 3} detective={det} sci={s.sci} /></g>}
+        {s.type === "full" && <g transform={`translate(540 ${1560})`}><Body color={s.color} act={s.act} t={t} prop={s.prop} rim={s.rim} eyes={eyes} mouth={mouth} detective={det} sci={s.sci} hat={s.hat} glint={gl} pose={det ? "lens" : "stand"} /></g>}
+        {s.type === "wide" && [2, 1].map((g) => <g key={g} transform={`translate(${540 - g * 70} 1500) scale(0.55)`} opacity={0.18 * (3 - g)}>  {/* 走る残像 */}
+          <Body color={s.color} eyes={eyes} mouth={s.mouth} pose="run" step={(f - g * 3) / 3} /></g>)}
+        {s.type === "wide" && <g transform="translate(540 1500) scale(0.55)"><Body color={s.color} act={s.act} t={t} prop={s.prop} rim={s.rim} eyes={eyes} mouth={s.mouth} pose="run" step={f / 3} detective={det} sci={s.sci} hat={s.hat} glint={gl} /></g>}
         {s.type === "two" && <>
-          <g transform="translate(300 1600) scale(0.95)"><Body color={s.color} rim={s.rim} eyes={eyes} mouth={mouth} pose={det ? "lens" : "point"} detective={det} sci={s.sci} /></g>
+          <g transform="translate(300 1600) scale(0.95)"><Body color={s.color} act={s.act} t={t} prop={s.prop} rim={s.rim} eyes={eyes} mouth={mouth} pose={det ? "lens" : "point"} detective={det} sci={s.sci} hat={s.hat} glint={gl} /></g>
           <g transform="translate(800 1620) scale(0.85)"><Body color={s.color2 ?? "#c0392b"} rim="#ffffff" eyes={s.eyes2} mouth={s.mouth2} /></g></>}
         {s.type === "ots" && <>  {/* 肩越し:手前に主人公の後頭部、奥に相手 */}
           <g transform="translate(560 1640) scale(0.95)"><Body color={s.color2 ?? "#c0392b"} rim="#ffffff" eyes={s.eyes2} mouth={s.mouth2} /></g>
@@ -92,7 +100,7 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
             <path d="M-360 300 Q0 200 360 300 L420 900 L-420 900 Z" fill={s.color ?? "#2f6fd6"} /></g></>}
         {s.type === "silhouette" && <>  {/* 逆光のシルエット */}
           <circle cx={540} cy={900} r={520} fill="#fff4d6" opacity={0.9} />
-          <g transform="translate(540 1560)" style={{ filter: "brightness(0)" }}><Body color={s.color} eyes={eyes} mouth="none" detective={det} sci={s.sci} pose={det ? "lens" : "stand"} /></g>
+          <g transform="translate(540 1560)" style={{ filter: "brightness(0)" }}><Body color={s.color} act={s.act} t={t} prop={s.prop} eyes={eyes} mouth="none" detective={det} sci={s.sci} hat={s.hat} glint={gl} pose={det ? "lens" : "stand"} /></g>
           <g transform="translate(540 1060)"><Eye2 kind={eyes} /></g></>}
         {(s.type === "insert" || s.type === "lens") && s.insert && <Insert kind={s.insert} value={s.value} t={t} />}
         {s.type === "lens" && s.insert && <>  {/* 虫めがねでのぞいた部分だけ拡大 */}
@@ -102,10 +110,14 @@ const ShotView = ({ s, words }: { s: Shot; words: Word[] }) => {
         {s.type === "split" && <>  {/* 画面を左右に分けて比べる */}
           <rect x={0} y={0} width={540} height={H} fill="#1f3b5c" /><rect x={540} y={0} width={540} height={H} fill="#5c1f2b" />
           <rect x={530} y={0} width={20} height={H} fill="#fff" />
-          <g transform={`translate(270 ${1400 + bob}) scale(0.7)`}><Body color={s.color} eyes={eyes} mouth={s.mouth} detective={det} sci={s.sci} /></g>
+          <g transform={`translate(270 ${1400 + bob}) scale(0.7)`}><Body color={s.color} act={s.act} t={t} prop={s.prop} eyes={eyes} mouth={s.mouth} detective={det} sci={s.sci} hat={s.hat} glint={gl} /></g>
           <g transform={`translate(810 ${1400 - bob}) scale(0.7)`}><Body color={s.color2 ?? "#c0392b"} rim="#fff" eyes={s.eyes2} mouth={s.mouth2} /></g>
           <text x={270} y={720} textAnchor="middle" fontSize={96} fontWeight={900} fill="#fff" fontFamily={EN}>{s.left}</text>
           <text x={810} y={720} textAnchor="middle" fontSize={96} fontWeight={900} fill="#ffd23f" fontFamily={EN}>{s.right}</text></>}
+        {s.bg === "rain" && [...Array(60)].map((_, i) => { const x = (i * 71) % W, y = ((i * 131) + f * 38) % H;  /* 雨 */
+          return <line key={`r${i}`} x1={x} y1={y} x2={x - 8} y2={y + 46} stroke="#a9c4e8" strokeWidth={3} opacity={0.5} />; })}
+        {s.speed && [...Array(14)].map((_, i) => { const y = 300 + (i * 97) % 1400, x = W - ((i * 233 + f * 70) % (W + 600));  /* スピード線 */
+          return <rect key={`s${i}`} x={x} y={y} width={260 + (i % 3) * 120} height={6} fill="#fff" opacity={0.35} />; })}
         {s.mark && <circle cx={s.mark[0]} cy={s.mark[1]} r={s.mark[2]} fill="none" stroke="#ff3b30" strokeWidth={16} strokeLinecap="round"
           strokeDasharray={2 * Math.PI * s.mark[2]} strokeDashoffset={(1 - markK) * 2 * Math.PI * s.mark[2]} transform={`rotate(-90 ${s.mark[0]} ${s.mark[1]})`} />}
         </g>

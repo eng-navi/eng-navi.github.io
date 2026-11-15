@@ -131,7 +131,7 @@ SHORTS = {
 LISTEN = dict(voice="nPczCjzI2devNBz1zQrb", intro=1.5, mysteryBg="dark", kicker="リスニング", title="クイズ", speed=0.9, gap=0.3)  # 少しゆっくり(約115〜120語/分)
 
 # ---- 名探偵アイビーの謎解き(別アカウント・心理学)。声は Alice(イギリス英語・女性)で固定、語りは探偵の一人称 ----
-IVY = dict(voice="Xb7hH8MSUJpSbSDYk0k2", account="ivy", intro=1.5, mysteryBg="room", kicker="名探偵アイビーの", title="謎解き", endText="推理の答えはコメント欄で🔍",
+IVY = dict(voice="Xb7hH8MSUJpSbSDYk0k2", account="ivy", intro=1.5, mysteryBg="room", hook_voice="WQz3clzUdMqvBf0jswZQ", karaoke=True, choice=3.6, kicker="名探偵アイビーの", title="謎解き", endText="推理の答えはコメント欄で🔍",
            bg1="#1f5a46", bg2="#0b1611", speed=0.9, gap=0.3)  # 11/15〜 少しゆっくり
 SHORTS.update({
     "case01_decoy": dict(IVY, caseNo="CASE #01",
@@ -199,7 +199,7 @@ SHORTS.update({
 })
 
 # ---- やさしい英語の科学クイズ(別アカウント)。英検3級〜準2級の単語、ゆっくり(0.7倍+文のあいだに0.7秒、約105語/分)、短い2〜3文で15秒前後。声は Sarah(アメリカ英語・女性)、博士のキャラ ----
-SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", speed=0.7, gap=0.7, bgm="cycles", kicker="やさしい英語の", title="科学クイズ", jaHints=True,
+SCI = dict(voice="EXAVITQu4vr4xnSDxMaL", account="sci", hook_voice="4lOQ7A2l7HPuG7UIHiKA", karaoke=True, speed=0.7, gap=0.7, bgm="cycles", kicker="やさしい英語の", title="科学クイズ", jaHints=True,
            intro=1.5, choice=3.2, end=2.6, endText="答えはコメント欄で👇", bg1="#1b4f7a", bg2="#0a1624")
 SHORTS.update({
     "sci001_strawberry": dict(SCI, no="#001", mystery="strawberry",
@@ -565,12 +565,12 @@ SHORTS.update({
         answer_ja="親しみやすさが、ほかの見方まで左右したから。",
         hl=["lecturer", "distant", "adored", "accent", "trait", "impression", "halo"],
         shots=[
-            ("Two classes watched the same lecturer on video.", dict(type="two", bg="office", det=True, color="#2d6a4f", eyes="normal", mouth="flat", eyes2="normal", mouth2="smile", cam="pan")),
-            ("In one clip, he was warm and friendly.", dict(type="face", bg="office", eyes="happy", mouth="grin", cam="push")),
-            ("In the other, he seemed cold and distant.", dict(type="face", bg="dark", eyes="squint", mouth="flat", cam="pull")),
-            ("The warm group adored even his accent.", dict(type="insert", bg="dark", insert="card", value="♥ ACCENT", cam="snap", stamp="CLUE 1")),
-            ("One good trait colored their whole impression.", dict(type="ots", bg="office", det=True, color="#2d6a4f", eyes2="shock", mouth2="o", cam="tilt", mark=[560, 1140, 170])),
-            ("Elementary: the halo effect.", dict(type="silhouette", bg="dark", det=True, eyes="smug", wipe="iris", stamp="SOLVED")),
+            ("Two classes watched the same lecturer on video.", dict(type="two", bg="classroom", det=True, color="#2d6a4f", eyes="normal", mouth="flat", eyes2="normal", mouth2="smile", cam="pan", act="think")),
+            ("In one clip, he was warm and friendly.", dict(type="full", bg="field", eyes="happy", mouth="grin", color="#e98a3a", act="wave", cam="push", wipe="slide")),
+            ("In the other, he seemed cold and distant.", dict(type="full", bg="rain", eyes="normal", eyesTo="squint", mouth="flat", color="#3a4a63", act="hold", prop="mug", cam="pull")),
+            ("The warm group adored even his accent.", dict(type="face", bg="classroom", eyes="happy", mouth="grin", color="#e98a3a", hat="cap", cam="snap", stamp="CLUE 1")),
+            ("One good trait colored their whole impression.", dict(type="ots", bg="classroom", det=True, color="#2d6a4f", eyes2="shock", mouth2="o", cam="tilt", mark=[560, 1140, 170])),
+            ("Elementary: the halo effect.", dict(type="face", bg="dark", det=True, color="#2d6a4f", eyes="glasses", mouth="grin", cam="whip", stamp="SOLVED")),
         ],
         ja=["2つのクラスが、同じ講師のビデオを見た。", "一方のビデオでは、彼は温かく親しみやすかった。", "もう一方では、冷たくよそよそしく見えた。",
             "「温かい」ほうを見たクラスは、彼のなまりまで気に入った。", "1つの良い特徴が、印象全体を染めた。", "初歩的なことだよ。「ハロー効果」だ。"],
@@ -618,9 +618,9 @@ SHORTS.update({
         choices=["Yes, it can last a very long time.", "No, germs live in it."], answer=1, answer_ja="はい、とても長くもつ。",
         hl=["sweet", "germs", "Egypt"],
         shots=[
-            ("Honey is very sweet.", dict(type="insert", bg="dark", insert="card", value="HONEY", cam="pull")),
-            ("Germs can't live in it.", dict(type="insert", bg="dark", insert="card", value="NO GERMS", cam="push")),
-            ("Old honey in Egypt was still good!", dict(type="face", bg="lab", sci=True, color="#f4f4f0", eyes="shock", mouth="o", cam="whip")),
+            ("Honey is very sweet.", dict(type="full", bg="kitchen", eyes="normal", eyesTo="happy", mouth="smile", color="#f2b632", act="hold", prop="mug", cam="push")),
+            ("Germs can't live in it.", dict(type="lens", bg="lab", insert="card", value="NO GERMS", focus=[540, 1010], wipe="slide")),
+            ("Old honey in Egypt was still good!", dict(type="full", bg="road", eyes="shock", eyesTo="happy", mouth="o", mouthTo="grin", color="#f2b632", act="cheer", hud="3,000 YEARS OLD", cam="snap")),
         ],
         ja=["ハチミツはとても甘い。", "ばい菌は、その中で生きられない。", "エジプトの古いハチミツは、まだ食べられた!"],
         gloss=["sweet:甘い", "germ:ばい菌", "Egypt:エジプト"],
@@ -1610,6 +1610,13 @@ def synth(kind, dur):
         return (0.28 * np.sin(2 * np.pi * (500 + 900 * t / dur) * t) * np.exp(-t * 25)).astype(np.float32)
     if kind == "boom":
         return (0.5 * np.sin(2 * np.pi * (90 - 40 * t) * t) * np.exp(-t * 6)).astype(np.float32)
+    if kind == "sparkle":  # キラッ(めがねの光)
+        return (0.16 * (np.sin(2 * np.pi * 2400 * t) + np.sin(2 * np.pi * 3600 * t)) * np.exp(-t * 14)).astype(np.float32)
+    if kind == "boing":
+        return (0.3 * np.sin(2 * np.pi * (180 + 260 * np.sin(np.pi * t / dur)) * t) * np.exp(-t * 5)).astype(np.float32)
+    if kind == "rain":
+        n = np.random.default_rng(7).standard_normal(len(t))
+        return (0.05 * np.convolve(n, np.ones(4) / 4, "same")).astype(np.float32)
     if kind == "ding":
         return (0.22 * (np.sin(2 * np.pi * 1320 * t) + 0.5 * np.sin(2 * np.pi * 1980 * t)) * np.exp(-t * 7)).astype(np.float32)
     if kind == "tick":
@@ -1741,6 +1748,14 @@ def build(name):
         put(sample("whoosh", 0.35), max(0, s["start"] - 0.12))
         if s.get("hud"):
             put(sample("pop", 0.15), s["start"] + 0.1)
+        if s.get("eyes") == "glasses" or s.get("sci"):
+            put(sample("sparkle", 0.4), s["start"] + 0.3)
+        if s.get("act") == "cheer":
+            put(sample("boing", 0.5), s["start"] + 0.15)
+        if s.get("speed"):
+            put(sample("whoosh", 0.35), s["start"] + 0.4)
+        if s.get("bg") == "rain":
+            put(sample("rain", s["dur"]) if False else synth("rain", s["dur"]), s["start"])
         mp = s.get("map") or {}
         for j in range(len(mp.get("labels", [])) + len(mp.get("icons", []))):  # 地図のラベル・アイコンが出るたびにポン
             put(sample("pop", 0.15), s["start"] + 0.25 + 0.18 * j)
