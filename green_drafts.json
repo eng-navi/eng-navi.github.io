@@ -1,0 +1,86 @@
+[
+ {
+  "category": "時制",
+  "question": "This soup ( ) too much salt.",
+  "options": [
+   "contains",
+   "is containing"
+  ],
+  "answer": 1,
+  "translation": "このスープは塩が多すぎる。",
+  "explanation": "contain(含んでいる)は「状態」を表す動詞なので、ふつう進行形にしません。\n「〜を含んでいる」と訳せても、is containing は使わないのがポイントです。\n\nしたがって、①contains が正解。",
+  "caption": "「含んでいる」なのに進行形じゃない?🍲\n状態動詞の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #時制"
+ },
+ {
+  "category": "受動態",
+  "question": "Our new office is ( ) right now.",
+  "options": [
+   "building",
+   "being built"
+  ],
+  "answer": 2,
+  "translation": "私たちの新しいオフィスは、今まさに建設中だ。",
+  "explanation": "オフィスは「建てる」側ではなく「建てられる」側なので、受動態にします。\n「今〜されている途中」は be being done(進行形の受動態)で表します。\n\nしたがって、②being built が正解。",
+  "caption": "building じゃダメなの?🏗️\n進行形の受動態の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #受動態"
+ },
+ {
+  "category": "助動詞",
+  "question": "He ( ) be tired. He slept for ten hours.",
+  "options": [
+   "can't",
+   "must"
+  ],
+  "answer": 1,
+  "translation": "彼が疲れているはずがない。10時間も寝たのだから。",
+  "explanation": "10時間寝たのだから「疲れているはずがない」と強く否定する場面です。\ncan't(cannot)には「〜のはずがない」という意味があります。\nmust だと「疲れているにちがいない」と逆の意味になります。\n\nしたがって、①can't が正解。",
+  "caption": "must じゃないの?😴\n「〜のはずがない」の助動詞です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+ },
+ {
+  "category": "助動詞",
+  "question": "I ( ) jog every morning, but now I'm too busy.",
+  "options": [
+   "used to",
+   "am used to"
+  ],
+  "answer": 1,
+  "translation": "以前は毎朝ジョギングしていたが、今は忙しすぎる。",
+  "explanation": "「(今はしていないが)以前はよく〜した」は used to do で表します。\nam used to は「〜に慣れている」という別の意味で、後ろは doing(動名詞)になります。\n\nしたがって、①used to が正解。",
+  "caption": "used to と be used to、どっち?🏃\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+ },
+ {
+  "category": "助動詞",
+  "question": "You ( ) brought an umbrella. It's pouring now.",
+  "options": [
+   "should have",
+   "must have"
+  ],
+  "answer": 1,
+  "translation": "傘を持ってくるべきだったのに。今は土砂降りだ。",
+  "explanation": "「〜すべきだったのに(実際にはしなかった)」という後悔は should have done で表します。\nmust have done は「〜したにちがいない」という推量です。\n\nしたがって、①should have が正解。",
+  "caption": "must have じゃないの?☔\n後悔を表す助動詞の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+ },
+ {
+  "category": "助動詞",
+  "question": "I couldn't help ( ) at his joke.",
+  "options": [
+   "to laugh",
+   "laughing"
+  ],
+  "answer": 2,
+  "translation": "彼の冗談に、思わず笑ってしまった。",
+  "explanation": "cannot help doing で「〜せずにはいられない」という意味です。\nこの help は「避ける」という意味なので、後ろは -ing(動名詞)になります。\n\nしたがって、②laughing が正解。",
+  "caption": "to laugh じゃないの?😂\n「〜せずにはいられない」の形です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #助動詞"
+ },
+ {
+  "category": "受動態",
+  "question": "The puppy was ( ) by my sister while we were away.",
+  "options": [
+   "looked after",
+   "looked"
+  ],
+  "answer": 1,
+  "translation": "私たちが留守の間、子犬は姉に世話をされた。",
+  "explanation": "look after(〜の世話をする)のような動詞のカタマリは、受動態にしても after を残します。\nbe looked after by ~ で「〜に世話をされる」です。\n\nしたがって、①looked after が正解。",
+  "caption": "after はいる?いらない?🐶\n群動詞の受動態の問題です。\n①か②か、コメントで答えてね\n\n#英検2級 #英文法 #受動態"
+ }
+]
