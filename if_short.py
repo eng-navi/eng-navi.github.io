@@ -1391,7 +1391,7 @@ MUSIC = "Music: The Waves / Otto.mp3 — Music from #Uppbeat (free for Creators!
 
 def caption(sc):
     sp = "\u3000"
-    return "\n".join([sc["hook"], sp, "🎧 25秒の英語、聞き取れる?", "AとBどっち?コメントで答えてね👇",
+    return "\n".join([sc["hook"], sp, "🎧 この英語、聞き取れる?", "AとBどっち?コメントで答えてね👇",
                       "正解・全文和訳・単語の意味はコメント欄に📌", sp, sc["tags"], sp,
                       f"Music: {MUSICS[sc.get('bgm', 'the-waves')]} — Music from #Uppbeat (free for Creators!)"])
 
