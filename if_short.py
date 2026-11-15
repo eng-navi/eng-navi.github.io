@@ -1501,6 +1501,56 @@ _v["credit"] = "DoD photo by Senior Master Sgt. Adrian Cadiz, CC BY 2.0 (via Wik
 _v["cover"] = 0
 SHORTS["vox001b_amazon_photo"] = _v
 
+SHORTS.update({
+    "vox003_musk": dict(VOX, no="#003", cover=0, hint="👂ヒント:3文目に注目", credit="Debbie Rowe, CC BY-SA 3.0 (via Wikimedia Commons)",
+        mysteryCollage={"bg": "dark", "items": [{"kind": "photo", "file": "musk_rs_s.jpg", "raw": True, "x": 540, "y": 860, "w": 460, "rot": -4}]},
+        q="What happened to Elon Musk's first company?", q_ja="イーロン・マスクの\n最初の会社、どうなった?",
+        choices=["He sold it and used the money for his next business.", "Newspapers bought his maps for three hundred dollars."], answer=1,
+        answer_ja="売って、そのお金を次の事業に使った。",
+        hl=["software", "online", "giant", "share"],
+        shots=[
+            ("In 1995, Elon Musk started a software company called Zip2.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "photo", "file": "musk_rs_s.jpg", "raw": True, "x": 400, "y": 820, "w": 440, "rot": -5}, {"kind": "label", "text": "1995", "x": 780, "y": 560, "w": 300, "rot": 4},
+                {"kind": "stamp", "text": "ZIP2", "x": 720, "y": 1060, "w": 260, "rot": -12}]})),
+            ("It put city maps and guides online for newspapers.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "news", "text": "CITY GUIDE", "x": 380, "y": 800, "w": 440, "rot": -6}, {"kind": "chart", "text": "ONLINE", "x": 740, "y": 1120, "w": 380, "rot": 7},
+                {"kind": "arrow", "x": 520, "y": 980, "x2": 640, "y2": 1060}]})),
+            ("In 1999, a computer giant bought it for about three hundred million dollars.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "money", "x": 380, "y": 820, "w": 340, "rot": -8}, {"kind": "doc", "text": "SOLD", "x": 760, "y": 900, "w": 340, "rot": 6},
+                {"kind": "label", "text": "$307 MILLION", "x": 540, "y": 1300, "w": 560, "rot": -2}]})),
+            ("Musk used his share to build his next company.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "photo", "file": "musk_rs_s.jpg", "raw": True, "x": 360, "y": 840, "w": 380, "rot": -6}, {"kind": "arrow", "x": 560, "y": 860, "x2": 690, "y2": 860},
+                {"kind": "box", "text": "NEXT", "x": 800, "y": 860, "w": 300, "rot": 6}, {"kind": "stamp", "text": "NEXT STEP", "x": 560, "y": 1300, "w": 460, "rot": -8}]})),
+        ],
+        ja=["1995年、イーロン・マスクは Zip2 というソフトウェア会社を始めた。", "新聞社のために、街の地図やガイドをネットにのせた。",
+            "1999年、コンピューターの大企業が、約3億ドルでその会社を買った。", "マスクは自分の取り分を、次の会社づくりに使った。"],
+        gloss=["software:ソフトウェア", "online:ネット上に", "giant:大企業", "share:取り分、持ち分"],
+        hook="イーロン・マスクの最初の会社、どうなった?🚀", tags="#英語リスニング #やさしい英語 #テック"),
+    "vox004_facebook": dict(VOX, no="#004", cover=0, hint="👂ヒント:3文目に注目", credit="Anthony Quintano, CC BY 2.0 (via Wikimedia Commons)",
+        mysteryCollage={"bg": "dark", "items": [{"kind": "photo", "file": "zuck_f8_s.jpg", "x": 540, "y": 860, "w": 460, "rot": 4}]},
+        q="Why did TheFacebook drop The from its name?", q_ja="「ザ・フェイスブック」から\n「The」が取れたのはなぜ?",
+        choices=["Its college dorm was named Facebook.", "It bought the web address facebook.com."], answer=2,
+        answer_ja="facebook.com というアドレスを買ったから。",
+        hl=["launched", "dorm", "address", "dropped"],
+        shots=[
+            ("In 2004, Mark Zuckerberg launched a website from his college dorm.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "photo", "file": "zuck_f8_s.jpg", "x": 400, "y": 820, "w": 440, "rot": -5}, {"kind": "label", "text": "2004", "x": 780, "y": 560, "w": 300, "rot": 4},
+                {"kind": "house", "x": 760, "y": 1120, "w": 300, "rot": 8}]})),
+            ("It was first called TheFacebook.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "grid", "items": [
+                {"kind": "label", "text": "THEFACEBOOK", "x": 540, "y": 800, "w": 620, "rot": -3}, {"kind": "doc", "text": "DORM", "x": 540, "y": 1180, "w": 340, "rot": 5}]})),
+            ("In 2005, the company bought the web address facebook.com.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "money", "x": 380, "y": 820, "w": 320, "rot": -8}, {"kind": "doc", "text": "FACEBOOK.COM", "x": 760, "y": 900, "w": 380, "rot": 6},
+                {"kind": "stamp", "text": "SOLD", "x": 560, "y": 1300, "w": 300, "rot": -10}]})),
+            ("So it dropped The from its name.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "photo", "file": "zuck_f8_s.jpg", "x": 360, "y": 840, "w": 380, "rot": -6}, {"kind": "label", "text": "THE ✗", "x": 780, "y": 760, "w": 300, "rot": 5},
+                {"kind": "label", "text": "FACEBOOK", "x": 560, "y": 1260, "w": 480, "rot": -2}]})),
+        ],
+        ja=["2004年、マーク・ザッカーバーグは大学の寮からウェブサイトを始めた。", "最初の名前は「ザ・フェイスブック」だった。",
+            "2005年、会社は facebook.com というウェブアドレスを買った。", "だから、名前から「The」を外した。"],
+        gloss=["launch:始める、立ち上げる", "dorm:寮", "web address:ウェブアドレス", "drop:外す、やめる"],
+        hook="フェイスブックの名前から「The」が消えた理由は?💻", tags="#英語リスニング #やさしい英語 #テック"),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""

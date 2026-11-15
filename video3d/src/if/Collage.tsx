@@ -10,7 +10,7 @@ const SANS = "'Avenir Next', 'Helvetica Neue', Arial, sans-serif";
 export type CItem = {
   kind: "photo" | "person" | "figure" | "books" | "garage" | "box" | "bank" | "money" | "chart" | "doc" | "news" | "label" | "stamp" | "coin" | "house" | "arrow";
   x: number; y: number; w?: number; rot?: number; at?: number;  // at:出てくるまでのフレーム数
-  text?: string; who?: string; color?: string; x2?: number; y2?: number; src?: string;  // src:写真(自由に使えるライセンスのもの。data URI)
+  text?: string; who?: string; color?: string; x2?: number; y2?: number; src?: string; raw?: boolean;  // raw:加工しない(CC BY-SA の写真)。src:写真(自由に使えるライセンスのもの。data URI)
 };
 export type CollageSpec = { bg?: "grid" | "parchment" | "gray" | "dark"; items: CItem[]; push?: number };
 
@@ -61,7 +61,7 @@ const Item = ({ it, k }: { it: CItem; k: number }) => {
   const t = it.text ?? "";
   switch (it.kind) {
     case "photo": return <Cut w={w} h={w * 1.25}>  {/* 写真のプリント(少しモノクロ寄り) */}
-      <image href={it.src} x={-w / 2 + 18} y={-w * 0.625 + 18} width={w - 36} height={w * 1.25 - 90} preserveAspectRatio="xMidYMid slice" filter="url(#bw)" /></Cut>;
+      <image href={it.src} x={-w / 2 + 18} y={-w * 0.625 + 18} width={w - 36} height={w * 1.25 - 90} preserveAspectRatio="xMidYMid slice" filter={it.raw ? undefined : "url(#bw)"} /></Cut>;
     case "person": return <Cut w={w} h={w * 1.25}><g transform={`translate(0 ${-w * 0.05}) scale(${w / 460})`}><Face who={it.who} /></g></Cut>;
     case "figure": return <g transform={`scale(${w / 460})`}><Face who="" /></g>;
     case "books": return <Cut w={w} h={w * 0.8}>{[0, 1, 2, 3].map((i) => <rect key={i} x={-w * 0.36} y={w * 0.22 - i * w * 0.14} width={w * 0.72 - i * 12} height={w * 0.12} rx={6}
