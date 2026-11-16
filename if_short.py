@@ -1648,7 +1648,7 @@ SHORTS.update({
         ja=["1975年、ビル・ゲイツとポール・アレンは小さな会社を作った。", "初期の家庭用コンピューター向けのソフトウェアを書いた。",
             "その機械は「マイクロコンピューター」と呼ばれていた。", "だから「マイクロ」と「ソフト」を組み合わせて1つの名前にした。"],
         gloss=["found:設立する", "software:ソフトウェア", "early:初期の", "microcomputer:マイクロコンピューター(小型のコンピューター)", "combine:組み合わせる"],
-        hook="「マイクロソフト」の名前の由来、知ってる?💻", tags=TT),
+        hook="マイクロソフトの\n名前の由来は?💻", tags=TT),
     "vox006_nvidia": dict(VOX, no="#006", cover=0, hint="👂ヒント:1文目に注目", credit="總統府 (Office of the President, Taiwan), CC BY 2.0 (via Wikimedia Commons)",
         mysteryCollage={"bg": "dark", "items": [{"kind": "photo", "file": "huang_s.jpg", "x": 540, "y": 860, "w": 460, "rot": 4}]},
         q="Where was the plan for Nvidia born?", q_ja="エヌビディアの計画は\nどこで生まれた?",
