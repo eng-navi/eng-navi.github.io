@@ -3254,5 +3254,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 170,
+    "category": "受動態",
+    "question": "Our new office is ( ) right now.",
+    "options": [
+      "building",
+      "being built"
+    ],
+    "answer": 2,
+    "translation": "私たちの新しいオフィスは、今まさに建設中だ。",
+    "explanation": "オフィスは「建てる」側ではなく「建てられる」側なので、受動態にします。\n「今〜されている途中」は be being done(進行形の受動態)で表します。\n\nしたがって、②being built が正解。",
+    "audio": "audio/q170.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
