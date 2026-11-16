@@ -45,6 +45,17 @@ STORIES = [
     ("nailed_it", "You nailed it!", "完ぺき!", "Your speech was great. You nailed it!", "スピーチ最高。完ぺき!", "nail=くぎを一発で打ち込む"),
     ("from_what_i_hear", "from what I hear", "聞いたところでは", "From what I hear, the new cafe is great.", "聞いた話だと、新しいカフェすごくいいらしい", "うわさ話の前置きに"),
     ("stay_fit", "stay fit", "健康を保つ", "I walk to work to stay fit.", "健康のために歩いて通勤してる", "fit=体の調子がいい"),
+    # ---- 11/16〜25 ----
+    ("sleep_on_it", "sleep on it", "一晩考える", "Don't decide now. Sleep on it.", "今決めないで、一晩考えて", "大事な決断の前に"),
+    ("my_treat", "It's my treat.", "おごるよ", "Put your wallet away. It's my treat.", "財布しまって、おごるよ", "treat は「ごちそう」"),
+    ("no_wonder", "No wonder.", "どうりで", "He didn't sleep? No wonder he's tired.", "寝てないの?どうりで疲れてるわけだ", "納得したときのひとこと"),
+    ("up_to_you", "It's up to you.", "君しだいだよ", "Pizza or sushi? It's up to you.", "ピザか寿司?君しだいだよ", "決めてもらうときに"),
+    ("cut_corners", "cut corners", "手を抜く", "Don't cut corners on safety.", "安全には手を抜かないで", "角を曲がらず近道する、から"),
+    ("on_the_same_page", "on the same page", "考えが一致して", "Let's make sure we're on the same page.", "認識を合わせておこう", "会議でよく使う"),
+    ("all_ears", "I'm all ears.", "ちゃんと聞いてるよ", "Tell me what happened. I'm all ears.", "何があったか話して。ちゃんと聞くよ", "全身が耳になるイメージ"),
+    ("break_the_ice", "break the ice", "場をなごませる", "A joke can help break the ice.", "冗談は場をなごませるのに役立つ", "初対面の空気をほぐす"),
+    ("get_the_hang_of_it", "get the hang of it", "コツをつかむ", "Driving is hard at first, but you'll get the hang of it.", "運転は最初は難しいけど、コツをつかめるよ", "慣れてきたときに"),
+    ("better_late", "Better late than never.", "遅くてもやらないよりまし", "I started English at 40. Better late than never!", "40歳で英語を始めた。遅くてもやらないよりまし!", "始めるのに遅すぎることはない"),
 ]
 
 
