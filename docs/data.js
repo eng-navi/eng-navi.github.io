@@ -3216,5 +3216,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 168,
+    "text": "Her nerves were written all over her face before the interview.",
+    "target": "written all over her face",
+    "glossary": [
+      "be written all over X's face：Xの顔にはっきり表れている",
+      "nerves：緊張",
+      "interview：面接"
+    ],
+    "translation": "面接の前、彼女の緊張は顔にはっきり出ていた。",
+    "explanation": "「be written all over one's face」は「(気持ちが)顔にはっきり出ている」という意味です。\n顔に文字で書いてあるくらい、隠せていないイメージです。",
+    "audio": "audio/q168.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
