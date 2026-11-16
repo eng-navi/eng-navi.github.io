@@ -1876,6 +1876,151 @@ SHORTS.update({
         hook="「無料体験」で会社がもうかる理由は?🎁", tags=MT2),
 })
 
+# ==== 2日目(地図:11/20、地理:11/20、お金とテック:11/19)====
+SHORTS.update({
+    "map016_ulaanbaatar": dict(POL, no="#016", cover=0, hint="👂ヒント:3文目に注目", mysteryMap=_p(ASC, **{"from": [106.9, 47.9, 9]}),
+        q="Why is Ulaanbaatar so cold?", q_ja="ウランバートルが\nこんなに寒いのはなぜ?",
+        choices=["It is high up and far from any ocean.", "It sits right next to a cold ocean."], answer=1,
+        answer_ja="標高が高く、海から遠く離れているから。",
+        hl=["coldest", "capital", "inland", "altitude", "minus"],
+        shots=[
+            ("Ulaanbaatar is the coldest national capital on Earth.", dict(type="map", bg="dark", map=_p(ASC, **{"from": [100, 45, 3.5], "to": [106.9, 47.9, 9], "glow": ["496"], "labels": [[106.9, 49.2, "ULAANBAATAR"]], "dots": [[106.9, 47.9]]}))),
+            ("In winter, it can drop to minus forty degrees.", dict(type="map", bg="dark", hud="−40°C", map=_p(ASC, **{"from": [106.9, 47.9, 12], "icons": [[106.9, 46.8, "🥶"]]}))),
+            ("It lies far inland, away from any warm sea.", dict(type="map", bg="dark", map=_p(ASC, **{"from": [110, 40, 3.2], "arrows": [[121, 32, 108, 46]], "labels": [[124, 31, "SEA"]]}))),
+            ("It also sits at a high altitude, about thirteen hundred meters.", dict(type="map", bg="dark", hud="≈ 1,300 m", map=_p(ASC, **{"from": [106.9, 47.9, 10], "to": [106.9, 47.9, 7], "glow": ["496"], "icons": [[106.9, 47.0, "⛰️"]]}))),
+        ],
+        ja=["ウランバートルは、世界でいちばん寒い首都だ。", "冬には、マイナス40度まで下がることもある。", "海から遠く離れた内陸にある。", "さらに、標高約1,300メートルの高い場所にある。"],
+        gloss=["coldest:いちばん寒い", "capital:首都", "minus:マイナス", "inland:内陸に", "altitude:標高"],
+        hook="世界一寒い首都、どこにある?🥶", tags=MT3),
+    "map017_deadsea": dict(POL, no="#017", cover=0, hint="👂ヒント:2文目と3文目に注目", mysteryMap=_p(MEC, **{"from": [35.5, 31.5, 22]}),
+        q="Why do people float in the Dead Sea?", q_ja="死海で人が\n浮くのはなぜ?",
+        choices=["The water is extremely salty.", "The lake is four hundred meters deep."], answer=1,
+        answer_ja="水が、ものすごく塩辛いから。",
+        hl=["lowest", "salty", "float", "evaporates", "dense"],
+        shots=[
+            ("The Dead Sea lies about four hundred thirty meters below sea level.", dict(type="map", bg="dark", hud="−430 m", map=_p(MEC, **{"from": [35, 31, 6], "to": [35.5, 31.5, 22], "labels": [[35.5, 32.2, "DEAD SEA"]]}))),
+            ("It's the lowest land on Earth.", dict(type="map", bg="dark", map=_p(MEC, **{"from": [35.5, 31.5, 26], "icons": [[35.5, 31.2, "📉"]]}))),
+            ("Water evaporates there, but salt stays behind.", dict(type="map", bg="dark", map=_p(MEC, **{"from": [35.5, 31.5, 22], "icons": [[35.3, 31.8, "☀️"], [35.6, 31.3, "🧂"]]}))),
+            ("The water becomes so dense that people float.", dict(type="map", bg="dark", map=_p(MEC, **{"from": [35.5, 31.5, 24], "to": [35.5, 31.5, 14], "icons": [[35.5, 31.5, "🏊"]]}))),
+        ],
+        ja=["死海は、海面より約430メートル低い場所にある。", "地球でいちばん低い陸地だ。", "そこでは水が蒸発するが、塩は残る。", "水がとても濃くなり、人が浮くほどになる。"],
+        gloss=["below sea level:海面より下", "lowest:いちばん低い", "evaporate:蒸発する", "dense:密度が高い、濃い", "float:浮く"],
+        hook="死海で人が浮くのはなぜ?🧂", tags=MT3),
+    "map018_amazon": dict(POL, no="#018", cover=0, hint="👂ヒント:2文目に注目", mysteryMap=_p(AMC, **{"from": [-60, -3, 4]}),
+        q="What makes the Amazon River special?", q_ja="アマゾン川の\nすごいところは?",
+        choices=["It carries more water than any other river.", "It is the shortest river in South America."], answer=1,
+        answer_ja="ほかのどの川よりも、たくさんの水を運ぶ。",
+        hl=["flows", "carries", "fifth", "rainforest", "basin"],
+        shots=[
+            ("The Amazon flows across South America to the Atlantic.", dict(type="map", bg="dark", map=_p(AMC, **{"from": [-65, -10, 2.2], "to": [-60, -3, 3.5], "glow": ["76"], "arrows": [[-73, -4, -50, -1]], "labels": [[-60, 0, "AMAZON"]]}))),
+            ("It carries more water than any other river on Earth.", dict(type="map", bg="dark", map=_p(AMC, **{"from": [-55, -2, 4.5], "icons": [[-52, -1, "🌊"]]}))),
+            ("About a fifth of all river water entering the oceans comes from it.", dict(type="map", bg="dark", hud="≈ 1/5", map=_p(AMC, **{"from": [-50, -1, 4], "to": [-50, 0, 3.4], "arrows": [[-52, -1, -40, 1]]}))),
+            ("Its huge basin is covered by rainforest.", dict(type="map", bg="dark", map=_p(AMC, **{"from": [-62, -5, 3.5], "to": [-62, -5, 2.6], "glow": ["76"], "icons": [[-65, -6, "🌳"], [-58, -4, "🌳"]]}))),
+        ],
+        ja=["アマゾン川は、南アメリカを横切って大西洋へ流れる。", "地球上のどの川よりも、たくさんの水を運ぶ。", "海に流れこむ川の水の、約5分の1がここから来る。", "その広大な流域は、熱帯雨林におおわれている。"],
+        gloss=["flow:流れる", "carry:運ぶ", "a fifth:5分の1", "basin:流域", "rainforest:熱帯雨林"],
+        hook="アマゾン川が運ぶ水の量、知ってる?🌳", tags=MT3),
+    "geo016_kyoto": dict(GEO, no="#016", cover=0, hint="👂ヒント:2文目と3文目に注目", mysteryMap={"from": [135.76, 35.01, 14]},
+        q="Why are Kyoto's summers so hot?", q_ja="京都の夏が\n暑いのはなぜ?",
+        choices=["Mountains surround it and trap the heat.", "The sea brings hot water into the city."], answer=1,
+        answer_ja="山に囲まれていて、熱がこもるから。",
+        hl=["basin", "surrounded", "trapped", "humid"],
+        shots=[
+            ("Kyoto lies in a basin.", dict(type="map", bg="dark", map={"from": [136, 35.2, 9], "to": [135.76, 35.01, 16], "hl": ["392"], "labels": [[135.76, 35.25, "KYOTO"]], "dots": [[135.76, 35.01]]})),
+            ("It's surrounded by mountains on three sides.", dict(type="map", bg="dark", map={"from": [135.76, 35.05, 18], "arrows": [[135.6, 35.2, 135.72, 35.06], [135.9, 35.2, 135.8, 35.06], [135.76, 35.3, 135.76, 35.1]]})),
+            ("Hot air gets trapped inside, with little wind.", dict(type="map", bg="dark", hud="🌡️ 38°C", map={"from": [135.76, 35.01, 20], "dots": [[135.76, 35.01]]})),
+            ("That's why summer in Kyoto feels so hot and humid.", dict(type="map", bg="dark", map={"from": [135.76, 35.01, 16], "to": [136, 35, 9], "hl": ["392"]})),
+        ],
+        ja=["京都は盆地にある。", "三方を山に囲まれている。", "熱い空気が中にこもり、風もあまり吹かない。", "だから京都の夏は、とても蒸し暑く感じる。"],
+        gloss=["basin:盆地", "surround:囲む", "trap:閉じこめる", "humid:蒸し暑い"],
+        hook="京都の夏が暑い理由、地形にあった?☀️", tags=GE),
+    "geo017_driftice": dict(GEO, no="#017", cover=0, hint="👂ヒント:2文目に注目", mysteryMap={"from": [145, 45, 7]},
+        q="Where does Hokkaido's winter drift ice come from?", q_ja="北海道の流氷は\nどこから来る?",
+        choices=["It forms near Russia and drifts south.", "It drifts north from Tokyo Bay."], answer=1,
+        answer_ja="ロシアの近くでできて、南へ流れてくる。",
+        hl=["drift", "forms", "Okhotsk", "pushed", "reaches"],
+        shots=[
+            ("Every winter, drift ice reaches Hokkaido's coast.", dict(type="map", bg="dark", map={"from": [143, 44, 6], "to": [144.3, 44.0, 10], "hl": ["392"], "labels": [[144.3, 44.6, "ABASHIRI"]], "dots": [[144.27, 44.02]]})),
+            ("The ice forms in the Sea of Okhotsk, near Russia.", dict(type="map", bg="dark", map={"from": [145, 52, 4.5], "labels": [[148, 53, "SEA OF OKHOTSK"]]})),
+            ("Winds and currents push it south.", dict(type="map", bg="dark", map={"from": [145, 48, 4.5], "arrows": [[140, 53, 143, 47], [146, 52, 145.5, 46]]})),
+            ("It's one of the southernmost places to see sea ice.", dict(type="map", bg="dark", hud="🧊 SEA ICE", map={"from": [144.3, 44.2, 9], "to": [143, 44, 6], "hl": ["392"]})),
+        ],
+        ja=["毎年冬、流氷が北海道の海岸にやってくる。", "その氷は、ロシアの近くのオホーツク海でできる。", "風と海流が、それを南へ押し流す。", "ここは、海氷が見られるいちばん南の場所の1つだ。"],
+        gloss=["drift ice:流氷", "reach:届く、着く", "form:できる", "current:海流", "push:押す", "southernmost:いちばん南の"],
+        hook="北海道の流氷、どこから来る?🧊", tags=GE),
+    "geo018_tottori": dict(GEO, no="#018", cover=0, hint="👂ヒント:2文目と3文目に注目", mysteryMap={"from": [134.23, 35.54, 18]},
+        q="How did the Tottori Sand Dunes form?", q_ja="鳥取砂丘は\nどうやってできた?",
+        choices=["A river and wind piled up sand.", "Sand fell from the sky in a storm."], answer=1,
+        answer_ja="川と風が、砂を積み上げたから。",
+        hl=["dunes", "carried", "washed", "blew", "piled"],
+        shots=[
+            ("The Tottori Sand Dunes stretch along the Sea of Japan.", dict(type="map", bg="dark", map={"from": [134, 35.5, 9], "to": [134.23, 35.54, 18], "hl": ["392"], "labels": [[134.23, 35.75, "TOTTORI DUNES"]]})),
+            ("A river carried sand from the mountains to the sea.", dict(type="map", bg="dark", map={"from": [134.2, 35.4, 14], "arrows": [[134.25, 35.2, 134.23, 35.52]]})),
+            ("Waves washed it ashore, and strong winds blew it inland.", dict(type="map", bg="dark", map={"from": [134.23, 35.55, 20], "arrows": [[134.1, 35.7, 134.2, 35.56]]})),
+            ("Over thousands of years, the sand piled up into hills.", dict(type="map", bg="dark", map={"from": [134.23, 35.54, 22], "to": [134.23, 35.54, 14], "dots": [[134.23, 35.54]]})),
+        ],
+        ja=["鳥取砂丘は、日本海に沿って広がっている。", "川が、山から海へ砂を運んだ。", "波がそれを岸へ打ち上げ、強い風が内陸へ吹き飛ばした。", "何千年もかけて、砂は丘のように積み重なった。"],
+        gloss=["dune:砂丘", "carry:運ぶ", "wash ashore:岸に打ち上げる", "blow:吹き飛ばす", "pile up:積み重なる"],
+        hook="鳥取砂丘はどうやってできた?🏜️", tags=GE),
+    "vox013_checkout": dict(VOX, no="#013", cover=1, hint="👂ヒント:3文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "doc", "text": "CHECKOUT", "x": 540, "y": 860, "w": 420}]},
+        q="Why do stores put candy near the checkout?", q_ja="お店がレジ横に\nお菓子を置くのはなぜ?",
+        choices=["Waiting shoppers buy things on impulse.", "Candy makes the line move faster."], answer=1,
+        answer_ja="待っている客が、ついで買いをするから。",
+        hl=["checkout", "line", "impulse", "profit"],
+        shots=[
+            ("Have you noticed candy right next to the checkout?", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "doc", "text": "CHECKOUT", "x": 380, "y": 820, "w": 380, "rot": -5}, {"kind": "coin", "x": 760, "y": 1100, "w": 160}]})),
+            ("Shoppers often wait in line with nothing to do.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "figure", "x": 380, "y": 880, "w": 360}, {"kind": "label", "text": "WAITING…", "x": 740, "y": 1100, "w": 380, "rot": 4}]})),
+            ("So they grab small treats on impulse.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "stamp", "text": "IMPULSE BUY", "x": 540, "y": 820, "w": 480, "rot": -10}, {"kind": "money", "x": 540, "y": 1220, "w": 280, "rot": 5}]})),
+            ("Those little extras add up to big profits.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "chart", "text": "PROFIT", "x": 540, "y": 820, "w": 460, "rot": -3}, {"kind": "label", "text": "ADD UP", "x": 540, "y": 1250, "w": 320, "rot": 4}]})),
+        ],
+        ja=["レジのすぐ横にお菓子があるのに、気づいたことはある?", "客は、何もすることなく列で待つことが多い。", "だから、つい小さなお菓子を衝動的に手に取る。", "その小さな追加が、大きな利益になる。"],
+        gloss=["checkout:レジ", "wait in line:列に並んで待つ", "on impulse:衝動的に", "add up to A:合計でAになる", "profit:利益"],
+        hook="レジ横のお菓子、置いてある理由は?🍫", tags=MT2),
+    "vox014_bitcoin": dict(VOX, no="#014", cover=1, hint="👂ヒント:2文目の数字に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "coin", "x": 540, "y": 860, "w": 320}, {"kind": "label", "text": "21,000,000", "x": 540, "y": 1200, "w": 460}]},
+        q="Why can't anyone make more than 21 million bitcoins?", q_ja="ビットコインが\n2,100万枚までなのはなぜ?",
+        choices=["The limit is built into its code.", "Banks print only twenty-one coins a day."], answer=1,
+        answer_ja="上限が、プログラムに組みこまれているから。",
+        hl=["limit", "million", "code", "scarce", "inflation"],
+        shots=[
+            ("Bitcoin has a strict limit.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "coin", "x": 380, "y": 820, "w": 260}, {"kind": "stamp", "text": "LIMIT", "x": 740, "y": 1100, "w": 300, "rot": -10}]})),
+            ("Only twenty-one million coins can ever exist.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "label", "text": "21,000,000", "x": 540, "y": 820, "w": 520, "rot": -3}, {"kind": "coin", "x": 540, "y": 1200, "w": 200}]})),
+            ("This rule is written into its computer code.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "doc", "text": "CODE", "x": 540, "y": 840, "w": 380, "rot": -4}]})),
+            ("Its creator wanted it to be scarce, like gold.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "coin", "x": 380, "y": 860, "w": 240}, {"kind": "label", "text": "LIKE GOLD", "x": 740, "y": 1150, "w": 400, "rot": 4}]})),
+        ],
+        ja=["ビットコインには、厳しい上限がある。", "存在できるのは、2,100万枚だけだ。", "このルールは、コンピューターのプログラムに書きこまれている。", "作った人は、金のように数が限られたものにしたかった。"],
+        gloss=["limit:上限", "million:百万", "exist:存在する", "code:(プログラムの)コード", "scarce:数が少ない"],
+        hook="ビットコインに上限があるのはなぜ?🪙", tags=MT2),
+    "vox015_netflix": dict(VOX, no="#015", cover=1, hint="👂ヒント:1文目と2文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "box", "text": "DVD", "x": 540, "y": 860, "w": 420}]},
+        q="How did Netflix start?", q_ja="ネットフリックスは\nどうやって始まった?",
+        choices=["By renting DVDs through the mail.", "By streaming movies on DVDs."], answer=1,
+        answer_ja="郵便でDVDを貸し出すことから始まった。",
+        hl=["mailed", "rental", "streaming", "switched"],
+        shots=[
+            ("Netflix began in 1997 as a DVD rental company.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "box", "text": "DVD", "x": 380, "y": 820, "w": 380, "rot": -5}, {"kind": "label", "text": "1997", "x": 760, "y": 560, "w": 300, "rot": 4}]})),
+            ("Customers got movies in red envelopes by mail.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "doc", "text": "MAIL", "x": 380, "y": 840, "w": 360, "rot": -6}, {"kind": "arrow", "x": 540, "y": 860, "x2": 660, "y2": 860}, {"kind": "house", "x": 780, "y": 900, "w": 300, "rot": 6}]})),
+            ("In 2007, it started streaming online.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "label", "text": "2007", "x": 380, "y": 760, "w": 280, "rot": -4}, {"kind": "chart", "text": "STREAMING", "x": 640, "y": 1150, "w": 440, "rot": 4}]})),
+            ("That switch turned it into a global giant.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "stamp", "text": "GLOBAL", "x": 540, "y": 820, "w": 380, "rot": -10}, {"kind": "money", "x": 540, "y": 1220, "w": 300, "rot": 5}]})),
+        ],
+        ja=["ネットフリックスは1997年、DVDレンタルの会社として始まった。", "客は、赤い封筒に入った映画を郵便で受け取った。", "2007年、ネットでの動画配信を始めた。", "その方向転換で、世界的な大企業になった。"],
+        gloss=["rental:レンタル、貸し出し", "envelope:封筒", "by mail:郵便で", "streaming:(動画の)配信", "switch:切りかえ", "giant:大企業"],
+        hook="ネットフリックス、最初はDVDの郵送だった?📦", tags=TT),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
