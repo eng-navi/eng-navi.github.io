@@ -1624,6 +1624,112 @@ _RESHOT = {
 for _n, _specs in _RESHOT.items():
     SHORTS[_n]["shots"] = [(ln, sp) for (ln, _), sp in zip(SHORTS[_n]["shots"], _specs)]
 
+# ==== お金とテック 11/16〜17 ====
+TT = "#英語リスニング #やさしい英語 #テック"; MT2 = "#英語リスニング #やさしい英語 #お金の勉強"
+SHORTS.update({
+    "vox005_microsoft": dict(VOX, no="#005", cover=0, hint="👂ヒント:3文目と4文目に注目", credit="Kuhlmann/MSC, CC BY 3.0 DE (via Wikimedia Commons)",
+        mysteryCollage={"bg": "dark", "items": [{"kind": "photo", "file": "gates_s.jpg", "x": 540, "y": 860, "w": 460, "rot": -4}]},
+        q="Where does the name Microsoft come from?", q_ja="「マイクロソフト」という\n名前の由来は?",
+        choices=["It joins microcomputer and software.", "Gates named it after a tiny soft toy."], answer=1,
+        answer_ja="「マイクロコンピューター」と「ソフトウェア」を組み合わせたから。",
+        hl=["founded", "software", "early", "microcomputers", "combined"],
+        shots=[
+            ("In 1975, Bill Gates and Paul Allen founded a small company.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "photo", "file": "gates_s.jpg", "x": 400, "y": 820, "w": 440, "rot": -5}, {"kind": "label", "text": "1975", "x": 780, "y": 560, "w": 300, "rot": 4},
+                {"kind": "garage", "x": 760, "y": 1160, "w": 300, "rot": 8}]})),
+            ("They wrote software for early home computers.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "grid", "items": [
+                {"kind": "doc", "text": "SOFTWARE", "x": 380, "y": 820, "w": 380, "rot": -6}, {"kind": "chart", "text": "HOME PC", "x": 740, "y": 1100, "w": 380, "rot": 6}]})),
+            ("Those machines were called microcomputers.", dict(type="collage", bg="dark", collage={"bg": "parchment", "items": [
+                {"kind": "label", "text": "MICROCOMPUTER", "x": 540, "y": 820, "w": 660, "rot": -3}, {"kind": "stamp", "text": "1970s", "x": 560, "y": 1180, "w": 300, "rot": -10}]})),
+            ("So they combined micro and soft into one name.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "label", "text": "MICRO", "x": 330, "y": 760, "w": 330, "rot": -5}, {"kind": "label", "text": "SOFT", "x": 760, "y": 760, "w": 300, "rot": 5},
+                {"kind": "stamp", "text": "MICROSOFT", "x": 540, "y": 1200, "w": 560, "rot": -6}]})),
+        ],
+        ja=["1975年、ビル・ゲイツとポール・アレンは小さな会社を作った。", "初期の家庭用コンピューター向けのソフトウェアを書いた。",
+            "その機械は「マイクロコンピューター」と呼ばれていた。", "だから「マイクロ」と「ソフト」を組み合わせて1つの名前にした。"],
+        gloss=["found:設立する", "software:ソフトウェア", "early:初期の", "microcomputer:マイクロコンピューター(小型のコンピューター)", "combine:組み合わせる"],
+        hook="「マイクロソフト」の名前の由来、知ってる?💻", tags=TT),
+    "vox006_nvidia": dict(VOX, no="#006", cover=0, hint="👂ヒント:1文目に注目", credit="總統府 (Office of the President, Taiwan), CC BY 2.0 (via Wikimedia Commons)",
+        mysteryCollage={"bg": "dark", "items": [{"kind": "photo", "file": "huang_s.jpg", "x": 540, "y": 860, "w": 460, "rot": 4}]},
+        q="Where was the plan for Nvidia born?", q_ja="エヌビディアの計画は\nどこで生まれた?",
+        choices=["Inside a large chip factory.", "At a casual restaurant."], answer=2,
+        answer_ja="気軽なレストラン(ファミレス)で。",
+        hl=["engineers", "diner", "chip", "power"],
+        shots=[
+            ("In 1993, three engineers met at a diner in California.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "photo", "file": "huang_s.jpg", "x": 400, "y": 820, "w": 440, "rot": -5}, {"kind": "label", "text": "1993", "x": 780, "y": 560, "w": 300, "rot": 4},
+                {"kind": "house", "x": 760, "y": 1150, "w": 300, "rot": 8}]})),
+            ("Over coffee, they planned a new chip company.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "doc", "text": "PLAN", "x": 380, "y": 820, "w": 360, "rot": -6}, {"kind": "coin", "x": 760, "y": 900, "w": 180}, {"kind": "label", "text": "CHIP COMPANY", "x": 560, "y": 1250, "w": 560, "rot": -2}]})),
+            ("That company became Nvidia.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "photo", "file": "huang_s.jpg", "x": 380, "y": 820, "w": 400, "rot": -4}, {"kind": "stamp", "text": "NVIDIA", "x": 720, "y": 1100, "w": 380, "rot": -10}]})),
+            ("Today, its chips power much of the world's AI.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "chart", "text": "AI", "x": 380, "y": 820, "w": 420, "rot": -5}, {"kind": "label", "text": "WORLD'S AI", "x": 720, "y": 1200, "w": 460, "rot": 3}]})),
+        ],
+        ja=["1993年、3人のエンジニアがカリフォルニアの軽食レストランで会った。", "コーヒーを飲みながら、新しい半導体の会社を計画した。",
+            "その会社がエヌビディアになった。", "今では、その半導体が世界のAIの多くを動かしている。"],
+        gloss=["engineer:エンジニア、技術者", "diner:軽食レストラン", "chip:半導体(チップ)", "power:動かす、電力を供給する"],
+        hook="世界一の会社の計画は、ファミレスで生まれた?☕", tags=TT),
+    "vox007_rule72": dict(VOX, no="#007", cover=1, hint="👂ヒント:4文目の数字に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "coin", "x": 540, "y": 860, "w": 300}, {"kind": "label", "text": "72", "x": 540, "y": 1200, "w": 260}]},
+        q="At six percent interest, about how long until your money doubles?", q_ja="金利6%で、お金が2倍になるのは\nだいたい何年後?",
+        choices=["About six years.", "Roughly a dozen years."], answer=2,
+        answer_ja="約12年後。",
+        hl=["double", "rule", "divide", "rate"],
+        shots=[
+            ("Want to know when your money will double?", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "figure", "x": 360, "y": 860, "w": 400}, {"kind": "coin", "x": 760, "y": 820, "w": 200}, {"kind": "label", "text": "×2 ?", "x": 720, "y": 1180, "w": 260, "rot": 4}]})),
+            ("Use the rule of seventy-two.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "label", "text": "RULE OF 72", "x": 540, "y": 820, "w": 560, "rot": -3}, {"kind": "doc", "text": "72", "x": 540, "y": 1220, "w": 320, "rot": 4}]})),
+            ("Divide seventy-two by the interest rate.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "label", "text": "72 ÷ RATE", "x": 540, "y": 820, "w": 520, "rot": -2}, {"kind": "chart", "text": "RATE", "x": 540, "y": 1200, "w": 380, "rot": 5}]})),
+            ("At six percent, it takes about twelve years.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "label", "text": "72 ÷ 6 = 12", "x": 540, "y": 800, "w": 560, "rot": -3}, {"kind": "money", "x": 540, "y": 1220, "w": 320, "rot": 6}]})),
+        ],
+        ja=["お金がいつ2倍になるか知りたい?", "「72の法則」を使おう。", "72を金利で割る。", "金利6%なら、約12年かかる。"],
+        gloss=["double:2倍になる", "rule:法則、ルール", "divide A by B:AをBで割る", "interest rate:金利"],
+        hook="お金が2倍になるのは何年後?「72の法則」💰", tags=MT2),
+    "vox008_bank": dict(VOX, no="#008", cover=1, hint="👂ヒント:2文目と3文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "bank", "x": 540, "y": 860, "w": 460}]},
+        q="Why do banks pay you interest?", q_ja="銀行が利息を\nくれるのはなぜ?",
+        choices=["They use your money to make loans.", "Borrowers keep your deposit at home."], answer=1,
+        answer_ja="あなたのお金を使って、ほかの人に貸し出しているから。",
+        hl=["deposit", "lends", "borrowers", "interest", "share"],
+        shots=[
+            ("When you deposit money, the bank doesn't just keep it.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "bank", "x": 380, "y": 820, "w": 420, "rot": -4}, {"kind": "money", "x": 760, "y": 1100, "w": 300, "rot": 8}]})),
+            ("It lends your money to other people.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "money", "x": 360, "y": 820, "w": 300, "rot": -6}, {"kind": "arrow", "x": 520, "y": 840, "x2": 650, "y2": 840},
+                {"kind": "figure", "x": 780, "y": 900, "w": 340}, {"kind": "doc", "text": "LOAN", "x": 540, "y": 1300, "w": 320, "rot": 3}]})),
+            ("Borrowers pay the bank interest.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "coin", "x": 380, "y": 860, "w": 220}, {"kind": "arrow", "x": 520, "y": 860, "x2": 650, "y2": 860}, {"kind": "bank", "x": 780, "y": 860, "w": 320}]})),
+            ("The bank shares a small part of it with you.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "bank", "x": 380, "y": 820, "w": 360, "rot": -4}, {"kind": "coin", "x": 760, "y": 900, "w": 160}, {"kind": "label", "text": "YOUR INTEREST", "x": 560, "y": 1260, "w": 560, "rot": -2}]})),
+        ],
+        ja=["お金を預けると、銀行はただ保管しているわけではない。", "あなたのお金を、ほかの人に貸し出す。", "借りた人は、銀行に利息を払う。", "銀行はその一部を、あなたに分けてくれる。"],
+        gloss=["deposit:預ける", "lend:貸す", "borrower:借りる人", "interest:利息", "share A with B:AをBと分け合う"],
+        hook="銀行が利息をくれる理由、知ってる?🏦", tags=MT2),
+    "vox009_subscription": dict(VOX, no="#009", cover=1, hint="👂ヒント:3文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "doc", "text": "MONTHLY", "x": 540, "y": 860, "w": 420}]},
+        q="Why do companies love subscriptions?", q_ja="会社がサブスクを\n好むのはなぜ?",
+        choices=["Customers forget the app's name.", "It brings in money every month."], answer=2,
+        answer_ja="毎月、安定してお金が入ってくるから。",
+        hl=["charge", "fee", "cancel", "steady", "income", "recurring"],
+        shots=[
+            ("Many apps now charge a small fee every month.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "doc", "text": "MONTHLY FEE", "x": 380, "y": 820, "w": 400, "rot": -5}, {"kind": "coin", "x": 760, "y": 1100, "w": 180}]})),
+            ("Customers often forget to cancel.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "figure", "x": 380, "y": 880, "w": 380}, {"kind": "stamp", "text": "CANCEL?", "x": 740, "y": 1100, "w": 340, "rot": -10}]})),
+            ("That brings in steady income.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "chart", "text": "INCOME", "x": 540, "y": 820, "w": 460, "rot": -3}, {"kind": "money", "x": 540, "y": 1250, "w": 300, "rot": 5}]})),
+            ("Experts call it recurring revenue.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "label", "text": "RECURRING REVENUE", "x": 540, "y": 820, "w": 700, "rot": -3}, {"kind": "doc", "text": "EVERY MONTH", "x": 540, "y": 1220, "w": 380, "rot": 4}]})),
+        ],
+        ja=["今では多くのアプリが、毎月少額の料金をとる。", "利用者は、解約するのを忘れがちだ。", "それが安定した収入をもたらす。", "専門家はそれを「継続収益」と呼ぶ。"],
+        gloss=["charge:(料金を)請求する", "fee:料金", "cancel:解約する", "steady:安定した", "income:収入", "recurring revenue:継続収益"],
+        hook="会社がサブスクを好きな本当の理由は?📱", tags=MT2),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
