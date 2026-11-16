@@ -3235,5 +3235,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 169,
+    "category": "動詞",
+    "question": "Our café ( ) fresh bread every morning.",
+    "options": [
+      "bake",
+      "bakes"
+    ],
+    "answer": 2,
+    "translation": "当店のカフェでは、毎朝焼きたてのパンを焼いています。",
+    "explanation": "主語の Our café は3人称単数で、毎朝の習慣なので現在形です。\n3人称単数・現在形では、動詞に s がつきます。\n\nしたがって、②bakes が正解。",
+    "audio": "audio/q169.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
