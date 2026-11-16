@@ -1730,6 +1730,152 @@ SHORTS.update({
         hook="会社がサブスクを好きな本当の理由は?📱", tags=MT2),
 })
 
+# ==== 1日分の追加(地図:11/19、地理:11/19、お金とテック:11/18)====
+MT3 = "#英語リスニング #やさしい英語 #地理"
+SHORTS.update({
+    "map013_canada": dict(POL, no="#013", cover=0, hint="👂ヒント:2文目と3文目に注目", mysteryMap=_p(NOC, **{"from": [-95, 58, 3.5]}),
+        q="Why does Canada have so many lakes?", q_ja="カナダに湖が\nこんなに多いのはなぜ?",
+        choices=["Huge rivers cover half of the world.", "Old glaciers scraped holes in the land."], answer=2,
+        answer_ja="昔の氷河が、地面を削ってくぼみを作ったから。",
+        hl=["half", "glaciers", "scraped", "melted", "filled"],
+        shots=[
+            ("Canada has more than half of the world's lakes.", dict(type="map", bg="dark", hud="> 50%", map=_p(NOC, **{"from": [-100, 50, 2.2], "to": [-95, 58, 3.4], "glow": ["124"], "labels": [[-100, 60, "CANADA"]]}))),
+            ("Long ago, giant glaciers covered the land.", dict(type="map", bg="dark", map=_p(NOC, **{"from": [-90, 60, 3.5], "icons": [[-105, 62, "🧊"], [-85, 58, "🧊"], [-75, 55, "🧊"]]}))),
+            ("They scraped deep holes into the ground.", dict(type="map", bg="dark", map=_p(NOC, **{"from": [-90, 57, 5], "to": [-88, 56, 6], "arrows": [[-100, 64, -92, 56], [-80, 62, -86, 54]]}))),
+            ("When the ice melted, water filled the holes.", dict(type="map", bg="dark", map=_p(NOC, **{"from": [-88, 56, 6], "to": [-95, 58, 3.6], "glow": ["124"], "icons": [[-95, 56, "💧"], [-80, 52, "💧"], [-110, 60, "💧"]]}))),
+        ],
+        ja=["カナダには、世界の湖の半分以上がある。", "大昔、巨大な氷河が大地をおおっていた。", "氷河は地面に深いくぼみを削った。", "氷がとけると、水がそのくぼみを満たした。"],
+        gloss=["half:半分", "glacier:氷河", "scrape:削る", "melt:とける", "fill:満たす"],
+        hook="カナダに湖が多いのは、氷のせい?🧊", tags=MT3),
+    "map014_maldives": dict(POL, no="#014", cover=0, hint="👂ヒント:2文目の数字に注目", mysteryMap=_p(ASC, **{"from": [73.5, 3.5, 12]}),
+        q="Why are the Maldives in danger?", q_ja="モルディブが\n危ないと言われるのはなぜ?",
+        choices=["Its islands sit just above the sea.", "The sea level there is fifteen meters."], answer=1,
+        answer_ja="島が、海面よりほんの少し高いだけだから。",
+        hl=["chain", "average", "barely", "rising", "threat"],
+        shots=[
+            ("The Maldives is a chain of over a thousand islands.", dict(type="map", bg="dark", hud="1,000+ ISLANDS", map=_p(ASC, **{"from": [78, 10, 4], "to": [73.5, 3.5, 12], "labels": [[75.5, 6, "MALDIVES"]], "icons": [[73.5, 2.5, "🏝️"]]}))),
+            ("On average, the land is only about one and a half meters high.", dict(type="map", bg="dark", hud="≈ 1.5 m", map=_p(ASC, **{"from": [73.5, 4, 18], "icons": [[73.5, 4, "🌊"]]}))),
+            ("It barely rises above the ocean.", dict(type="map", bg="dark", map=_p(ASC, **{"from": [73.5, 3.5, 22], "to": [73.5, 3.5, 16]}))),
+            ("So rising seas are a serious threat.", dict(type="map", bg="dark", map=_p(ASC, **{"from": [73.5, 3.5, 14], "to": [76, 6, 5], "labels": [[73.5, 8, "RISING SEAS"]], "icons": [[73.5, 3, "⚠️"]]}))),
+        ],
+        ja=["モルディブは、千を超える島々が連なる国だ。", "陸地の高さは、平均でたった約1.5メートル。", "海からほとんど出ていない。", "だから、海面の上昇は深刻な脅威だ。"],
+        gloss=["chain:連なり", "on average:平均で", "barely:かろうじて", "rising:上昇する", "threat:脅威"],
+        hook="モルディブが危ないと言われる理由は?🏝️", tags=MT3),
+    "map015_sahara": dict(POL, no="#015", cover=0, hint="👂ヒント:2文目に注目", mysteryMap=_p(AFC, **{"from": [10, 22, 4]}),
+        q="What was the Sahara like long ago?", q_ja="昔のサハラ砂漠は\nどんな場所だった?",
+        choices=["It was green, with lakes and grass.", "It was a desert with hippos in rivers."], answer=1,
+        answer_ja="湖や草原のある、緑の土地だった。",
+        hl=["largest", "desert", "thousand", "grassland", "shifted"],
+        shots=[
+            ("The Sahara is the largest hot desert on Earth.", dict(type="map", bg="dark", map=_p(AFC, **{"from": [15, 10, 2.5], "to": [10, 22, 3.8], "labels": [[10, 24, "SAHARA"]], "icons": [[5, 20, "🏜️"]]}))),
+            ("But about eight thousand years ago, it was green grassland.", dict(type="map", bg="dark", hud="≈ 8,000 YEARS AGO", map=_p(AFC, **{"from": [10, 22, 4], "icons": [[0, 22, "🌿"], [15, 20, "🌿"], [20, 25, "🌿"]]}))),
+            ("Lakes were home to hippos and fish.", dict(type="map", bg="dark", map=_p(AFC, **{"from": [14, 15, 6], "icons": [[14, 13, "🦛"], [10, 17, "🐟"]], "labels": [[14, 17, "LAKES"]]}))),
+            ("Then Earth's orbit shifted, and the rains stopped.", dict(type="map", bg="dark", map=_p(AFC, **{"from": [10, 22, 4.5], "to": [10, 22, 3.6], "icons": [[10, 22, "☀️"]]}))),
+        ],
+        ja=["サハラは、地球でいちばん大きな暑い砂漠だ。", "でも約8,000年前、そこは緑の草原だった。", "湖にはカバや魚がすんでいた。", "その後、地球の軌道が変わり、雨が降らなくなった。"],
+        gloss=["largest:いちばん大きい", "desert:砂漠", "thousand:千", "grassland:草原", "orbit:(天体の)軌道", "shift:変わる、ずれる"],
+        hook="サハラ砂漠は、昔は緑だった?🌿", tags=MT3),
+    "geo013_seto": dict(GEO, no="#013", cover=0, hint="👂ヒント:2文目に注目", mysteryMap={"from": [133, 34.2, 12]},
+        q="Why is the Seto Inland Sea so calm?", q_ja="瀬戸内海が\nおだやかなのはなぜ?",
+        choices=["Big islands surround it and block strong waves.", "Over seven hundred ships calm the waves."], answer=1,
+        answer_ja="大きな島に囲まれていて、強い波が入りにくいから。",
+        hl=["surrounded", "block", "waves", "dotted"],
+        shots=[
+            ("The Seto Inland Sea lies between three main islands.", dict(type="map", bg="dark", map={"from": [134, 34, 6], "to": [133, 34.2, 10], "hl": ["392"], "labels": [[133, 34.3, "SETO INLAND SEA"]]})),
+            ("Honshu, Shikoku, and Kyushu surround it.", dict(type="map", bg="dark", map={"from": [133, 34, 9], "hl": ["392"], "labels": [[133.5, 35.3, "HONSHU"], [133.5, 33.4, "SHIKOKU"], [130.8, 33.2, "KYUSHU"]]})),
+            ("They block big waves from the open ocean.", dict(type="map", bg="dark", map={"from": [133.5, 33.5, 8], "arrows": [[134, 31, 133.5, 33.2], [130.5, 31, 131, 32.8]]})),
+            ("It's also dotted with over seven hundred small islands.", dict(type="map", bg="dark", hud="700+ ISLANDS", map={"from": [133, 34.3, 14], "to": [133, 34.3, 11], "dots": [[133.2, 34.4], [132.5, 34.2], [134, 34.5], [133.8, 34.2]]})),
+        ],
+        ja=["瀬戸内海は、3つの大きな島のあいだにある。", "本州、四国、九州がそれを囲んでいる。", "これらの島が、外洋からの大きな波をさえぎる。", "さらに、700を超える小さな島が点在している。"],
+        gloss=["inland sea:内海", "surround:囲む", "block:さえぎる", "open ocean:外洋", "be dotted with A:Aが点在している"],
+        hook="瀬戸内海がおだやかな理由、知ってる?🌊", tags=GE),
+    "geo014_kanto": dict(GEO, no="#014", cover=0, hint="👂ヒント:3文目に注目", mysteryMap={"from": [139.6, 36.0, 10]},
+        q="Why could Tokyo grow so big?", q_ja="東京が大都市に\nなれたのはなぜ?",
+        choices=["It sits on Japan's largest flat land.", "It has Japan's largest mountains."], answer=1,
+        answer_ja="日本でいちばん広い平らな土地にあるから。",
+        hl=["mountains", "flat", "largest", "plain", "spread"],
+        shots=[
+            ("Most of Japan is covered by mountains.", dict(type="map", bg="dark", hud="≈ 70% MOUNTAINS", map={"from": [137, 36.5, 5], "hl": ["392"]})),
+            ("Flat land is hard to find.", dict(type="map", bg="dark", map={"from": [138, 36.2, 8], "to": [138.5, 36, 9]})),
+            ("But Tokyo sits on the Kanto Plain, Japan's largest plain.", dict(type="map", bg="dark", map={"from": [139.6, 36, 11], "to": [139.7, 35.9, 13], "labels": [[139.6, 36.4, "KANTO PLAIN"]], "dots": [[139.69, 35.69]]})),
+            ("So the city could spread out in every direction.", dict(type="map", bg="dark", map={"from": [139.7, 35.8, 13], "to": [139.7, 35.8, 10], "arrows": [[139.7, 35.7, 139.3, 36.1], [139.7, 35.7, 140.2, 36.0], [139.7, 35.7, 139.9, 35.4]]})),
+        ],
+        ja=["日本の大部分は、山におおわれている。", "平らな土地は見つけにくい。", "でも東京は、日本最大の平野「関東平野」にある。", "だから都市は、あらゆる方向に広がることができた。"],
+        gloss=["mountain:山", "flat:平らな", "plain:平野", "largest:いちばん大きい", "spread out:広がる"],
+        hook="東京が大都市になれた理由は、地形?🏙️", tags=GE),
+    "geo015_aso": dict(GEO, no="#015", cover=0, hint="👂ヒント:2文目の数字に注目", mysteryMap={"from": [131.1, 32.9, 14]},
+        q="What is special about Mount Aso?", q_ja="阿蘇山の\nすごいところは?",
+        choices=["People live inside its giant crater.", "It erupted twenty-five times last year."], answer=1,
+        answer_ja="巨大なカルデラの中に、人が住んでいる。",
+        hl=["active", "caldera", "kilometers", "towns", "inside"],
+        shots=[
+            ("Mount Aso in Kyushu is an active volcano.", dict(type="map", bg="dark", map={"from": [131, 33, 7], "to": [131.1, 32.9, 13], "hl": ["392"], "labels": [[131.1, 33.35, "MT. ASO"]]})),
+            ("Its huge caldera is about twenty-five kilometers long.", dict(type="map", bg="dark", hud="≈ 25 km", map={"from": [131.1, 32.9, 18], "arrows": [[130.95, 32.8, 131.2, 33.05]]})),
+            ("Towns and farms sit inside it.", dict(type="map", bg="dark", map={"from": [131.1, 32.9, 22], "dots": [[131.05, 32.95], [131.15, 32.88]]})),
+            ("About fifty thousand people live in the caldera.", dict(type="map", bg="dark", hud="≈ 50,000 PEOPLE", map={"from": [131.1, 32.9, 18], "to": [131.1, 32.9, 12], "hl": ["392"]})),
+        ],
+        ja=["九州の阿蘇山は、活火山だ。", "その巨大なカルデラは、長さ約25キロ。", "その中に、町や畑がある。", "約5万人がカルデラの中で暮らしている。"],
+        gloss=["active volcano:活火山", "caldera:カルデラ(火山の大きなくぼ地)", "kilometer:キロメートル", "town:町", "inside:内側に"],
+        hook="火山の中に、5万人が住んでいる?🌋", tags=GE),
+    "vox010_overbook": dict(VOX, no="#010", cover=1, hint="👂ヒント:2文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "doc", "text": "OVERBOOKED", "x": 540, "y": 860, "w": 420}]},
+        q="Why do airlines sell more tickets than seats?", q_ja="航空会社が席より多く\nチケットを売るのはなぜ?",
+        choices=["Every seat is sold twice on purpose.", "Some passengers never show up."], answer=2,
+        answer_ja="来ない乗客がいるから。",
+        hl=["airlines", "seats", "passengers", "empty", "practice"],
+        shots=[
+            ("Airlines often sell more tickets than they have seats.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "doc", "text": "TICKETS", "x": 380, "y": 820, "w": 380, "rot": -5}, {"kind": "label", "text": "SEATS: 180", "x": 740, "y": 1150, "w": 400, "rot": 4}]})),
+            ("Why? Some passengers never show up.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "figure", "x": 380, "y": 880, "w": 380}, {"kind": "stamp", "text": "NO SHOW", "x": 740, "y": 1100, "w": 340, "rot": -10}]})),
+            ("An empty seat earns nothing.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "label", "text": "EMPTY = $0", "x": 540, "y": 820, "w": 480, "rot": -3}, {"kind": "coin", "x": 540, "y": 1200, "w": 180}]})),
+            ("This practice is called overbooking.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "label", "text": "OVERBOOKING", "x": 540, "y": 820, "w": 560, "rot": -3}, {"kind": "chart", "text": "PROFIT", "x": 540, "y": 1220, "w": 380, "rot": 4}]})),
+        ],
+        ja=["航空会社は、座席数より多くチケットを売ることがよくある。", "なぜ?来ない乗客がいるからだ。", "空いた席は、1円も生まない。", "このやり方は「オーバーブッキング」と呼ばれる。"],
+        gloss=["airline:航空会社", "seat:座席", "passenger:乗客", "show up:現れる", "empty:空の", "practice:慣行、やり方"],
+        hook="飛行機の席、なぜ多めに売るの?✈️", tags=MT2),
+    "vox011_gold": dict(VOX, no="#011", cover=1, hint="👂ヒント:2文目と3文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "coin", "x": 540, "y": 860, "w": 320}]},
+        q="Why has gold kept its value for thousands of years?", q_ja="金が何千年も価値を\n保ってきたのはなぜ?",
+        choices=["It is rare and never rusts.", "People rust it to make coins."], answer=1,
+        answer_ja="めずらしく、さびないから。",
+        hl=["rare", "rust", "shines", "trusted"],
+        shots=[
+            ("Gold has been valuable for thousands of years.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "coin", "x": 380, "y": 820, "w": 260}, {"kind": "label", "text": "5,000 YEARS", "x": 720, "y": 1150, "w": 460, "rot": 4}]})),
+            ("It is rare and hard to find.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "label", "text": "RARE", "x": 540, "y": 820, "w": 320, "rot": -3}, {"kind": "coin", "x": 540, "y": 1200, "w": 200}]})),
+            ("It never rusts, so it shines forever.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "coin", "x": 380, "y": 860, "w": 260}, {"kind": "stamp", "text": "NO RUST", "x": 740, "y": 1100, "w": 340, "rot": -10}]})),
+            ("That's why people still trust it today.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "figure", "x": 380, "y": 880, "w": 360}, {"kind": "label", "text": "TRUSTED", "x": 740, "y": 1150, "w": 380, "rot": 4}]})),
+        ],
+        ja=["金は、何千年も価値を持ち続けてきた。", "めずらしく、見つけにくい。", "さびないので、ずっと輝き続ける。", "だから今でも、人々に信頼されている。"],
+        gloss=["valuable:価値のある", "rare:めずらしい", "rust:さびる", "shine:輝く", "trust:信頼する"],
+        hook="金が何千年も価値を保つ理由は?🥇", tags=MT2),
+    "vox012_freetrial": dict(VOX, no="#012", cover=1, hint="👂ヒント:3文目に注目",
+        mysteryCollage={"bg": "parchment", "items": [{"kind": "doc", "text": "FREE TRIAL", "x": 540, "y": 860, "w": 420}]},
+        q="Why do companies offer free trials?", q_ja="会社が無料体験を\nするのはなぜ?",
+        choices=["Once people use it, they often keep paying.", "Free users pay for every trial twice."], answer=1,
+        answer_ja="一度使うと、そのままお金を払い続ける人が多いから。",
+        hl=["offer", "habit", "switch", "keep"],
+        shots=[
+            ("Many services offer a free trial for a month.", dict(type="collage", bg="dark", collage={"bg": "dark", "items": [
+                {"kind": "doc", "text": "30 DAYS FREE", "x": 380, "y": 820, "w": 400, "rot": -5}, {"kind": "coin", "x": 760, "y": 1100, "w": 160}]})),
+            ("During that time, using it becomes a habit.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "parchment", "items": [
+                {"kind": "figure", "x": 380, "y": 880, "w": 380}, {"kind": "label", "text": "HABIT", "x": 740, "y": 1100, "w": 300, "rot": 4}]})),
+            ("Once people get used to it, they rarely switch.", dict(type="collage", bg="dark", collage={"bg": "grid", "items": [
+                {"kind": "stamp", "text": "STAY", "x": 540, "y": 820, "w": 300, "rot": -10}, {"kind": "chart", "text": "USERS", "x": 540, "y": 1200, "w": 380, "rot": 4}]})),
+            ("So many keep paying after the trial ends.", dict(type="collage", bg="dark", wipe="slide", collage={"bg": "gray", "items": [
+                {"kind": "money", "x": 380, "y": 860, "w": 300, "rot": -6}, {"kind": "label", "text": "KEEP PAYING", "x": 720, "y": 1150, "w": 460, "rot": 4}]})),
+        ],
+        ja=["多くのサービスが、1か月の無料体験を用意している。", "そのあいだに、使うことが習慣になる。", "いったん慣れると、人はめったに乗りかえない。", "だから無料期間が終わっても、多くの人が払い続ける。"],
+        gloss=["offer:提供する", "free trial:無料体験", "habit:習慣", "get used to A:Aに慣れる", "switch:乗りかえる", "keep doing:〜し続ける"],
+        hook="「無料体験」で会社がもうかる理由は?🎁", tags=MT2),
+})
+
 
 def tts_words(voice, text, speed=None):
     """ElevenLabs で読み上げ、音声と単語ごとの時刻を返す(保存して使い回す)"""
