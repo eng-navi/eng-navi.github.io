@@ -431,7 +431,7 @@ SHORTS.update({
 })
 
 # ---- ゆっくり英語の地理クイズ(試作)。衛星写真の地図アニメ。英検3級〜準1級の単語を混ぜる。声は Daniel(イギリス英語・ニュース風)
-GEO = dict(voice="onwK4e9ZLuTAKqWW03F9", account="geo", speed=0.8, gap=0.4, bgm="tunnel", kicker="ゆっくり英語の", title="地理クイズ", jaHints=True,
+GEO = dict(voice="onwK4e9ZLuTAKqWW03F9", hook_voice="WQz3clzUdMqvBf0jswZQ", account="geo", speed=0.8, gap=0.4, bgm="tunnel", kicker="ゆっくり英語の", title="地理クイズ", jaHints=True,
            intro=1.5, choice=4.2, end=2.6, endText="答えはコメント欄で👇", bg1="#123a5a", bg2="#06131f", mystery="map")
 SHORTS.update({
     "geo001_quake": dict(GEO, no="#001", mysteryMap=dict(from_=None), cover=3, hint="👂ヒント:3文目に注目",
