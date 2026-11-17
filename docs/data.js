@@ -3311,5 +3311,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 173,
+    "category": "助動詞",
+    "question": "He ( ) be tired. He slept for ten hours.",
+    "options": [
+      "can't",
+      "must"
+    ],
+    "answer": 1,
+    "translation": "彼が疲れているはずがない。10時間も寝たのだから。",
+    "explanation": "10時間寝たのだから「疲れているはずがない」と強く否定する場面です。\ncan't(cannot)には「〜のはずがない」という意味があります。\nmust だと「疲れているにちがいない」と逆の意味になります。\n\nしたがって、①can't が正解。",
+    "audio": "audio/q173.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
