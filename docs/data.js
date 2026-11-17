@@ -3273,5 +3273,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 171,
+    "text": "There's no denying that the new manager has changed the team for the better.",
+    "target": "There's no denying that",
+    "glossary": [
+      "There's no denying that SV：〜は否定できない",
+      "for the better：良い方向に",
+      "manager：部長、責任者"
+    ],
+    "translation": "新しい部長がチームを良い方向に変えたことは、否定できない。",
+    "explanation": "「There's no denying that ~」は「〜ということは否定できない、間違いない」という意味です。\n「否定することはできない」から、強く認める言い方になります。",
+    "audio": "audio/q171.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
