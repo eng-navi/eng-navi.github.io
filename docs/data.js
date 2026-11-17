@@ -3292,5 +3292,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 172,
+    "category": "態",
+    "question": "The meeting room ( ) every Friday afternoon.",
+    "options": [
+      "cleans",
+      "is cleaned"
+    ],
+    "answer": 2,
+    "translation": "会議室は、毎週金曜日の午後に掃除される。",
+    "explanation": "会議室は「掃除する」側ではなく「掃除される」側です。\nまた、空所の後ろに目的語がありません。こういうときは受動態(be + 過去分詞)を選びます。\n\nしたがって、②is cleaned が正解。",
+    "audio": "audio/q172.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
