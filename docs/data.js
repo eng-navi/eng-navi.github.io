@@ -3368,5 +3368,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 176,
+    "category": "助動詞",
+    "question": "I ( ) jog every morning, but now I'm too busy.",
+    "options": [
+      "used to",
+      "am used to"
+    ],
+    "answer": 1,
+    "translation": "以前は毎朝ジョギングしていたが、今は忙しすぎる。",
+    "explanation": "「(今はしていないが)以前はよく〜した」は used to do で表します。\nam used to は「〜に慣れている」という別の意味で、後ろは doing(動名詞)になります。\n\nしたがって、①used to が正解。",
+    "audio": "audio/q176.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
