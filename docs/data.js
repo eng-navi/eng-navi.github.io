@@ -3349,5 +3349,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 175,
+    "category": "動名詞",
+    "question": "The manager is considering ( ) a new office.",
+    "options": [
+      "to open",
+      "opening"
+    ],
+    "answer": 2,
+    "translation": "部長は、新しいオフィスを開くことを検討している。",
+    "explanation": "consider(〜を検討する)は、後ろに動名詞(-ing)をとる動詞です。\nto 不定詞はとらないので、to open は使えません。\n\nしたがって、②opening が正解。",
+    "audio": "audio/q175.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
