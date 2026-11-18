@@ -3330,5 +3330,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 174,
+    "text": "Remote work came into fashion faster than anyone expected.",
+    "target": "came into fashion",
+    "glossary": [
+      "come into fashion：はやり始める",
+      "remote work：リモートワーク",
+      "expect：予想する"
+    ],
+    "translation": "リモートワークは、誰の予想よりも早くはやり始めた。",
+    "explanation": "「come into fashion」は「流行し始める、はやる」という意味です。\n反対は「go out of fashion(すたれる)」です。",
+    "audio": "audio/q174.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
