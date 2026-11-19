@@ -3387,5 +3387,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 177,
+    "text": "Joining the debate club helped me step out of my comfort zone.",
+    "target": "step out of my comfort zone",
+    "glossary": [
+      "step out of one's comfort zone：自分の殻を破る、慣れた場所から一歩出る",
+      "debate club：ディベート部"
+    ],
+    "translation": "ディベート部に入ったことで、自分の殻を破ることができた。",
+    "explanation": "「step out of one's comfort zone」は「居心地のいい場所から一歩外に出る」=「新しいことに挑戦する、殻を破る」という意味です。",
+    "audio": "audio/q177.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
