@@ -3424,5 +3424,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 179,
+    "category": "助動詞",
+    "question": "You ( ) brought an umbrella. It's pouring now.",
+    "options": [
+      "must have",
+      "should have"
+    ],
+    "answer": 2,
+    "translation": "傘を持ってくるべきだったのに。今は土砂降りだ。",
+    "explanation": "「〜すべきだったのに(実際にはしなかった)」という後悔は should have done で表します。\nmust have done は「〜したにちがいない」という推量です。\n\nしたがって、②should have が正解。",
+    "audio": "audio/q179.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
