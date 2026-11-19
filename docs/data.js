@@ -3405,5 +3405,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 178,
+    "category": "前置詞・接続詞",
+    "question": "Please turn off your phone ( ) the presentation.",
+    "options": [
+      "during",
+      "while"
+    ],
+    "answer": 1,
+    "translation": "発表の間は、携帯電話の電源を切ってください。",
+    "explanation": "空所の後ろは the presentation という名詞なので、前置詞が入ります。\nduring は前置詞、while は接続詞で、後ろに「主語+動詞」が必要です。\n\nしたがって、①during が正解。",
+    "audio": "audio/q178.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
