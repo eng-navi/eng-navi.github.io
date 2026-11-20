@@ -3443,5 +3443,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 180,
+    "text": "The plan is popular, but it's not without its critics.",
+    "target": "not without its critics",
+    "glossary": [
+      "be not without (one's) critics：批判する人がいないわけではない",
+      "popular：人気がある"
+    ],
+    "translation": "その計画は人気があるが、批判する人がいないわけではない。",
+    "explanation": "「not without ~」は「〜がないわけではない」という二重否定です。\n「not without its critics」で「批判もある」とやわらかく伝えます。",
+    "audio": "audio/q180.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
