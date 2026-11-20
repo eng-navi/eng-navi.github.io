@@ -3461,5 +3461,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 181,
+    "category": "接続詞",
+    "question": "( ) otherwise noted, all prices include tax.",
+    "options": [
+      "Unless",
+      "Once"
+    ],
+    "answer": 1,
+    "translation": "特に記載がない限り、すべての価格は税込みです。",
+    "explanation": "unless otherwise noted で「特に記載がない限り」という決まった言い方です。\nonce は「いったん〜すれば」で、意味が通りません。\n\nしたがって、①Unless が正解。",
+    "audio": "audio/q181.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
