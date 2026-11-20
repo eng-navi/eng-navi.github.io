@@ -3480,5 +3480,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 182,
+    "category": "助動詞",
+    "question": "I couldn't help ( ) at his joke.",
+    "options": [
+      "to laugh",
+      "laughing"
+    ],
+    "answer": 2,
+    "translation": "彼の冗談に、思わず笑ってしまった。",
+    "explanation": "cannot help doing で「〜せずにはいられない」という意味です。\nこの help は「避ける」という意味なので、後ろは -ing(動名詞)になります。\n\nしたがって、②laughing が正解。",
+    "audio": "audio/q182.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
