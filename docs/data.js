@@ -3517,5 +3517,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 184,
+    "category": "前置詞",
+    "question": "Sales have been growing ( ) last spring.",
+    "options": [
+      "since",
+      "until"
+    ],
+    "answer": 1,
+    "translation": "売上は、去年の春からずっと伸び続けている。",
+    "explanation": "have been growing(現在完了進行形)は、過去から今まで続いていることを表します。\n「〜以来ずっと」の since がぴったりです。\nuntil は「〜までずっと」で、今も続いている文と合いません。\n\nしたがって、①since が正解。",
+    "audio": "audio/q184.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
