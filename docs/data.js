@@ -3536,5 +3536,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 185,
+    "category": "受動態",
+    "question": "The puppy was ( ) by my sister while we were away.",
+    "options": [
+      "looked after",
+      "looked"
+    ],
+    "answer": 1,
+    "translation": "私たちが留守の間、子犬は姉に世話をされた。",
+    "explanation": "look after(〜の世話をする)のような動詞のカタマリは、受動態にしても after を残します。\nbe looked after by ~ で「〜に世話をされる」です。\n\nしたがって、①looked after が正解。",
+    "audio": "audio/q185.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
