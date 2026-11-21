@@ -3499,5 +3499,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 183,
+    "text": "The loud ticking of the clock really got on my nerves.",
+    "target": "got on my nerves",
+    "glossary": [
+      "get on X's nerves：Xをイライラさせる",
+      "ticking：(時計の)カチカチという音"
+    ],
+    "translation": "時計の大きなカチカチという音に、本当にイライラした。",
+    "explanation": "「get on one's nerves」は「〜の神経にさわる」=「イライラさせる」という意味です。\n主語には、イライラの原因(音・人・態度など)が来ます。",
+    "audio": "audio/q183.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
