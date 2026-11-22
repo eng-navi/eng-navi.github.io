@@ -91,52 +91,199 @@ def recs(books, svcs):
     return "\n\n".join(out)
 
 
+LILY, GEORGE = "pFZP5JQG7iQjIQuC4Bku", "JBFqnCBsd6RMkjVDRZzb"  # イギリス英語(女性・男性)。ElevenLabs
+PLAYLIST = ["sailing", "lantern", "vapour", "whales", "tunnel"]  # 長い動画の BGM(1曲を流しっぱなし、つなぎ目はクロスフェード)
+CREDITS = {"sailing": "Sailing Home / Oliver Massa", "lantern": "Lantern / all:ambient", "vapour": "Vapour / Simon Folwar",
+           "whales": "Death Of The Whales / Sky Cassette", "tunnel": "Tunnel / Danijel Zambo"}
+SR = 44100
+Q_CUT = 3.55  # 元のショートは 3.65 秒で見出しが「答えはコメント欄で」に変わる
+
+
+def sentence(q):
+    if "options" in q:
+        return q["question"].replace("( )", q["options"][q["answer"] - 1])
+    return q["text"].replace("\\n", " ").replace("\n", " ")
+
+
+def voice(text, vid):
+    import quizify_black as qb
+    qb.LEVEL.setdefault(vid, qb.LEVEL[qb.EN_VOICE])
+    return qb.tts(vid, text, 1.0)  # キャッシュあり・歪ませないリミッター(クリアな音)
+
+
+def wrap_mixed(d, text, font, width):
+    """日本語は1文字ずつ、英単語は単語ごとに折り返す(英単語の途中で切らない)。"""
+    import re
+    toks = re.findall(r"[A-Za-z0-9'’\-.,/~]+|\s+|.", text)
+    lines, cur = [], ""
+    for tk in toks:
+        if cur and d.textlength(cur + tk, font=font) > width and tk not in "、。」)":
+            lines.append(cur.rstrip())
+            cur = tk.lstrip()
+        else:
+            cur += tk
+    return lines + ([cur] if cur else [])
+
+
+def explain_card(q, path):
+    """答えのあとの解説(要点2〜3行)+くわしい解説のページの URL。"""
+    import render
+    from PIL import Image, ImageDraw
+    t = render.THEMES[render.theme_name(q["no"])]
+    im = Image.new("RGB", (1080, 1920), t["bg"])
+    d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, render.BAR_W, 1920], fill=t["bar"])
+    x = 172
+    d.text((x, 228), str(q["no"]), font=render.font("CrimsonText-Italic.ttf", 93), fill=t["accent"], anchor="ls")
+    d.text((x, 420), "解説", font=render.font("NotoSansJP.ttf", 86, 700), fill=t["accent"], anchor="ls")
+    f = render.font("NotoSansJP.ttf", 56, 400)
+    fb = render.font("NotoSansJP.ttf", 58, 700)
+    lines = []
+    if "options" in q:
+        lines = [l for l in q["explanation"].split("\n") if l.strip() and not l.startswith("したがって")][:3]
+    else:
+        lines = [g for g in q.get("glossary", [])[:3]] + [q["explanation"].split("\n")[0]]
+    y = 600
+    for k, l in enumerate(lines):
+        font = fb if ("options" not in q and k < len(lines) - 1) else f
+        for w in wrap_mixed(d, l, font, 820):
+            d.text((x, y), w, font=font, fill=t["ink"], anchor="ls")
+            y += 84
+        y += 30
+    d.text((x, 1640), "くわしい解説・音声", font=render.font("NotoSansJP.ttf", 40, 500), fill=(110, 110, 110), anchor="ls")
+    d.text((x, 1705), f"eng-navi.github.io/q/{q['no']}", font=render.font("NotoSansJP.ttf", 48, 700), fill=t["accent"], anchor="ls")
+    im.save(path)
+    return path
+
+
+def countdown_frames(src, n, tmp):
+    """問題の最後の画面に 3・2・1 を重ねた画像。"""
+    from PIL import Image, ImageDraw, ImageFont
+    last = tmp / f"{n}_last.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(Q_CUT - 0.15), "-i", str(src), "-frames:v", "1",
+                    "-vf", "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2", str(last)], check=True)
+    out = []
+    for k in (3, 2, 1):
+        im = Image.open(last).convert("RGB")
+        d = ImageDraw.Draw(im)
+        d.ellipse([890, 1620, 1040, 1770], fill=(28, 31, 36))
+        d.text((965, 1697), str(k), font=ImageFont.truetype(yc.HV, 92), fill=(255, 214, 80), anchor="mm")
+        p = tmp / f"{n}_cd{k}.png"
+        im.save(p)
+        out.append(p)
+    return out
+
+
+def still(png, sec, out):
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-framerate", "30", "-t", f"{sec:.3f}", "-i", str(png),
+                    "-vf", "fps=30,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-an", str(out)], check=True)
+
+
+def bgm_bed(total, path):
+    """BGM:曲をクロスフェードでつないで、動画の長さまでくり返す。"""
+    srcs = [str(ROOT / "assets" / "bgm" / f"{m}.mp3") for m in PLAYLIST]
+    inputs, chain, prev = [], "", "[0:a]"
+    for k, sp in enumerate(srcs):
+        inputs += ["-i", sp]
+    for k in range(1, len(srcs)):
+        lab = f"[x{k}]"
+        chain += f"{prev}[{k}:a]acrossfade=d=4{lab};"
+        prev = lab
+    once = path.with_suffix(".once.wav")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", chain.rstrip(";"), "-map", prev,
+                    "-ar", str(SR), "-ac", "2", str(once)], check=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-stream_loop", "-1", "-i", str(once), "-t", f"{total:.3f}",
+                    "-af", f"afade=t=in:d=2,afade=t=out:st={max(0, total - 4):.3f}:d=4", str(path)], check=True)
+    once.unlink()
+
+
 def build(theme_id):
+    import numpy as np
+    import soundfile as sf
     th = next(t for t in THEMES if t[0] == theme_id)
     tid, _, title_t, intro, head, sub, char, books, svcs, tags = th
     nos = items(th)
     if len(nos) < 8:
         sys.exit(f"{tid}:問題が少なすぎます({len(nos)}問)")
-    CACHE.mkdir(parents=True, exist_ok=True)
-    parts, chapters, t = [], [], 0.0
+    Q = {q["no"]: q for q in json.loads((ROOT / "quizzes.json").read_text())}
+    tmp = OUT / f"_t_{tid}"
+    tmp.mkdir(parents=True, exist_ok=True)
+    segs, voice_track, chapters, t = [], [], [], 0.0
+
+    def add_seg(path, sec):
+        nonlocal t
+        segs.append(path)
+        t += sec
+
     for k, n in enumerate(nos, 1):
+        q = Q[n]
+        if (k - 1) % 5 == 0:
+            chapters.append((t, k, n))
         src = ROOT / "out" / "eng_navi" / f"q{n}.mp4"
-        part = CACHE / f"{n}.mp4"
-        if not part.exists():
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vf",
+        qv = tmp / f"{n}_q.mp4"  # 問題(元のショートの映像だけ。「答えはコメント欄で」が出る前で切る。音は全体の BGM に)
+        if not qv.exists():
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-t", str(Q_CUT), "-i", str(src), "-vf",
                             "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,fps=30,format=yuv420p",
-                            "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac", "-ar", "44100", "-ac", "2", "-b:a", "160k",
-                            str(part)], check=True)
-        ans = CACHE / f"{n}_answer.mp4"
-        if not ans.exists():
-            yc.answer_clip(n, ans)
-        if (k - 1) % 5 == 0:  # チャプターは5問ずつ(1つ10秒以上必要)
-            chapters.append((t, k))
-        t += yc.duration(part) + yc.duration(ans)
-        parts += [part, ans]
+                            "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-an", str(qv)], check=True)
+        add_seg(qv, yc.duration(qv))
+        for i, p in enumerate(countdown_frames(src, n, tmp)):  # 考える時間 3・2・1
+            cd = tmp / f"{n}_cd{3 - i}.mp4"
+            if not cd.exists():
+                still(p, 1.0, cd)
+            add_seg(cd, 1.0)
+        text = sentence(q)
+        a, b = voice(text, LILY), voice(text, GEORGE)
+        gap = 0.5
+        ans_sec = 0.5 + len(a) / SR + gap + len(b) / SR + 0.9
+        voice_track.append((t + 0.5, a))
+        voice_track.append((t + 0.5 + len(a) / SR + gap, b))
+        apng = yc.answer_card(n, tmp / f"{n}_ans.png")
+        av = tmp / f"{n}_ans.mp4"
+        still(apng, ans_sec, av)
+        add_seg(av, ans_sec)
+        ev = tmp / f"{n}_exp.mp4"
+        still(explain_card(q, tmp / f"{n}_exp.png"), 5.0, ev)
+        add_seg(ev, 5.0)
         if k % yc.CTA_EVERY == 0 and k < len(nos):
-            cta = CACHE / f"_cta_{k}.mp4"
-            if not cta.exists():
-                yc.cta_clip(k, cta)
-            t += yc.duration(cta)
-            parts.append(cta)
-    lst = OUT / f"_theme_{tid}.txt"
-    lst.write_text("".join(f"file '{p.resolve()}'\n" for p in parts))
+            cpng = yc.cta_card(k, tmp / f"_cta{k}.png")
+            cv = tmp / f"_cta{k}.mp4"
+            still(cpng, yc.CTA_SEC, cv)
+            add_seg(cv, yc.CTA_SEC)
+    # 映像をつなぐ
+    lst = tmp / "list.txt"
+    lst.write_text("".join(f"file '{p.resolve()}'\n" for p in segs))
+    vid = tmp / "video.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(vid)], check=True)
+    total = yc.duration(vid)
+    # 声のトラック
+    track = np.zeros(int(total * SR) + SR, np.float32)
+    for st, clip in voice_track:
+        i0 = int(st * SR)
+        track[i0:i0 + len(clip)] += clip[: len(track) - i0]
+    vwav = tmp / "voice.wav"
+    sf.write(vwav, track, SR)
+    bed = tmp / "bgm.wav"
+    bgm_bed(total, bed)
+    # BGM は小さめ+声の間はさらに下げる(サイドチェイン)→ 声と合わせる
     dst = OUT / f"theme_{tid}.mp4"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy",
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(vid), "-i", str(bed), "-i", str(vwav), "-filter_complex",
+                    "[1:a]volume=0.32[b];[2:a]aformat=channel_layouts=stereo,asplit=2[v1][v2];"
+                    "[b][v1]sidechaincompress=threshold=0.015:ratio=10:attack=15:release=350[bd];"
+                    "[bd][v2]amix=inputs=2:normalize=0,alimiter=limit=0.95[a]",
+                    "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-t", f"{total:.3f}",
                     "-movflags", "+faststart", str(dst)], check=True)
-    lst.unlink()
     yc.KINDS["_theme"] = dict(head=head, sub=sub, char=char)
     yc.thumbnail("_theme", 0, 0, OUT / f"theme_{tid}_thumb.jpg", label=f"{len(nos)}問")
     title = title_t.format(n=len(nos))
-    chap = "\n".join(f"{yc.stamp(ct)} 第{k}問〜" for ct, k in chapters)
-    desc = (f"📚 全問の答え・解説と音声は、無料のサイトで復習できます👇\nhttps://eng-navi.github.io/?utm_source=youtube\n\n"
-            f"{intro}\n1問ずつ「問題 → 答え・和訳」の順に進みます。聞き流しでも、一時停止して考えてもOKです。\n\n"
-            f"{recs(books, svcs)}\n\n▼ チャプター\n{chap}\n\n{tags}")
-    tagline = ",".join(x.lstrip("#") for x in tags.split()) + ",英語学習,聞き流し"
-    (OUT / f"theme_{tid}.txt").write_text(f"タイトル:\n{title}\n\n説明欄:\n{desc}\n\nタグ(詳細設定の「タグ」にそのまま貼る):\n{tagline}\n")
-    print(f"✓ theme_{tid}.mp4({yc.stamp(t)}・{len(nos)}問)")
-
+    chap = "\n".join(f"{yc.stamp(ct)} 第{k}問〜" for ct, k, _ in chapters)
+    links = "\n".join(f"第{k}問(#{n}){Q[n].get('category') or 'イディオム'} → https://eng-navi.github.io/q/{n}/" for k, n in enumerate(nos, 1))
+    music = "\n".join(f"Music: {CREDITS[m]} — Music from #Uppbeat (free for Creators!)" for m in PLAYLIST)
+    desc = (f"📚 全問の答え・くわしい解説と音声は、無料のサイトで復習できます👇\nhttps://eng-navi.github.io/?utm_source=youtube\n\n"
+            f"{intro}\n1問ずつ「問題 → 考える時間 → 答え(イギリス英語で2回読み上げ)→ 解説」の順に進みます。解説はスペースキーで止めてじっくりどうぞ。\n\n"
+            f"{recs(books, svcs)}\n\n▼ チャプター\n{chap}\n\n▼ 問題ごとのくわしい解説(サイト)\n{links}\n\n{music}\n\n{tags}")
+    tagline = ",".join(x.lstrip("#") for x in tags.split()) + ",英語学習,聞き流し,イギリス英語"
+    (OUT / f"theme_{tid}.txt").write_text(f"タイトル:\n{title}\n\n説明欄({len(desc)}字):\n{desc}\n\nタグ(詳細設定の「タグ」にそのまま貼る):\n{tagline}\n")
+    print(f"✓ theme_{tid}.mp4({yc.stamp(total)}・{len(nos)}問・説明欄 {len(desc)}字)")
 
 if __name__ == "__main__":
     cmd = sys.argv[1]
