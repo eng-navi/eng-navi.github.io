@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>おすすめの英語学習ツール | eng_navi</title>
+<meta name="description" content="eng_navi のクイズ・聞き流し動画と一緒に使いたい、英語学習のアプリ・サービス・本をまとめました。">
+<style>
+  :root { --bg: #f7f4ed; --ink: #1d2320; --sub: #6b6f6a; --line: #e4dfd3; --accent: #45613f; --pr: #b5473f; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; line-height: 1.7; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--line); background: #fffdf8; position: sticky; top: 0; }
+  header a.logo { font-weight: 700; color: var(--accent); text-decoration: none; font-size: 18px; letter-spacing: .02em; }
+  header a.back { font-size: 13px; color: var(--sub); text-decoration: none; }
+  main { max-width: 620px; margin: 0 auto; padding: 22px 16px 48px; }
+  h1 { font-size: 22px; }
+  .lead { color: var(--sub); font-size: 14px; margin-top: 6px; }
+  .pr { display: inline-block; font-size: 11px; color: var(--pr); border: 1px solid var(--pr); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: 2px; }
+  h2 { font-size: 15px; color: var(--accent); margin: 30px 0 10px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-top: 12px; scroll-margin-top: 70px; }
+  .card b { font-size: 16px; display: block; }
+  .card p { font-size: 14px; color: #3c413d; margin-top: 4px; }
+  .card .fine { font-size: 12px; color: var(--sub); margin-top: 6px; }
+  .card a.btn { display: block; margin-top: 12px; text-align: center; background: var(--accent); color: #fff; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 600; font-size: 15px; }
+  .note { font-size: 12px; color: var(--sub); margin-top: 32px; }
+  .home { display: block; text-align: center; margin-top: 28px; color: var(--accent); font-weight: 600; text-decoration: none; }
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">eng_navi</a>
+  <a class="back" href="/">クイズに戻る ›</a>
+</header>
+<main>
+  <h1>おすすめの英語学習ツール<span class="pr">PR</span></h1>
+  <p class="lead">クイズや聞き流しの動画と一緒に使うと、覚えた英語を「使える」ところまで伸ばせるものを選びました。</p>
+  <div id="list"></div>
+  <a class="home" href="/">› 無料のクイズ・音声つき復習ページへ</a>
+  <p class="note">このページには広告(アフィリエイトリンク)が含まれます。料金・キャンペーンは変わることがあるので、申し込む前に公式サイトで確認してください。</p>
+</main>
+<script src="/recommend.js"></script>
+<script>
+  // 表示する順番(YouTube の説明欄から #speak などで飛んでくる)
+  const SECTIONS = [
+    { title: "声に出して練習する", keys: ["speak", "nativecamp"] },
+    { title: "本気で伸ばしたい人へ", keys: ["progrit", "liberty"] },
+    { title: "耳から英語を増やす", keys: ["audible"] },
+  ];
+  const I = window.ITEMS || {};
+  const S = window.SALES || {};
+  const esc = (s) => String(s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  document.getElementById("list").innerHTML = SECTIONS.map((sec) => `<h2>${esc(sec.title)}</h2>` + sec.keys.filter((k) => I[k]).map((k) => {
+    const it = I[k], sale = S[k];
+    return `<div class="card" id="${k}"><b>${esc(it.name)}</b><p>${esc(it.note)}</p>`
+      + (sale ? `<p class="fine">${esc(sale.text)}${sale.checked ? `(${esc(sale.checked.slice(5).replace("-", "/"))}時点)` : ""}${sale.fine ? `。${esc(sale.fine)}` : ""}</p>` : "")
+      + `<a class="btn" href="${esc(it.url)}" rel="sponsored noopener" target="_blank" data-label="${esc(k)}">公式サイトを見る</a>`
+      + (it.pixel ? `<img src="${esc(it.pixel)}" width="1" height="1" alt="" style="border:0">` : "") + `</div>`;
+  }).join("")).join("");
+  if (window.ANALYTICS_ID) {
+    const tag = document.createElement("script");
+    tag.async = true; tag.src = "https://www.googletagmanager.com/gtag/js?id=" + window.ANALYTICS_ID;
+    document.head.appendChild(tag);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
+  }
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a.btn");
+    if (a && window.gtag) gtag("event", "link_click", { place: "osusume", label: a.dataset.label, ref: new URLSearchParams(location.search).get("from") || "" });
+  });
+  if (location.hash) setTimeout(() => document.querySelector(location.hash)?.scrollIntoView(), 50);
+</script>
+</body>
+</html>
