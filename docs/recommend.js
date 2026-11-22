@@ -114,7 +114,7 @@ window.SALES = {
   horikoshi: { text: "Kindle版が今だけ半額", until: "2026-11-05", checked: "2026-10-25" },
   brushup: { text: "Kindle版が今だけ26%OFF", until: "2026-10-31", checked: "2026-10-25" },
   // 終了日の発表がないキャンペーンは until: null(日付は出さない)。fine は吹き出しの下に小さく出す注意書き
-  speak: { text: "今なら1ヶ月180円で使い放題", until: null, checked: "2026-10-27", fine: "お試し後は年額プランに自動更新(終了24時間前まで解約OK)" },
+  speak: { text: "今なら1ヶ月180円で使い放題", until: null, checked: "2026-11-22", fine: "お試し後は年額プランに自動更新(終了24時間前まで解約OK)" },
 };
 // いつも使えるキャンペーン(無料体験など)。セールがない日はこちらを出す
 // [A, B] の2案を、見る人ごとにランダムで出し分ける(端末ごとに固定)。GA4 の link_click の copy(A/B)で、押されやすい言い方を比べる
