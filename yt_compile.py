@@ -120,6 +120,91 @@ def thumbnail(kind, a, b, path):
     return path
 
 
+ANSWER_SEC = 4.5
+QUIZZES = None
+
+
+def wrap_words(d, text, f, width):
+    lines, cur = [], ""
+    for w in text.split():
+        t = (cur + " " + w).strip()
+        if cur and d.textlength(t, font=f) > width:
+            lines.append(cur)
+            cur = w
+        else:
+            cur = t
+    return lines + ([cur] if cur else [])
+
+
+def wrap_ja(d, text, f, width):
+    lines, cur = [], ""
+    for ch in text:
+        if cur and d.textlength(cur + ch, font=f) > width and ch not in "、。」)":
+            lines.append(cur)
+            cur = ""
+        cur += ch
+    return lines + ([cur] if cur else [])
+
+
+def answer_card(no, path):
+    """eng_navi の問題のあとに入れる「答え」の画面(元の動画と同じ色・字)。"""
+    import render
+    global QUIZZES
+    if QUIZZES is None:
+        QUIZZES = {q["no"]: q for q in json.loads((ROOT / "quizzes.json").read_text())}
+    q = QUIZZES[no]
+    t = render.THEMES[render.theme_name(no)]
+    im = Image.new("RGB", (1080, 1920), t["bg"])
+    d = ImageDraw.Draw(im)
+    d.rectangle([0, 0, render.BAR_W, 1920], fill=t["bar"])
+    x = 172
+    d.text((x, 228), str(no), font=render.font("CrimsonText-Italic.ttf", 93), fill=t["accent"], anchor="ls")
+    d.text((x, 420), "答え", font=render.font("NotoSansJP.ttf", 86, 700), fill=t["accent"], anchor="ls")
+    ja = render.font("NotoSansJP.ttf", 50, 400)
+    y = 600
+    if "options" in q:
+        fq = render.font("EBGaramond.ttf", 80, 400)
+        ans = q["options"][q["answer"] - 1]
+        sent = q["question"].replace("( )", ans)
+        for line in wrap_words(d, sent, fq, 820):
+            d.text((x, y), line, font=fq, fill=t["ink"], anchor="ls")
+            if ans in line:  # 正解の部分に色の線
+                x0 = x + d.textlength(line[: line.index(ans)], font=fq)
+                d.rectangle([x0 - 4, y + 8, x0 + d.textlength(ans, font=fq) + 4, y + 18], fill=t["accent"])
+            y += 108
+        y += 40
+        d.text((x, y), f"{'①②'[q['answer'] - 1]} {ans}", font=render.font("NotoSansJP.ttf", 72, 700), fill=t["accent"], anchor="ls")
+        y += 120
+    else:
+        fq = render.font("EBGaramond.ttf", 70, 400)
+        for line in wrap_words(d, q["text"].replace("\\n", " ").replace("\n", " "), fq, 820):
+            d.text((x, y), line, font=fq, fill=t["ink"], anchor="ls")
+            y += 92
+        y += 40
+        fg = render.font("NotoSansJP.ttf", 56, 700)
+        for line in wrap_ja(d, q["glossary"][0], fg, 820):
+            d.text((x, y), line, font=fg, fill=t["ink"], anchor="ls")
+            y += 80
+        y += 30
+    for line in wrap_ja(d, q["translation"], ja, 820):
+        d.text((x, y), line, font=ja, fill=(90, 90, 90), anchor="ls")
+        y += 74
+    im.save(path)
+    return path
+
+
+def answer_clip(no, out):
+    png = answer_card(no, out.with_suffix(".png"))
+    bgm = ROOT / "assets" / "bgm.m4a"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-framerate", "30", "-t", str(ANSWER_SEC), "-i", str(png),
+                    "-ss", "6.3", "-t", str(ANSWER_SEC), "-i", str(bgm),
+                    "-vf", "fps=30,format=yuv420p",
+                    "-af", f"volume=0.6,afade=t=in:d=0.3,afade=t=out:st={ANSWER_SEC - 0.6}:d=0.6",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac", "-ar", "44100", "-ac", "2", "-b:a", "160k",
+                    "-shortest", str(out)], check=True)
+    return out
+
+
 def duration(f):
     return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(f)],
                                 capture_output=True, text=True, check=True).stdout.strip())
@@ -146,9 +231,16 @@ def video(kind, a, b):
                             "scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,fps=30,format=yuv420p",
                             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac", "-ar", "44100", "-ac", "2", "-b:a", "160k",
                             str(out)], check=True)
-        chapters.append((t, n))
+        if kind != "eng_navi" or (n - files[0][0]) % 10 == 0:  # YouTube のチャプターは10秒以上必要なので、eng_navi は10問ずつ
+            chapters.append((t, n))
         t += duration(out)
         parts.append(out)
+        if kind == "eng_navi":  # インスタでは答えがコメント欄なので、まとめ動画では答えの画面を足す
+            ans = work / f"{n}_answer.mp4"
+            if not ans.exists():
+                answer_clip(n, ans)
+            t += duration(ans)
+            parts.append(ans)
     lst = work / "list.txt"
     lst.write_text("".join(f"file '{p.name}'\n" for p in parts))
     dst = OUT / f"{kind}_{a}-{b}.mp4"
@@ -159,7 +251,7 @@ def video(kind, a, b):
     title = cfg["title"].format(a=first, b=last)
     desc = (f"{title}\n\nショートで出したクイズを、番号順にまとめました。通しで聞き流しても、気になる回だけ見てもOKです。\n\n"
             "🔊 音声つきの復習・過去の問題はこちら(無料)\nhttps://eng-navi.github.io/\n\n"
-            "▼ チャプター\n" + "\n".join(f"{stamp(ct)} {n}" for ct, n in chapters) + "\n\n#英語学習 #聞き流し #英検 #TOEIC")
+            "▼ チャプター\n" + "\n".join(f"{stamp(ct)} {n}" + (f"〜{min(n + 9, files[-1][0])}" if kind == "eng_navi" else "") for ct, n in chapters) + "\n\n#英語学習 #聞き流し #英検 #TOEIC")
     (OUT / f"{kind}_{a}-{b}.txt").write_text(f"タイトル:\n{title}\n\n説明欄:\n{desc}\n")
     missing = [n for n in range(a, b + 1) if not cfg["files"](n).exists()]
     print(f"✓ {dst}({stamp(t)}・{len(files)}本)" + (f" 見つからない番号: {missing[:20]}" if missing else ""))
