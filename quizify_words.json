@@ -1289,6 +1289,90 @@
    "source": null
   },
   {
+   "word": "scarcity",
+   "no": 337,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "precision",
+   "no": 338,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "composed",
+   "no": 339,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "obsolete",
+   "no": 340,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "skeptical",
+   "no": 341,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "expire",
+   "no": 342,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "conventional",
+   "no": 343,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "notify",
+   "no": 344,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "assumption",
+   "no": 345,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "prejudice",
+   "no": 346,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "seize",
+   "no": 347,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
+   "word": "impulse",
+   "no": 348,
+   "status": "予定",
+   "date": "2026-11-16",
+   "source": null
+  },
+  {
    "word": "abundant",
    "no": 322,
    "status": "投稿済み",
@@ -1394,87 +1478,213 @@
    "source": null
   },
   {
-   "word": "scarcity",
-   "no": 337,
+   "word": "meticulous",
+   "no": 349,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "precision",
-   "no": 338,
+   "word": "rigorous",
+   "no": 350,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "composed",
-   "no": 339,
+   "word": "versatile",
+   "no": 351,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "obsolete",
-   "no": 340,
+   "word": "deteriorate",
+   "no": 352,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "skeptical",
-   "no": 341,
+   "word": "diminish",
+   "no": 353,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "expire",
-   "no": 342,
+   "word": "deplete",
+   "no": 354,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "conventional",
-   "no": 343,
+   "word": "endorse",
+   "no": 355,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "notify",
-   "no": 344,
+   "word": "impose",
+   "no": 356,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "assumption",
-   "no": 345,
+   "word": "imminent",
+   "no": 357,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "prejudice",
-   "no": 346,
+   "word": "lucrative",
+   "no": 358,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "seize",
-   "no": 347,
+   "word": "frugal",
+   "no": 359,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "impulse",
-   "no": 348,
+   "word": "stagnant",
+   "no": 360,
    "status": "予定",
-   "date": "2026-11-16",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "eloquent",
+   "no": 361,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "coherent",
+   "no": 362,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "plausible",
+   "no": 363,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "hinder",
+   "no": 364,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "undermine",
+   "no": 365,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "conceal",
+   "no": 366,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "resilient",
+   "no": 367,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "sporadic",
+   "no": 368,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "spontaneous",
+   "no": 369,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "tentative",
+   "no": 370,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "novice",
+   "no": 371,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "mediocre",
+   "no": 372,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "alleviate",
+   "no": 373,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "provoke",
+   "no": 374,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "refrain",
+   "no": 375,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "inevitable",
+   "no": 376,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "feasible",
+   "no": 377,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "scrutinize",
+   "no": 378,
+   "status": "予定",
+   "date": "2026-11-22",
    "source": null
   }
  ],
@@ -2285,6 +2495,62 @@
    "source": null
   },
   {
+   "word": "mention A",
+   "no": 203,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "contact A",
+   "no": 204,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "apply for A",
+   "no": 205,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "search for A",
+   "no": 206,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "connect A to B",
+   "no": 207,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "suffer from A",
+   "no": 208,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "take advantage of A",
+   "no": 209,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
+   "word": "have an impact on A",
+   "no": 210,
+   "status": "予定",
+   "date": "2026-11-15",
+   "source": null
+  },
+  {
    "word": "notice A doing",
    "no": 191,
    "status": "投稿済み",
@@ -2369,59 +2635,143 @@
    "source": null
   },
   {
-   "word": "mention A",
-   "no": 203,
+   "word": "belong to A",
+   "no": 211,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "contact A",
-   "no": 204,
+   "word": "graduate from A",
+   "no": 212,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "apply for A",
-   "no": 205,
+   "word": "apologize to A for B",
+   "no": 213,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "search for A",
-   "no": 206,
+   "word": "look forward to doing",
+   "no": 214,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "connect A to B",
-   "no": 207,
+   "word": "consist of A",
+   "no": 215,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "suffer from A",
-   "no": 208,
+   "word": "rely on A",
+   "no": 216,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "take advantage of A",
-   "no": 209,
+   "word": "be responsible for A",
+   "no": 217,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
    "source": null
   },
   {
-   "word": "have an impact on A",
-   "no": 210,
+   "word": "be capable of doing",
+   "no": 218,
    "status": "予定",
-   "date": "2026-11-15",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "remind A of B",
+   "no": 219,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "replace A with B",
+   "no": 220,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "approve of A",
+   "no": 221,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "insist on doing",
+   "no": 222,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "participate in A",
+   "no": 223,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "attend A",
+   "no": 224,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "succeed in doing",
+   "no": 225,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "adapt to A",
+   "no": 226,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "distinguish A from B",
+   "no": 227,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "blame A for B",
+   "no": 228,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "get rid of A",
+   "no": 229,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be familiar with A",
+   "no": 230,
+   "status": "予定",
+   "date": "2026-11-22",
    "source": null
   }
  ]
