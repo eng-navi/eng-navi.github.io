@@ -14,7 +14,7 @@ import sys
 import urllib.request
 
 API = "https://api.buffer.com"
-TIKTOK = "6b026f288541f09ecb5e0c42"  # TikTok @quizify_english(クイズファイの動画を流す)
+TIKTOK = "6b026f288541f09ecb5e0c42"  # TikTok @quizify_english(名前は quizify だが、中身は eng_navi の動画。緑→ピンク→青のグリッドを守る)
 CHANNEL = "6b02693d8541f09ecb5dca6f"  # 英語クイズ | サクサク英会話・瞬間英作文トレ(eng_navi とクイズファイを両方流す)
 SITE = "https://eng-navi.github.io/"
 MUTATION = """mutation($input: CreatePostInput!) {

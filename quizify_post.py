@@ -93,7 +93,6 @@ def publish(item):
     color = ("listening", "white", "black")[datetime.now(post.JST).toordinal() % 3]
     if item["key"].startswith(color):
         youtube_buffer.send(url, item["caption"])
-    youtube_buffer.send_tiktok(url, item["caption"])  # TikTok @quizify_english にも
     link = post.api("GET", mid, fields="permalink").get("permalink")
     log = mp.load(LOG, {})
     log[item["key"]] = {"media_id": mid, "story_id": story, "permalink": link,

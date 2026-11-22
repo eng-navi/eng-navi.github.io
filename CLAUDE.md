@@ -194,5 +194,5 @@ work could wait：仕事は後回しにできる
 - eng_navi とクイズファイのリールは、インスタに出た直後に youtube_buffer.py が同じ動画を Buffer に shareNow で送り、YouTube「英語クイズ | サクサク英会話・瞬間英作文トレ」に出る(2チャンネル目の約700人の方は使わない)
 - Buffer 経由の YouTube は1日2本まで(YouTube 側の上限)。eng_navi は夜の1本、クイズファイは日替わりで青・白・黒のどれか1本だけ送る
 - YouTube 公式 API は審査前は非公開に制限されるので使わない。Buffer の鍵は BUFFER_API_KEY(.env と Secrets)、期限 2027/11/22。期限前にリマインドする
-- クイズファイのリールは TikTok @quizify_english にも同じ Buffer の鍵で送る(send_tiktok)
+- TikTok @quizify_english は名前に反して eng_navi の動画のアカウント(緑・ピンク・青のグリッド)。クイズファイの動画は出さない(11/22 に誤って3本出した)。クイズファイ用の TikTok は別に作る予定
 - 説明欄はキャプション+答え・解説+サイトのリンク。「プロフィールのリンク」「ハイライト」の行は外す。失敗してもインスタの投稿は止めない
