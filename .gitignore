@@ -11,3 +11,5 @@ assets/
 archive/
 __pycache__/
 source_words.json
+client_secret*.json
+youtube_token.json
