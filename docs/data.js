@@ -3573,5 +3573,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 187,
+    "category": "前置詞",
+    "question": "The team discussed the plan ( ) coffee.",
+    "options": [
+      "over",
+      "through"
+    ],
+    "answer": 1,
+    "translation": "チームは、コーヒーを飲みながらその計画について話し合った。",
+    "explanation": "over coffee で「コーヒーを飲みながら」という意味になります。\nover lunch(ランチを食べながら)も同じ使い方です。\nthrough は「〜を通じて」で、意味が通りません。\n\nしたがって、①over が正解。",
+    "audio": "audio/q187.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
