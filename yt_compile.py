@@ -122,6 +122,52 @@ def thumbnail(kind, a, b, path):
 
 ANSWER_SEC = 4.5
 QUIZZES = None
+CTA_EVERY, CTA_SEC = 25, 4.5
+OSU = "https://eng-navi.github.io/osusume/?from=yt"
+_SPEAK = ("🗣 スピーク(AI英会話アプリ):覚えた英語を、AI相手に声に出して練習\n"
+          f"→ {OSU}#speak\n▶ 600分使ってみた体験記:https://note.com/english__nonono/n/n99960bcd7af3")
+_PROGRIT = f"🏆 PROGRIT(英語コーチング):本気で伸ばしたい人へ\n→ {OSU}#progrit"
+RECS = {  # まとめ動画の説明欄のおすすめ(PR)。本は Amazon 直リンク、アプリ・サービスは /osusume/ 経由
+    "eng_navi": "🎁 あわせておすすめ(PR)\n📗 『英語のハノン 初級』:わかる文法を、口から出る英語に\nhttps://www.amazon.co.jp/dp/B09NY53725?tag=mokumoku70e-22&linkCode=ll2&linkId=aaa9fc05b00ffc5bcfd72de9d08bdca0&language=ja_JP&ref_=as_li_ss_tl\n"
+                "▶ 実際に使った感想:https://note.com/english__nonono/n/n8b3b665fef6a\n\n" + _SPEAK + "\n\n" + _PROGRIT,
+    "listening": "🎁 あわせておすすめ(PR)\n📗 『キクフレ』:TOEICによく出るフレーズを音声つきで\nhttps://link.amazon/B09qOB6Ou\n\n" + _SPEAK + "\n\n" + _PROGRIT,
+    "white": "🎁 あわせておすすめ(PR)\n📗 『大学入試英単語 OVERSIGHT』:「見たことはあるのに訳せない」単語に\nhttps://www.amazon.co.jp/dp/B0H2BMN624?tag=mokumoku70e-22&linkCode=ll2&linkId=c9b5d7da796b8d08904c91469500b648&language=ja_JP&ref_=as_li_ss_tl\n\n" + _SPEAK + "\n\n" + _PROGRIT,
+    "black": "🎁 あわせておすすめ(PR)\n📗 『大学入試 無敵の難単語 PINNACLE 420』:難しい単語で手が止まる人に\nhttps://www.amazon.co.jp/dp/B0CK4HSRZN?tag=mokumoku70e-22&linkCode=ll2&linkId=8ecd3ddef08dd6642b8ef647882ce7d7&language=ja_JP&ref_=as_li_ss_tl\n\n" + _SPEAK + "\n\n" + _PROGRIT,
+}
+
+
+def cta_card(k, path):
+    """まとめ動画の途中(25問ごと)に入れる、サイトの案内の画面。"""
+    im = Image.new("RGB", (1080, 1920), (28, 31, 36))
+    random.seed(k)
+    fog = Image.new("L", (1080, 1920), 0)
+    fd = ImageDraw.Draw(fog)
+    for _ in range(60):
+        x, y, r = random.uniform(-100, 1180), random.uniform(700, 2000), random.uniform(80, 260)
+        fd.ellipse([x - r, y - r * .7, x + r, y + r * .7], fill=int(random.uniform(30, 80) * y / 1920))
+    im.paste((175, 180, 188), (0, 0), fog.filter(ImageFilter.GaussianBlur(50)))
+    d = ImageDraw.Draw(im)
+    d.text((540, 300), f"ここまで {k}問", font=ImageFont.truetype(HM, 66), fill=(255, 214, 80), anchor="mm")
+    d.text((540, 400), "おつかれさま!", font=ImageFont.truetype(HV, 92), fill=(255, 255, 255), anchor="mm")
+    for i, line in enumerate(["答え・解説と音声は", "無料のサイトで", "いつでも復習できます"]):
+        d.text((540, 600 + i * 96), line, font=ImageFont.truetype(HM, 64), fill=(235, 235, 235), anchor="mm")
+    d.rounded_rectangle([170, 960, 910, 1080], 60, fill=(255, 214, 80))
+    d.text((540, 1020), "▼ 概要欄のリンクから", font=ImageFont.truetype(HV, 56), fill=(28, 31, 36), anchor="mm")
+    ch = character("owl", 330)
+    im.paste(ch, (540 - ch.width // 2, 1180), ch)
+    im.save(path)
+    return path
+
+
+def cta_clip(k, out):
+    png = cta_card(k, out.with_suffix(".png"))
+    bgm = ROOT / "assets" / "bgm.m4a"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-framerate", "30", "-t", str(CTA_SEC), "-i", str(png),
+                    "-stream_loop", "-1", "-i", str(bgm), "-vf", "fps=30,format=yuv420p",
+                    "-t", str(CTA_SEC), "-af", f"volume=0.4,afade=t=in:d=0.4,afade=t=out:st={CTA_SEC - 0.6}:d=0.6",
+                    "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac", "-ar", "44100", "-ac", "2", "-b:a", "160k",
+                    "-shortest", str(out)], check=True)
+    return out
 
 
 def wrap_words(d, text, f, width):
@@ -241,6 +287,13 @@ def video(kind, a, b):
                 answer_clip(n, ans)
             t += duration(ans)
             parts.append(ans)
+        k = files.index((n, f)) + 1
+        if k % CTA_EVERY == 0 and k < len(files):  # 最初ではなく途中に、さりげなくサイトの案内
+            cta = work / f"_cta_{k}.mp4"
+            if not cta.exists():
+                cta_clip(k, cta)
+            t += duration(cta)
+            parts.append(cta)
     lst = work / "list.txt"
     lst.write_text("".join(f"file '{p.name}'\n" for p in parts))
     dst = OUT / f"{kind}_{a}-{b}.mp4"
@@ -249,9 +302,10 @@ def video(kind, a, b):
     first, last = files[0][0], files[-1][0]
     thumbnail(kind, first, last, OUT / f"{kind}_{a}-{b}_thumb.jpg")
     title = cfg["title"].format(a=first, b=last)
-    desc = (f"{title}\n\nショートで出したクイズを、番号順にまとめました。通しで聞き流しても、気になる回だけ見てもOKです。\n\n"
-            "🔊 音声つきの復習・過去の問題はこちら(無料)\nhttps://eng-navi.github.io/\n\n"
-            "▼ チャプター\n" + "\n".join(f"{stamp(ct)} {n}" + (f"〜{min(n + 9, files[-1][0])}" if kind == "eng_navi" else "") for ct, n in chapters) + "\n\n#英語学習 #聞き流し #英検 #TOEIC")
+    desc = ("📚 全問の答え・解説と音声は、無料のサイトで復習できます👇\nhttps://eng-navi.github.io/?utm_source=youtube\n\n"
+            f"{title}\n\nショートで出したクイズを、番号順にまとめました。通しで聞き流しても、気になる回だけ見てもOKです。\n\n"
+            + RECS.get(kind, RECS["eng_navi"]) +
+            "\n\n▼ チャプター\n" + "\n".join(f"{stamp(ct)} {n}" + (f"〜{min(n + 9, files[-1][0])}" if kind == "eng_navi" else "") for ct, n in chapters) + "\n\n#英語学習 #聞き流し #英検 #TOEIC")
     (OUT / f"{kind}_{a}-{b}.txt").write_text(f"タイトル:\n{title}\n\n説明欄:\n{desc}\n")
     missing = [n for n in range(a, b + 1) if not cfg["files"](n).exists()]
     print(f"✓ {dst}({stamp(t)}・{len(files)}本)" + (f" 見つからない番号: {missing[:20]}" if missing else ""))
