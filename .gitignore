@@ -10,3 +10,4 @@ assets/
 # 過去投稿の取り込み作業用(動画・コマ・書き出しデータ)
 archive/
 __pycache__/
+source_words.json
