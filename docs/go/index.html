@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eng_navi | 無料のクイズとおすすめ教材</title>
+<meta name="description" content="eng_navi の無料クイズ・リスニング・英単語の復習ページと、目的別のおすすめ教材(単語・熟語・文法・TOEIC・スピーキング・留学)を1ページにまとめました。">
+<meta property="og:title" content="eng_navi | 無料のクイズとおすすめ教材">
+<meta property="og:description" content="無料の英語クイズと、目的別のおすすめ教材をまとめたページ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #f4f1ea; --card: #fffdf8; --ink: #1b211d; --sub: #6a6f69; --line: #e3ddd0; --green: #45613f; --pink: #e6a0a5; --blue: #8fb3c0; --pr: #b5473f; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: "Noto Sans JP", system-ui, -apple-system, "Hiragino Sans", sans-serif; line-height: 1.7; }
+  header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: rgba(255,253,248,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .logo { font-family: "EB Garamond", serif; font-style: italic; font-size: 24px; color: var(--green); text-decoration: none; letter-spacing: .01em; }
+  header a.free { font-size: 13px; font-weight: 700; color: #fff; background: var(--green); padding: 7px 14px; border-radius: 99px; text-decoration: none; }
+  main { max-width: 640px; margin: 0 auto; padding: 0 16px 56px; }
+  .hero { padding: 30px 0 18px; }
+  .hero .stripe { display: flex; gap: 6px; margin-bottom: 14px; }
+  .hero .stripe i { width: 34px; height: 6px; border-radius: 3px; }
+  .hero h1 { font-size: 26px; line-height: 1.4; letter-spacing: .01em; }
+  .hero p { color: var(--sub); font-size: 14px; margin-top: 8px; }
+  nav.chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 14px; scrollbar-width: none; }
+  nav.chips::-webkit-scrollbar { display: none; }
+  nav.chips a { flex: none; font-size: 13px; font-weight: 500; color: var(--ink); background: var(--card); border: 1px solid var(--line); padding: 6px 13px; border-radius: 99px; text-decoration: none; }
+  section { scroll-margin-top: 64px; margin-top: 26px; }
+  h2 { font-size: 17px; display: flex; align-items: baseline; gap: 8px; }
+  h2 small { font-size: 12px; color: var(--sub); font-weight: 400; }
+  .pr { font-size: 10px; font-weight: 700; color: var(--pr); border: 1px solid var(--pr); border-radius: 4px; padding: 0 4px; }
+  .free-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .free-grid a { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; text-decoration: none; color: var(--ink); border-top: 5px solid var(--c); }
+  .free-grid b { display: block; font-size: 15px; }
+  .free-grid span { display: block; font-size: 12px; color: var(--sub); margin-top: 2px; line-height: 1.5; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 15px; margin-top: 10px; }
+  .card .kind { font-size: 11px; color: var(--sub); letter-spacing: .04em; }
+  .card b { display: block; font-size: 15px; line-height: 1.5; }
+  .card p { font-size: 13px; color: #3d433e; margin-top: 4px; }
+  .card .perk { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 700; color: var(--green); background: #e9efe6; padding: 2px 8px; border-radius: 6px; }
+  .card .fine { font-size: 11px; color: var(--sub); margin-top: 6px; }
+  .card a.btn { display: block; margin-top: 12px; text-align: center; color: #fff; background: var(--ink); text-decoration: none; padding: 11px; border-radius: 10px; font-weight: 700; font-size: 14px; }
+  .card a.btn.amazon { background: #fff; color: var(--ink); border: 1.5px solid var(--ink); }
+  footer { margin-top: 40px; font-size: 11px; color: var(--sub); line-height: 1.8; }
+  footer a { color: var(--sub); }
+  @media (min-width: 560px) { .hero h1 { font-size: 30px; } }
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">eng_navi</a>
+  <a class="free" href="/?utm_source=go">無料でクイズ ›</a>
+</header>
+<main>
+  <div class="hero">
+    <div class="stripe"><i style="background:var(--green)"></i><i style="background:var(--pink)"></i><i style="background:var(--blue)"></i></div>
+    <h1>動画の英語を、<br>ここから復習しよう。</h1>
+    <p>クイズ・リスニング・単語は、全部無料で音声つき。目的別のおすすめ教材も、まとめて置いています。</p>
+  </div>
+  <nav class="chips">
+    <a href="#free">無料で復習</a><a href="#tango">英単語</a><a href="#jukugo">熟語・表現</a><a href="#bunpo">英文法</a><a href="#toeic">TOEIC</a><a href="#speaking">スピーキング</a><a href="#honki">本気・留学</a>
+  </nav>
+
+  <section id="free">
+    <h2>無料で復習する <small>音声つき・登録なし</small></h2>
+    <div class="free-grid">
+      <a href="/?utm_source=go" style="--c:var(--green)"><b>英文法クイズ</b><span>英検・TOEICによく出る2択クイズ</span></a>
+      <a href="/listening/?utm_source=go" style="--c:var(--blue)"><b>リスニング</b><span>1回で聞き取る TOEIC 形式</span></a>
+      <a href="/tango/?utm_source=go" style="--c:#d9d2c0"><b>英単語(基本)</b><span>入試・英検でよく出る形</span></a>
+      <a href="/tango-advanced/?utm_source=go" style="--c:#333"><b>英単語(上級)</b><span>英検準1級の瞬間英作文</span></a>
+      <a href="/list/?utm_source=go" style="--c:var(--pink)"><b>フレーズ集</b><span>テーマ別の5選・10選</span></a>
+      <a href="/manga/?utm_source=go" style="--c:#f0c36a"><b>4コマで英語</b><span>マンガで覚えるイディオム</span></a>
+    </div>
+  </section>
+  <div id="recs"></div>
+
+  <footer>
+    このページには広告(アフィリエイトリンク)を含みます(PR)。料金・キャンペーンは変わることがあるので、申し込む前に公式サイトで確認してください。<br>
+    <a href="/">eng_navi トップへ</a>
+  </footer>
+</main>
+<script src="/recommend.js"></script>
+<script>
+  // 目的別のおすすめ。中身(名前・説明・リンク)は recommend.js の ITEMS から
+  const GROUPS = [
+    { id: "tango", title: "英単語", sub: "語彙を一気に増やす", keys: ["pinnacle", "oversight"] },
+    { id: "jukugo", title: "熟語・表現", sub: "言い回しを英文ごと", keys: ["idiomatic", "setphrase", "hanon_phrase"] },
+    { id: "bunpo", title: "英文法", sub: "入試・英検の文法を固める", keys: ["shortcuts", "scramble", "eureka"] },
+    { id: "toeic", title: "TOEIC", sub: "スコアを上げる", keys: ["studysapuri", "kikufure"] },
+    { id: "speaking", title: "スピーキング", sub: "覚えた英語を口に出す", keys: ["speak", "torabit", "nativecamp", "sankei"] },
+    { id: "honki", title: "本気で伸ばす・留学", sub: "プロに伴走してもらう", keys: ["progrit", "liberty", "yumekana"] },
+  ];
+  const I = window.ITEMS || {}, S = window.SALES || {}, P = window.PERKS || {};
+  const esc = (s) => String(s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const today = new Date().toISOString().slice(0, 10);
+  const fresh = (s) => s && (!s.until || s.until >= today) && s.checked && (Date.parse(today) - Date.parse(s.checked)) / 864e5 <= 7; // 確認から1週間以内のセールだけ出す
+  const NOTES = { yumekana: "18〜30歳のワーホリ・留学希望の方が対象の無料カウンセリングです" };
+  document.getElementById("recs").innerHTML = GROUPS.map((g) => `<section id="${g.id}"><h2>${esc(g.title)} <small>${esc(g.sub)}</small> <span class="pr">PR</span></h2>` +
+    g.keys.filter((k) => I[k]).map((k) => {
+      const it = I[k], amazon = /amazon/.test(it.url), sale = fresh(S[k]) ? S[k] : null;
+      const perk = sale ? `${sale.text}(${sale.checked.slice(5).replace("-", "/")}時点)` : (Array.isArray(P[k]) ? P[k][0] : "");
+      return `<div class="card"><div class="kind">${amazon ? "本(Amazon)" : "アプリ・サービス"}</div><b>${esc(it.name)}</b><p>${esc(it.note)}</p>`
+        + (perk ? `<span class="perk">${esc(perk)}</span>` : "")
+        + (sale && sale.fine ? `<p class="fine">${esc(sale.fine)}</p>` : "")
+        + (NOTES[k] ? `<p class="fine">${esc(NOTES[k])}</p>` : "")
+        + `<a class="btn${amazon ? " amazon" : ""}" href="${esc(it.url)}" target="_blank" rel="sponsored noopener" data-label="${esc(k)}">${amazon ? "Amazonで見る" : "公式サイトを見る"}</a>`
+        + (it.pixel ? `<img src="${esc(it.pixel)}" width="1" height="1" alt="" style="border:0">` : "") + `</div>`;
+    }).join("") + `</section>`).join("");
+  if (window.ANALYTICS_ID) {
+    const tag = document.createElement("script"); tag.async = true;
+    tag.src = "https://www.googletagmanager.com/gtag/js?id=" + window.ANALYTICS_ID; document.head.appendChild(tag);
+    window.dataLayer = window.dataLayer || []; window.gtag = function () { dataLayer.push(arguments); };
+    gtag("js", new Date()); gtag("config", window.ANALYTICS_ID);
+  }
+  const from = new URLSearchParams(location.search).get("from") || document.referrer.split("/")[2] || "";
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a"); if (!a || !window.gtag) return;
+    gtag("event", "link_click", { place: "go", label: a.dataset.label || a.getAttribute("href"), ref: from });
+  });
+</script>
+</body>
+</html>

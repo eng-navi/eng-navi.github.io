@@ -77,7 +77,7 @@ def tiktok_text(caption):
     lines = [l.rstrip() for l in caption.replace("\u3000", "").splitlines()
              if "プロフィールのリンク" not in l and "ハイライト" not in l]
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
-    note = "\n\n🔊 音声つきの復習は、プロフィールのリンクから"
+    note = "\n\n📚 無料のクイズ・音声つき復習と、おすすめの単語集・英会話アプリは、プロフィールのリンクのページにまとめています"
     return text[: 2150 - len(note)] + note
 
 
