@@ -1476,6 +1476,216 @@
    "status": "投稿済み",
    "date": "2026-11-21",
    "source": null
+  },
+  {
+   "word": "vacant",
+   "no": 349,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "concede",
+   "no": 350,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "reconcile",
+   "no": 351,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "exempt",
+   "no": 352,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "stroll",
+   "no": 353,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "hectic",
+   "no": 354,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "vivid",
+   "no": 355,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "intact",
+   "no": 356,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "conform",
+   "no": 357,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "sway",
+   "no": 358,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "hasty",
+   "no": 359,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "rotate",
+   "no": 360,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "decisive",
+   "no": 361,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "trivial",
+   "no": 362,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "detain",
+   "no": 363,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "vicious",
+   "no": 364,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "revolve",
+   "no": 365,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "summon",
+   "no": 366,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "corrupt",
+   "no": 367,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "stale",
+   "no": 368,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "proclaim",
+   "no": 369,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "cherish",
+   "no": 370,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "fictitious",
+   "no": 371,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "rash",
+   "no": 372,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "serene",
+   "no": 373,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "ransom",
+   "no": 374,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "witty",
+   "no": 375,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "thaw",
+   "no": 376,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "obstacle",
+   "no": 377,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "impractical",
+   "no": 378,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
   }
  ],
  "white": [
@@ -2422,6 +2632,146 @@
    "no": 202,
    "status": "投稿済み",
    "date": "2026-11-21",
+   "source": null
+  },
+  {
+   "word": "suggest that S (should) do",
+   "no": 211,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be subject to A",
+   "no": 212,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be particular about A",
+   "no": 213,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be native to A",
+   "no": 214,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "realize one's dream",
+   "no": 215,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "demand for A",
+   "no": 216,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "in detail",
+   "no": 217,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "for instance",
+   "no": 218,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be aware of A",
+   "no": 219,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "have access to A",
+   "no": 220,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be worth doing",
+   "no": 221,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "treat A as B",
+   "no": 222,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "view A as B",
+   "no": 223,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be supposed to do",
+   "no": 224,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "perform an experiment",
+   "no": 225,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "have an opportunity to do",
+   "no": 226,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "a wide range of A",
+   "no": 227,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "figure out A",
+   "no": 228,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "be determined to do",
+   "no": 229,
+   "status": "予定",
+   "date": "2026-11-22",
+   "source": null
+  },
+  {
+   "word": "survive A",
+   "no": 230,
+   "status": "予定",
+   "date": "2026-11-22",
    "source": null
   }
  ]
