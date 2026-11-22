@@ -56,7 +56,7 @@ def smoke_bg():
 
 
 def gold_text(base, xy, text, size):
-    f = ImageFont.truetype(GOLD_FONT, size)
+    f = ImageFont.truetype(GOLD_FONT, size) if text.isascii() else ImageFont.truetype(HV, int(size * .8))  # 日本語(「問」など)はヒラギノで
     mask = Image.new("L", base.size, 0)
     ImageDraw.Draw(mask).text(xy, text, font=f, fill=255, anchor="ls")
     grad = Image.new("RGB", base.size)
