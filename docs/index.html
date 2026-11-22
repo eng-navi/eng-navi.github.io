@@ -395,6 +395,7 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
   }
+  .review-link { display: block; font-size: 12px; color: #45613f; margin: 6px 2px 0; text-decoration: underline; text-underline-offset: 3px; }
 </style>
 </head>
 <body>
@@ -688,7 +689,7 @@
   const promo = window.promo || (() => null);
   const promoTip = window.promoTip || (() => "");
   const nb = window.nb || esc;
-  const recLink = (it) => `${promoTip(it)}<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${nb(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}`;
+  const recLink = (it) => `${promoTip(it)}<a href="${esc(it.url)}" target="_blank" rel="noopener sponsored nofollow"><span><b>${nb(it.name)}</b><small>${esc(it.note || "")}</small></span></a>${pix(it)}${it.review ? `<a class="review-link" href="${esc(it.review)}" target="_blank" rel="noopener">▶ ${esc(it.reviewText || "使った感想")}</a>` : ""}`;
 
   // 全問チャレンジは、どこまで進んだかを端末に記録して続きから再開できる
   let allMode = false;
@@ -991,7 +992,7 @@
       ? `<a class="slim" data-place="explanation_slim" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow"><small>PR</small><span>この分野の参考書${(promo(p.item) || {}).hot ? `<em class="hot-badge">${nb(promo(p.item).text)}</em>` : ""}<b>${nb(p.item.name)}</b></span><i>›</i></a>${pix(p.item)}`
       : `<a class="nudge" href="${esc(p.item.url)}" target="_blank" rel="noopener sponsored nofollow">
           <small>PR</small><em>${nb(p.hook)}</em><b>${nb(p.item.name)}</b>${p.item.note ? `<span>${esc(p.item.note)}</span>` : ""}
-          <span class="cta-row">${promoTip(p.item)}<i>${/amazon|amzn/.test(p.item.url) ? (promo(p.item) || {}).hot ? "セール価格を見る" : "Amazonで中身を見る" : "無料で試してみる"} →</i></span></a>${pix(p.item)}${speakLine(p.item)}`;
+          <span class="cta-row">${promoTip(p.item)}<i>${/amazon|amzn/.test(p.item.url) ? (promo(p.item) || {}).hot ? "セール価格を見る" : "Amazonで中身を見る" : "無料で試してみる"} →</i></span></a>${pix(p.item)}${p.item.review ? `<a class="review-link" href="${esc(p.item.review)}" target="_blank" rel="noopener">▶ ${esc(p.item.reviewText || "使った感想")}</a>` : ""}${speakLine(p.item)}`;
     const V = window.VIEW || {};
     return `<div data-block="exp">
       <details ${open || V.open === "always" ? "open" : ""}>

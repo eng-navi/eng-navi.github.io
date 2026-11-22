@@ -100,6 +100,7 @@
         + (sale && sale.fine ? `<p class="fine">${esc(sale.fine)}</p>` : "")
         + (NOTES[k] ? `<p class="fine">${esc(NOTES[k])}</p>` : "")
         + `<a class="btn${amazon ? " amazon" : ""}" href="${esc(it.url)}" target="_blank" rel="sponsored noopener" data-label="${esc(k)}">${amazon ? "Amazonで見る" : "公式サイトを見る"}</a>`
+        + (it.review ? `<p class="fine"><a href="${esc(it.review)}" target="_blank" rel="noopener" style="color:#45613f">▶ ${esc(it.reviewText || "使った感想")}</a></p>` : "")
         + (it.pixel ? `<img src="${esc(it.pixel)}" width="1" height="1" alt="" style="border:0">` : "") + `</div>`;
     }).join("") + `</section>`).join("");
   if (window.ANALYTICS_ID) {
