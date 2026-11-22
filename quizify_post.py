@@ -89,6 +89,8 @@ def publish(item):
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
     add_comment(mid, item["caption"])  # 答え・解説はコメントにも(タップしやすい)
     story = post.post_story(url)
+    import youtube_buffer  # 同じ動画を YouTube ショートにも
+    youtube_buffer.send(url, item["caption"])
     link = post.api("GET", mid, fields="permalink").get("permalink")
     log = mp.load(LOG, {})
     log[item["key"]] = {"media_id": mid, "story_id": story, "permalink": link,
