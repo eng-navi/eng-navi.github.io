@@ -197,9 +197,9 @@ def answer_clip(no, out):
     png = answer_card(no, out.with_suffix(".png"))
     bgm = ROOT / "assets" / "bgm.m4a"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-framerate", "30", "-t", str(ANSWER_SEC), "-i", str(png),
-                    "-ss", "6.3", "-t", str(ANSWER_SEC), "-i", str(bgm),
+                    "-stream_loop", "-1", "-i", str(bgm),
                     "-vf", "fps=30,format=yuv420p",
-                    "-af", f"volume=0.6,afade=t=in:d=0.3,afade=t=out:st={ANSWER_SEC - 0.6}:d=0.6",
+                    "-t", str(ANSWER_SEC), "-af", f"volume=0.5,afade=t=in:d=0.3,afade=t=out:st={ANSWER_SEC - 0.6}:d=0.6",
                     "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac", "-ar", "44100", "-ac", "2", "-b:a", "160k",
                     "-shortest", str(out)], check=True)
     return out
