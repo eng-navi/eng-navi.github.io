@@ -208,6 +208,7 @@ TEMPLATE = """<!doctype html>
 </style>
 </head>
 <body>
+<script src="/nav.js"></script>
 <main>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › <a href="../">4コマで覚える英語</a></p>
   <h1>__WORD__<small>= __MEANING__</small></h1>
@@ -385,6 +386,7 @@ INDEX = """<!doctype html>
 </style>
 </head>
 <body>
+<script src="/nav.js"></script>
 <main>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › 4コマで覚える英語</p>
   <h1>4コマで覚える英語</h1>

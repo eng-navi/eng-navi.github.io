@@ -167,6 +167,7 @@ def question_page(q, prev_no, next_no, has_audio):
     reel = f'<a class="sub" href="{e(q["permalink"])}" target="_blank" rel="noopener">▶ このリールを Instagram で見る</a>' if q.get("permalink") else ""
     style = STYLE % t
     return HEAD.format(title=e(page_title(q)), desc=e(description(q)), url=url, site=SITE_URL, style=style) + f"""<body>
+<script src="/nav.js"></script>
 <main>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › <a href="/q/">問題一覧</a> › No.{q['no']}</p>
   <p class="num">{q['no']}</p>
@@ -201,6 +202,7 @@ def index_page(quizzes):
     title = f"問題一覧|TOEIC・英検の英文法クイズ{len(quizzes)}問|eng_navi"
     desc = f"Instagram @eng_navi のリールで出題した英文法クイズ{len(quizzes)}問の一覧。TOEIC・英検2級・イディオムの問題を、答えと解説つきで無料公開しています。"
     return HEAD.format(title=e(title), desc=e(desc), url=f"{SITE_URL}/q/", site=SITE_URL, style=style) + f"""<body>
+<script src="/nav.js"></script>
 <main>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › 問題一覧</p>
   <h1 style="font-family:inherit;font-weight:700;font-size:24px">英文法クイズ 問題一覧</h1>

@@ -117,6 +117,7 @@ def page(lst):
 </style>
 </head>
 <body>
+<script src="/nav.js"></script>
 <main>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › フレーズ集 No.{lst['id']}</p>
   <h1>{e(lst['title'])}</h1>
@@ -274,6 +275,7 @@ def index_page(lists):
 </style>
 </head>
 <body>
+<script src="/nav.js"></script>
 <main>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › フレーズ集</p>
   <h1>フレーズ集</h1>

@@ -15,9 +15,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--ink); font-family: "Noto Sans JP", system-ui, -apple-system, "Hiragino Sans", sans-serif; line-height: 1.7; }
-  header { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: rgba(255,253,248,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  .logo { font-family: "EB Garamond", serif; font-style: italic; font-size: 24px; color: var(--green); text-decoration: none; letter-spacing: .01em; }
-  header a.free { font-size: 13px; font-weight: 700; color: #fff; background: var(--green); padding: 7px 14px; border-radius: 99px; text-decoration: none; }
   main { max-width: 640px; margin: 0 auto; padding: 0 16px 56px; }
   .hero { padding: 30px 0 18px; }
   .hero .stripe { display: flex; gap: 6px; margin-bottom: 14px; }
@@ -49,10 +46,7 @@
 </style>
 </head>
 <body>
-<header>
-  <a class="logo" href="/">eng_navi</a>
-  <a class="free" href="/?utm_source=go">無料でクイズ ›</a>
-</header>
+<script src="/nav.js"></script>
 <main>
   <div class="hero">
     <div class="stripe"><i style="background:var(--green)"></i><i style="background:var(--pink)"></i><i style="background:var(--blue)"></i></div>

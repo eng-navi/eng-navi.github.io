@@ -196,6 +196,7 @@ TEMPLATE = """<!doctype html>
 </style>
 </head>
 <body>
+<script src="/nav.js"></script>
 <main>
   <p class="crumb"><a href="/">eng_navi 英語クイズ</a> › {{crumb}}</p>
   <h1>{{h1}}</h1>
