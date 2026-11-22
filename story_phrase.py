@@ -56,6 +56,17 @@ STORIES = [
     ("break_the_ice", "break the ice", "場をなごませる", "A joke can help break the ice.", "冗談は場をなごませるのに役立つ", "初対面の空気をほぐす"),
     ("get_the_hang_of_it", "get the hang of it", "コツをつかむ", "Driving is hard at first, but you'll get the hang of it.", "運転は最初は難しいけど、コツをつかめるよ", "慣れてきたときに"),
     ("better_late", "Better late than never.", "遅くてもやらないよりまし", "I started English at 40. Better late than never!", "40歳で英語を始めた。遅くてもやらないよりまし!", "始めるのに遅すぎることはない"),
+    # ---- 11/26〜12/5 ----
+    ("on_the_fence", "on the fence", "迷っている", "I'm still on the fence about the trip.", "旅行に行くか、まだ迷っている", "どっちつかずの気持ち"),
+    ("my_bad", "My bad.", "ごめん、私のせい", "Oops, I took your seat. My bad.", "あっ、席取っちゃった。ごめん", "軽いミスを認めるとき"),
+    ("pull_an_all_nighter", "pull an all-nighter", "徹夜する", "I pulled an all-nighter before the test.", "テストの前に徹夜した", "テスト前によく聞く"),
+    ("under_the_weather", "under the weather", "体調がいまいち", "I'm a bit under the weather today.", "今日はちょっと体調がいまいち", "sick よりやわらかい"),
+    ("ring_a_bell", "ring a bell", "聞き覚えがある", "His name rings a bell.", "彼の名前、聞き覚えがある", "思い出せそうなとき"),
+    ("no_hard_feelings", "No hard feelings.", "恨みっこなしね", "You won fair and square. No hard feelings.", "正々堂々勝ったね。恨みっこなし", "勝負や言い合いのあとに"),
+    ("in_a_nutshell", "in a nutshell", "要するに", "In a nutshell, we need more time.", "要するに、もっと時間が必要だ", "話をまとめるとき"),
+    ("treat_yourself", "Treat yourself.", "自分にごほうびを", "You worked hard this year. Treat yourself.", "今年がんばったね。自分にごほうびを", "年末にぴったり"),
+    ("keep_in_touch", "Let's keep in touch.", "連絡とり合おうね", "I'm moving, but let's keep in touch.", "引っ越すけど、連絡とり合おうね", "別れぎわのひとこと"),
+    ("the_more_the_merrier", "The more, the merrier.", "多いほど楽しい", "Can my friend come? — Sure, the more, the merrier!", "友だちも行っていい?— もちろん、多いほど楽しい!", "誘いを歓迎するとき"),
 ]
 
 
