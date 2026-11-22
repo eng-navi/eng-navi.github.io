@@ -3592,5 +3592,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 188,
+    "category": "時制",
+    "question": "By next April, I ( ) here for ten years.",
+    "options": [
+      "will have worked",
+      "have worked"
+    ],
+    "answer": 1,
+    "translation": "来年の4月で、私はここで10年働いたことになる。",
+    "explanation": "By next April(来年の4月までに)と、未来のある時点までの継続を表しています。\n未来の時点を基準にするときは、未来完了 will have done を使います。\nhave worked は「今」までの継続です。\n\nしたがって、①will have worked が正解。",
+    "audio": "audio/q188.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
