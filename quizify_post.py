@@ -91,6 +91,7 @@ def publish(item):
     story = post.post_story(url)
     import youtube_buffer  # 同じ動画を YouTube ショートにも
     youtube_buffer.send(url, item["caption"])
+    youtube_buffer.send_tiktok(url, item["caption"])  # TikTok @quizify_english にも
     link = post.api("GET", mid, fields="permalink").get("permalink")
     log = mp.load(LOG, {})
     log[item["key"]] = {"media_id": mid, "story_id": story, "permalink": link,
