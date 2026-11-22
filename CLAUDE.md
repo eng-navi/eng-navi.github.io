@@ -195,4 +195,5 @@ work could wait：仕事は後回しにできる
 - Buffer 経由の YouTube は1日2本まで(YouTube 側の上限)。eng_navi は夜の1本、クイズファイは日替わりで青・白・黒のどれか1本だけ送る
 - YouTube 公式 API は審査前は非公開に制限されるので使わない。Buffer の鍵は BUFFER_API_KEY(.env と Secrets)、期限 2027/11/22。期限前にリマインドする
 - TikTok @quizify_english は名前に反して eng_navi の動画のアカウント(緑・ピンク・青のグリッド)。クイズファイの動画は出さない(11/22 に誤って3本出した)。クイズファイ用の TikTok は別に作る予定
+- eng_navi → TikTok は tiktok_eng.py(番号順。TikTok の最後は 62 だったので 63 から。1日7枠・2時間以上あけて、インスタの最新番号に追いつくまで)。記録は tiktok_eng_posted.json。#1〜97 の動画は 11/22 にインスタからダウンロードして out/eng_navi/ に置いた
 - 説明欄はキャプション+答え・解説+サイトのリンク。「プロフィールのリンク」「ハイライト」の行は外す。失敗してもインスタの投稿は止めない

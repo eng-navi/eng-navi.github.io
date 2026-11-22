@@ -24,6 +24,14 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
+      - name: TikTok(eng_navi を番号順に)
+        if: always()
+        run: |
+          git pull -q --rebase --autostash || true
+          python3 tiktok_eng.py run
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          SITE_URL: https://eng-navi.github.io
       - name: 4コマ(@yonkoma_eigo)
         if: always()
         run: python3 manga_post.py run
