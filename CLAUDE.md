@@ -192,7 +192,7 @@ work could wait：仕事は後回しにできる
 
 ## YouTube ショート(Buffer 経由・2026/11/22 から)
 - eng_navi とクイズファイのリールは、インスタに出た直後に youtube_buffer.py が同じ動画を Buffer に shareNow で送り、YouTube「英語クイズ | サクサク英会話・瞬間英作文トレ」に出る(2チャンネル目の約700人の方は使わない)
-- Buffer 経由の YouTube は1日2本まで(YouTube 側の上限)。eng_navi は夜の1本、クイズファイは日替わりで青・白・黒のどれか1本だけ送る
+- Buffer は 11/22 から有料(Essentials・YouTube の1チャンネルだけ・月$6・自動更新は止めてあるので 12/22 ごろ切れる)。無料だと YouTube は1日2本まで。有料+メール確認で1日100本 → eng_navi とクイズファイを全部 YouTube に流す。TikTok は別の無料 Buffer アカウントにつなぎ直す予定(鍵は BUFFER_TIKTOK_API_KEY)
 - YouTube 公式 API は審査前は非公開に制限されるので使わない。Buffer の鍵は BUFFER_API_KEY(.env と Secrets)、期限 2027/11/22。期限前にリマインドする
 - TikTok @quizify_english は名前に反して eng_navi の動画のアカウント(緑・ピンク・青のグリッド)。クイズファイの動画は出さない(11/22 に誤って3本出した)。クイズファイ用の TikTok は別に作る予定
 - eng_navi → TikTok は tiktok_eng.py(番号順。TikTok の最後は 62 だったので 63 から。1日7枠・2時間以上あけて、インスタの最新番号に追いつくまで)。記録は tiktok_eng_posted.json。#1〜97 の動画は 11/22 にインスタからダウンロードして out/eng_navi/ に置いた

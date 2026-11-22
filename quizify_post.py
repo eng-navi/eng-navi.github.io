@@ -89,10 +89,8 @@ def publish(item):
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
     add_comment(mid, item["caption"])  # 答え・解説はコメントにも(タップしやすい)
     story = post.post_story(url)
-    import youtube_buffer  # YouTube は1日2本まで:クイズファイは1日1本、日によって青・白・黒を順番に
-    color = ("listening", "white", "black")[datetime.now(post.JST).toordinal() % 3]
-    if item["key"].startswith(color):
-        youtube_buffer.send(url, item["caption"])
+    import youtube_buffer  # 同じ動画を YouTube ショートにも(Buffer 有料プランで本数の上限なし)
+    youtube_buffer.send(url, item["caption"])
     link = post.api("GET", mid, fields="permalink").get("permalink")
     log = mp.load(LOG, {})
     log[item["key"]] = {"media_id": mid, "story_id": story, "permalink": link,
