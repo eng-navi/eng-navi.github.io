@@ -70,7 +70,7 @@ def list_videos():
         print(v["views"], v["duration"], v["id"], v["title"][:50])
 
 
-def update(video_id, text):
+def update(video_id, text, backup=True):
     """説明欄だけを書きかえる(タイトル・カテゴリなどはそのまま)。"""
     y = yt()
     v = y.videos().list(part="snippet", id=video_id).execute()["items"][0]
@@ -79,9 +79,10 @@ def update(video_id, text):
     sn["description"] = text
     body = {"id": video_id, "snippet": {k: sn[k] for k in ("title", "description", "categoryId", "tags", "defaultLanguage") if k in sn}}
     y.videos().update(part="snippet", body=body).execute()
-    backup = ROOT / "out" / "yt_desc" / "backup"
-    backup.mkdir(parents=True, exist_ok=True)
-    (backup / f"{video_id}.txt").write_text(old)  # 元に戻せるように、前の説明欄を残す
+    bdir = ROOT / "out" / "yt_desc" / "backup"
+    bdir.mkdir(parents=True, exist_ok=True)
+    if backup and not (bdir / f"{video_id}.txt").exists():
+        (bdir / f"{video_id}.txt").write_text(old)  # 元に戻せるように、最初の説明欄を残す(上書きしない)
     print(f"✓ {video_id} の説明欄を書きかえました(前の文は out/yt_desc/backup/ に保存)")
 
 

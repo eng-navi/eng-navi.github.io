@@ -22,12 +22,12 @@ BOOKS = {
     "pinnacle": ("『大学入試 無敵の難単語 PINNACLE 420』", "難しい単語で手が止まる人に。最難関レベルの語彙をまとめて固められます", AMZ("B0CK4HSRZN", "8ecd3ddef08dd6642b8ef647882ce7d7")),
     "kikufure": ("『TOEIC L&Rテスト 聞いて覚える頻出英語フレーズ キクフレ』", "よく出るフレーズを音声つきで。聞いた英語を本で確認したい人に", "https://link.amazon/B09qOB6Ou"),
     "idiomatic": ("『飛躍のフレーズ IDIOMATIC 300』", "よくある言い回しを英文ごと覚えられる。問題300問つき", "https://link.amazon/B0eHBRPkB"),
-    "hanon": ("『英語のハノン 初級』", "わかる英語を「口から出る」ところまで落とし込むドリル", AMZ("B09NY53725", "aaa9fc05b00ffc5bcfd72de9d08bdca0")),
+    "hanon": ("『英語のハノン 初級』", "わかる英語を「口から出る」ところまで落とし込むドリル\n▶ 実際に使った感想:https://note.com/english__nonono/n/n8b3b665fef6a", AMZ("B09NY53725", "aaa9fc05b00ffc5bcfd72de9d08bdca0")),
     "oversight": ("『大学入試英単語 OVERSIGHT』", "「見たことはあるのに訳せない」単語をクイズ形式で", AMZ("B0H2BMN624", "c9b5d7da796b8d08904c91469500b648")),
     "shortcuts": ("『大学受験 英文法・語法SHORTCUTS』", "よく出る良問だけの254問。全問に正解率つきで、苦手がわかる", "https://link.amazon/B0bwqM40M"),
 }
 APPS = {
-    "speak": ("🗣 アプリ:スピーク(AI英会話)", "聞いた英語を、AI相手に声に出して使う練習に。24時間・予約なしで、1日5分から", "speak"),
+    "speak": ("🗣 アプリ:スピーク(AI英会話)", "聞いた英語を、AI相手に声に出して使う練習に。24時間・予約なしで、1日5分から\n▶ 600分使ってみた体験記:https://note.com/english__nonono/n/n99960bcd7af3", "speak"),
     "torabit": ("🗣 アプリ:TORAbit(トラビット)", "シャドーイングと瞬間英作文を、AIの採点つきで1日5分から", "torabit"),
     "studysapuri": ("📱 アプリ:スタディサプリENGLISH TOEIC対策コース", "文法の学び直しからパート別の対策まで、スマホで。無料体験あり", "studysapuri"),
 }
@@ -56,7 +56,7 @@ def make(v):
     b, a = BOOKS[book], APPS[app]
     m = re.search(r"(\*🍿 WATCH NEXT:\*.*?)(?=\n\s*\n?\*|\Z)", v.get("description", ""), re.S)
     watch = ("\n\n" + m.group(1).strip()) if m else ""
-    return (f"{intro}\n\n📚 単語・フレーズの意味と例文は、サイトでクイズにして復習できます(無料・音声つき)\n{SITE}\n\n"
+    return (f"📚 この動画の英語は、無料のサイトで答え合わせ・音声つき復習ができます👇\n{SITE}\n\n{intro}\n\n"
             f"🎁 あわせておすすめ(PR)\n📗 本:{b[0]}\n{b[1]}\n{b[2]}\n\n{a[0]}\n{a[1]}\n→ {OSU}#{a[2]}\n\n"
             f"{BIG[0]}\n{BIG[1]}\n→ {OSU}#{BIG[2]}{watch}\n\n{tags}")
 
@@ -67,6 +67,15 @@ def main():
     done = json.loads(DONE.read_text()) if DONE.exists() else ["An68yJqgE9U", "tggOVDA9n_Q", "z5LknIGplVY", "MNXDpCCqcy8", "Ft2ANjkB0MU"]
     if sys.argv[1] == "preview":
         print(make(next(v for v in vids if v["id"] == sys.argv[2])))
+        return
+    if sys.argv[1] == "redo":  # 型を変えたとき:書きかえ済みの動画をもう一度、新しい型で
+        for vid in list(done):
+            v = next(x for x in vids if x["id"] == vid)
+            old = (DIR / "backup" / f"{vid}.txt")
+            if old.exists():
+                v = {**v, "description": old.read_text()}  # 再生リストのリンクは元の説明欄から拾う
+            yt_api.update(vid, make(v), backup=False)
+        print(f"作り直し {len(done)} 本")
         return
     n = int(sys.argv[2])
     for v in [v for v in vids if v["id"] not in done][:n]:

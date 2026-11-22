@@ -45,8 +45,9 @@ def make_description(caption):
     lines = [l.rstrip() for l in caption.replace("　", "").splitlines()
              if "プロフィールのリンク" not in l and "ハイライト" not in l]
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
-    note = f"\n\n🔊 音声つきの復習・過去の問題はこちら(無料)\n{SITE}"
-    return text[: 4900 - len(note)] + note
+    head = f"📚 答え合わせ・音声つき復習は、無料のサイトで👇\n{SITE}?utm_source=youtube\n\n"
+    note = f"\n\n🎁 おすすめの単語集・英会話アプリ(PR)\nhttps://eng-navi.github.io/go/?from=youtube"
+    return head + text[: 4800 - len(note) - len(head)] + note
 
 
 def send(video_url, caption, title=None, privacy="public", due=None):
@@ -77,6 +78,8 @@ def tiktok_text(caption):
     lines = [l.rstrip() for l in caption.replace("\u3000", "").splitlines()
              if "プロフィールのリンク" not in l and "ハイライト" not in l]
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
+    first, _, rest = text.partition("\n")  # 2行目に短く案内(「もっと見る」を開く前に見える位置)
+    text = f"{first}\n📚 答え合わせ・おすすめ教材はプロフィールのリンクから\n{rest}"
     note = "\n\n📚 無料のクイズ・音声つき復習と、おすすめの単語集・英会話アプリは、プロフィールのリンクのページにまとめています"
     return text[: 2150 - len(note)] + note
 
