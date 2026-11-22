@@ -3555,5 +3555,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 186,
+    "text": "Summer vacation is just around the corner, so let's make some plans.",
+    "target": "just around the corner",
+    "glossary": [
+      "be just around the corner：もうすぐだ、間近に迫っている",
+      "make plans：計画を立てる"
+    ],
+    "translation": "夏休みはもうすぐだから、何か計画を立てよう。",
+    "explanation": "「around the corner」は「角を曲がったすぐ先」という意味から、時間的に「もうすぐ」という意味でも使います。",
+    "audio": "audio/q186.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
