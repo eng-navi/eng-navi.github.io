@@ -84,7 +84,7 @@ def character(kind, s=300):
     return layer.resize((layer.width // k, layer.height // k), Image.LANCZOS)
 
 
-def thumbnail(kind, a, b, path):
+def thumbnail(kind, a, b, path, label=None):
     cfg = KINDS[kind]
     im = smoke_bg()
     d = ImageDraw.Draw(im)
@@ -110,7 +110,7 @@ def thumbnail(kind, a, b, path):
         d.text((TW - 70, 470 + i * 92), line, font=fy, fill=(0, 0, 0), anchor="rt", stroke_width=6, stroke_fill=(0, 0, 0))
         d.text((TW - 70, 470 + i * 92), line, font=fy, fill=(255, 214, 80), anchor="rt")
     # 金の数字(左下)
-    gold_text(im, (60, 660), f"{a}-{b}", 120)
+    gold_text(im, (60, 660), label or f"{a}-{b}", 120)
     # 左上のリボン
     rib = Image.new("RGBA", (TW, TH), (0, 0, 0, 0))
     ImageDraw.Draw(rib).polygon([(0, 70), (70, 0), (130, 0), (0, 130)], fill=(220, 30, 30))
