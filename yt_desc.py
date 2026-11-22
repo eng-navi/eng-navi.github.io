@@ -51,7 +51,23 @@ def series_of(title):
     return next(s for s in SERIES if s[0] in title)
 
 
+def is_short(v):
+    import re as _re
+    m = _re.fullmatch(r"PT(?:(\d+)M)?(?:(\d+)S)?", v.get("duration", ""))
+    return bool(m) and int(m.group(1) or 0) * 60 + int(m.group(2) or 0) <= 180
+
+
+def make_short(v):
+    """ショートは説明欄のリンクを押せないので、プロフィールのリンク(/go/)に案内する短い形。"""
+    _, intro, book, app, tags = series_of(v["title"])
+    b, a = BOOKS[book], APPS[app]
+    return (f"📚 答え合わせ・音声つき復習(無料)と、おすすめの教材は、チャンネル名を押して出るプロフィールのリンクから\n\n{intro}\n\n"
+            f"🎁 おすすめ(PR):{b[0]}/{a[0].split(':', 1)[-1]}/PROGRIT(英語コーチング)\n🔗 eng-navi.github.io/go\n\n{tags}")
+
+
 def make(v):
+    if is_short(v):
+        return make_short(v)
     _, intro, book, app, tags = series_of(v["title"])
     b, a = BOOKS[book], APPS[app]
     m = re.search(r"(\*🍿 WATCH NEXT:\*.*?)(?=\n\s*\n?\*|\Z)", v.get("description", ""), re.S)

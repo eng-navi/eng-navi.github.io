@@ -45,8 +45,9 @@ def make_description(caption):
     lines = [l.rstrip() for l in caption.replace("　", "").splitlines()
              if "プロフィールのリンク" not in l and "ハイライト" not in l]
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
-    head = f"📚 答え合わせ・音声つき復習は、無料のサイトで👇\n{SITE}?utm_source=youtube\n\n"
-    note = f"\n\n🎁 おすすめの単語集・英会話アプリ(PR)\nhttps://eng-navi.github.io/go/?from=youtube"
+    # ショートの説明欄のリンクは押せない(YouTube の仕様)ので、チャンネルのプロフィールのリンク(/go/)に案内する
+    head = "📚 答え合わせ・音声つき復習(無料)と、おすすめの単語集・英会話アプリは、チャンネル名を押して出るプロフィールのリンクから\n\n"
+    note = "\n\n🔗 eng-navi.github.io/go"
     return head + text[: 4800 - len(note) - len(head)] + note
 
 
