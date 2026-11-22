@@ -102,8 +102,8 @@ def send_tiktok(video_url, caption, due=None):
         res = gql(MUTATION, {"input": {
             "channelId": tiktok_channel(key), "text": tiktok_text(caption), "schedulingType": "automatic",
             **({"mode": "customScheduled", "dueAt": due} if due else {"mode": "shareNow"}),
-            "assets": [{"video": {"url": video_url}}], 
-        }})
+            "assets": [{"video": {"url": video_url}}],
+        }}, key)
         out = (res.get("data") or {}).get("createPost") or {}
         if out.get("post"):
             print(f"✓ TikTok(Buffer)に送りました {out['post']['id']}")
