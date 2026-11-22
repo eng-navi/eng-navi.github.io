@@ -4,7 +4,7 @@
 
 - YouTube の公式 API は審査が通るまで動画が非公開に制限されるので、審査済みの Buffer を通す。
 - 鍵は BUFFER_API_KEY(.env と GitHub の Secrets)。期限は 2027/11/22(作り直すときは Buffer の Settings → API)。
-- 無料プランは予約が10件までなので、まとめて予約せず、インスタに出たときに shareNow で1本ずつ送る。
+- 無料プランは予約が10件まで、YouTube は1日2本まで。まとめて予約せず、インスタに出たときに shareNow で送る。
 - 失敗してもインスタの投稿は止めない(ログだけ出す)。
 """
 import json
@@ -49,14 +49,15 @@ def make_description(caption):
     return text[: 4900 - len(note)] + note
 
 
-def send(video_url, caption, title=None, privacy="public"):
+def send(video_url, caption, title=None, privacy="public", due=None):
     if not os.environ.get("BUFFER_API_KEY"):
         print("YouTube: BUFFER_API_KEY がないので送りません")
         return None
     try:
         desc = make_description(caption)
         res = gql(MUTATION, {"input": {
-            "channelId": CHANNEL, "text": desc, "schedulingType": "automatic", "mode": "shareNow",
+            "channelId": CHANNEL, "text": desc, "schedulingType": "automatic",
+            **({"mode": "customScheduled", "dueAt": due} if due else {"mode": "shareNow"}),
             "assets": [{"video": {"url": video_url}}],
             "metadata": {"youtube": {"title": title or make_title(caption), "categoryId": "27",
                                      "privacy": privacy, "madeForKids": False, "notifySubscribers": True}},
@@ -80,13 +81,14 @@ def tiktok_text(caption):
     return text[: 2150 - len(note)] + note
 
 
-def send_tiktok(video_url, caption):
+def send_tiktok(video_url, caption, due=None):
     if not os.environ.get("BUFFER_API_KEY"):
         return None
     try:
         res = gql(MUTATION, {"input": {
-            "channelId": TIKTOK, "text": tiktok_text(caption), "schedulingType": "automatic", "mode": "shareNow",
-            "assets": [{"video": {"url": video_url}}], "metadata": {"tiktok": {"isAiGenerated": True}},
+            "channelId": TIKTOK, "text": tiktok_text(caption), "schedulingType": "automatic",
+            **({"mode": "customScheduled", "dueAt": due} if due else {"mode": "shareNow"}),
+            "assets": [{"video": {"url": video_url}}], 
         }})
         out = (res.get("data") or {}).get("createPost") or {}
         if out.get("post"):
