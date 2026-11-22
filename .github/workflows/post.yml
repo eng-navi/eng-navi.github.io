@@ -30,7 +30,7 @@ jobs:
           git pull -q --rebase --autostash || true
           python3 tiktok_eng.py run
         env:
-          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_TIKTOK_API_KEY: ${{ secrets.BUFFER_TIKTOK_API_KEY }}
           SITE_URL: https://eng-navi.github.io
       - name: 4コマ(@yonkoma_eigo)
         if: always()

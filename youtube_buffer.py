@@ -25,9 +25,9 @@ MUTATION = """mutation($input: CreatePostInput!) {
 }"""
 
 
-def gql(query, variables):
+def gql(query, variables, key=None):
     req = urllib.request.Request(API, data=json.dumps({"query": query, "variables": variables}).encode(),
-                                 headers={"Authorization": f"Bearer {os.environ['BUFFER_API_KEY']}",
+                                 headers={"Authorization": f"Bearer {key or os.environ['BUFFER_API_KEY']}",
                                           "Content-Type": "application/json"})
     return json.loads(urllib.request.urlopen(req, timeout=60).read())
 
@@ -85,12 +85,22 @@ def tiktok_text(caption):
     return text[: 2150 - len(note)] + note
 
 
+def tiktok_channel(key):
+    """TikTok 用の Buffer アカウント(無料)から、TikTok のチャンネル ID を探す。"""
+    q = "{ account { organizations { id } } }"
+    org = gql(q, {}, key)["data"]["account"]["organizations"][0]["id"]
+    chs = gql("query($o: OrganizationId!) { channels(input:{organizationId:$o}) { id service } }", {"o": org}, key)["data"]["channels"]
+    return next(c["id"] for c in chs if c["service"] == "tiktok")
+
+
 def send_tiktok(video_url, caption, due=None):
-    if not os.environ.get("BUFFER_API_KEY"):
+    key = os.environ.get("BUFFER_TIKTOK_API_KEY")  # TikTok は別の無料アカウント(YouTube だけ有料のアカウントに置いている)
+    if not key:
+        print("TikTok: BUFFER_TIKTOK_API_KEY がないので送りません")
         return None
     try:
         res = gql(MUTATION, {"input": {
-            "channelId": TIKTOK, "text": tiktok_text(caption), "schedulingType": "automatic",
+            "channelId": tiktok_channel(key), "text": tiktok_text(caption), "schedulingType": "automatic",
             **({"mode": "customScheduled", "dueAt": due} if due else {"mode": "shareNow"}),
             "assets": [{"video": {"url": video_url}}], 
         }})
