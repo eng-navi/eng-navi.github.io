@@ -320,7 +320,12 @@ def tts(vid, text, speed):
                          capture_output=True, check=True).stdout
     a = np.frombuffer(raw, np.float32).copy()
     a = a * (LEVEL[vid] / (float(np.sqrt(np.mean(a ** 2))) or 1.0))
-    a = np.tanh(a * 1.2) / 1.2  # 大きく入れても割れないように、山だけやわらかく抑える
+    # 割れないように山を抑える。前は tanh で全体を丸めていたが、テープのような濁りが出たので、
+    # 大きすぎる瞬間だけ音量を下げるリミッター(ffmpeg alimiter)に変えた(11/22)
+    a = np.frombuffer(subprocess.run(
+        ["ffmpeg", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
+         "-af", "alimiter=limit=0.9:attack=4:release=60:level=disabled", "-f", "f32le", "-"],
+        input=a.astype(np.float32).tobytes(), capture_output=True, check=True).stdout, np.float32).copy()
     # 音量をそろえてから、前後の無音を切る(-45dB より小さいところ)
     # 測ったときと同じく 16kHz に直したもので調べる
     a16 = subprocess.run(["ffmpeg", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-",
