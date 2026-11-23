@@ -1,839 +1,888 @@
 [
-  {
-    "key": "arc_black_0",
-    "at": "2026-11-01 23:15",
-    "kind": "black",
-    "idx": 0
-  },
-  {
-    "key": "arc_white_0",
-    "at": "2026-11-01 23:45",
-    "kind": "white",
-    "idx": 0
-  },
-  {
-    "key": "arc_black_1",
-    "at": "2026-11-02 10:30",
-    "kind": "black",
-    "idx": 1
-  },
-  {
-    "key": "v2_quote_0",
-    "at": "2026-11-02 18:00",
-    "kind": "quote",
-    "idx": 0
-  },
-  {
-    "key": "v2_phrase_0",
-    "at": "2026-11-02 23:00",
-    "kind": "phrase",
-    "idx": 0
-  },
-  {
-    "key": "v2_quote_1",
-    "at": "2026-11-03 07:00",
-    "kind": "quote",
-    "idx": 1
-  },
-  {
-    "key": "v2_fill_black_0",
-    "at": "2026-11-03 11:00",
-    "kind": "fill_black",
-    "idx": 0
-  },
-  {
-    "key": "v3_list5_black_0",
-    "at": "2026-11-03 18:30",
-    "kind": "list5_black",
-    "idx": 0
-  },
-  {
-    "key": "v3_quote_0",
-    "at": "2026-11-03 20:00",
-    "kind": "quote",
-    "idx": 0
-  },
-  {
-    "key": "v3_list5_black_1",
-    "at": "2026-11-04 07:00",
-    "kind": "list5_black",
-    "idx": 1
-  },
-  {
-    "key": "v3_list5_white_0",
-    "at": "2026-11-04 12:00",
-    "kind": "list5_white",
-    "idx": 0
-  },
-  {
-    "key": "v3_list5_listening_0",
-    "at": "2026-11-04 18:30",
-    "kind": "list5_listening",
-    "idx": 0
-  },
-  {
-    "key": "v3_quote_1",
-    "at": "2026-11-04 20:00",
-    "kind": "quote",
-    "idx": 1
-  },
-  {
-    "key": "v3_list5_black_2",
-    "at": "2026-11-05 07:00",
-    "kind": "list5_black",
-    "idx": 2
-  },
-  {
-    "key": "v3_list5_white_1",
-    "at": "2026-11-05 12:00",
-    "kind": "list5_white",
-    "idx": 1
-  },
-  {
-    "key": "v3_list5_listening_1",
-    "at": "2026-11-05 18:30",
-    "kind": "list5_listening",
-    "idx": 1
-  },
-  {
-    "key": "v3_fill_black_0",
-    "at": "2026-11-05 20:00",
-    "kind": "fill_black",
-    "idx": 0
-  },
-  {
-    "key": "v3_list5_black_3",
-    "at": "2026-11-06 07:00",
-    "kind": "list5_black",
-    "idx": 3
-  },
-  {
-    "key": "v3_list5_white_2",
-    "at": "2026-11-06 12:00",
-    "kind": "list5_white",
-    "idx": 2
-  },
-  {
-    "key": "v3_list5_listening_2",
-    "at": "2026-11-06 18:30",
-    "kind": "list5_listening",
-    "idx": 2
-  },
-  {
-    "key": "v3_quote_2",
-    "at": "2026-11-06 20:00",
-    "kind": "quote",
-    "idx": 2
-  },
-  {
-    "key": "v3_list5_black_4",
-    "at": "2026-11-07 07:00",
-    "kind": "list5_black",
-    "idx": 4
-  },
-  {
-    "key": "v3_list5_white_3",
-    "at": "2026-11-07 12:00",
-    "kind": "list5_white",
-    "idx": 3
-  },
-  {
-    "key": "v3_list5_listening_3",
-    "at": "2026-11-07 18:30",
-    "kind": "list5_listening",
-    "idx": 3
-  },
-  {
-    "key": "v3_fill_black_1",
-    "at": "2026-11-07 20:00",
-    "kind": "fill_black",
-    "idx": 1
-  },
-  {
-    "key": "v3_list5_black_5",
-    "at": "2026-11-08 07:00",
-    "kind": "list5_black",
-    "idx": 5
-  },
-  {
-    "key": "v3_list5_white_4",
-    "at": "2026-11-08 12:00",
-    "kind": "list5_white",
-    "idx": 4
-  },
-  {
-    "key": "v3_list5_listening_4",
-    "at": "2026-11-08 18:30",
-    "kind": "list5_listening",
-    "idx": 4
-  },
-  {
-    "key": "v3_quote_3",
-    "at": "2026-11-08 20:00",
-    "kind": "quote",
-    "idx": 3
-  },
-  {
-    "key": "v4_list5_black_6",
-    "at": "2026-11-09 07:00",
-    "kind": "list5_black",
-    "idx": 6
-  },
-  {
-    "key": "v4_list5_white_5",
-    "at": "2026-11-09 12:00",
-    "kind": "list5_white",
-    "idx": 5
-  },
-  {
-    "key": "v4_list5_listening_5",
-    "at": "2026-11-09 18:30",
-    "kind": "list5_listening",
-    "idx": 5
-  },
-  {
-    "key": "v4_list5_black_7",
-    "at": "2026-11-09 21:00",
-    "kind": "list5_black",
-    "idx": 7
-  },
-  {
-    "key": "v4_list5_black_8",
-    "at": "2026-11-10 07:00",
-    "kind": "list5_black",
-    "idx": 8
-  },
-  {
-    "key": "v4_list5_white_6",
-    "at": "2026-11-10 12:00",
-    "kind": "list5_white",
-    "idx": 6
-  },
-  {
-    "key": "v4_list5_listening_6",
-    "at": "2026-11-10 18:30",
-    "kind": "list5_listening",
-    "idx": 6
-  },
-  {
-    "key": "v4_list5_black_9",
-    "at": "2026-11-10 21:00",
-    "kind": "list5_black",
-    "idx": 9
-  },
-  {
-    "key": "v4_list5_black_10",
-    "at": "2026-11-11 07:00",
-    "kind": "list5_black",
-    "idx": 10
-  },
-  {
-    "key": "v4_list5_white_7",
-    "at": "2026-11-11 12:00",
-    "kind": "list5_white",
-    "idx": 7
-  },
-  {
-    "key": "v4_list5_listening_7",
-    "at": "2026-11-11 18:30",
-    "kind": "list5_listening",
-    "idx": 7
-  },
-  {
-    "key": "v4_list5_black_11",
-    "at": "2026-11-11 21:00",
-    "kind": "list5_black",
-    "idx": 11
-  },
-  {
-    "key": "v4_list5_black_12",
-    "at": "2026-11-12 07:00",
-    "kind": "list5_black",
-    "idx": 12
-  },
-  {
-    "key": "v4_list5_white_8",
-    "at": "2026-11-12 12:00",
-    "kind": "list5_white",
-    "idx": 8
-  },
-  {
-    "key": "v4_list5_listening_8",
-    "at": "2026-11-12 18:30",
-    "kind": "list5_listening",
-    "idx": 8
-  },
-  {
-    "key": "v4_list5_black_13",
-    "at": "2026-11-12 21:00",
-    "kind": "list5_black",
-    "idx": 13
-  },
-  {
-    "key": "v4_list5_black_14",
-    "at": "2026-11-13 07:00",
-    "kind": "list5_black",
-    "idx": 14
-  },
-  {
-    "key": "v4_list5_white_9",
-    "at": "2026-11-13 12:00",
-    "kind": "list5_white",
-    "idx": 9
-  },
-  {
-    "key": "v4_list5_listening_9",
-    "at": "2026-11-13 18:30",
-    "kind": "list5_listening",
-    "idx": 9
-  },
-  {
-    "key": "v4_list5_black_15",
-    "at": "2026-11-13 21:00",
-    "kind": "list5_black",
-    "idx": 15
-  },
-  {
-    "key": "v4_list5_black_16",
-    "at": "2026-11-14 07:00",
-    "kind": "list5_black",
-    "idx": 16
-  },
-  {
-    "key": "v4_list5_white_10",
-    "at": "2026-11-14 12:00",
-    "kind": "list5_white",
-    "idx": 10
-  },
-  {
-    "key": "v4_list5_listening_10",
-    "at": "2026-11-14 18:30",
-    "kind": "list5_listening",
-    "idx": 10
-  },
-  {
-    "key": "reel5_compound",
-    "at": "2026-11-14 19:45",
-    "kind": "reel5",
-    "reel": "if_compound",
-    "head": "25秒の英語に出てくる\n英検2級〜1級レベル「お金の英単語」5選💰\n\n① colleague … 同僚\n② ridicule … あざ笑う\n③ astonishing … 驚くべき\n④ generate … 生み出す\n⑤ economist … 経済学者\n\n全部わかった人は上級者👏"
-  },
-  {
-    "key": "v4_list5_black_17",
-    "at": "2026-11-14 21:00",
-    "kind": "list5_black",
-    "idx": 17
-  },
-  {
-    "key": "v4_list5_black_18",
-    "at": "2026-11-15 07:00",
-    "kind": "list5_black",
-    "idx": 18
-  },
-  {
-    "key": "reel5_spotlight",
-    "at": "2026-11-15 09:30",
-    "kind": "reel5",
-    "reel": "if_spotlight",
-    "head": "25秒の英語に出てくる\n英検2級〜1級レベル「心理学の英単語」5選🧠\n\n① crimson … 真っ赤な\n② embarrassment … 恥ずかしさ\n③ hardly … ほとんど〜ない\n④ overestimate … 過大評価する\n⑤ observe … 観察する\n\n全部わかった人は上級者👏"
-  },
-  {
-    "key": "v4_list5_white_11",
-    "at": "2026-11-15 12:00",
-    "kind": "list5_white",
-    "idx": 11
-  },
-  {
-    "key": "reel5_sleep",
-    "at": "2026-11-15 15:30",
-    "kind": "reel5",
-    "reel": "if_sleep",
-    "head": "25秒の英語に出てくる\n英検2級〜1級レベル「科学の英単語」5選🔬\n\n① cram … 詰め込み勉強をする\n② consolidate … 強化する、定着させる\n③ neuron … 神経細胞\n④ outperform … 〜より良い成績をあげる\n⑤ retain … 保持する\n\n全部わかった人は上級者👏"
-  },
-  {
-    "key": "v4_list5_listening_11",
-    "at": "2026-11-15 18:30",
-    "kind": "list5_listening",
-    "idx": 11
-  },
-  {
-    "key": "v4_list5_black_19",
-    "at": "2026-11-15 21:00",
-    "kind": "list5_black",
-    "idx": 19
-  },
-  {
-    "key": "v5_list5_white_12",
-    "at": "2026-11-16 12:00",
-    "kind": "list5_white",
-    "idx": 12
-  },
-  {
-    "key": "v5_list5_listening_12",
-    "at": "2026-11-16 18:30",
-    "kind": "list5_listening",
-    "idx": 12
-  },
-  {
-    "key": "v5_list5_black_20",
-    "at": "2026-11-16 21:00",
-    "kind": "list5_black",
-    "idx": 20
-  },
-  {
-    "key": "v5_list5_black_21",
-    "at": "2026-11-17 07:00",
-    "kind": "list5_black",
-    "idx": 21
-  },
-  {
-    "key": "v5_list5_white_13",
-    "at": "2026-11-17 12:00",
-    "kind": "list5_white",
-    "idx": 13
-  },
-  {
-    "key": "v5_list5_listening_13",
-    "at": "2026-11-17 18:30",
-    "kind": "list5_listening",
-    "idx": 13
-  },
-  {
-    "key": "v5_list5_black_22",
-    "at": "2026-11-17 21:00",
-    "kind": "list5_black",
-    "idx": 22
-  },
-  {
-    "key": "v5_list5_black_23",
-    "at": "2026-11-18 07:00",
-    "kind": "list5_black",
-    "idx": 23
-  },
-  {
-    "key": "v5_list5_white_14",
-    "at": "2026-11-18 12:00",
-    "kind": "list5_white",
-    "idx": 14
-  },
-  {
-    "key": "v5_list5_listening_14",
-    "at": "2026-11-18 18:30",
-    "kind": "list5_listening",
-    "idx": 14
-  },
-  {
-    "key": "v5_list5_black_24",
-    "at": "2026-11-18 21:00",
-    "kind": "list5_black",
-    "idx": 24
-  },
-  {
-    "key": "v5_list5_black_25",
-    "at": "2026-11-19 07:00",
-    "kind": "list5_black",
-    "idx": 25
-  },
-  {
-    "key": "v5_list5_white_15",
-    "at": "2026-11-19 12:00",
-    "kind": "list5_white",
-    "idx": 15
-  },
-  {
-    "key": "v5_list5_listening_15",
-    "at": "2026-11-19 18:30",
-    "kind": "list5_listening",
-    "idx": 15
-  },
-  {
-    "key": "v5_list5_black_26",
-    "at": "2026-11-19 21:00",
-    "kind": "list5_black",
-    "idx": 26
-  },
-  {
-    "key": "v5_list5_black_27",
-    "at": "2026-11-20 07:00",
-    "kind": "list5_black",
-    "idx": 27
-  },
-  {
-    "key": "v5_list5_white_16",
-    "at": "2026-11-20 12:00",
-    "kind": "list5_white",
-    "idx": 16
-  },
-  {
-    "key": "v5_list5_listening_16",
-    "at": "2026-11-20 18:30",
-    "kind": "list5_listening",
-    "idx": 16
-  },
-  {
-    "key": "v5_list5_black_28",
-    "at": "2026-11-20 21:00",
-    "kind": "list5_black",
-    "idx": 28
-  },
-  {
-    "key": "v5_list5_black_29",
-    "at": "2026-11-21 07:00",
-    "kind": "list5_black",
-    "idx": 29
-  },
-  {
-    "key": "v5_list5_white_17",
-    "at": "2026-11-21 12:00",
-    "kind": "list5_white",
-    "idx": 17
-  },
-  {
-    "key": "v5_list5_listening_17",
-    "at": "2026-11-21 18:30",
-    "kind": "list5_listening",
-    "idx": 17
-  },
-  {
-    "key": "v5_list5_black_30",
-    "at": "2026-11-21 21:00",
-    "kind": "list5_black",
-    "idx": 30
-  },
-  {
-    "key": "v5_list5_black_31",
-    "at": "2026-11-22 07:00",
-    "kind": "list5_black",
-    "idx": 31
-  },
-  {
-    "key": "v5_list5_white_18",
-    "at": "2026-11-22 12:00",
-    "kind": "list5_white",
-    "idx": 18
-  },
-  {
-    "key": "v5_list5_listening_18",
-    "at": "2026-11-22 18:30",
-    "kind": "list5_listening",
-    "idx": 18
-  },
-  {
-    "key": "v5_list5_black_32",
-    "at": "2026-11-22 21:00",
-    "kind": "list5_black",
-    "idx": 32
-  },
-  {
-    "key": "v5_list5_black_33",
-    "at": "2026-11-23 07:00",
-    "kind": "list5_black",
-    "idx": 33
-  },
-  {
-    "key": "v5_list5_white_19",
-    "at": "2026-11-23 12:00",
-    "kind": "list5_white",
-    "idx": 19
-  },
-  {
-    "key": "v5_list5_listening_19",
-    "at": "2026-11-23 18:30",
-    "kind": "list5_listening",
-    "idx": 19
-  },
-  {
-    "key": "v5_list5_black_34",
-    "at": "2026-11-23 21:00",
-    "kind": "list5_black",
-    "idx": 34
-  },
-  {
-    "key": "v5_list5_black_35",
-    "at": "2026-11-24 07:00",
-    "kind": "list5_black",
-    "idx": 35
-  },
-  {
-    "key": "v5_list5_white_20",
-    "at": "2026-11-24 12:00",
-    "kind": "list5_white",
-    "idx": 20
-  },
-  {
-    "key": "v5_list5_listening_20",
-    "at": "2026-11-24 18:30",
-    "kind": "list5_listening",
-    "idx": 20
-  },
-  {
-    "key": "v5_list5_black_36",
-    "at": "2026-11-24 21:00",
-    "kind": "list5_black",
-    "idx": 36
-  },
-  {
-    "key": "v5_list5_black_37",
-    "at": "2026-11-25 07:00",
-    "kind": "list5_black",
-    "idx": 37
-  },
-  {
-    "key": "v5_list5_white_21",
-    "at": "2026-11-25 12:00",
-    "kind": "list5_white",
-    "idx": 21
-  },
-  {
-    "key": "v5_list5_listening_21",
-    "at": "2026-11-25 18:30",
-    "kind": "list5_listening",
-    "idx": 21
-  },
-  {
-    "key": "v5_list5_black_38",
-    "at": "2026-11-25 21:00",
-    "kind": "list5_black",
-    "idx": 38
-  },
-  {
-    "key": "v5_list5_black_39",
-    "at": "2026-11-26 07:00",
-    "kind": "list5_black",
-    "idx": 39
-  },
-  {
-    "key": "v5_list5_white_22",
-    "at": "2026-11-26 12:00",
-    "kind": "list5_white",
-    "idx": 22
-  },
-  {
-    "key": "v5_list5_listening_22",
-    "at": "2026-11-26 18:30",
-    "kind": "list5_listening",
-    "idx": 22
-  },
-  {
-    "key": "v5_list5_black_40",
-    "at": "2026-11-26 21:00",
-    "kind": "list5_black",
-    "idx": 40
-  },
-  {
-    "key": "v5_list5_black_41",
-    "at": "2026-11-27 07:00",
-    "kind": "list5_black",
-    "idx": 41
-  },
-  {
-    "key": "v5_list5_white_23",
-    "at": "2026-11-27 12:00",
-    "kind": "list5_white",
-    "idx": 23
-  },
-  {
-    "key": "v5_list5_listening_23",
-    "at": "2026-11-27 18:30",
-    "kind": "list5_listening",
-    "idx": 23
-  },
-  {
-    "key": "v5_list5_black_42",
-    "at": "2026-11-27 21:00",
-    "kind": "list5_black",
-    "idx": 42
-  },
-  {
-    "key": "v5_list5_black_43",
-    "at": "2026-11-28 07:00",
-    "kind": "list5_black",
-    "idx": 43
-  },
-  {
-    "key": "v5_list5_white_24",
-    "at": "2026-11-28 12:00",
-    "kind": "list5_white",
-    "idx": 24
-  },
-  {
-    "key": "v5_list5_listening_24",
-    "at": "2026-11-28 18:30",
-    "kind": "list5_listening",
-    "idx": 24
-  },
-  {
-    "key": "v5_list5_black_44",
-    "at": "2026-11-28 21:00",
-    "kind": "list5_black",
-    "idx": 44
-  },
-  {
-    "key": "v5_list5_black_45",
-    "at": "2026-11-29 07:00",
-    "kind": "list5_black",
-    "idx": 45
-  },
-  {
-    "key": "v5_list5_white_25",
-    "at": "2026-11-29 12:00",
-    "kind": "list5_white",
-    "idx": 25
-  },
-  {
-    "key": "v5_list5_listening_25",
-    "at": "2026-11-29 18:30",
-    "kind": "list5_listening",
-    "idx": 25
-  },
-  {
-    "key": "v5_list5_black_46",
-    "at": "2026-11-29 21:00",
-    "kind": "list5_black",
-    "idx": 46
-  },
-  {
-    "key": "v5_list5_black_47",
-    "at": "2026-11-30 07:00",
-    "kind": "list5_black",
-    "idx": 47
-  },
-  {
-    "key": "v5_list5_white_26",
-    "at": "2026-11-30 12:00",
-    "kind": "list5_white",
-    "idx": 26
-  },
-  {
-    "key": "v5_list5_listening_26",
-    "at": "2026-11-30 18:30",
-    "kind": "list5_listening",
-    "idx": 26
-  },
-  {
-    "key": "v5_list5_black_48",
-    "at": "2026-11-30 21:00",
-    "kind": "list5_black",
-    "idx": 48
-  },
-  {
-    "key": "v5_list5_black_49",
-    "at": "2026-12-01 07:00",
-    "kind": "list5_black",
-    "idx": 49
-  },
-  {
-    "key": "v5_list5_white_27",
-    "at": "2026-12-01 12:00",
-    "kind": "list5_white",
-    "idx": 27
-  },
-  {
-    "key": "v5_list5_listening_27",
-    "at": "2026-12-01 18:30",
-    "kind": "list5_listening",
-    "idx": 27
-  },
-  {
-    "key": "v5_list5_black_50",
-    "at": "2026-12-01 21:00",
-    "kind": "list5_black",
-    "idx": 50
-  },
-  {
-    "key": "v5_list5_black_51",
-    "at": "2026-12-02 07:00",
-    "kind": "list5_black",
-    "idx": 51
-  },
-  {
-    "key": "v5_list5_white_28",
-    "at": "2026-12-02 12:00",
-    "kind": "list5_white",
-    "idx": 28
-  },
-  {
-    "key": "v5_list5_listening_28",
-    "at": "2026-12-02 18:30",
-    "kind": "list5_listening",
-    "idx": 28
-  },
-  {
-    "key": "v5_list5_black_52",
-    "at": "2026-12-02 21:00",
-    "kind": "list5_black",
-    "idx": 52
-  },
-  {
-    "key": "v5_list5_black_53",
-    "at": "2026-12-03 07:00",
-    "kind": "list5_black",
-    "idx": 53
-  },
-  {
-    "key": "v5_list5_white_29",
-    "at": "2026-12-03 12:00",
-    "kind": "list5_white",
-    "idx": 29
-  },
-  {
-    "key": "v5_list5_listening_29",
-    "at": "2026-12-03 18:30",
-    "kind": "list5_listening",
-    "idx": 29
-  },
-  {
-    "key": "v5_list5_black_54",
-    "at": "2026-12-03 21:00",
-    "kind": "list5_black",
-    "idx": 54
-  },
-  {
-    "key": "v5_list5_black_55",
-    "at": "2026-12-04 07:00",
-    "kind": "list5_black",
-    "idx": 55
-  },
-  {
-    "key": "v5_list5_white_30",
-    "at": "2026-12-04 12:00",
-    "kind": "list5_white",
-    "idx": 30
-  },
-  {
-    "key": "v5_list5_listening_30",
-    "at": "2026-12-04 18:30",
-    "kind": "list5_listening",
-    "idx": 30
-  },
-  {
-    "key": "v5_list5_black_56",
-    "at": "2026-12-04 21:00",
-    "kind": "list5_black",
-    "idx": 56
-  },
-  {
-    "key": "v5_list5_black_57",
-    "at": "2026-12-05 07:00",
-    "kind": "list5_black",
-    "idx": 57
-  },
-  {
-    "key": "v5_list5_white_31",
-    "at": "2026-12-05 12:00",
-    "kind": "list5_white",
-    "idx": 31
-  },
-  {
-    "key": "v5_list5_listening_31",
-    "at": "2026-12-05 18:30",
-    "kind": "list5_listening",
-    "idx": 31
-  },
-  {
-    "key": "v5_list5_black_58",
-    "at": "2026-12-05 21:00",
-    "kind": "list5_black",
-    "idx": 58
-  }
+ {
+  "key": "arc_black_0",
+  "at": "2026-11-01 23:15",
+  "kind": "black",
+  "idx": 0
+ },
+ {
+  "key": "arc_white_0",
+  "at": "2026-11-01 23:45",
+  "kind": "white",
+  "idx": 0
+ },
+ {
+  "key": "arc_black_1",
+  "at": "2026-11-02 10:30",
+  "kind": "black",
+  "idx": 1
+ },
+ {
+  "key": "v2_quote_0",
+  "at": "2026-11-02 18:00",
+  "kind": "quote",
+  "idx": 0
+ },
+ {
+  "key": "v2_phrase_0",
+  "at": "2026-11-02 23:00",
+  "kind": "phrase",
+  "idx": 0
+ },
+ {
+  "key": "v2_quote_1",
+  "at": "2026-11-03 07:00",
+  "kind": "quote",
+  "idx": 1
+ },
+ {
+  "key": "v2_fill_black_0",
+  "at": "2026-11-03 11:00",
+  "kind": "fill_black",
+  "idx": 0
+ },
+ {
+  "key": "v3_list5_black_0",
+  "at": "2026-11-03 18:30",
+  "kind": "list5_black",
+  "idx": 0
+ },
+ {
+  "key": "v3_quote_0",
+  "at": "2026-11-03 20:00",
+  "kind": "quote",
+  "idx": 0
+ },
+ {
+  "key": "v3_list5_black_1",
+  "at": "2026-11-04 07:00",
+  "kind": "list5_black",
+  "idx": 1
+ },
+ {
+  "key": "v3_list5_white_0",
+  "at": "2026-11-04 12:00",
+  "kind": "list5_white",
+  "idx": 0
+ },
+ {
+  "key": "v3_list5_listening_0",
+  "at": "2026-11-04 18:30",
+  "kind": "list5_listening",
+  "idx": 0
+ },
+ {
+  "key": "v3_quote_1",
+  "at": "2026-11-04 20:00",
+  "kind": "quote",
+  "idx": 1
+ },
+ {
+  "key": "v3_list5_black_2",
+  "at": "2026-11-05 07:00",
+  "kind": "list5_black",
+  "idx": 2
+ },
+ {
+  "key": "v3_list5_white_1",
+  "at": "2026-11-05 12:00",
+  "kind": "list5_white",
+  "idx": 1
+ },
+ {
+  "key": "v3_list5_listening_1",
+  "at": "2026-11-05 18:30",
+  "kind": "list5_listening",
+  "idx": 1
+ },
+ {
+  "key": "v3_fill_black_0",
+  "at": "2026-11-05 20:00",
+  "kind": "fill_black",
+  "idx": 0
+ },
+ {
+  "key": "v3_list5_black_3",
+  "at": "2026-11-06 07:00",
+  "kind": "list5_black",
+  "idx": 3
+ },
+ {
+  "key": "v3_list5_white_2",
+  "at": "2026-11-06 12:00",
+  "kind": "list5_white",
+  "idx": 2
+ },
+ {
+  "key": "v3_list5_listening_2",
+  "at": "2026-11-06 18:30",
+  "kind": "list5_listening",
+  "idx": 2
+ },
+ {
+  "key": "v3_quote_2",
+  "at": "2026-11-06 20:00",
+  "kind": "quote",
+  "idx": 2
+ },
+ {
+  "key": "v3_list5_black_4",
+  "at": "2026-11-07 07:00",
+  "kind": "list5_black",
+  "idx": 4
+ },
+ {
+  "key": "v3_list5_white_3",
+  "at": "2026-11-07 12:00",
+  "kind": "list5_white",
+  "idx": 3
+ },
+ {
+  "key": "v3_list5_listening_3",
+  "at": "2026-11-07 18:30",
+  "kind": "list5_listening",
+  "idx": 3
+ },
+ {
+  "key": "v3_fill_black_1",
+  "at": "2026-11-07 20:00",
+  "kind": "fill_black",
+  "idx": 1
+ },
+ {
+  "key": "v3_list5_black_5",
+  "at": "2026-11-08 07:00",
+  "kind": "list5_black",
+  "idx": 5
+ },
+ {
+  "key": "v3_list5_white_4",
+  "at": "2026-11-08 12:00",
+  "kind": "list5_white",
+  "idx": 4
+ },
+ {
+  "key": "v3_list5_listening_4",
+  "at": "2026-11-08 18:30",
+  "kind": "list5_listening",
+  "idx": 4
+ },
+ {
+  "key": "v3_quote_3",
+  "at": "2026-11-08 20:00",
+  "kind": "quote",
+  "idx": 3
+ },
+ {
+  "key": "v4_list5_black_6",
+  "at": "2026-11-09 07:00",
+  "kind": "list5_black",
+  "idx": 6
+ },
+ {
+  "key": "v4_list5_white_5",
+  "at": "2026-11-09 12:00",
+  "kind": "list5_white",
+  "idx": 5
+ },
+ {
+  "key": "v4_list5_listening_5",
+  "at": "2026-11-09 18:30",
+  "kind": "list5_listening",
+  "idx": 5
+ },
+ {
+  "key": "v4_list5_black_7",
+  "at": "2026-11-09 21:00",
+  "kind": "list5_black",
+  "idx": 7
+ },
+ {
+  "key": "v4_list5_black_8",
+  "at": "2026-11-10 07:00",
+  "kind": "list5_black",
+  "idx": 8
+ },
+ {
+  "key": "v4_list5_white_6",
+  "at": "2026-11-10 12:00",
+  "kind": "list5_white",
+  "idx": 6
+ },
+ {
+  "key": "v4_list5_listening_6",
+  "at": "2026-11-10 18:30",
+  "kind": "list5_listening",
+  "idx": 6
+ },
+ {
+  "key": "v4_list5_black_9",
+  "at": "2026-11-10 21:00",
+  "kind": "list5_black",
+  "idx": 9
+ },
+ {
+  "key": "v4_list5_black_10",
+  "at": "2026-11-11 07:00",
+  "kind": "list5_black",
+  "idx": 10
+ },
+ {
+  "key": "v4_list5_white_7",
+  "at": "2026-11-11 12:00",
+  "kind": "list5_white",
+  "idx": 7
+ },
+ {
+  "key": "v4_list5_listening_7",
+  "at": "2026-11-11 18:30",
+  "kind": "list5_listening",
+  "idx": 7
+ },
+ {
+  "key": "v4_list5_black_11",
+  "at": "2026-11-11 21:00",
+  "kind": "list5_black",
+  "idx": 11
+ },
+ {
+  "key": "v4_list5_black_12",
+  "at": "2026-11-12 07:00",
+  "kind": "list5_black",
+  "idx": 12
+ },
+ {
+  "key": "v4_list5_white_8",
+  "at": "2026-11-12 12:00",
+  "kind": "list5_white",
+  "idx": 8
+ },
+ {
+  "key": "v4_list5_listening_8",
+  "at": "2026-11-12 18:30",
+  "kind": "list5_listening",
+  "idx": 8
+ },
+ {
+  "key": "v4_list5_black_13",
+  "at": "2026-11-12 21:00",
+  "kind": "list5_black",
+  "idx": 13
+ },
+ {
+  "key": "v4_list5_black_14",
+  "at": "2026-11-13 07:00",
+  "kind": "list5_black",
+  "idx": 14
+ },
+ {
+  "key": "v4_list5_white_9",
+  "at": "2026-11-13 12:00",
+  "kind": "list5_white",
+  "idx": 9
+ },
+ {
+  "key": "v4_list5_listening_9",
+  "at": "2026-11-13 18:30",
+  "kind": "list5_listening",
+  "idx": 9
+ },
+ {
+  "key": "v4_list5_black_15",
+  "at": "2026-11-13 21:00",
+  "kind": "list5_black",
+  "idx": 15
+ },
+ {
+  "key": "v4_list5_black_16",
+  "at": "2026-11-14 07:00",
+  "kind": "list5_black",
+  "idx": 16
+ },
+ {
+  "key": "v4_list5_white_10",
+  "at": "2026-11-14 12:00",
+  "kind": "list5_white",
+  "idx": 10
+ },
+ {
+  "key": "v4_list5_listening_10",
+  "at": "2026-11-14 18:30",
+  "kind": "list5_listening",
+  "idx": 10
+ },
+ {
+  "key": "reel5_compound",
+  "at": "2026-11-14 19:45",
+  "kind": "reel5",
+  "reel": "if_compound",
+  "head": "25秒の英語に出てくる\n英検2級〜1級レベル「お金の英単語」5選💰\n\n① colleague … 同僚\n② ridicule … あざ笑う\n③ astonishing … 驚くべき\n④ generate … 生み出す\n⑤ economist … 経済学者\n\n全部わかった人は上級者👏"
+ },
+ {
+  "key": "v4_list5_black_17",
+  "at": "2026-11-14 21:00",
+  "kind": "list5_black",
+  "idx": 17
+ },
+ {
+  "key": "v4_list5_black_18",
+  "at": "2026-11-15 07:00",
+  "kind": "list5_black",
+  "idx": 18
+ },
+ {
+  "key": "reel5_spotlight",
+  "at": "2026-11-15 09:30",
+  "kind": "reel5",
+  "reel": "if_spotlight",
+  "head": "25秒の英語に出てくる\n英検2級〜1級レベル「心理学の英単語」5選🧠\n\n① crimson … 真っ赤な\n② embarrassment … 恥ずかしさ\n③ hardly … ほとんど〜ない\n④ overestimate … 過大評価する\n⑤ observe … 観察する\n\n全部わかった人は上級者👏"
+ },
+ {
+  "key": "v4_list5_white_11",
+  "at": "2026-11-15 12:00",
+  "kind": "list5_white",
+  "idx": 11
+ },
+ {
+  "key": "reel5_sleep",
+  "at": "2026-11-15 15:30",
+  "kind": "reel5",
+  "reel": "if_sleep",
+  "head": "25秒の英語に出てくる\n英検2級〜1級レベル「科学の英単語」5選🔬\n\n① cram … 詰め込み勉強をする\n② consolidate … 強化する、定着させる\n③ neuron … 神経細胞\n④ outperform … 〜より良い成績をあげる\n⑤ retain … 保持する\n\n全部わかった人は上級者👏"
+ },
+ {
+  "key": "v4_list5_listening_11",
+  "at": "2026-11-15 18:30",
+  "kind": "list5_listening",
+  "idx": 11
+ },
+ {
+  "key": "v4_list5_black_19",
+  "at": "2026-11-15 21:00",
+  "kind": "list5_black",
+  "idx": 19
+ },
+ {
+  "key": "v5_list5_white_12",
+  "at": "2026-11-16 12:00",
+  "kind": "list5_white",
+  "idx": 12
+ },
+ {
+  "key": "v5_list5_listening_12",
+  "at": "2026-11-16 18:30",
+  "kind": "list5_listening",
+  "idx": 12
+ },
+ {
+  "key": "v5_list5_black_20",
+  "at": "2026-11-16 21:00",
+  "kind": "list5_black",
+  "idx": 20
+ },
+ {
+  "key": "v5_list5_black_21",
+  "at": "2026-11-17 07:00",
+  "kind": "list5_black",
+  "idx": 21
+ },
+ {
+  "key": "v5_list5_white_13",
+  "at": "2026-11-17 12:00",
+  "kind": "list5_white",
+  "idx": 13
+ },
+ {
+  "key": "v5_list5_listening_13",
+  "at": "2026-11-17 18:30",
+  "kind": "list5_listening",
+  "idx": 13
+ },
+ {
+  "key": "v5_list5_black_22",
+  "at": "2026-11-17 21:00",
+  "kind": "list5_black",
+  "idx": 22
+ },
+ {
+  "key": "v5_list5_black_23",
+  "at": "2026-11-18 07:00",
+  "kind": "list5_black",
+  "idx": 23
+ },
+ {
+  "key": "v5_list5_white_14",
+  "at": "2026-11-18 12:00",
+  "kind": "list5_white",
+  "idx": 14
+ },
+ {
+  "key": "v5_list5_listening_14",
+  "at": "2026-11-18 18:30",
+  "kind": "list5_listening",
+  "idx": 14
+ },
+ {
+  "key": "v5_list5_black_24",
+  "at": "2026-11-18 21:00",
+  "kind": "list5_black",
+  "idx": 24
+ },
+ {
+  "key": "v5_list5_black_25",
+  "at": "2026-11-19 07:00",
+  "kind": "list5_black",
+  "idx": 25
+ },
+ {
+  "key": "v5_list5_white_15",
+  "at": "2026-11-19 12:00",
+  "kind": "list5_white",
+  "idx": 15
+ },
+ {
+  "key": "v5_list5_listening_15",
+  "at": "2026-11-19 18:30",
+  "kind": "list5_listening",
+  "idx": 15
+ },
+ {
+  "key": "v5_list5_black_26",
+  "at": "2026-11-19 21:00",
+  "kind": "list5_black",
+  "idx": 26
+ },
+ {
+  "key": "v5_list5_black_27",
+  "at": "2026-11-20 07:00",
+  "kind": "list5_black",
+  "idx": 27
+ },
+ {
+  "key": "v5_list5_white_16",
+  "at": "2026-11-20 12:00",
+  "kind": "list5_white",
+  "idx": 16
+ },
+ {
+  "key": "v5_list5_listening_16",
+  "at": "2026-11-20 18:30",
+  "kind": "list5_listening",
+  "idx": 16
+ },
+ {
+  "key": "v5_list5_black_28",
+  "at": "2026-11-20 21:00",
+  "kind": "list5_black",
+  "idx": 28
+ },
+ {
+  "key": "v5_list5_black_29",
+  "at": "2026-11-21 07:00",
+  "kind": "list5_black",
+  "idx": 29
+ },
+ {
+  "key": "v5_list5_white_17",
+  "at": "2026-11-21 12:00",
+  "kind": "list5_white",
+  "idx": 17
+ },
+ {
+  "key": "v5_list5_listening_17",
+  "at": "2026-11-21 18:30",
+  "kind": "list5_listening",
+  "idx": 17
+ },
+ {
+  "key": "v5_list5_black_30",
+  "at": "2026-11-21 21:00",
+  "kind": "list5_black",
+  "idx": 30
+ },
+ {
+  "key": "v5_list5_black_31",
+  "at": "2026-11-22 07:00",
+  "kind": "list5_black",
+  "idx": 31
+ },
+ {
+  "key": "v5_list5_white_18",
+  "at": "2026-11-22 12:00",
+  "kind": "list5_white",
+  "idx": 18
+ },
+ {
+  "key": "v5_list5_listening_18",
+  "at": "2026-11-22 18:30",
+  "kind": "list5_listening",
+  "idx": 18
+ },
+ {
+  "key": "v5_list5_black_32",
+  "at": "2026-11-22 21:00",
+  "kind": "list5_black",
+  "idx": 32
+ },
+ {
+  "key": "v5_list5_black_33",
+  "at": "2026-11-23 07:00",
+  "kind": "list5_black",
+  "idx": 33
+ },
+ {
+  "key": "v5_list5_white_19",
+  "at": "2026-11-23 12:00",
+  "kind": "list5_white",
+  "idx": 19
+ },
+ {
+  "key": "v5_list5_listening_19",
+  "at": "2026-11-23 18:30",
+  "kind": "list5_listening",
+  "idx": 19
+ },
+ {
+  "key": "v5_list5_black_34",
+  "at": "2026-11-23 21:00",
+  "kind": "list5_black",
+  "idx": 34
+ },
+ {
+  "key": "talk_001",
+  "at": "2026-11-23 22:30",
+  "kind": "talk",
+  "head": "単語を覚えるとき、書く派?見る派?✍️👀",
+  "reply": "正解はどっちでもOK。\n見て覚えられる単語は見るだけ、それでも覚えられない単語だけ書く。\n「何回書くか」を決めるより、英語そのものに集中しよう"
+ },
+ {
+  "key": "v5_list5_black_35",
+  "at": "2026-11-24 07:00",
+  "kind": "list5_black",
+  "idx": 35
+ },
+ {
+  "key": "v5_list5_white_20",
+  "at": "2026-11-24 12:00",
+  "kind": "list5_white",
+  "idx": 20
+ },
+ {
+  "key": "v5_list5_listening_20",
+  "at": "2026-11-24 18:30",
+  "kind": "list5_listening",
+  "idx": 20
+ },
+ {
+  "key": "v5_list5_black_36",
+  "at": "2026-11-24 21:00",
+  "kind": "list5_black",
+  "idx": 36
+ },
+ {
+  "key": "talk_002",
+  "at": "2026-11-24 22:30",
+  "kind": "talk",
+  "head": "1つの単語に意味がいっぱい載ってて、全部覚えようとしてない?🙋",
+  "reply": "まずは1つの単語に1つの意味だけ。\n単語帳の最初の意味か、自分が一番覚えやすい意味でOK。\n「記憶の芯」が1つできれば、ほかの意味はあとから自然につながる🧠"
+ },
+ {
+  "key": "v5_list5_black_37",
+  "at": "2026-11-25 07:00",
+  "kind": "list5_black",
+  "idx": 37
+ },
+ {
+  "key": "v5_list5_white_21",
+  "at": "2026-11-25 12:00",
+  "kind": "list5_white",
+  "idx": 21
+ },
+ {
+  "key": "v5_list5_listening_21",
+  "at": "2026-11-25 18:30",
+  "kind": "list5_listening",
+  "idx": 21
+ },
+ {
+  "key": "v5_list5_black_38",
+  "at": "2026-11-25 21:00",
+  "kind": "list5_black",
+  "idx": 38
+ },
+ {
+  "key": "talk_003",
+  "at": "2026-11-25 22:30",
+  "kind": "talk",
+  "head": "単語を「覚えた」と思ってやめてない?\n\n① 見ても思い出せない\n② 見覚えはある\n③ 1〜2秒で言える\n④ 0.1秒で言える\n\n今の単語帳、どこまで来てる?",
+  "reply": "③で止める人が多いけど、③はすぐ忘れる段階。\n④の「見た瞬間に意味が出る」まで回してはじめて定着。\nもう一周だけ、がんばろう🔥"
+ },
+ {
+  "key": "v5_list5_black_39",
+  "at": "2026-11-26 07:00",
+  "kind": "list5_black",
+  "idx": 39
+ },
+ {
+  "key": "v5_list5_white_22",
+  "at": "2026-11-26 12:00",
+  "kind": "list5_white",
+  "idx": 22
+ },
+ {
+  "key": "v5_list5_listening_22",
+  "at": "2026-11-26 18:30",
+  "kind": "list5_listening",
+  "idx": 22
+ },
+ {
+  "key": "v5_list5_black_40",
+  "at": "2026-11-26 21:00",
+  "kind": "list5_black",
+  "idx": 40
+ },
+ {
+  "key": "talk_004",
+  "at": "2026-11-26 22:30",
+  "kind": "talk",
+  "head": "ex-girlfriend(元カノ)の ex って、本当はどういう意味だと思う?",
+  "reply": "ex は「外」。\n彼女ゾーンから外に出た人=元カノ。\nexit(出口)も同じ ex。\n意味の「芯」で覚えると、単語は一気に忘れにくくなる📌"
+ },
+ {
+  "key": "v5_list5_black_41",
+  "at": "2026-11-27 07:00",
+  "kind": "list5_black",
+  "idx": 41
+ },
+ {
+  "key": "v5_list5_white_23",
+  "at": "2026-11-27 12:00",
+  "kind": "list5_white",
+  "idx": 23
+ },
+ {
+  "key": "v5_list5_listening_23",
+  "at": "2026-11-27 18:30",
+  "kind": "list5_listening",
+  "idx": 23
+ },
+ {
+  "key": "v5_list5_black_42",
+  "at": "2026-11-27 21:00",
+  "kind": "list5_black",
+  "idx": 42
+ },
+ {
+  "key": "talk_005",
+  "at": "2026-11-27 22:30",
+  "kind": "talk",
+  "head": "2〜3回で英単語が覚えられたら天才。\n\n何回やっても忘れる人🙋",
+  "reply": "忘れるのは脳が正常な証拠。\n毎日大量の情報を処理する脳は、忘れる前提でできてる。\n記憶力や年齢のせいにしないで、回数で勝とう💪"
+ },
+ {
+  "key": "v5_list5_black_43",
+  "at": "2026-11-28 07:00",
+  "kind": "list5_black",
+  "idx": 43
+ },
+ {
+  "key": "v5_list5_white_24",
+  "at": "2026-11-28 12:00",
+  "kind": "list5_white",
+  "idx": 24
+ },
+ {
+  "key": "v5_list5_listening_24",
+  "at": "2026-11-28 18:30",
+  "kind": "list5_listening",
+  "idx": 24
+ },
+ {
+  "key": "v5_list5_black_44",
+  "at": "2026-11-28 21:00",
+  "kind": "list5_black",
+  "idx": 44
+ },
+ {
+  "key": "talk_006",
+  "at": "2026-11-28 22:30",
+  "kind": "talk",
+  "head": "英検の勉強、どのタイミングが一番集中できる?\n\n① 朝\n② 電車・移動中\n③ 夜\n④ 試験直前",
+  "reply": "移動中なら「降りる駅のアナウンスまで」を本気タイムにするのがおすすめ。\nギリギリまでやる練習は、本番のラスト10分の集中力にもつながる⏱"
+ },
+ {
+  "key": "v5_list5_black_45",
+  "at": "2026-11-29 07:00",
+  "kind": "list5_black",
+  "idx": 45
+ },
+ {
+  "key": "v5_list5_white_25",
+  "at": "2026-11-29 12:00",
+  "kind": "list5_white",
+  "idx": 25
+ },
+ {
+  "key": "v5_list5_listening_25",
+  "at": "2026-11-29 18:30",
+  "kind": "list5_listening",
+  "idx": 25
+ },
+ {
+  "key": "v5_list5_black_46",
+  "at": "2026-11-29 21:00",
+  "kind": "list5_black",
+  "idx": 46
+ },
+ {
+  "key": "talk_007",
+  "at": "2026-11-29 22:30",
+  "kind": "talk",
+  "head": "「1か月後の目標」、決めてる?🎯",
+  "reply": "語学に終わりはないからこそ、自分で区切りを作るのが大事。\n「1か月で単語帳を3周」みたいに小さく決めて、終わらせる。\n達成感が、次の1か月のやる気になる✨"
+ },
+ {
+  "key": "v5_list5_black_47",
+  "at": "2026-11-30 07:00",
+  "kind": "list5_black",
+  "idx": 47
+ },
+ {
+  "key": "v5_list5_white_26",
+  "at": "2026-11-30 12:00",
+  "kind": "list5_white",
+  "idx": 26
+ },
+ {
+  "key": "v5_list5_listening_26",
+  "at": "2026-11-30 18:30",
+  "kind": "list5_listening",
+  "idx": 26
+ },
+ {
+  "key": "v5_list5_black_48",
+  "at": "2026-11-30 21:00",
+  "kind": "list5_black",
+  "idx": 48
+ },
+ {
+  "key": "v5_list5_black_49",
+  "at": "2026-12-01 07:00",
+  "kind": "list5_black",
+  "idx": 49
+ },
+ {
+  "key": "v5_list5_white_27",
+  "at": "2026-12-01 12:00",
+  "kind": "list5_white",
+  "idx": 27
+ },
+ {
+  "key": "v5_list5_listening_27",
+  "at": "2026-12-01 18:30",
+  "kind": "list5_listening",
+  "idx": 27
+ },
+ {
+  "key": "v5_list5_black_50",
+  "at": "2026-12-01 21:00",
+  "kind": "list5_black",
+  "idx": 50
+ },
+ {
+  "key": "v5_list5_black_51",
+  "at": "2026-12-02 07:00",
+  "kind": "list5_black",
+  "idx": 51
+ },
+ {
+  "key": "v5_list5_white_28",
+  "at": "2026-12-02 12:00",
+  "kind": "list5_white",
+  "idx": 28
+ },
+ {
+  "key": "v5_list5_listening_28",
+  "at": "2026-12-02 18:30",
+  "kind": "list5_listening",
+  "idx": 28
+ },
+ {
+  "key": "v5_list5_black_52",
+  "at": "2026-12-02 21:00",
+  "kind": "list5_black",
+  "idx": 52
+ },
+ {
+  "key": "v5_list5_black_53",
+  "at": "2026-12-03 07:00",
+  "kind": "list5_black",
+  "idx": 53
+ },
+ {
+  "key": "v5_list5_white_29",
+  "at": "2026-12-03 12:00",
+  "kind": "list5_white",
+  "idx": 29
+ },
+ {
+  "key": "v5_list5_listening_29",
+  "at": "2026-12-03 18:30",
+  "kind": "list5_listening",
+  "idx": 29
+ },
+ {
+  "key": "v5_list5_black_54",
+  "at": "2026-12-03 21:00",
+  "kind": "list5_black",
+  "idx": 54
+ },
+ {
+  "key": "v5_list5_black_55",
+  "at": "2026-12-04 07:00",
+  "kind": "list5_black",
+  "idx": 55
+ },
+ {
+  "key": "v5_list5_white_30",
+  "at": "2026-12-04 12:00",
+  "kind": "list5_white",
+  "idx": 30
+ },
+ {
+  "key": "v5_list5_listening_30",
+  "at": "2026-12-04 18:30",
+  "kind": "list5_listening",
+  "idx": 30
+ },
+ {
+  "key": "v5_list5_black_56",
+  "at": "2026-12-04 21:00",
+  "kind": "list5_black",
+  "idx": 56
+ },
+ {
+  "key": "v5_list5_black_57",
+  "at": "2026-12-05 07:00",
+  "kind": "list5_black",
+  "idx": 57
+ },
+ {
+  "key": "v5_list5_white_31",
+  "at": "2026-12-05 12:00",
+  "kind": "list5_white",
+  "idx": 31
+ },
+ {
+  "key": "v5_list5_listening_31",
+  "at": "2026-12-05 18:30",
+  "kind": "list5_listening",
+  "idx": 31
+ },
+ {
+  "key": "v5_list5_black_58",
+  "at": "2026-12-05 21:00",
+  "kind": "list5_black",
+  "idx": 58
+ }
 ]

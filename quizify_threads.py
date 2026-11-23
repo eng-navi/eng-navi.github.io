@@ -198,6 +198,8 @@ def extra_posts(item):
         return quote_post(idx)
     if kind == "phrase":
         return phrase_post(idx)
+    if kind == "talk":  # 勉強法・問いかけ(リンクなし)
+        return [(item["head"], {}), item["reply"]]
     src = "black" if kind == "fill_black" else "white"
     data = json.loads(DATA.read_text())  # 読み取りミスのない今の回を先に、そのあと過去の投稿
     its = [x for k, v in data.items() if k.startswith(src) for x in v]
