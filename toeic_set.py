@@ -21,7 +21,7 @@ def fit(P, top, room, hi, lo=30, hl=()):
         if passage(Image.new("RGBA", (W, H)), 64, top, W - 128, P, size, hl) <= room: return size
     return lo
 NUM = "❶❷❸❹❺"
-NUM_GAP = 0  # 番号の後ろの追加の空き(英検は広め)
+NUM_GAP = 14  # 番号の後ろの空き
 
 def wrap_jp(d, text, f, width):
     """日本語は1文字ずつ、英単語(と記号の続き)は途中で切らずに折り返す"""
@@ -99,7 +99,7 @@ def build(Q, out):
     rooms = [BOTTOM - TOP - 40 - len(qlines) * 58 - 26 - 2 * 92,
              BOTTOM - TOP - 32 - len(jl) * 50 - 34 - len(qj) * 48]
     rooms += [BOTTOM - TOP - 36 - (116 if k == 0 else 0) - len(el) * 60 for k, el in enumerate(els)]
-    size = min(fit(Q["passage"], TOP, r, 52, 32) for i, r in enumerate(rooms) if i != 1)  # 英文はどのページでも同じ大きさ(和訳ページは日本語側を調整)
+    size = min(fit(Q["passage"], TOP, r, 56, 32) for i, r in enumerate(rooms) if i != 1)  # 英文はどのページでも同じ大きさ(和訳ページは日本語側を調整)
     hP = passage(Image.new("RGBA", (W, H)), PX, TOP, PW, Q["passage"], size)
     def ja_fit():
         for withq, lo in ((True, 29), (False, 27)):  # 和訳は小さくしすぎない。入らなければ設問の訳は省く
