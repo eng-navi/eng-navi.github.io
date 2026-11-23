@@ -12,7 +12,8 @@ def serif(s, w=500):
     f = font("SourceSerif4.ttf", s)
     f.set_variation_by_axes([w, 18])  # 太め・小さい字向けの字形でスマホでも読みやすく
     return f
-BOTTOM = H - 120  # 下の案内より上に収める
+BOTTOM = H - 104
+TOP = 50  # 下の案内より上に収める
 
 def fit(P, top, room, hi, lo=30, hl=()):
     """英文カードが room(px) に収まる一番大きい字の大きさ"""
@@ -35,10 +36,10 @@ def wrap_jp(d, text, f, width):
         lines.append(cur.rstrip())
     return lines
 
-def passage(base, x, y, w, P, size=29, hl=(), card=True):
+def passage(base, x, y, w, P, size=29, hl=(), card=True, label="", timer=None):
     """P = {"kind":"E-MAIL", "head":[...], "body":[[(text, tag), ...], ...]} を描く。高さを返す"""
     d = ImageDraw.Draw(base); fs = serif(size); fh = jp(size - 6, 600); lh = int(size * 1.42)
-    pad = 30; cx = x + pad; cy = y + pad + 34
+    pad = 30; cx = x + pad; cy = y + pad + 52
     if card:
         d.rectangle((x, y, x + w, y + 10), fill=BLACK)
     for t in P["head"]:
@@ -62,76 +63,82 @@ def passage(base, x, y, w, P, size=29, hl=(), card=True):
     h = cy - y + pad - 12
     if card:  # 紙のカード(後ろに敷く)
         bg = Image.new("RGBA", (w, h), PAPER + (255,)); ImageDraw.Draw(bg).rectangle((0, 0, w - 1, h - 1), outline=BLACK, width=3)
-        ImageDraw.Draw(bg).rectangle((0, 0, w, 44), fill=BLACK)
-        ImageDraw.Draw(bg).text((22, 22), P["kind"], font=anton(24), fill=CREAM, anchor="lm")
+        bd = ImageDraw.Draw(bg); bd.rectangle((0, 0, w, 60), fill=BLACK)
+        bd.text((24, 30), P["kind"], font=anton(32), fill=CREAM, anchor="lm")
+        if timer:
+            stopwatch(bd, w - 44, 33, 15, CREAM, RED); bd.text((w - 74, 30), f"目安{timer}秒", font=jp(30, 800), fill=CREAM, anchor="rm")
+        elif label:
+            bd.text((w - 24, 30), label, font=jp(28, 800), fill=CREAM, anchor="rm")
         layer = Image.new("RGBA", base.size, (0, 0, 0, 0)); layer.alpha_composite(bg, (x, y))
         tmp = base.copy(); base.paste(layer, (0, 0), layer)
-        return passage(base, x, y, w, P, size, hl, card=False) if True else h
+        return passage(base, x, y, w, P, size, hl, card=False)
     return h
 
-def frame(no, label, page, total):
-    im = Image.new("RGBA", (W, H), CREAM + (255,)); d = ImageDraw.Draw(im)
-    d.text((64, 50), "@toeic_read30", font=anton(30), fill=BLACK)
-    d.text((W - 64, 50), f"No.{no:02d}  {page}/{total}", font=anton(30), fill=BLACK, anchor="ra")
-    paste(im, zabuton(text_img(label, jp(34), CREAM), BLACK, 18, 10), (64, 100), 2)
+def frame(no, label=None, page=0, total=0):
+    im = Image.new("RGBA", (W, H), CREAM + (255,))
+    if label: paste(im, zabuton(text_img(label, jp(40), CREAM), BLACK, 20, 12), (64, 64), 2)
     return im
 
 def bottom_note(d, left, right="SWIPE"):
-    d.text((64, H - 70), left, font=jp(28, 700), fill=BLACK, anchor="lm")
+    d.text((64, H - 58), left, font=jp(30, 700), fill=BLACK, anchor="lm")
     if right:
-        d.text((W - 130, H - 70), right, font=anton(40), fill=BLACK, anchor="rm"); arrow(d, W - 120, H - 68, W - 64, RED)
+        d.text((W - 130, H - 58), right, font=anton(40), fill=BLACK, anchor="rm"); arrow(d, W - 120, H - 56, W - 64, RED)
 
 def build(Q, out):
     out.mkdir(parents=True, exist_ok=True); no = Q["no"]; total = 5 + len(Q["explain"]); files = []
     kind = "cream" if no % 2 else "black"  # 交互にしてグリッドを市松模様に
     files.append(make(kind, ROOT / "assets" / "toeic_photos" / f'{Q["photo"]}.jpg', no, *Q["cover"], Q["sec"], out / "01_cover.png"))
     PX, PW = 64, W - 128
+    d0 = ImageDraw.Draw(Image.new("RGBA", (W, H)))
+    QF, CF, JF, EF = serif(46, 600), serif(44), jp(33, 400), jp(37, 500)
+    qlines = wrap_jp(d0, Q["q"], QF, PW)
+    jl = wrap_jp(d0, Q["ja"], JF, PW)
+    qj = [ln for t in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])] for ln in wrap_jp(d0, t, jp(32, 600), PW)]
+    exps = Q["explain"]; els = [wrap_jp(d0, e["text"], EF, PW) for e in exps]
+    rooms = [BOTTOM - TOP - 40 - len(qlines) * 58 - 26 - 2 * 92,
+             BOTTOM - TOP - 32 - len(jl) * 50 - 34 - len(qj) * 48]
+    rooms += [BOTTOM - TOP - 36 - (116 if k == 0 else 0) - len(el) * 60 for k, el in enumerate(els)]
+    size = min(fit(Q["passage"], TOP, r, 52, 32) for i, r in enumerate(rooms) if i != 1)  # 英文はどのページでも同じ大きさ(和訳ページは日本語側を調整)
+    hP = passage(Image.new("RGBA", (W, H)), PX, TOP, PW, Q["passage"], size)
+    def ja_fit():
+        for withq, lo in ((True, 29), (False, 27)):  # 和訳は小さくしすぎない。入らなければ設問の訳は省く
+            for js in range(33, lo - 1, -1):
+                JF = jp(js, 400); jl = wrap_jp(d0, Q["ja"], JF, PW)
+                qj = [ln for t in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])] for ln in wrap_jp(d0, t, jp(js - 1, 600), PW)] if withq else []
+                if TOP + hP + 32 + len(jl) * int(js * 1.5) + (34 + len(qj) * int(js * 1.45) if qj else 0) <= BOTTOM: return js, JF, jl, qj
+        return js, JF, jl, []
+    js, JF, jl, qj = ja_fit()
     # 2 問題:英文+設問+2択
-    im = frame(no, "問題", 2, total); d = ImageDraw.Draw(im)
-    qlines = wrap_jp(d, Q["q"], serif(42), PW)
-    size = fit(Q["passage"], 190, BOTTOM - 190 - 44 - len(qlines) * 54 - 30 - 2 * 86, 46)
-    h = passage(im, PX, 190, PW, Q["passage"], size); d = ImageDraw.Draw(im)
-    stopwatch(d, W - 110, 130, 30, BLACK, RED); d.text((W - 160, 130), f"目安{Q['sec']}秒", font=jp(28, 800), fill=RED, anchor="rm")
-    y = 190 + h + 40
-    for ln in qlines: d.text((PX, y), ln, font=serif(42, 600), fill=BLACK); y += 54
-    y += 24
+    im = frame(no); h = passage(im, PX, TOP, PW, Q["passage"], size, timer=Q["sec"]); d = ImageDraw.Draw(im)
+    y = TOP + h + 40
+    for ln in qlines: d.text((PX, y), ln, font=QF, fill=BLACK); y += 58
+    y += 26
     for i, (c, cj) in enumerate(Q["choices"]):
-        paste(im, zabuton(text_img("AB"[i], anton(40), CREAM, 1.0), BLACK, 16, 6), (PX, y)); d = ImageDraw.Draw(im)
-        d.text((PX + 84, y + 2), c, font=serif(40), fill=BLACK); y += 86
+        paste(im, zabuton(text_img("AB"[i], anton(44), CREAM, 1.0), BLACK, 18, 6), (PX, y)); d = ImageDraw.Draw(im)
+        d.text((PX + 92, y + 2), c, font=CF, fill=BLACK); y += 92
     bottom_note(d, "AかBか、コメントで答えてね")
     im.convert("RGB").save(out / "02_question.png")
     # 3 全文の和訳(答えの前に。もう一度考えてもらう)
-    im = frame(no, "全文の和訳", 3, total); d = ImageDraw.Draw(im)
-    jl = wrap_jp(d, Q["ja"], jp(31, 400), PW)
-    ql = sum(len(wrap_jp(d, t, jp(30, 600), PW)) for t in [Q["q_ja"] + "設問:"] + [c[1] + "(A) " for c in Q["choices"]])
-    size = fit(Q["passage"], 190, BOTTOM - 190 - 32 - len(jl) * 47 - 32 - ql * 45, 38)
-    h = passage(im, PX, 190, PW, Q["passage"], size); d = ImageDraw.Draw(im); y = 190 + h + 32
-    for ln in jl: d.text((PX, y), ln, font=jp(31, 400), fill=BLACK); y += 47
-    y += 14; d.line((PX, y, W - PX, y), fill=(210, 203, 185), width=2); y += 18
-    for item in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])]:
-        for ln in wrap_jp(d, item, jp(30, 600), PW): d.text((PX, y), ln, font=jp(30, 600), fill=BLACK); y += 45
+    im = frame(no); h = passage(im, PX, TOP, PW, Q["passage"], size, label="全文の和訳"); d = ImageDraw.Draw(im); y = TOP + h + 32
+    for ln in jl: d.text((PX, y), ln, font=JF, fill=BLACK); y += int(js * 1.5)
+    if qj: y += 14; d.line((PX, y, W - PX, y), fill=(210, 203, 185), width=2); y += 20
+    for ln in qj: d.text((PX, y), ln, font=jp(js - 1, 600), fill=BLACK); y += int(js * 1.45)
     bottom_note(d, "もう一度考えてみて。答えは次へ"); im.convert("RGB").save(out / "03_ja.png")
     # 4〜 解説(上=英文固定、下=解説)
-    exps = Q["explain"]
     for k, e in enumerate(exps):
-        im = frame(no, EXPLAIN_TITLES[k], 4 + k, total); d = ImageDraw.Draw(im)
-        el = wrap_jp(d, e["text"], jp(34, 500), PW)
-        size = fit(Q["passage"], 190, BOTTOM - 190 - 36 - (110 if k == 0 else 0) - len(el) * 56, 38, hl=e["hl"])
-        h = passage(im, PX, 190, PW, Q["passage"], size, hl=e["hl"]); d = ImageDraw.Draw(im)
-        y = 190 + h + 36
+        im = frame(no); h = passage(im, PX, TOP, PW, Q["passage"], size, hl=e["hl"], label=f"{EXPLAIN_TITLES[k]}  {k + 1}/{len(exps)}"); d = ImageDraw.Draw(im)
+        y = TOP + h + 36
         if k == 0:
-            paste(im, zabuton(text_img(f"答え  {Q['answer']}", jp(56), CREAM), RED, 22, 12), (PX, y), 2); d = ImageDraw.Draw(im); y += 110
-        for ln in wrap_jp(d, e["text"], jp(34, 500), PW):
-            # 「」内の英語や → の行も同じ大きさで
-            d.text((PX, y), ln, font=jp(34, 500), fill=BLACK); y += 56
+            paste(im, zabuton(text_img(f"答え  {Q['answer']}", jp(58), CREAM), RED, 22, 12), (PX, y), 2); d = ImageDraw.Draw(im); y += 116
+        for ln in els[k]: d.text((PX, y), ln, font=EF, fill=BLACK); y += 60
         bottom_note(d, f"解説 {k + 1}/{len(exps)}")
         im.convert("RGB").save(out / f"0{4 + k}_explain{k + 1}.png")
     p = 4 + len(exps)
     # 単語
-    im = frame(no, "この問題の単語", p, total); d = ImageDraw.Draw(im); y = 230
+    im = frame(no, "この問題の単語"); d = ImageDraw.Draw(im); y = 200
     for en, ja in Q["words"]:
-        d.text((PX, y), en, font=serif(54), fill=BLACK); d.text((PX, y + 70), ja, font=jp(32, 500), fill=GREY)
-        d.line((PX, y + 128, W - PX, y + 128), fill=(210, 203, 185), width=2); y += 150
+        d.text((PX, y), en, font=serif(58, 600), fill=BLACK); d.text((PX, y + 76), ja, font=jp(36, 500), fill=GREY)
+        d.line((PX, y + 138, W - PX, y + 138), fill=(210, 203, 185), width=2); y += 162
     asterisk(d, W - 110, 260, 30, RED)
     bottom_note(d, "保存して、単語帳がわりに"); im.convert("RGB").save(out / f"0{p}_words.png"); p += 1
     # 案内(黒地)
