@@ -88,7 +88,9 @@ def make(v, photo, no, teaser, word, line, level="準1級", out=None):
         im = duo(photo, W, H, (30, 50, 90), SKY); d = ImageDraw.Draw(im)
         ov = Image.new("RGBA", (W, H), BLUE + (110,)); im.alpha_composite(ov); d = ImageDraw.Draw(im)
         put(im, text_im(teaser, go(42, 800), NAVY, (22, 12), SAND).rotate(2, expand=True, resample=Image.BICUBIC), (66, 600))
-        put(im, text_im(word, pf(160, 800), CREAM, (30, 18), NAVY).rotate(-2, expand=True, resample=Image.BICUBIC), (60, 700))
+        f3 = pf(160, 800)
+        while f3.getlength(word) > W - 200: f3 = pf(f3.size - 6, 800)  # 長い見出しも座布団からはみ出さない
+        put(im, text_im(word, f3, CREAM, (30, 18), NAVY).rotate(-2, expand=True, resample=Image.BICUBIC), (60, 700))
         d = ImageDraw.Draw(im); d.text((76, 1010), line, font=go(44, 800), fill=CREAM, anchor="ls")
         star(d, 940, 560, 50, CREAM, seed=3); sparkle(d, 880, 980, 30, SAND); header(d, CREAM, no, level)
         footer(im, CREAM, NAVY, CREAM, SAND)
