@@ -3648,5 +3648,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 191,
+    "category": "助動詞",
+    "question": "She ( ) have left already. Her bag is gone.",
+    "options": [
+      "must",
+      "should"
+    ],
+    "answer": 1,
+    "translation": "彼女はもう帰ったにちがいない。かばんがなくなっている。",
+    "explanation": "かばんがない、という証拠から「帰ったにちがいない」と推量しています。\n過去のことへの強い推量は must have done です。\nshould have done は「〜すべきだったのに」という後悔です。\n\nしたがって、①must が正解。",
+    "audio": "audio/q191.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
