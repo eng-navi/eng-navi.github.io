@@ -3629,5 +3629,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 190,
+    "category": "前置詞・接続詞",
+    "question": "The event was held ( ) the heavy rain.",
+    "options": [
+      "although",
+      "despite"
+    ],
+    "answer": 2,
+    "translation": "大雨にもかかわらず、イベントは開催された。",
+    "explanation": "空所の後ろは the heavy rain という名詞なので、前置詞の despite が入ります。\nalthough は接続詞で、後ろに「主語+動詞」が必要です。\n\nしたがって、②despite が正解。",
+    "audio": "audio/q190.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
