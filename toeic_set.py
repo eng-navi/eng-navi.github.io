@@ -21,6 +21,7 @@ def fit(P, top, room, hi, lo=30, hl=()):
         if passage(Image.new("RGBA", (W, H)), 64, top, W - 128, P, size, hl) <= room: return size
     return lo
 NUM = "❶❷❸❹❺"
+NUM_GAP = 0  # 番号の後ろの追加の空き(英検は広め)
 
 def wrap_jp(d, text, f, width):
     """日本語は1文字ずつ、英単語(と記号の続き)は途中で切らずに折り返す"""
@@ -58,7 +59,7 @@ def passage(base, x, y, w, P, size=29, hl=(), card=True, label="", timer=None):
                 if px + ww > x + w - pad: px = cx; cy += lh
                 if tag in hl: d.rectangle((px - 2, cy + 4, px + ww + (sp if i < len(words) - 1 else 0) + 2, cy + lh - 2), fill=MARK)
                 d.text((px, cy + (3 if isnum else 0)), wd, font=f, fill=RED if isnum else BLACK)
-                px += ww + sp
+                px += ww + sp + (NUM_GAP if isnum else 0)
         cy += lh + 12
     h = cy - y + pad - 12
     if card:  # 紙のカード(後ろに敷く)

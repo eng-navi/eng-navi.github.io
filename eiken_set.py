@@ -7,6 +7,7 @@ from eiken_problems import PROBLEMS
 from eiken_cover import make as cover, NAVY, BLUE, SKY, SAND, watch, text_im, put, pf, go, star, flower
 ROOT = Path(__file__).parent
 PAPER_BG = (247, 241, 224)
+ts.NUM_GAP = 14
 ts.BLACK, ts.RED, ts.PAPER, ts.MARK, ts.CREAM, ts.GREY = NAVY, BLUE, (253, 250, 242), (200, 218, 240), (247, 241, 224), (110, 116, 130)
 TITLES = ("答えと根拠", "ワナの選択肢", "解き方のコツ")
 W, H, PX, PW, TOP, BOTTOM = ts.W, ts.H, 64, ts.W - 128, ts.TOP, ts.BOTTOM
@@ -39,7 +40,7 @@ def build(Q, out):
     def ja_fit():
         for withq, lo in ((True, 29), (False, 26)):
             for js in range(33, lo - 1, -1):
-                JF = ts.jp(js, 400); jl = ts.wrap_jp(d0, Q["ja"], JF, PW)
+                JF = ts.jp(js, 600); jl = ts.wrap_jp(d0, Q["ja"], JF, PW)
                 qj = [l for t in [f"設問:{Q['q_ja']}"] + [f"{i + 1}. {c[1]}" for i, c in enumerate(Q["choices"])] for l in ts.wrap_jp(d0, t, ts.jp(js - 1, 600), PW)] if withq else []
                 if TOP + hP + 32 + len(jl) * int(js * 1.5) + (34 + len(qj) * int(js * 1.45) if qj else 0) <= BOTTOM: return js, JF, jl, qj
         return js, JF, jl, []

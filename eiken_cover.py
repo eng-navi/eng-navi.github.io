@@ -55,9 +55,13 @@ def header(d, fg, no, level):
     d.text((W - 66, 66), f"No.{no:02d}", font=pf(42), fill=fg, anchor="ra")
     d.text((W - 66, 120), f"{level}・長文の空所", font=go(26, 700), fill=fg, anchor="ra")
 def footer(base, fg, pill_bg, pill_fg, acc, sec=60):
-    d = ImageDraw.Draw(base); watch(d, 104, H - 92, 30, fg, acc)
-    d.text((152, H - 92), f"目安 {sec}秒", font=go(36, 800), fill=fg, anchor="lm")
-    put(base, text_im("Q. 問題はこちら →", go(36, 800), pill_fg, (28, 16), pill_bg), (W - 66 - 400, H - 128))
+    """めくらせる合図:大きい「Q. 問題をとく →」の札+時計"""
+    d = ImageDraw.Draw(base); watch(d, 100, H - 96, 30, fg, acc)
+    d.text((146, H - 96), f"{sec}秒", font=go(38, 800), fill=fg, anchor="lm")
+    pill = text_im("Q. 2択クイズに挑戦 →", go(50, 900), pill_fg, (34, 22), pill_bg)
+    put(base, pill, (W - 60 - pill.width, H - 96 - pill.height // 2))
+    star(d, W - 60 - pill.width - 30, H - 150, 22, acc, fill=True)
+
 def big(base, word, xy, size, fill, maxw=W - 120):
     f = pf(size, 800)
     while f.getlength(word) > maxw: f = pf(f.size - 6, 800)
