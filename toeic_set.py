@@ -8,7 +8,17 @@ from toeic_cover import W, H, CREAM, BLACK, RED, font, anton, jp, text_img, zabu
 
 ROOT = Path(__file__).parent
 PAPER = (250, 247, 238); MARK = (240, 178, 160); GREY = (110, 106, 98)
-def serif(s): return font("EBGaramond.ttf", s)
+def serif(s, w=500):
+    f = font("SourceSerif4.ttf", s)
+    f.set_variation_by_axes([w, 18])  # 太め・小さい字向けの字形でスマホでも読みやすく
+    return f
+BOTTOM = H - 120  # 下の案内より上に収める
+
+def fit(P, top, room, hi, lo=30, hl=()):
+    """英文カードが room(px) に収まる一番大きい字の大きさ"""
+    for size in range(hi, lo - 1, -1):
+        if passage(Image.new("RGBA", (W, H)), 64, top, W - 128, P, size, hl) <= room: return size
+    return lo
 NUM = "❶❷❸❹❺"
 
 def wrap_jp(d, text, f, width):
@@ -27,7 +37,7 @@ def wrap_jp(d, text, f, width):
 
 def passage(base, x, y, w, P, size=29, hl=(), card=True):
     """P = {"kind":"E-MAIL", "head":[...], "body":[[(text, tag), ...], ...]} を描く。高さを返す"""
-    d = ImageDraw.Draw(base); fs = serif(size); fh = jp(size - 6, 600); lh = int(size * 1.32)
+    d = ImageDraw.Draw(base); fs = serif(size); fh = jp(size - 6, 600); lh = int(size * 1.42)
     pad = 30; cx = x + pad; cy = y + pad + 34
     if card:
         d.rectangle((x, y, x + w, y + 10), fill=BLACK)
@@ -77,27 +87,37 @@ def build(Q, out):
     files.append(make(kind, ROOT / "assets" / "toeic_photos" / f'{Q["photo"]}.jpg', no, *Q["cover"], Q["sec"], out / "01_cover.png"))
     PX, PW = 64, W - 128
     # 2 問題:英文+設問+2択
-    im = frame(no, "問題", 2, total); h = passage(im, PX, 190, PW, Q["passage"], 32); d = ImageDraw.Draw(im)
+    im = frame(no, "問題", 2, total); d = ImageDraw.Draw(im)
+    qlines = wrap_jp(d, Q["q"], serif(42), PW)
+    size = fit(Q["passage"], 190, BOTTOM - 190 - 44 - len(qlines) * 54 - 30 - 2 * 86, 46)
+    h = passage(im, PX, 190, PW, Q["passage"], size); d = ImageDraw.Draw(im)
     stopwatch(d, W - 110, 130, 30, BLACK, RED); d.text((W - 160, 130), f"目安{Q['sec']}秒", font=jp(28, 800), fill=RED, anchor="rm")
     y = 190 + h + 40
-    for ln in wrap_jp(d, Q["q"], serif(36), PW): d.text((PX, y), ln, font=serif(36), fill=BLACK); y += 46
+    for ln in qlines: d.text((PX, y), ln, font=serif(42, 600), fill=BLACK); y += 54
     y += 24
     for i, (c, cj) in enumerate(Q["choices"]):
         paste(im, zabuton(text_img("AB"[i], anton(40), CREAM, 1.0), BLACK, 16, 6), (PX, y)); d = ImageDraw.Draw(im)
-        d.text((PX + 80, y + 4), c, font=serif(34), fill=BLACK); y += 74
+        d.text((PX + 84, y + 2), c, font=serif(40), fill=BLACK); y += 86
     bottom_note(d, "AかBか、コメントで答えてね")
     im.convert("RGB").save(out / "02_question.png")
     # 3 全文の和訳(答えの前に。もう一度考えてもらう)
-    im = frame(no, "全文の和訳", 3, total); h = passage(im, PX, 190, PW, Q["passage"], 27); d = ImageDraw.Draw(im); y = 190 + h + 32
-    for ln in wrap_jp(d, Q["ja"], jp(27, 400), PW): d.text((PX, y), ln, font=jp(27, 400), fill=BLACK); y += 41
+    im = frame(no, "全文の和訳", 3, total); d = ImageDraw.Draw(im)
+    jl = wrap_jp(d, Q["ja"], jp(31, 400), PW)
+    ql = sum(len(wrap_jp(d, t, jp(30, 600), PW)) for t in [Q["q_ja"] + "設問:"] + [c[1] + "(A) " for c in Q["choices"]])
+    size = fit(Q["passage"], 190, BOTTOM - 190 - 32 - len(jl) * 47 - 32 - ql * 45, 38)
+    h = passage(im, PX, 190, PW, Q["passage"], size); d = ImageDraw.Draw(im); y = 190 + h + 32
+    for ln in jl: d.text((PX, y), ln, font=jp(31, 400), fill=BLACK); y += 47
     y += 14; d.line((PX, y, W - PX, y), fill=(210, 203, 185), width=2); y += 18
     for item in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])]:
-        for ln in wrap_jp(d, item, jp(27, 600), PW): d.text((PX, y), ln, font=jp(27, 600), fill=BLACK); y += 41
+        for ln in wrap_jp(d, item, jp(30, 600), PW): d.text((PX, y), ln, font=jp(30, 600), fill=BLACK); y += 45
     bottom_note(d, "もう一度考えてみて。答えは次へ"); im.convert("RGB").save(out / "03_ja.png")
     # 4〜 解説(上=英文固定、下=解説)
     exps = Q["explain"]
     for k, e in enumerate(exps):
-        im = frame(no, EXPLAIN_TITLES[k], 4 + k, total); h = passage(im, PX, 190, PW, Q["passage"], 27, hl=e["hl"]); d = ImageDraw.Draw(im)
+        im = frame(no, EXPLAIN_TITLES[k], 4 + k, total); d = ImageDraw.Draw(im)
+        el = wrap_jp(d, e["text"], jp(34, 500), PW)
+        size = fit(Q["passage"], 190, BOTTOM - 190 - 36 - (110 if k == 0 else 0) - len(el) * 56, 38, hl=e["hl"])
+        h = passage(im, PX, 190, PW, Q["passage"], size, hl=e["hl"]); d = ImageDraw.Draw(im)
         y = 190 + h + 36
         if k == 0:
             paste(im, zabuton(text_img(f"答え  {Q['answer']}", jp(56), CREAM), RED, 22, 12), (PX, y), 2); d = ImageDraw.Draw(im); y += 110
