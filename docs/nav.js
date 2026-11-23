@@ -11,6 +11,7 @@
     { href: "/tango-advanced/", label: "英単語(上級)", note: "英検準1級の瞬間英作文" },
     { href: "/list/", label: "フレーズ集", note: "テーマ別の5選・10選" },
     { href: "/reading/", label: "TOEIC読解", note: "Part7を30秒で" },
+    { href: "/study/", label: "英語の勉強法", note: "覚え方・続け方・順番" },
     { group: "おすすめ" },
     { href: "/go/#tango", label: "おすすめ教材・サービス", note: "単語・文法・TOEIC・英会話・留学", pr: true },
   ];

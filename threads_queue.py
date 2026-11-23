@@ -64,7 +64,7 @@ def render(item):
         return [th.poll_text(q), th.answer_text(q, None)]
     if t == "poll":
         return [item["text"], item["answer_text"]]
-    return [item["text"]] + ([item["reply"]] if item.get("reply") else [])  # talk:問いかけ+自分の返信
+    return [item["text"]] + item.get("replies", []) + ([item["reply"]] if item.get("reply") else [])  # talk:問いかけ+自分の返信
 
 
 def publish(text, reply_to=None, **extra):
