@@ -104,7 +104,7 @@ def build(Q, out):
     def ja_fit():
         for withq, lo in ((True, 29), (False, 27)):  # 和訳は小さくしすぎない。入らなければ設問の訳は省く
             for js in range(33, lo - 1, -1):
-                JF = jp(js, 400); jl = wrap_jp(d0, Q["ja"], JF, PW)
+                JF = jp(js, 600); jl = wrap_jp(d0, Q["ja"], JF, PW)
                 qj = [ln for t in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])] for ln in wrap_jp(d0, t, jp(js - 1, 600), PW)] if withq else []
                 if TOP + hP + 32 + len(jl) * int(js * 1.5) + (34 + len(qj) * int(js * 1.45) if qj else 0) <= BOTTOM: return js, JF, jl, qj
         return js, JF, jl, []
