@@ -4,11 +4,11 @@ from PIL import Image, ImageDraw, ImageOps, ImageFilter
 from pathlib import Path
 import math, random
 from eiken_icon import NAVY, CREAM, SAND, pf, mc, go
-ROOT = Path(__file__).parent; W, H = 1080, 1350; PH = ROOT / "assets" / "toeic_photos"
+ROOT = Path(__file__).parent; W, H = 1080, 1350; PH = ROOT / "assets" / "toeic_photos"; PH2 = ROOT / "assets" / "eiken_photos"
 BLUE, SKY, INK = (79, 117, 163), (168, 193, 222), (20, 34, 62)
 
 def duo(name, w, h, dark=INK, light=(226, 233, 242)):
-    im = Image.open(PH / f"{name}.jpg").convert("L"); r = max(w / im.width, h / im.height)
+    im = Image.open(PH2 / f"{name}.jpg" if (PH2 / f"{name}.jpg").exists() else PH / f"{name}.jpg").convert("L"); r = max(w / im.width, h / im.height)
     im = im.resize((int(im.width * r) + 1, int(im.height * r) + 1)); x, y = (im.width - w) // 2, (im.height - h) // 2
     return ImageOps.colorize(ImageOps.autocontrast(im.crop((x, y, x + w, y + h)), cutoff=2), dark, light).convert("RGBA")
 def shape(p, kind, r=60):

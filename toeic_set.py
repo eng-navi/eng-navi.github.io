@@ -53,7 +53,7 @@ def passage(base, x, y, w, P, size=29, hl=(), card=True, label="", timer=None):
             for i, wd in enumerate(words):
                 if not wd: continue
                 isnum = wd in NUM
-                f = jp(size - 4, 800) if isnum else fs
+                f = jp(size - 4, 800) if isnum else (jp(size - 2, 600) if any(c in "①②③" for c in wd) else fs)
                 ww = d.textlength(wd, font=f); sp = d.textlength(" ", font=fs)
                 if px + ww > x + w - pad: px = cx; cy += lh
                 if tag in hl: d.rectangle((px - 2, cy + 4, px + ww + (sp if i < len(words) - 1 else 0) + 2, cy + lh - 2), fill=MARK)
