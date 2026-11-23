@@ -65,11 +65,11 @@ jobs:
           SCI_IG_USER_ID: ${{ secrets.SCI_IG_USER_ID }}
           SCI_IG_ACCESS_TOKEN: ${{ secrets.SCI_IG_ACCESS_TOKEN }}
           SITE_URL: https://eng-navi.github.io
-      - name: 海クイズ(@rio_devlog)
+      - name: 英検リーディング部(@eiken_reading_club・旧海クイズ)
         if: always()
         run: |
           git pull -q --rebase --autostash || true
-          python3 sea_post.py run
+          python3 eiken_post.py run
         env:
           SEA_IG_USER_ID: ${{ secrets.SEA_IG_USER_ID }}
           SEA_IG_ACCESS_TOKEN: ${{ secrets.SEA_IG_ACCESS_TOKEN }}

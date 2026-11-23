@@ -24,16 +24,16 @@ def build(Q, out):
     cover(v, Q["photo"], Q["no"], teaser, word, line, Q["level"], out / "01_cover.png")
     d0 = ImageDraw.Draw(base()); QF, CF, EF = ts.serif(42, 600), ts.serif(40), ts.jp(37, 500)
     ql = ts.wrap_jp(d0, Q["q"], QF, PW); els = [ts.wrap_jp(d0, e["text"], EF, PW) for e in Q["explain"]]
-    rooms = [BOTTOM - TOP - 40 - len(ql) * 54 - 20 - 4 * 74] + [BOTTOM - TOP - 36 - (116 if k == 0 else 0) - len(el) * 60 for k, el in enumerate(els)]
+    rooms = [BOTTOM - TOP - 40 - len(ql) * 54 - 20 - len(Q["choices"]) * 86] + [BOTTOM - TOP - 36 - (116 if k == 0 else 0) - len(el) * 60 for k, el in enumerate(els)]
     size = min(ts.fit(P(Q), TOP, r, 52, 30) for r in rooms)
     # 2 問題
     im = base(); h = ts.passage(im, PX, TOP, PW, P(Q), size, timer=Q["sec"]); d = ImageDraw.Draw(im); y = TOP + h + 40
     for ln in ql: d.text((PX, y), ln, font=QF, fill=NAVY); y += 54
     y += 20
     for i, (c, _) in enumerate(Q["choices"]):
-        put(im, text_im(str(i + 1), go(36, 900), PAPER_BG, (16, 4), NAVY), (PX, y + 4)); d = ImageDraw.Draw(im)
-        d.text((PX + 70, y), c, font=CF, fill=NAVY); y += 74
-    note(d, "1〜4で、コメントに答えてね"); im.convert("RGB").save(out / "02_question.png")
+        put(im, text_im(str(i + 1), go(40, 900), PAPER_BG, (18, 4), NAVY), (PX, y + 4)); d = ImageDraw.Draw(im)
+        d.text((PX + 80, y), c, font=ts.serif(44), fill=NAVY); y += 86
+    note(d, "1か2か、コメントで答えてね"); im.convert("RGB").save(out / "02_question.png")
     # 3 和訳
     hP = ts.passage(base(), PX, TOP, PW, P(Q), size)
     def ja_fit():
