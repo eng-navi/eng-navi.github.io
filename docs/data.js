@@ -3611,5 +3611,23 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 189,
+    "text": "Nobody can deny that, on top of that, he speaks three languages.",
+    "target": "on top of that",
+    "glossary": [
+      "on top of that：そのうえ、さらに",
+      "deny：否定する"
+    ],
+    "translation": "そのうえ、彼が3か国語を話せることは誰も否定できない。",
+    "explanation": "「on top of that」は「その上に重ねて」=「そのうえ、さらに」という意味です。\n良いことにも悪いことにも使えます。",
+    "audio": "audio/q189.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
