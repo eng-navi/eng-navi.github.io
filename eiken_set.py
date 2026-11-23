@@ -12,7 +12,7 @@ ts.BLACK, ts.RED, ts.PAPER, ts.MARK, ts.CREAM, ts.GREY = NAVY, BLUE, (253, 250, 
 TITLES = ("答えと根拠", "ワナの選択肢", "解き方のコツ")
 W, H, PX, PW, TOP, BOTTOM = ts.W, ts.H, 64, ts.W - 128, ts.TOP, ts.BOTTOM
 
-def P(Q): return {"kind": Q["title"].upper(), "head": [], "body": Q["body"]}
+def P(Q): return {"kind": Q["title"].upper(), "head": [], "body": [[(t.replace("( ① )", "(\u3000①\u3000)"), n) for t, n in para] for para in Q["body"]]}  # 空所を途中で改行しない
 def base(): return Image.new("RGBA", (W, H), PAPER_BG + (255,))
 def note(d, left, swipe=True):
     d.text((64, H - 58), left, font=ts.jp(30, 700), fill=NAVY, anchor="lm")
