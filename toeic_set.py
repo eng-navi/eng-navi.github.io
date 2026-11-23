@@ -3,6 +3,7 @@
 from PIL import Image, ImageDraw
 from pathlib import Path
 import sys
+from toeic_problems import PROBLEMS, EXPLAIN_TITLES
 from toeic_cover import W, H, CREAM, BLACK, RED, font, anton, jp, text_img, zabuton, paste, stopwatch, arrow, asterisk, make
 
 ROOT = Path(__file__).parent
@@ -11,14 +12,17 @@ def serif(s): return font("EBGaramond.ttf", s)
 NUM = "❶❷❸❹❺"
 
 def wrap_jp(d, text, f, width):
+    """日本語は1文字ずつ、英単語(と記号の続き)は途中で切らずに折り返す"""
+    import re
     lines = []
     for para in text.split("\n"):
+        toks = re.findall(r"[A-Za-z0-9'’.,:;!?()\-/~〜]+ ?|.", para)
         cur = ""
-        for ch in para:
-            if d.textlength(cur + ch, font=f) > width and ch not in "、。」）":
-                lines.append(cur); cur = ch
-            else: cur += ch
-        lines.append(cur)
+        for t in toks:
+            if d.textlength(cur + t.rstrip(), font=f) > width and cur and t not in "、。」）)":
+                lines.append(cur.rstrip()); cur = t.lstrip()
+            else: cur += t
+        lines.append(cur.rstrip())
     return lines
 
 def passage(base, x, y, w, P, size=29, hl=(), card=True):
@@ -67,9 +71,10 @@ def bottom_note(d, left, right="SWIPE"):
     if right:
         d.text((W - 130, H - 70), right, font=anton(40), fill=BLACK, anchor="rm"); arrow(d, W - 120, H - 68, W - 64, RED)
 
-def build(Q, photos, out):
+def build(Q, out):
     out.mkdir(parents=True, exist_ok=True); no = Q["no"]; total = 5 + len(Q["explain"]); files = []
-    files.append(make(Q["cover"]["kind"], photos / f'{Q["cover"]["photo"]}.jpg', no, *Q["cover"]["lines"], Q["sec"], out / "01_cover.png"))
+    kind = "cream" if no % 2 else "black"  # 交互にしてグリッドを市松模様に
+    files.append(make(kind, ROOT / "assets" / "toeic_photos" / f'{Q["photo"]}.jpg', no, *Q["cover"], Q["sec"], out / "01_cover.png"))
     PX, PW = 64, W - 128
     # 2 問題:英文+設問+2択
     im = frame(no, "問題", 2, total); h = passage(im, PX, 190, PW, Q["passage"], 32); d = ImageDraw.Draw(im)
@@ -86,13 +91,13 @@ def build(Q, photos, out):
     im = frame(no, "全文の和訳", 3, total); h = passage(im, PX, 190, PW, Q["passage"], 27); d = ImageDraw.Draw(im); y = 190 + h + 32
     for ln in wrap_jp(d, Q["ja"], jp(27, 400), PW): d.text((PX, y), ln, font=jp(27, 400), fill=BLACK); y += 41
     y += 14; d.line((PX, y, W - PX, y), fill=(210, 203, 185), width=2); y += 18
-    for ln in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])]:
-        d.text((PX, y), ln, font=jp(27, 600), fill=BLACK); y += 41
+    for item in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])]:
+        for ln in wrap_jp(d, item, jp(27, 600), PW): d.text((PX, y), ln, font=jp(27, 600), fill=BLACK); y += 41
     bottom_note(d, "もう一度考えてみて。答えは次へ"); im.convert("RGB").save(out / "03_ja.png")
     # 4〜 解説(上=英文固定、下=解説)
     exps = Q["explain"]
     for k, e in enumerate(exps):
-        im = frame(no, e["title"], 4 + k, total); h = passage(im, PX, 190, PW, Q["passage"], 27, hl=e["hl"]); d = ImageDraw.Draw(im)
+        im = frame(no, EXPLAIN_TITLES[k], 4 + k, total); h = passage(im, PX, 190, PW, Q["passage"], 27, hl=e["hl"]); d = ImageDraw.Draw(im)
         y = 190 + h + 36
         if k == 0:
             paste(im, zabuton(text_img(f"答え  {Q['answer']}", jp(56), CREAM), RED, 22, 12), (PX, y), 2); d = ImageDraw.Draw(im); y += 110
@@ -123,31 +128,13 @@ def build(Q, photos, out):
     im.convert("RGB").save(out / f"0{p}_cta.png")
     return sorted(out.glob("0*.png"))
 
-Q3 = {
-    "no": 3, "sec": 30, "answer": "(A)",
-    "cover": {"kind": "cream", "photo": "p11", "lines": ("この1問、", [("30秒", "a"), ("で", "n")], "解けたら上級者")},
-    "passage": {"kind": "E-MAIL", "head": ["To: All Staff", "From: Facilities Team", "Subject: East parking lot closure"],
-        "body": [[("Hello everyone,", 0)],
-                 [("The east parking lot will be closed from March 10 to 14 while it is repaved.", 1),
-                  ("During this period, please park in the north garage on Elm Street.", 0),
-                  ("Because the garage has fewer spaces, we encourage you to carpool or take the shuttle bus from Central Station.", 2),
-                  ("Garage permits can be picked up at the front desk starting this Friday.", 3)],
-                 [("Thank you for your cooperation.", 0)]]},
-    "q": "What is suggested about the north garage?",
-    "q_ja": "北の駐車場について何が分かりますか。",
-    "choices": [("It has limited parking spaces.", "台数が限られている。"), ("It will be closed next week.", "来週閉鎖される。")],
-    "explain": [
-        {"title": "答えと根拠", "hl": (2,), "text": "❷「the garage has fewer spaces(駐車場は台数が少ない)」が根拠。\nfewer spaces → limited parking spaces(限られた台数)と言い換えた (A) が正解。"},
-        {"title": "ワナの選択肢", "hl": (1,), "text": "(B)「来週閉鎖される」のは、❶の east parking lot(東の駐車場)のほう。\n北の駐車場の話ではありません。closed という同じ単語につられないように、「どこの話か」を必ず確かめよう。"},
-        {"title": "解き方のコツ", "hl": (2, 3), "text": "suggested(示唆されている)の問題は、本文の語がそのまま選択肢に出ることは少なく、たいてい言い換えになっています。\n設問のキーワード(north garage)を本文で探して、その前後だけを読めば30秒で解けます。"},
-    ],
-    "ja": "宛先:全従業員/差出人:施設管理チーム/件名:東駐車場の閉鎖\n皆さん、こんにちは。❶東駐車場は舗装工事のため、3月10日から14日まで閉鎖されます。この期間は、エルム通りにある北の駐車場をご利用ください。❷北の駐車場は台数が少ないため、相乗りや、セントラル駅からのシャトルバスの利用をおすすめします。❸駐車場の許可証は、今週金曜日から受付で受け取れます。ご協力をお願いします。",
-    "words": [("repave", "舗装し直す"), ("garage", "(屋内の)駐車場、車庫"), ("encourage A to do", "Aに〜するよう勧める"), ("carpool", "相乗りする"), ("permit", "許可証"), ("limited", "限られた")],
-}
-
 if __name__ == "__main__":
-    fs = build(Q3, Path(sys.argv[1]), ROOT / "out" / "toeic_reading" / "set_03")
-    tw = 270; sheet = Image.new("RGB", (tw * 4 + 12, int(tw * 1.25) * 2 + 4), "white")
-    for i, f in enumerate(fs):
-        sheet.paste(Image.open(f).resize((tw, int(tw * 1.25))), ((i % 4) * (tw + 4), (i // 4) * (int(tw * 1.25) + 4)))
-    sheet.save(ROOT / "out" / "toeic_reading" / "set_03" / "overview.png"); print(len(fs))
+    for Q in PROBLEMS:
+        if len(sys.argv) > 1 and str(Q["no"]) not in sys.argv[1:]: continue
+        d = ROOT / "out" / "toeic_reading" / f"no{Q['no']:03d}"
+        for f in d.glob("0*.png"): f.unlink()
+        fs = build(Q, d)
+        tw = 270; sheet = Image.new("RGB", (tw * 4 + 12, int(tw * 1.25) * 2 + 4), "white")
+        for i, f in enumerate(fs):
+            sheet.paste(Image.open(f).resize((tw, int(tw * 1.25))), ((i % 4) * (tw + 4), (i // 4) * (int(tw * 1.25) + 4)))
+        sheet.save(d / "overview.png"); print(Q["no"], len(fs))
