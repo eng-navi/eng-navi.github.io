@@ -71,7 +71,7 @@ def arrow(d, x0, y, x1, col, w=5):
     d.line((x1, y, x1 - 22, y - 16), fill=col, width=w); d.line((x1, y, x1 - 22, y + 16), fill=col, width=w)
 
 def header(d, fg, no):
-    d.text((64, 56), "eng_navi TOEIC", font=anton(30), fill=fg)
+    d.text((64, 56), "@toeic_read30", font=anton(30), fill=fg)
     for i, t in enumerate(["PART 7", "READING", f"No.{no:02d}"]):
         d.text((W - 64, 52 + i * 30), t, font=jp(24, 800), fill=fg, anchor="ra")
 

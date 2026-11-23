@@ -57,7 +57,7 @@ def passage(base, x, y, w, P, size=29, hl=(), card=True):
 
 def frame(no, label, page, total):
     im = Image.new("RGBA", (W, H), CREAM + (255,)); d = ImageDraw.Draw(im)
-    d.text((64, 50), "eng_navi TOEIC", font=anton(30), fill=BLACK)
+    d.text((64, 50), "@toeic_read30", font=anton(30), fill=BLACK)
     d.text((W - 64, 50), f"No.{no:02d}  {page}/{total}", font=anton(30), fill=BLACK, anchor="ra")
     paste(im, zabuton(text_img(label, jp(34), CREAM), BLACK, 18, 10), (64, 100), 2)
     return im
@@ -76,16 +76,23 @@ def build(Q, photos, out):
     stopwatch(d, W - 110, 130, 30, BLACK, RED); d.text((W - 160, 130), f"目安{Q['sec']}秒", font=jp(28, 800), fill=RED, anchor="rm")
     y = 190 + h + 40
     for ln in wrap_jp(d, Q["q"], serif(36), PW): d.text((PX, y), ln, font=serif(36), fill=BLACK); y += 46
-    d.text((PX, y + 2), Q["q_ja"], font=jp(24, 500), fill=GREY); y += 50
+    y += 24
     for i, (c, cj) in enumerate(Q["choices"]):
         paste(im, zabuton(text_img("AB"[i], anton(40), CREAM, 1.0), BLACK, 16, 6), (PX, y)); d = ImageDraw.Draw(im)
         d.text((PX + 80, y + 4), c, font=serif(34), fill=BLACK); y += 74
     bottom_note(d, "AかBか、コメントで答えてね")
     im.convert("RGB").save(out / "02_question.png")
-    # 3〜 解説(上=英文固定、下=解説)
+    # 3 全文の和訳(答えの前に。もう一度考えてもらう)
+    im = frame(no, "全文の和訳", 3, total); h = passage(im, PX, 190, PW, Q["passage"], 27); d = ImageDraw.Draw(im); y = 190 + h + 32
+    for ln in wrap_jp(d, Q["ja"], jp(27, 400), PW): d.text((PX, y), ln, font=jp(27, 400), fill=BLACK); y += 41
+    y += 14; d.line((PX, y, W - PX, y), fill=(210, 203, 185), width=2); y += 18
+    for ln in [f"設問:{Q['q_ja']}"] + [f"({'AB'[i]}) {cj}" for i, (c, cj) in enumerate(Q["choices"])]:
+        d.text((PX, y), ln, font=jp(27, 600), fill=BLACK); y += 41
+    bottom_note(d, "もう一度考えてみて。答えは次へ"); im.convert("RGB").save(out / "03_ja.png")
+    # 4〜 解説(上=英文固定、下=解説)
     exps = Q["explain"]
     for k, e in enumerate(exps):
-        im = frame(no, e["title"], 3 + k, total); h = passage(im, PX, 190, PW, Q["passage"], 27, hl=e["hl"]); d = ImageDraw.Draw(im)
+        im = frame(no, e["title"], 4 + k, total); h = passage(im, PX, 190, PW, Q["passage"], 27, hl=e["hl"]); d = ImageDraw.Draw(im)
         y = 190 + h + 36
         if k == 0:
             paste(im, zabuton(text_img(f"答え  {Q['answer']}", jp(56), CREAM), RED, 22, 12), (PX, y), 2); d = ImageDraw.Draw(im); y += 110
@@ -93,12 +100,8 @@ def build(Q, photos, out):
             # 「」内の英語や → の行も同じ大きさで
             d.text((PX, y), ln, font=jp(34, 500), fill=BLACK); y += 56
         bottom_note(d, f"解説 {k + 1}/{len(exps)}")
-        im.convert("RGB").save(out / f"0{3 + k}_explain{k + 1}.png")
-    p = 3 + len(exps)
-    # 和訳
-    im = frame(no, "全文の和訳", p, total); h = passage(im, PX, 190, PW, Q["passage"], 27); d = ImageDraw.Draw(im); y = 190 + h + 36
-    for ln in wrap_jp(d, Q["ja"], jp(28, 400), PW): d.text((PX, y), ln, font=jp(28, 400), fill=BLACK); y += 43
-    bottom_note(d, "保存して、あとで見返そう"); im.convert("RGB").save(out / f"0{p}_ja.png"); p += 1
+        im.convert("RGB").save(out / f"0{4 + k}_explain{k + 1}.png")
+    p = 4 + len(exps)
     # 単語
     im = frame(no, "この問題の単語", p, total); d = ImageDraw.Draw(im); y = 230
     for en, ja in Q["words"]:
@@ -108,7 +111,7 @@ def build(Q, photos, out):
     bottom_note(d, "保存して、単語帳がわりに"); im.convert("RGB").save(out / f"0{p}_words.png"); p += 1
     # 案内(黒地)
     im = Image.new("RGBA", (W, H), BLACK + (255,)); d = ImageDraw.Draw(im)
-    d.text((64, 50), "eng_navi TOEIC", font=anton(30), fill=CREAM)
+    d.text((64, 50), "@toeic_read30", font=anton(30), fill=CREAM)
     d.text((W - 64, 50), f"No.{no:02d}  {p}/{total}", font=anton(30), fill=CREAM, anchor="ra")
     paste(im, text_img("毎日1問、", jp(110), CREAM), (64, 300))
     paste(im, zabuton(text_img("30秒", jp(170), CREAM), RED, 18, 6), (64, 450), 3)
@@ -132,7 +135,7 @@ Q3 = {
                  [("Thank you for your cooperation.", 0)]]},
     "q": "What is suggested about the north garage?",
     "q_ja": "北の駐車場について何が分かりますか。",
-    "choices": [("It has limited parking spaces.", ""), ("It will be closed next week.", "")],
+    "choices": [("It has limited parking spaces.", "台数が限られている。"), ("It will be closed next week.", "来週閉鎖される。")],
     "explain": [
         {"title": "答えと根拠", "hl": (2,), "text": "❷「the garage has fewer spaces(駐車場は台数が少ない)」が根拠。\nfewer spaces → limited parking spaces(限られた台数)と言い換えた (A) が正解。"},
         {"title": "ワナの選択肢", "hl": (1,), "text": "(B)「来週閉鎖される」のは、❶の east parking lot(東の駐車場)のほう。\n北の駐車場の話ではありません。closed という同じ単語につられないように、「どこの話か」を必ず確かめよう。"},
