@@ -10,7 +10,7 @@
     { href: "/tango/", label: "英単語(基本)", note: "入試・英検の頻出" },
     { href: "/tango-advanced/", label: "英単語(上級)", note: "英検準1級の瞬間英作文" },
     { href: "/list/", label: "フレーズ集", note: "テーマ別の5選・10選" },
-    { href: "/manga/", label: "4コマで英語", note: "マンガでイディオム" },
+    { href: "/reading/", label: "TOEIC読解", note: "Part7を30秒で" },
     { group: "おすすめ" },
     { href: "/go/#tango", label: "おすすめ教材・サービス", note: "単語・文法・TOEIC・英会話・留学", pr: true },
   ];

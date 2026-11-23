@@ -79,7 +79,8 @@ def plan(a, b, day):
     for k, no in enumerate(range(int(a), int(b) + 1)):
         at = f"{(d + timedelta(days=k // len(SLOTS))):%Y-%m-%d} {SLOTS[k % len(SLOTS)]}"
         paths += add(no, at); print(f"No.{no} → {at}")
-    mp.push(paths, f"TOEIC読解 No.{a}〜{b} を予約")
+    import subprocess; subprocess.run([sys.executable, str(ROOT / "build_reading.py")], check=True)  # 復習ページも更新
+    mp.push(paths + [str(ROOT / "docs" / "reading")], f"TOEIC読解 No.{a}〜{b} を予約")
 
 
 def wait(cid, timeout=180):
