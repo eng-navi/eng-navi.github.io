@@ -3686,5 +3686,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 193,
+    "category": "前置詞",
+    "question": "The new store will open ( ) the river next year.",
+    "options": [
+      "along",
+      "at"
+    ],
+    "answer": 1,
+    "translation": "新しい店は、来年川沿いにオープンする。",
+    "explanation": "川のように長いものに「沿って」いるときは along を使います。\nat は「ある一点」を指すイメージなので、長い川には合いません。\n\nしたがって、①along が正解。",
+    "audio": "audio/q193.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
