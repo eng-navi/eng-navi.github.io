@@ -205,7 +205,7 @@ MORE4 = [
    [((2, 3), "❸「延滞した人が来なくなった」=罰金が人を遠ざけていた。\nだから 1 が正解。"), ((3,), "2 は罰金をやめる理由になりません。❸は払えない人がいた、という話です。"), ((1, 2, 3), "「なぜやめたのか」の答えは、後ろの具体的な説明(❸)にあります。空所の次の文を必ず読もう。")],
    "図書館の延滞料\n❶延滞した本の罰金をやめた図書館がいくつもある。❷図書館員は、罰金が( ① )ことに気づいたのだ。❸延滞した本を持つ多くの人が、恥ずかしさや払えないことから、図書館に来なくなっていた。",
    [("charge", "請求する"), ("fine", "罰金"), ("librarian", "図書館員"), ("overdue", "期限切れの"), ("embarrassed", "恥ずかしい"), ("keep A away", "Aを遠ざける")]),
- Q2(24, ("上級者でも迷う", "Ironically", "皮肉な結果とは?"), "Wider Roads",
+ Q2(24, ("上級者でも迷う", "Backfire", "逆効果になる理由は?"), "Wider Roads",
    [("To reduce traffic jams, many cities have built wider roads.", 1), ("Ironically, adding lanes often ( ① ).", 2), ("Faster roads encourage more people to drive, so the roads soon become just as crowded as before.", 3)],
    [("leads to more traffic", "交通量を増やす結果になる"), ("solves the problem forever", "問題を永久に解決する")], 1,
    [((2, 3), "❷ Ironically(皮肉なことに)=目的と逆。❸「車で行く人が増え、また混む」。\nだから 1 が正解。"), ((1,), "2 は目的(渋滞を減らす)が成功した場合。Ironically のあとには来ません。"), ((2,), "Ironically / Paradoxically は「狙いと逆の結果」の合図。目的を確認して、その逆を選ぼう。")],
@@ -269,3 +269,10 @@ MORE5 = [
    [("blame", "責める"), ("waste", "ムダにする"), ("educational", "教育的な"), ("value", "価値"), ("certain", "ある種の"), ("problem-solving", "問題解決")]),
 ]
 PROBLEMS += MORE3 + MORE4 + MORE5
+
+# 写真は毎回ちがうものに(2026-11-24〜)。No.10 以降は e01〜e24、ポラロイド2枚目は別の写真
+for _i, _q in enumerate([q for q in PROBLEMS if q["no"] >= 10]):
+    _q["photo"] = f"e{_i + 1:02d}"
+_SECOND = iter(["e25", "coffee_laptop", "laptop_desk", "reading_glasses", "open_book"])
+for _q in PROBLEMS:
+    if _q["no"] >= 10 and _q["layout"] == 5: _q["photo2"] = next(_SECOND)

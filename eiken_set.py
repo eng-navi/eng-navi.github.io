@@ -22,7 +22,7 @@ def build(Q, out):
     out.mkdir(parents=True, exist_ok=True)
     for f in out.glob("0*.png"): f.unlink()
     v, (teaser, word, line) = Q["layout"], Q["cover"]
-    cover(v, Q["photo"], Q["no"], teaser, word, line, Q["level"], out / "01_cover.png")
+    cover(v, Q["photo"], Q["no"], teaser, word, line, Q["level"], out / "01_cover.png", Q.get("photo2", "desk_top"))
     d0 = ImageDraw.Draw(base()); QF, CF, EF = ts.serif(42, 600), ts.serif(40), ts.jp(37, 500)
     ql = ts.wrap_jp(d0, Q["q"], QF, PW); els = [ts.wrap_jp(d0, e["text"], EF, PW) for e in Q["explain"]]
     rooms = [BOTTOM - TOP - 40 - len(ql) * 54 - 20 - len(Q["choices"]) * 86] + [BOTTOM - TOP - 36 - (116 if k == 0 else 0) - len(el) * 60 for k, el in enumerate(els)]

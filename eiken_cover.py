@@ -67,7 +67,7 @@ def big(base, word, xy, size, fill, maxw=W - 120):
     while f.getlength(word) > maxw: f = pf(f.size - 6, 800)
     ImageDraw.Draw(base).text(xy, word, font=f, fill=fill, anchor="ls"); return f.size
 
-def make(v, photo, no, teaser, word, line, level="準1級", out=None):
+def make(v, photo, no, teaser, word, line, level="準1級", out=None, photo2="desk_top"):
     if v == 1:  # ネイビー地。左に縦長アーチの写真、見出しは写真に重ねる
         im = Image.new("RGBA", (W, H), NAVY + (255,)); d = ImageDraw.Draw(im)
         put(im, shape(duo(photo, 470, 700), "arch"), (66, 250)); d = ImageDraw.Draw(im)
@@ -107,7 +107,7 @@ def make(v, photo, no, teaser, word, line, level="準1級", out=None):
         put(im, text_im(teaser, go(40, 800), NAVY, (22, 12), SKY).rotate(-2, expand=True, resample=Image.BICUBIC), (66, 220))
         big(im, word, (60, 470), 200, CREAM); d = ImageDraw.Draw(im)
         d.text((70, 540), line, font=go(42, 700), fill=SAND, anchor="ls")
-        for (x, y, a, nm) in ((120, 640, -6, photo), (560, 680, 5, "desk_top")):
+        for (x, y, a, nm) in ((120, 640, -6, photo), (560, 680, 5, photo2)):
             card = Image.new("RGBA", (400, 470), CREAM + (255,)); card.alpha_composite(duo(nm, 360, 360), (20, 20)); put(im, card, (x, y), a)
         tape(im, 230, 620, 180, -8); tape(im, 680, 660, 180, 6); d = ImageDraw.Draw(im)
         sparkle(d, 960, 300, 36, SAND); star(d, 980, 600, 44, SKY, seed=5); header(d, CREAM, no, level)
@@ -115,9 +115,9 @@ def make(v, photo, no, teaser, word, line, level="準1級", out=None):
     else:  # クリーム地。下半分に水色の帯+写真、帯の上にネイビーの座布団
         im = Image.new("RGBA", (W, H), CREAM + (255,)); d = ImageDraw.Draw(im)
         d.rectangle((0, 760, W, H), fill=SKY)
-        put(im, shape(duo(photo, 420, 520), "arch"), (600, 300)); d = ImageDraw.Draw(im)
+        put(im, shape(duo(photo, 400, 470), "arch"), (610, 200)); d = ImageDraw.Draw(im)
         flower(d, 160, 380, 70, SAND); star(d, 470, 300, 40, BLUE, seed=6)
-        big(im, word, (60, 700), 180, NAVY, 560 if len(word) > 9 else W - 120); d = ImageDraw.Draw(im)
+        big(im, word, (60, 740), 180, NAVY); d = ImageDraw.Draw(im)  # 写真の下に全幅で
         put(im, text_im(teaser, go(42, 800), CREAM, (22, 12), NAVY).rotate(2, expand=True, resample=Image.BICUBIC), (66, 820))
         d.text((76, 1010), line, font=go(44, 800), fill=NAVY, anchor="ls"); header(d, NAVY, no, level)
         footer(im, NAVY, NAVY, CREAM, BLUE)
