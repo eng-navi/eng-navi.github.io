@@ -3667,5 +3667,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 192,
+    "text": "This rare stamp is hard to come by these days.",
+    "target": "hard to come by",
+    "glossary": [
+      "be hard to come by：手に入りにくい",
+      "rare：珍しい",
+      "these days：最近"
+    ],
+    "translation": "この珍しい切手は、最近では手に入りにくい。",
+    "explanation": "「come by」には「手に入れる」という意味があります。\n「hard to come by」で「手に入りにくい」となります。",
+    "audio": "audio/q192.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
