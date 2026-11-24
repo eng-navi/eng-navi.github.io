@@ -3705,5 +3705,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 194,
+    "category": "助動詞",
+    "question": "You had better ( ) late again.",
+    "options": [
+      "not be",
+      "be not"
+    ],
+    "answer": 1,
+    "translation": "もう遅刻しないほうがいい。",
+    "explanation": "had better は2語で1つの助動詞のように働きます。\n否定は had better not do の形で、not の位置は better のすぐ後ろです。\n\nしたがって、①not be が正解。",
+    "audio": "audio/q194.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
