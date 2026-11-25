@@ -3724,5 +3724,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 195,
+    "text": "His bad mood seems to stem from a lack of sleep.",
+    "target": "stem from",
+    "glossary": [
+      "stem from X：Xから生じる、Xに由来する",
+      "mood：機嫌",
+      "lack of X：Xの不足"
+    ],
+    "translation": "彼の機嫌の悪さは、睡眠不足から来ているようだ。",
+    "explanation": "「stem」は植物の「茎」のこと。茎から伸びるように「〜から生じる」という意味になります。\n原因を説明するときによく使います。",
+    "audio": "audio/q195.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
