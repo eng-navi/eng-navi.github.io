@@ -3762,5 +3762,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 197,
+    "category": "時制",
+    "question": "I ( ) this watch for ten years.",
+    "options": [
+      "have been having",
+      "have had"
+    ],
+    "answer": 2,
+    "translation": "この時計は10年間使っている。",
+    "explanation": "have(持っている)は状態を表す動詞なので、ふつう進行形にしません。\n状態の継続は現在完了 have done で表します。\n\nしたがって、②have had が正解。",
+    "audio": "audio/q197.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
