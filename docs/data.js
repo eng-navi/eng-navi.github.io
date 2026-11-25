@@ -3743,5 +3743,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 196,
+    "category": "前置詞",
+    "question": "Many people applied ( ) the job.",
+    "options": [
+      "for",
+      "to"
+    ],
+    "answer": 1,
+    "translation": "多くの人がその仕事に応募した。",
+    "explanation": "「(仕事・職)に応募する」は apply for です。\napply to は「(会社・学校など)に申し込む」や「〜に当てはまる」で使います。\n\nしたがって、①for が正解。",
+    "audio": "audio/q196.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
