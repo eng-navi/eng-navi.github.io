@@ -3781,5 +3781,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 198,
+    "text": "Square-toe boots were everywhere last winter, but they turned out to be a passing fad.",
+    "target": "a passing fad",
+    "glossary": [
+      "a passing fad：一時的な流行",
+      "square-toe：つま先が四角い",
+      "turn out to be X：結局Xだとわかる"
+    ],
+    "translation": "去年の冬はスクエアトゥのブーツをどこでも見かけたが、一時的な流行にすぎなかった。",
+    "explanation": "「fad」は「すぐに廃れる流行」のこと。passing(過ぎ去っていく)がついて「一時の流行」の意味がはっきりします。\n「長続きしなかった」と少し冷めた目で語るときの表現です。",
+    "audio": "audio/q198.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
