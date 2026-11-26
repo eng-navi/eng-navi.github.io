@@ -3800,5 +3800,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 199,
+    "category": "前置詞・接続詞",
+    "question": "The outdoor concert was canceled ( ) the heavy rain.",
+    "options": [
+      "because",
+      "because of"
+    ],
+    "answer": 2,
+    "translation": "激しい雨のため、野外コンサートは中止された。",
+    "explanation": "空所の後ろは the heavy rain という名詞のかたまりです。\n名詞の前に置けるのは前置詞の because of。because は接続詞なので、後ろに主語と動詞が必要です。\n\nしたがって、②because of が正解。",
+    "audio": "audio/q199.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
