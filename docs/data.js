@@ -3819,5 +3819,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 200,
+    "category": "時制",
+    "question": "She ( ) for over an hour when the bus finally arrived.",
+    "options": [
+      "had been waiting",
+      "has been waiting"
+    ],
+    "answer": 1,
+    "translation": "バスがやっと来たとき、彼女は1時間以上待っていた。",
+    "explanation": "バスが来た(過去)の時点まで、ずっと待ち続けていたという意味です。\n過去のある時点までの動作の継続は、過去完了進行形 had been doing で表します。\n\nしたがって、①had been waiting が正解。",
+    "audio": "audio/q200.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
