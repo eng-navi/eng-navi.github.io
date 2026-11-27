@@ -28,47 +28,53 @@ def bgm_path(name):
     for d in ("docs/bgm", "assets/bgm"):
         p = ROOT / d / f"{name}.mp3"
         if p.exists(): return p
+def ease(t): t = max(0.0, min(1.0, t)); return 1 - (1 - t) ** 3
+
 def frames(kind, no):
-    c = dict(CFG[kind]); c.update(setup(kind, no)); q = Image.open(ROOT / c["src"].format(no)).convert("RGB"); q = q.crop((0, 0, q.width, q.height - 120))  # 下の「swipe」案内は外す
-    # 1) 暗い画面の一言
-    intro = Image.new("RGB", (W, H), c["dark"]); d = ImageDraw.Draw(intro)
-    for i, t in enumerate(c["lines"]):
-        f = jp(120 if i == 2 else 80); col = c["acc"] if i == 2 else (245, 240, 228)
-        while f.getlength(t) > W - 240: f = jp(f.size - 6)  # 左右に余白(小さい画面でも見切れない)
-        d.text((W // 2, 700 + i * 190), t, font=f, fill=col, anchor="mm")
-    d.text((W // 2, 1320), "2択クイズ", font=jp(54, 700), fill=(200, 200, 200), anchor="mm")
-    for _ in range(12): yield intro
-    # 2) 問題+タイマー
-    base = Image.new("RGB", (W, H), c["bg"]); base.paste(q, (0, 330))
-    d = ImageDraw.Draw(base)
-    d.text((64, 120), c["tag"], font=jp(52, 800), fill=c["ink"]); watch_x = 0
-    d.text((64, 1740), "画面を長押しすると一時停止できます", font=jp(40, 600), fill=c["ink"])
-    n = c["sec"] * FPS
+    """約7秒。1コマ目から問題を見せ、見出しと選択肢をすっと出す。最後も同じ画面のまま(ループしやすい)"""
+    c = dict(CFG[kind]); c.update(setup(kind, no))
+    q = Image.open(ROOT / c["src"].format(no)).convert("RGB"); q = q.crop((0, 0, q.width, q.height - 120))
+    px = q.load(); cut = 0
+    for y in range(q.height - 1, 0, -1):  # 英文カードの下端(全幅の濃い線)
+        dark = sum(1 for x in range(80, q.width - 80, 20) if sum(px[x, y]) < 200)
+        if dark > (q.width - 160) / 20 * 0.9: cut = y + 6; break
+    bgc = px[5, q.height - 5]; bottom = q.height
+    for y in range(q.height - 1, cut, -1):  # 選択肢の下の余白を切る
+        if any(sum(abs(a - b) for a, b in zip(px[x, y], bgc)) > 60 for x in range(40, q.width - 40, 8)): bottom = y + 40; break
+    card, rest = q.crop((0, 0, q.width, cut)), q.crop((0, cut, q.width, bottom))
+    Y0 = max(360, (H - bottom) // 2 + 40)  # 縦の真ん中あたりに置く
+    base = Image.new("RGB", (W, H), c["bg"]); base.paste(card, (0, Y0))
+    head = Image.new("RGB", (W - 128, 150), c["dark"]); hd = ImageDraw.Draw(head)
+    t1 = f"{c['lines'][0]}|{c['lines'][1]}{c['lines'][2]}"; f = jp(58)
+    while f.getlength(t1) > W - 220: f = jp(f.size - 4)
+    hd.text(((W - 128) // 2, 75), t1, font=f, fill=(245, 240, 228), anchor="mm")
+    FR = 30; n = int(7.0 * FR)
     for k in range(n):
-        im = base.copy(); d = ImageDraw.Draw(im); left = (n - k) / FPS
-        d.rounded_rectangle((64, 220, W - 64, 262), 21, fill=(210, 203, 185))
-        d.rounded_rectangle((64, 220, 64 + int((W - 128) * (n - k) / n), 262), 21, fill=c["acc"] if left > 5 else (207, 62, 34))
-        d.text((W - 64, 150), f"{int(left + 0.999):02d}", font=anton(110), fill=c["ink"], anchor="rm")
+        t = k / FR; im = base.copy(); d = ImageDraw.Draw(im)
+        im.paste(head, (64, int(-160 + (Y0 - 210 + 160) * ease(t / 0.35))))
+        im.paste(rest, (int(W * (1 - ease((t - 0.45) / 0.35))), Y0 + cut))
+        if t >= 0.8:
+            left = max(0.0, 1 - (t - 0.8) / 5.0)
+            d.rounded_rectangle((64, Y0 - 44, W - 64, Y0 - 20), 12, fill=(210, 203, 185))
+            d.rounded_rectangle((64, Y0 - 44, 64 + max(24, int((W - 128) * left)), Y0 - 20), 12, fill=c["acc"] if left > 0.3 else (207, 62, 34))
+        if t < 5.8: d.text((W // 2, Y0 + bottom + 70), "長押しで一時停止して、じっくり解いてね", font=jp(40, 700), fill=c["ink"], anchor="mm")
+        if t >= 5.8:
+            a = ease((t - 5.8) / 0.3); band = Image.new("RGB", (W - 128, 130), c["dark"]); bd = ImageDraw.Draw(band)
+            bd.text(((W - 128) // 2, 65), "答えは?コメントで " + c["ans"].replace(" を書いてね", ""), font=jp(54), fill=(245, 240, 228), anchor="mm")
+            im.paste(band, (64, int(H - (H - Y0 - bottom - 20) * a)))
         yield im
-    # 3) 答えはコメントで
-    end = Image.new("RGB", (W, H), c["dark"]); d = ImageDraw.Draw(end)
-    d.text((W // 2, 760), "解けた?", font=jp(120), fill=c["acc"], anchor="mm")
-    d.text((W // 2, 1040), "答えは?コメントで", font=jp(68), fill=(245, 240, 228), anchor="mm")
-    d.text((W // 2, 1160), c["ans"], font=jp(68), fill=(245, 240, 228), anchor="mm")
-    d.text((W // 2, 1320), "じっくり解きたい人は 長押しで一時停止", font=jp(40, 700), fill=(200, 200, 200), anchor="mm")
-    d.text((W // 2, 1400), "答えと詳しい解説はコメント欄に", font=jp(40, 700), fill=(200, 200, 200), anchor="mm")
-    for _ in range(20): yield end
+
 def build(kind, no):
     c = dict(CFG[kind]); c.update(setup(kind, no)); out = OUT / f"{kind}_{no:03d}.mp4"; tmp = OUT / "_v.mp4"
-    p = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "image2pipe", "-framerate", str(FPS), "-i", "-", "-c:v", "libx264",
+    p = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "image2pipe", "-framerate", "30", "-i", "-", "-c:v", "libx264",
                           "-pix_fmt", "yuv420p", "-r", "30", str(tmp)], stdin=subprocess.PIPE)
     total = 0
     for im in frames(kind, no): im.save(p.stdin, "PNG"); total += 1
-    p.stdin.close(); p.wait(); dur = total / FPS
-    tick = f"aevalsrc='0.12*sin(2*PI*520*t)*exp(-35*mod(t,1))':d={c['sec']}:s=44100,lowpass=f=1500"  # やわらかい低めの音(耳に刺さらない)
+    p.stdin.close(); p.wait(); dur = total / 30
+    tick = "aevalsrc='0.12*sin(2*PI*520*t)*exp(-35*mod(t,1))*gte(t,0.8)*lte(t,5.8)+0.18*sin(2*PI*660*t)*exp(-25*(t-0.5))*gte(t,0.5)*lte(t,0.9)':d=7:s=44100,lowpass=f=1500"  # 選択肢でやわらかい「ポン」、タイマー中は控えめな秒針
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(tmp), "-stream_loop", "-1", "-i", str(bgm_path(c["bgm"])),
                     "-f", "lavfi", "-i", tick, "-filter_complex",
-                    f"[1:a]volume=0.35,afade=t=out:st={dur - 1.5}:d=1.5[m];[2:a]adelay=1200|1200,volume=0.5[t];"
+                    f"[1:a]volume=0.35,afade=t=out:st={dur - 1.5}:d=1.5[m];[2:a]volume=0.5[t];"
                     f"[m][t]amix=inputs=2:normalize=0,alimiter=limit=0.9:level=disabled[a]",
                     "-map", "0:v", "-map", "[a]", "-t", str(dur), "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", str(out)], check=True)
     tmp.unlink(); return out, c["credit"]
