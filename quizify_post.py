@@ -90,7 +90,7 @@ def publish(item):
     add_comment(mid, item["caption"])  # 答え・解説はコメントにも(タップしやすい)
     story = post.post_story(url)
     import youtube_buffer  # 同じ動画を YouTube ショートにも(Buffer 有料プランで本数の上限なし)
-    youtube_buffer.send(url, item["caption"])
+    youtube_buffer.send(url, item["caption"], topic=next((k for k in ("listening", "white", "black") if k in url), "black"), n=sum(map(ord, url)))
     link = post.api("GET", mid, fields="permalink").get("permalink")
     log = mp.load(LOG, {})
     log[item["key"]] = {"media_id": mid, "story_id": story, "permalink": link,

@@ -185,7 +185,7 @@ def post(q):
     permalink = api("GET", media_id, fields="permalink").get("permalink")
     story_id = post_story(video_url)
     import youtube_buffer  # 同じ動画を YouTube ショートにも(答えは説明欄に)。Buffer 有料プランで本数の上限なし
-    youtube_buffer.send(video_url, q["caption"] + "\n\n" + build_comment(q))
+    youtube_buffer.send(video_url, q["caption"] + "\n\n" + build_comment(q), topic=youtube_buffer.topic_of_quiz(q), n=q["no"])
     log = json.loads(LOG.read_text()) if LOG.exists() else []
     log.append({"no": q["no"], "media_id": media_id, "permalink": permalink, "story_id": story_id,
                 "posted_at": datetime.now(JST).isoformat(timespec="seconds")})

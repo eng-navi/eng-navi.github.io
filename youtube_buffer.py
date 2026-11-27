@@ -32,36 +32,64 @@ def gql(query, variables, key=None):
     return json.loads(urllib.request.urlopen(req, timeout=60).read())
 
 
-def make_title(caption):
-    """キャプションの1行目からタイトル(100字まで)を作る。"""
+# 検索で引っかかる2〜3語のキーワード。動画の番号で順番に回し、同じ言い回しが続かないようにする
+KEYWORDS = {
+    "grammar": ["英文法 問題 高校", "英検2級 文法", "共通テスト 英語 文法", "大学受験 英文法", "中学英語 文法 復習", "TOEIC 文法問題",
+                "英文法 ひっかけ問題", "時制 問題 英語", "英語 文法 独学", "高校英語 文法 確認"],
+    "idiom": ["英熟語 意味 クイズ", "英語 イディオム 日常会話", "ネイティブ 英語表現", "英検準1級 熟語", "使える 英語フレーズ",
+              "英会話 フレーズ 初心者", "英語 言い回し 意味", "海外ドラマ 英語表現"],
+    "toeic": ["TOEIC 頻出 単語", "TOEIC Part5 対策", "TOEIC 600点 単語", "TOEIC 文法 問題", "TOEIC 900 語彙", "TOEIC 独学 スキマ時間",
+              "TOEIC 言い換え 単語", "ビジネス英語 単語"],
+    "white": ["大学受験 英熟語", "英熟語 頻出 高校", "英検2級 熟語", "共通テスト 英熟語", "英熟語 覚え方", "入試 英語 熟語"],
+    "black": ["英検準1級 単語", "準1級 語彙 問題", "英単語 上級 クイズ", "英検 単語 覚え方", "大人の英単語 難しい", "英検準1級 対策"],
+    "listening": ["英語 リスニング 練習", "TOEIC リスニング 対策", "イギリス英語 リスニング", "リスニング 聞き取り 1回", "英語耳 トレーニング", "英会話 聞き取り 初心者"],
+}
+GRAMMAR_CATS = {"時制", "助動詞", "語法", "前置詞", "品詞", "受動態", "分詞", "不定詞", "動名詞", "関係詞", "比較", "仮定法", "接続詞"}
+
+def topic_of_quiz(q):
+    """eng_navi の問題の種類(緑=文法/ピンク=イディオム/青=TOEIC)"""
+    cat = q.get("category") or ""
+    if cat in GRAMMAR_CATS: return "grammar"
+    if "TOEIC" in cat or "toeic" in cat.lower(): return "toeic"
+    if cat: return "idiom"
+    return ["idiom", "toeic", "grammar"][q["no"] % 3]
+
+def keyword(topic, n, k=0):
+    pool = KEYWORDS.get(topic) or KEYWORDS["grammar"]
+    return pool[(n * 3 + k) % len(pool)]  # 番号ごとにずらす
+
+def make_title(caption, topic=None, n=0):
+    """キャプションの1行目+検索キーワード(100字まで)。"""
     first = next((l.strip() for l in caption.splitlines() if l.strip()), "英語クイズ")
     first = re.sub(r"#\S+", "", first).strip()
-    tail = " #shorts"
+    tail = (f"|{keyword(topic, n)}" if topic else "") + " #shorts"
     return first[: 100 - len(tail)] + tail
 
 
-def make_description(caption):
+def make_description(caption, topic=None, n=0):
     # インスタ向けの案内(プロフィールのリンク・ハイライト)は YouTube では通じないので外す
     lines = [l.rstrip() for l in caption.replace("　", "").splitlines()
              if "プロフィールのリンク" not in l and "ハイライト" not in l]
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
     # ショートの説明欄のリンクは押せない(YouTube の仕様)ので、チャンネルのプロフィールのリンク(/go/)に案内する
     head = "📚 答え合わせ・音声つき復習(無料)と、おすすめの単語集・英会話アプリは、チャンネル名を押して出るプロフィールのリンクから\n\n"
+    if topic:
+        head = f"🔎 {keyword(topic, n, 1)}/{keyword(topic, n, 2)}\n" + head
     note = "\n\n🔗 eng-navi.github.io/go"
     return head + text[: 4800 - len(note) - len(head)] + note
 
 
-def send(video_url, caption, title=None, privacy="public", due=None):
+def send(video_url, caption, title=None, privacy="public", due=None, topic=None, n=0):
     if not os.environ.get("BUFFER_API_KEY"):
         print("YouTube: BUFFER_API_KEY がないので送りません")
         return None
     try:
-        desc = make_description(caption)
+        desc = make_description(caption, topic, n)
         res = gql(MUTATION, {"input": {
             "channelId": CHANNEL, "text": desc, "schedulingType": "automatic",
             **({"mode": "customScheduled", "dueAt": due} if due else {"mode": "shareNow"}),
             "assets": [{"video": {"url": video_url}}],
-            "metadata": {"youtube": {"title": title or make_title(caption), "categoryId": "27",
+            "metadata": {"youtube": {"title": (title + (f"|{keyword(topic, n)}" if topic else "")) if title else make_title(caption, topic, n), "categoryId": "27",
                                      "privacy": privacy, "madeForKids": False, "notifySubscribers": True}},
         }})
         out = (res.get("data") or {}).get("createPost") or {}

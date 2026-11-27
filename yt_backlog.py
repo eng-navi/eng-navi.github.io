@@ -45,7 +45,7 @@ def run():
     cap = tiktok_eng.caption_for(q)  # 昔の回のキャプションがない分も作る(答えつき)
     site = os.environ.get("SITE_URL", "https://eng-navi.github.io").rstrip("/")
     kind = q.get("category") or "英語"
-    pid = youtube_buffer.send(f"{site}/videos/q{nxt}.mp4", cap, title=f"{kind}クイズ No.{nxt}|①と②、どっち?🧠")  # 同じタイトルが並ばないように番号を入れる
+    pid = youtube_buffer.send(f"{site}/videos/q{nxt}.mp4", cap, title=f"{kind}クイズ No.{nxt}|①と②、どっち?🧠", topic=youtube_buffer.topic_of_quiz(q), n=nxt)  # 同じタイトルが並ばないように番号を入れる
     if not pid:
         return False
     st["last"] = nxt
