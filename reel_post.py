@@ -10,7 +10,7 @@ import manga_post as mp, post
 ROOT = Path(__file__).parent
 SITE = os.environ.get("SITE_URL", "https://eng-navi.github.io")
 SCHEDULE, LOG = ROOT / "reel_schedule.json", ROOT / "reel_posted.json"
-SLOTS = {"toeic": ["10:00", "18:30"], "eiken": ["09:30", "18:00"]}
+SLOTS = {"toeic": ["10:00", "18:30", "22:00"], "eiken": ["09:30", "18:00", "21:30"]}
 ENV = {"toeic": "IVY", "eiken": "SEA"}
 TAGS = {"toeic": "#TOEIC #TOEICリーディング #Part7 #TOEIC勉強 #英語学習", "eiken": "#英検 #英検準1級 #英検2級 #英検対策 #英語長文"}
 
@@ -70,6 +70,6 @@ if __name__ == "__main__":
     elif cmd == "plan":
         kind, a, b, day = sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), datetime.strptime(sys.argv[5], "%Y-%m-%d"); paths = []
         for k, no in enumerate(range(a, b + 1)):
-            at = f"{day + timedelta(days=k // 2):%Y-%m-%d} {SLOTS[kind][k % 2]}"; paths += add(kind, no, at); print(kind, no, at)
+            at = f"{day + timedelta(days=k // 3):%Y-%m-%d} {SLOTS[kind][k % 3]}"; paths += add(kind, no, at); print(kind, no, at)
         mp.push(paths, f"{kind}リール No.{a}〜{b} を予約")
     elif cmd == "run": run(sys.argv[2])
