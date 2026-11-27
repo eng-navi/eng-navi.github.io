@@ -33,17 +33,30 @@ def gql(query, variables, key=None):
 
 
 # 検索で引っかかる2〜3語のキーワード。動画の番号で順番に回し、同じ言い回しが続かないようにする
-# タイトルの後ろにつける、自然な一言(検索で探されそうな言葉を、文として無理なく含める)。動画の番号で順番に回す
-KEYWORDS = {
-    "grammar": ["高校で習う英文法の問題です", "英検2級レベルの文法問題", "大学受験でよく出る文法", "中学英語の文法、覚えてる?", "TOEICの文法問題にも出ます",
-                "引っかけやすい英文法", "時制の使い分け、わかる?", "英文法の基本を確認しよう"],
-    "idiom": ["日常会話でよく使う英語表現", "ネイティブがよく使う言い回し", "海外ドラマにも出てくる英語", "英検準1級にも出る熟語",
-              "知っていると便利な英語フレーズ", "英熟語の意味、わかる?"],
-    "toeic": ["TOEICによく出る単語です", "TOEIC Part 5 の練習に", "ビジネス英語でも使えます", "TOEIC 600点を目指す人へ", "スキマ時間でTOEIC対策"],
-    "white": ["大学受験によく出る英熟語", "高校で習う英熟語です", "英検2級にも出る熟語", "共通テストの英語にも"],
-    "black": ["英検準1級によく出る単語", "大人も知りたい少し難しい英単語", "英検準1級の語彙問題", "上級者向けの英単語クイズ"],
-    "listening": ["イギリス英語のリスニング練習", "1回で聞き取れるかな?", "TOEICのリスニング対策にも", "英語の耳を鍛える練習"],
+# タイトルの後半(キーワード2つを含む自然な一文)と、説明欄の2〜3文。動画の番号で順番に回す
+TITLE = {
+    "grammar": ["英検2級・大学受験によく出る英文法", "高校英語とTOEICで差がつく文法", "中学・高校で習う英文法の確認に", "共通テストにも出る英文法の2択"],
+    "idiom": ["ネイティブが日常会話で使う英語表現", "海外ドラマにも出る英語フレーズ", "英検準1級にも出る便利な英熟語", "英会話ですぐ使えるイディオム"],
+    "toeic": ["TOEIC Part 5によく出る単語と文法", "TOEIC 600点を目指す人の頻出語", "ビジネス英語とTOEICで使える単語"],
+    "white": ["大学受験・英検2級によく出る英熟語", "高校英語で覚えたい頻出の英熟語", "共通テストにも出る英熟語クイズ"],
+    "black": ["英検準1級によく出る英単語クイズ", "大人の語彙力アップに英検準1級の単語", "英検準1級の語彙問題に強くなる"],
+    "listening": ["イギリス英語のリスニング練習", "TOEICリスニング対策にもなる英語", "英語耳を鍛える1回聞き取りクイズ"],
 }
+DESC = {
+    "grammar": ["英検2級や大学受験によく出る英文法の2択クイズです。1日1問で、迷いやすいポイントを確認しましょう。TOEICの文法問題(Part 5)の練習にも使えます。",
+                "高校で習う英文法を、2択でサクッと確認できるクイズです。共通テストや英検の文法対策に。答えと解説はコメント欄・プロフィールのリンクから。"],
+    "idiom": ["ネイティブが日常会話でよく使う英語表現を、2択クイズで覚えましょう。海外ドラマや英会話でもよく出てくる言い回しです。",
+              "知っていると便利な英熟語・イディオムのクイズです。英検やTOEICの語彙対策にも、英会話の練習にも使えます。"],
+    "toeic": ["TOEICによく出る単語と文法の2択クイズです。Part 5の対策や、スキマ時間の語彙力アップにどうぞ。ビジネス英語でもよく使う表現です。",
+              "TOEIC 600点〜800点を目指す人向けの頻出問題です。1日1問、通勤時間などのスキマ時間で続けましょう。"],
+    "white": ["大学受験や英検2級によく出る英熟語のクイズです。例文ごと覚えると、長文読解でもすぐ意味がわかるようになります。",
+              "高校英語の頻出の英熟語を、例文といっしょに確認しましょう。共通テストや英検の対策にも使えます。"],
+    "black": ["英検準1級によく出る英単語のクイズです。例文ごと覚えて、長文読解と語彙問題に強くなりましょう。大人の語彙力アップにもどうぞ。",
+              "英検準1級の語彙問題に出る、少し難しい英単語を1日1語。英作文やスピーキングで使える例文つきです。"],
+    "listening": ["イギリス英語のリスニング練習です。1回で聞き取れるか挑戦してみましょう。TOEICのリスニング対策にも使えます。",
+                  "英語の耳を鍛える、短いリスニングクイズです。毎日少しずつ聞いて、英語の音に慣れましょう。"],
+}
+TAGS = {"grammar": "#英文法", "idiom": "#英語表現", "toeic": "#TOEIC", "white": "#英熟語", "black": "#英検準1級", "listening": "#英語リスニング"}
 GRAMMAR_CATS = {"時制", "助動詞", "語法", "前置詞", "品詞", "受動態", "分詞", "不定詞", "動名詞", "関係詞", "比較", "仮定法", "接続詞"}
 
 def topic_of_quiz(q):
@@ -54,28 +67,30 @@ def topic_of_quiz(q):
     if cat: return "idiom"
     return ["idiom", "toeic", "grammar"][q["no"] % 3]
 
-def keyword(topic, n, k=0):
-    pool = KEYWORDS.get(topic) or KEYWORDS["grammar"]
-    return pool[(n * 3 + k) % len(pool)]  # 番号ごとにずらす
+def pick(table, topic, n):
+    pool = table.get(topic) or table["grammar"]
+    return pool[n % len(pool)]
 
 def make_title(caption, topic=None, n=0):
-    """キャプションの1行目+検索キーワード(100字まで)。"""
+    """問題の一言+キーワード2つを含む自然な一文(45字前後まで)。"""
     first = next((l.strip() for l in caption.splitlines() if l.strip()), "英語クイズ")
     first = re.sub(r"#\S+", "", first).strip()
-    tail = (f"|{keyword(topic, n)}" if topic else "") + " #shorts"  # 一言は1つだけ(詰め込みすぎない)
-    return first[: 100 - len(tail)] + tail
-
+    if not topic:
+        return first[:90] + " #shorts"
+    rest = pick(TITLE, topic, n)
+    first = first[: max(8, 46 - len(rest))]
+    return f"{first} {rest} #shorts"
 
 def make_description(caption, topic=None, n=0):
-    # インスタ向けの案内(プロフィールのリンク・ハイライト)は YouTube では通じないので外す
-    lines = [l.rstrip() for l in caption.replace("　", "").splitlines()
+    # インスタ向けの案内(プロフィールのリンク・ハイライト)と、ハッシュタグは外す(タグは最後に3つまで)
+    lines = [re.sub(r"#\S+", "", l).rstrip() for l in caption.replace("　", "").splitlines()
              if "プロフィールのリンク" not in l and "ハイライト" not in l]
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(lines)).strip()
     # ショートの説明欄のリンクは押せない(YouTube の仕様)ので、チャンネルのプロフィールのリンク(/go/)に案内する
     head = "📚 答え合わせ・音声つき復習(無料)と、おすすめの単語集・英会話アプリは、チャンネル名を押して出るプロフィールのリンクから\n\n"
     if topic:
-        head = f"{keyword(topic, n, 1)}。\n" + head  # 説明欄にも自然な一文を1つだけ
-    note = "\n\n🔗 eng-navi.github.io/go"
+        head = pick(DESC, topic, n) + "\n\n" + head  # 自然な2〜3文(キーワード3〜4つ)
+    note = "\n\n🔗 eng-navi.github.io/go" + (f"\n\n{TAGS.get(topic, '#英語学習')} #英語学習 #shorts" if topic else "")
     return head + text[: 4800 - len(note) - len(head)] + note
 
 
@@ -89,7 +104,7 @@ def send(video_url, caption, title=None, privacy="public", due=None, topic=None,
             "channelId": CHANNEL, "text": desc, "schedulingType": "automatic",
             **({"mode": "customScheduled", "dueAt": due} if due else {"mode": "shareNow"}),
             "assets": [{"video": {"url": video_url}}],
-            "metadata": {"youtube": {"title": (title + (f"|{keyword(topic, n)}" if topic else "")) if title else make_title(caption, topic, n), "categoryId": "27",
+            "metadata": {"youtube": {"title": make_title(title or caption, topic, n), "categoryId": "27",
                                      "privacy": privacy, "madeForKids": False, "notifySubscribers": True}},
         }})
         out = (res.get("data") or {}).get("createPost") or {}
