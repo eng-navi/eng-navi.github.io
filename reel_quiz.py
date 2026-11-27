@@ -20,9 +20,9 @@ def setup(kind, no):
     """問題ごとの目安時間に合わせる(リールは目安の約3分の2)"""
     if kind == "toeic":
         from toeic_problems import PROBLEMS; Q = next(q for q in PROBLEMS if q["no"] == no); sec = Q["sec"]
-        return dict(sec=round(sec * 2 / 3), tag=f"目安{sec}秒 → {round(sec * 2 / 3)}秒で挑戦", lines=["TOEIC Part 7", f"{sec}秒で解けたら", "上級者"], ans="A か B を書いてね")
+        return dict(sec=7, tag=f"目安{sec}秒|長押しで止めて解いてね", lines=["TOEIC Part 7", f"{sec}秒で解けたら", "上級者"], ans="A か B を書いてね")
     from eiken_problems import PROBLEMS; Q = next(q for q in PROBLEMS if q["no"] == no); sec = Q["sec"]
-    return dict(sec=sec // 2, tag=f"目安{sec}秒 → {sec // 2}秒で挑戦", lines=["英検準1級", "この空所、", f"{sec // 2}秒で解ける?"], ans="1 か 2 を書いてね")
+    return dict(sec=7, tag=f"目安{sec}秒|長押しで止めて解いてね", lines=["英検準1級", "この空所、", f"{sec}秒で解ける?"], ans="1 か 2 を書いてね")
 
 def bgm_path(name):
     for d in ("docs/bgm", "assets/bgm"):
@@ -41,7 +41,7 @@ def frames(kind, no):
     base = Image.new("RGB", (W, H), c["bg"]); base.paste(q, (0, 330))
     d = ImageDraw.Draw(base)
     d.text((64, 120), c["tag"], font=jp(52, 800), fill=c["ink"]); watch_x = 0
-    d.text((64, 1740), "一時停止してじっくり解いてもOK", font=jp(40, 600), fill=c["ink"])
+    d.text((64, 1740), "画面を長押しすると一時停止できます", font=jp(40, 600), fill=c["ink"])
     n = c["sec"] * FPS
     for k in range(n):
         im = base.copy(); d = ImageDraw.Draw(im); left = (n - k) / FPS
@@ -51,11 +51,12 @@ def frames(kind, no):
         yield im
     # 3) 答えはコメントで
     end = Image.new("RGB", (W, H), c["dark"]); d = ImageDraw.Draw(end)
-    d.text((W // 2, 820), "TIME UP", font=anton(200), fill=c["acc"], anchor="mm")
+    d.text((W // 2, 760), "解けた?", font=jp(150), fill=c["acc"], anchor="mm")
     d.text((W // 2, 1040), "答えは?コメントで", font=jp(84), fill=(245, 240, 228), anchor="mm")
     d.text((W // 2, 1160), c["ans"], font=jp(84), fill=(245, 240, 228), anchor="mm")
-    d.text((W // 2, 1340), "解説・全文和訳はカルーセルに", font=jp(48, 600), fill=(200, 200, 200), anchor="mm")
-    for _ in range(25): yield end
+    d.text((W // 2, 1320), "じっくり解きたい人は 長押しで一時停止", font=jp(46, 700), fill=(200, 200, 200), anchor="mm")
+    d.text((W // 2, 1400), "答えと詳しい解説はコメント欄に", font=jp(46, 700), fill=(200, 200, 200), anchor="mm")
+    for _ in range(20): yield end
 def build(kind, no):
     c = dict(CFG[kind]); c.update(setup(kind, no)); out = OUT / f"{kind}_{no:03d}.mp4"; tmp = OUT / "_v.mp4"
     p = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "image2pipe", "-framerate", str(FPS), "-i", "-", "-c:v", "libx264",

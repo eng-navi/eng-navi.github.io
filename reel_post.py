@@ -29,7 +29,11 @@ def texts(kind, no, credit):
         ans, hook = f"{Q['answer']}. {Q['choices'][Q['answer'] - 1][0]}", f"英検準1級|長文の空所「{Q['title']}」、時間内に解ける?⏱"
         pick = "1か2か"
     cap = "\n".join([hook, f"{pick}、コメントで答えてね👇", B, "✅ 答えはコメント欄に", "📖 全文和訳・ワナ・解き方のコツは、同じ問題のカルーセル投稿で(プロフィールから)", "🔖 保存して、あとでもう一度", B, TAGS[kind], B, f"Music: {credit} — Music from #Uppbeat (free for Creators!)"])
-    com = "\n".join([f"✅ 正解:{ans}", B, Q["explain"][0]["text"], B, "ワナの選択肢・全文和訳・単語は、プロフィールのカルーセル投稿で📌"])
+    words = "\n".join(f"▶ {a} … {b}" for a, b in Q["words"])
+    com = "\n".join([f"✅ 正解:{ans}", Q["explain"][0]["text"].split("\n")[0], B,
+                      "━━ 詳しい解説 ━━", B, "【根拠】", Q["explain"][0]["text"], B, "【ワナの選択肢】", Q["explain"][1]["text"], B,
+                      "【解き方のコツ】", Q["explain"][2]["text"], B, "【全文和訳】", Q["ja"], B, "【単語】", words, B,
+                      "🔖 保存して、あとで見返してね"])[:2150]
     return cap, com
 
 def add(kind, no, at):
