@@ -3857,5 +3857,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 202,
+    "category": "前置詞・接続詞",
+    "question": "Please submit the report ( ) Friday.",
+    "options": [
+      "until",
+      "by"
+    ],
+    "answer": 2,
+    "translation": "金曜日までに報告書を提出してください。",
+    "explanation": "by は「〜までに(期限)」、until は「〜までずっと(継続)」です。\n提出は一度で終わる動作なので、期限を表す by を使います。\n\nしたがって、②by が正解。",
+    "audio": "audio/q202.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
