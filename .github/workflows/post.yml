@@ -52,6 +52,7 @@ jobs:
         run: |
           git pull -q --rebase --autostash || true
           python3 toeic_post.py run
+          python3 reel_post.py run toeic || true
         env:
           IVY_IG_USER_ID: ${{ secrets.IVY_IG_USER_ID }}
           IVY_IG_ACCESS_TOKEN: ${{ secrets.IVY_IG_ACCESS_TOKEN }}
@@ -70,6 +71,7 @@ jobs:
         run: |
           git pull -q --rebase --autostash || true
           python3 eiken_post.py run
+          python3 reel_post.py run eiken || true
         env:
           SEA_IG_USER_ID: ${{ secrets.SEA_IG_USER_ID }}
           SEA_IG_ACCESS_TOKEN: ${{ secrets.SEA_IG_ACCESS_TOKEN }}
