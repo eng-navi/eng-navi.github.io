@@ -33,7 +33,8 @@ def frames(kind, no):
     # 1) 暗い画面の一言
     intro = Image.new("RGB", (W, H), c["dark"]); d = ImageDraw.Draw(intro)
     for i, t in enumerate(c["lines"]):
-        f = jp(150 if i == 2 else 96); col = c["acc"] if i == 2 else (245, 240, 228)
+        f = jp(120 if i == 2 else 80); col = c["acc"] if i == 2 else (245, 240, 228)
+        while f.getlength(t) > W - 240: f = jp(f.size - 6)  # 左右に余白(小さい画面でも見切れない)
         d.text((W // 2, 700 + i * 190), t, font=f, fill=col, anchor="mm")
     d.text((W // 2, 1320), "2択クイズ", font=jp(54, 700), fill=(200, 200, 200), anchor="mm")
     for _ in range(12): yield intro
@@ -51,11 +52,11 @@ def frames(kind, no):
         yield im
     # 3) 答えはコメントで
     end = Image.new("RGB", (W, H), c["dark"]); d = ImageDraw.Draw(end)
-    d.text((W // 2, 760), "解けた?", font=jp(150), fill=c["acc"], anchor="mm")
-    d.text((W // 2, 1040), "答えは?コメントで", font=jp(84), fill=(245, 240, 228), anchor="mm")
-    d.text((W // 2, 1160), c["ans"], font=jp(84), fill=(245, 240, 228), anchor="mm")
-    d.text((W // 2, 1320), "じっくり解きたい人は 長押しで一時停止", font=jp(46, 700), fill=(200, 200, 200), anchor="mm")
-    d.text((W // 2, 1400), "答えと詳しい解説はコメント欄に", font=jp(46, 700), fill=(200, 200, 200), anchor="mm")
+    d.text((W // 2, 760), "解けた?", font=jp(120), fill=c["acc"], anchor="mm")
+    d.text((W // 2, 1040), "答えは?コメントで", font=jp(68), fill=(245, 240, 228), anchor="mm")
+    d.text((W // 2, 1160), c["ans"], font=jp(68), fill=(245, 240, 228), anchor="mm")
+    d.text((W // 2, 1320), "じっくり解きたい人は 長押しで一時停止", font=jp(40, 700), fill=(200, 200, 200), anchor="mm")
+    d.text((W // 2, 1400), "答えと詳しい解説はコメント欄に", font=jp(40, 700), fill=(200, 200, 200), anchor="mm")
     for _ in range(20): yield end
 def build(kind, no):
     c = dict(CFG[kind]); c.update(setup(kind, no)); out = OUT / f"{kind}_{no:03d}.mp4"; tmp = OUT / "_v.mp4"
@@ -64,7 +65,7 @@ def build(kind, no):
     total = 0
     for im in frames(kind, no): im.save(p.stdin, "PNG"); total += 1
     p.stdin.close(); p.wait(); dur = total / FPS
-    tick = f"aevalsrc='0.25*sin(2*PI*1800*t)*exp(-60*mod(t,1))':d={c['sec']}:s=44100"  # 秒針のような小さな音
+    tick = f"aevalsrc='0.12*sin(2*PI*520*t)*exp(-35*mod(t,1))':d={c['sec']}:s=44100,lowpass=f=1500"  # やわらかい低めの音(耳に刺さらない)
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(tmp), "-stream_loop", "-1", "-i", str(bgm_path(c["bgm"])),
                     "-f", "lavfi", "-i", tick, "-filter_complex",
                     f"[1:a]volume=0.35,afade=t=out:st={dur - 1.5}:d=1.5[m];[2:a]adelay=1200|1200,volume=0.5[t];"
