@@ -3838,5 +3838,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 201,
+    "text": "The new highway gave rise to a wave of shopping malls along the coast.",
+    "target": "gave rise to",
+    "glossary": [
+      "give rise to X：Xを生じさせる、Xのきっかけになる",
+      "highway：幹線道路",
+      "a wave of X：次々に起こるX"
+    ],
+    "translation": "新しい高速道路ができて、海沿いにショッピングモールが次々と生まれた。",
+    "explanation": "rise(上昇・発生)を与える、で「〜を引き起こす」。\ncause よりかたい言い方で、ニュースや長文読解でよく見かけます。主語が原因、to の後ろが結果です。",
+    "audio": "audio/q201.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
