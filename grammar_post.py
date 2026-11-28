@@ -35,6 +35,13 @@ def lesson(no):
     return next(L for L in LESSONS if L["no"] == int(no))
 
 
+def music(no):
+    if no <= 16:  # No.1〜16 は旧BGM(Cycles)
+        return MUSIC
+    import grammar_reel as gr
+    return gr.track_for(no)["credit"]
+
+
 def texts(L):
     B = "　"
     q = L["q"]
@@ -44,7 +51,7 @@ def texts(L):
         "💬 最後のクイズ、1か2か、コメントで答えてね👇",
         "✅ 正解と詳しい解説は、コメント欄に📌",
         "🔖 保存して、あとで見返してね", B,
-        TAGS, B, MUSIC,
+        TAGS, B, music(L["no"]),
     ])
     com = "\n".join([
         f"✅ 正解:{q['answer']}. {q['word']}",
@@ -69,7 +76,7 @@ def add(no, at):
     cap, com = texts(lesson(no))
     key = f"grammar_{no:03d}"
     items = [s for s in mp.load(SCHEDULE, []) if s["key"] != key]
-    items.append({"key": key, "at": at, "video": f"{SITE}/grammar/{dst.name}", "caption": cap, "comment": com, "thumb_ms": int((starts[2] + 2.0) * 1000)})
+    items.append({"key": key, "at": at, "video": f"{SITE}/grammar/{dst.name}", "caption": cap, "comment": com, "thumb_ms": int((starts[3 if no > 16 else 2] + 1.5) * 1000)})
     items.sort(key=lambda s: s["at"])
     SCHEDULE.write_text(json.dumps(items, ensure_ascii=False, indent=1) + "\n")
     return [str(dst), str(SCHEDULE)]

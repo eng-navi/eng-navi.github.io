@@ -359,13 +359,40 @@ def _tape_size(s, base=80):
     while text_w(jp(size), s) > 860 and size > 40: size -= 4
     return size
 
+HOOK = 1.3  # 冒頭フックの長さ(秒)。BGM の盛り上がりをここに合わせる
+# 英文法リールの BGM(Uppbeat)。drop = 曲の中で急に盛り上がる位置(秒)
+TRACKS = [
+    dict(file="golden_age.mp3", drop=26.8, credit="Music: Golden Age / Walz — Music from #Uppbeat (free for Creators!)"),
+    dict(file="days_off.mp3", drop=85.3, credit="Music: Days Off / Matrika — Music from #Uppbeat (free for Creators!)"),
+    dict(file="jasmine.mp3", drop=27.7, credit="Music: Jasmine / 92elm — Music from #Uppbeat (free for Creators!)"),
+]
+JA_TEMPO = 1.18  # 日本語ナレーションを少し速く(v3 は速さ設定がないため)
+
+
+def track_for(no):
+    return TRACKS[no % len(TRACKS)]
+
+
+def hook_title(bb, T, t, title):
+    import re
+    parts = [x for x in re.split(r"(?<=[、?])", title) if x.strip()]
+    if len(parts) == 1 and len(title) > 10:
+        k = title.find(" ", len(title) // 2 - 3)
+        parts = [title[:k], title[k:]] if k > 0 else [title]
+    ys = [780] if len(parts) == 1 else [700, 880]
+    for i, (line, y) in enumerate(zip(parts[:2], ys)):
+        big(bb, T, t, line.strip(), y, size=120, d=0.08 * i)
+    scribble(bb, T, t, 540, ys[-1] + 20, 470, 110, d=0.5, dur=0.5)
+
 
 def lesson(L):
     a, b2, q = L["a"], L["b"], L["q"]
     A = THEMES["blue"]["accent"]
     S = []
-    S.append((2.6, L.get("hook_sub", "この英語、\n意味わかる?"), lambda bb, T, t: card(bb, T, t, rows(L["hook"], "en"), 900, d=0.1, angle=-2),
-              [("ja", L.get("hook_say", "この英語、わかりますか?")), ("m", plain(L["hook"]))]))
+    # 0〜HOOK秒:タイトルを大きく(声なし)。HOOK秒で曲の盛り上がりと同時に本編へ
+    S.append((HOOK, "", lambda bb, T, t: hook_title(bb, T, t, L.get("hook_big", L["title"])), []))
+    S.append((2.6, L.get("hook_sub", "この英語、\n意味わかる?"), lambda bb, T, t: card(bb, T, t, rows(L["hook"], "en"), 900, d=0.0, angle=-2),
+              [("ja", L.get("hook_say", "この英語、わかる?")), ("m", plain(L["hook"]))]))
 
     def ask(P, wrong_angle):
         def f(bb, T, t):
@@ -398,7 +425,7 @@ def lesson(L):
         big(bb, T, t, "Q.", 520, size=200, color=A),
         card(bb, T, t, rows(q["en"], "en") + [([(q["choices"], False)], "q")], 880, d=0.2, angle=-1),
         tape(bb, T, t, q["ja"], 540, 1200, angle=-2, d=0.8, size=min(46, _tape_size(q["ja"], 46)))),
-        [("ja", q["say"])]))
+        [("ja", q.get("say_short", "どっちが正しい?答えは、コメントで教えてね。"))]))
     return "blue", S
 
 
@@ -458,9 +485,17 @@ def tts(kind, text):
             mp3.write_bytes(urllib.request.urlopen(req).read())
         except urllib.error.HTTPError as e:
             sys.exit(f"ElevenLabs エラー {e.code}: {e.read()[:200]} (クレジット切れの可能性。声の差し替えはしません)")
+    # 前後の無音を削る(+日本語は少し速く)。テンポを詰めるため
+    trim = mp3.with_name(mp3.stem + (f"_t{int(JA_TEMPO*100)}" if kind == "ja" else "_t") + ".wav")
+    if not trim.exists():
+        af = "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse"
+        if kind == "ja":
+            af += f",atempo={JA_TEMPO}"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mp3), "-af", af, "-ar", "44100", str(trim)], check=True)
+    MANIFEST.append({"kind": kind, "text": text, "mp3": str(mp3)})
+    mp3 = trim
     d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(mp3)],
                              capture_output=True, text=True).stdout)
-    MANIFEST.append({"kind": kind, "text": text, "mp3": str(mp3)})
     return mp3, d
 
 
@@ -478,11 +513,11 @@ def render(no, lesson_no=None, out=None):
     for s in S:
         dur, sub, fn = s[:3]
         parts = s[3] if len(s) > 3 else []
-        t = acc + 0.25
+        t = acc + 0.08
         for kind, text in parts:
             mp3, d = tts(kind, text)
-            clips.append((t, mp3)); t += d + 0.2
-        dur = max(1.6, t - acc + 0.25) if parts else dur
+            clips.append((t, mp3, kind)); t += d + 0.08
+        dur = max(1.3, t - acc + 0.12) if parts else dur
         S2.append((dur, sub, fn)); acc += dur
     S = S2
     total = sum(s[0] for s in S)
@@ -491,12 +526,16 @@ def render(no, lesson_no=None, out=None):
     for s in S: starts.append(acc); acc += s[0]
     wav = OUT / f"sfx_{no}.wav"
     sfx(wav, [x + 0.05 for x in starts], total)
-    bgm = ROOT / "assets" / "bgm" / ("cycles.mp3" if no != 2 else "sailing.mp3")
+    if lesson_no:
+        tr = track_for(lesson_no)
+        bgm, ss, vol = ROOT / "assets" / "bgm" / tr["file"], max(0.0, tr["drop"] - HOOK), 0.14
+    else:
+        bgm, ss, vol = ROOT / "assets" / "bgm" / ("cycles.mp3" if no != 2 else "sailing.mp3"), 0.0, (0.10 if clips else 0.22)
     cmd = ["ffmpeg", "-v", "error", "-y", "-f", "image2pipe", "-framerate", str(FPS), "-i", "-",
-           "-i", str(wav), "-stream_loop", "-1", "-i", str(bgm)]
-    fc = f"[2:a]volume={0.10 if clips else 0.22},afade=t=out:st={total-1}:d=1[m];"
+           "-i", str(wav), "-stream_loop", "-1", "-ss", f"{ss:.2f}", "-i", str(bgm)]
+    fc = f"[2:a]volume={vol},afade=t=out:st={total-1}:d=1[m];"
     mix = "[1:a][m]"
-    for i, (t0, mp3) in enumerate(clips):
+    for i, (t0, mp3, kind) in enumerate(clips):
         cmd += ["-i", str(mp3)]
         fc += f"[{3+i}:a]loudnorm=I=-19:TP=-3:LRA=7,aresample=44100,adelay={int(t0*1000)}:all=1[v{i}];"; mix += f"[v{i}]"  # 声の大きさをそろえる
     fc += f"{mix}amix=inputs={2+len(clips)}:normalize=0,alimiter=limit=0.9[a]"
