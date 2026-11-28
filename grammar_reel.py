@@ -340,6 +340,68 @@ def V3():
     return "cream", S
 
 
+# ---------- レッスンのひな型(grammar_lessons.py) ----------
+def _segs(line):
+    parts = line.split("*")
+    return [(x, i % 2 == 1) for i, x in enumerate(parts) if x]
+
+
+def rows(s, kind):
+    return [(_segs(l), kind) for l in s.split("|")]
+
+
+def plain(s):
+    return s.replace("*", "").replace("|", " ")
+
+
+def _tape_size(s, base=80):
+    size = base
+    while text_w(jp(size), s) > 860 and size > 40: size -= 4
+    return size
+
+
+def lesson(L):
+    a, b2, q = L["a"], L["b"], L["q"]
+    A = THEMES["blue"]["accent"]
+    S = []
+    S.append((2.6, L.get("hook_sub", "この英語、\n意味わかる?"), lambda bb, T, t: card(bb, T, t, rows(L["hook"], "en"), 900, d=0.1, angle=-2),
+              [("ja", L.get("hook_say", "この英語、わかりますか?")), ("m", plain(L["hook"]))]))
+
+    def ask(P, wrong_angle):
+        def f(bb, T, t):
+            big(bb, T, t, P["key"], 700, size=260)
+            if P.get("wrong"):
+                sz = _tape_size(P["wrong"], 70)
+                tape(bb, T, t, P["wrong"], 540, 980, angle=wrong_angle, d=0.5, size=sz)
+                cross(bb, T, t, 540, 980, s=90, d=1.1)
+        return f
+
+    def right(P, ang):
+        def f(bb, T, t):
+            big(bb, T, t, P["key"], 700, size=260)
+            sz = _tape_size(P["right"])
+            tape(bb, T, t, P["right"], 540, 980, angle=ang, d=0.2, size=sz)
+            rx = min(500, text_w(jp(sz), P["right"]) / 2 + 90)
+            scribble(bb, T, t, 540, 980, rx, 110, d=0.8)
+        return f
+
+    def ex(P, ang):
+        return lambda bb, T, t: card(bb, T, t, rows(P["en"], "en") + rows(P["ja"], "ja"), 900, angle=ang)
+
+    S.append((2.2, a.get("ask_sub", f"{a['key']} は「{a['wrong']}」…?"), ask(a, 5), [("ja", a.get("ask", f"{a['kana']}は「{a['wrong']}」?"))]))
+    S.append((2.8, a["sub"], right(a, -4), [("ja", a["say"])]))
+    S.append((3.0, plain(a["ja"]), ex(a, -2), [("f", plain(a["en"])), ("ja", a["ja_say"])]))
+    S.append((2.2, b2.get("ask_sub", f"じゃあ {b2['key']} は?"), ask(b2, 4), [("ja", b2.get("ask", f"じゃあ、{b2['kana']}のほうは、どうでしょう?"))]))
+    S.append((2.8, b2["sub"], right(b2, -3), [("ja", b2["say"])]))
+    S.append((3.0, plain(b2["ja"]), ex(b2, 2), [("m", plain(b2["en"])), ("f", plain(b2["en"])), ("ja", b2["ja_say"])]))
+    S.append((4.4, "( ) に入るのは?\n答えはコメントで 1 か 2", lambda bb, T, t: (
+        big(bb, T, t, "Q.", 520, size=200, color=A),
+        card(bb, T, t, rows(q["en"], "en") + [([(q["choices"], False)], "q")], 880, d=0.2, angle=-1),
+        tape(bb, T, t, q["ja"], 540, 1200, angle=-2, d=0.8, size=min(46, _tape_size(q["ja"], 46)))),
+        [("ja", q["say"])]))
+    return "blue", S
+
+
 # ---------- 書き出し ----------
 def sfx(path, times, dur):
     sr = 44100
@@ -399,8 +461,12 @@ def tts(kind, text):
     return mp3, d
 
 
-def render(no):
-    theme, S = {1: V1, 2: V2, 3: V3}[no]()
+def render(no, lesson_no=None, out=None):
+    if lesson_no:
+        from grammar_lessons import LESSONS
+        theme, S = lesson(next(L for L in LESSONS if L["no"] == lesson_no))
+    else:
+        theme, S = {1: V1, 2: V2, 3: V3}[no]()
     T = THEMES[theme]
     bg = background(theme).convert("RGBA")
     OUT.mkdir(parents=True, exist_ok=True)
@@ -417,7 +483,7 @@ def render(no):
         S2.append((dur, sub, fn)); acc += dur
     S = S2
     total = sum(s[0] for s in S)
-    out = OUT / f"grammar_{no}.mp4"
+    out = Path(out) if out else OUT / f"grammar_{no}.mp4"
     starts, acc = [], 0.0
     for s in S: starts.append(acc); acc += s[0]
     wav = OUT / f"sfx_{no}.wav"
@@ -450,11 +516,17 @@ def render(no):
     p.stdin.close(); p.wait()
     wav.unlink()
     import json
-    (OUT / f"grammar_{no}.voice.json").write_text(json.dumps(MANIFEST, ensure_ascii=False, indent=1))
+    (out.with_suffix(".voice.json")).write_text(json.dumps(MANIFEST, ensure_ascii=False, indent=1))
     MANIFEST.clear()
+    out.with_suffix(".starts.json").write_text(json.dumps(starts))
     print(out, f"{total:.1f}s")
+    return out, starts
 
 
 if __name__ == "__main__":
-    for a in sys.argv[1:] or ["1", "2", "3"]:
-        render(int(a))
+    if sys.argv[1:2] == ["lesson"]:  # python3 grammar_reel.py lesson 2 3 …
+        for a in sys.argv[2:]:
+            render(0, int(a), OUT / f"lesson_{int(a):03d}.mp4")
+    else:
+        for a in sys.argv[1:] or ["1", "2", "3"]:
+            render(int(a))

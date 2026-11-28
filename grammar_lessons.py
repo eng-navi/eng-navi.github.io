@@ -1,0 +1,272 @@
+"""やさしい英文法(@uk_easy_grammar)のレッスン。例文はすべてオリジナル。
+書き方:'|' で改行、*語* が蛍光ペン。kana は日本語ナレーションでの読み(英単語はカタカナ)。
+ナレーションの読みは yomi_check.py で必ず確認する。
+"""
+
+LESSONS = [
+    dict(no=1, title="命令文のあとの and / or、意味わかる?",
+         hook="Leave now, *and* you'll catch|the bus.",
+         a=dict(key="and", kana="アンド", wrong="そして", right="そうすれば",
+                say="実は、命令文のあとだと「そうすれば」なんです。", sub="命令文のあとの and は\n「そうすれば」",
+                en="Leave now, *and* you'll catch|the bus.", ja="今出なさい、*そうすれば*間に合うよ", ja_say="今出なさい、そうすれば間に合うよ。"),
+         b=dict(key="or", kana="オア", wrong="または", right="さもないと",
+                ask="じゃあ、オアのほうは、どうでしょう?", ask_sub="じゃあ or は?",
+                say="命令文のあとのオアは、「さもないと」という意味です。", sub="命令文のあとの or は\n「さもないと」",
+                en="Leave now, *or* you'll miss|the bus.", ja="*さもないと*、乗り遅れるよ", ja_say="さもないと、乗り遅れるよ。"),
+         q=dict(en="Be quiet, (    ) the|baby will wake up.", choices="1  and      2  or", ja="静かにして、さもないと赤ちゃんが起きる",
+                say="問題です。1のアンドか、2のオアか。答えは、コメントで教えてね。", answer=2, word="or"),
+         point="命令文のあとの and は「そうすれば」、or は「さもないと」。",
+         detail="""■ 命令文 + and …「〜しなさい、そうすれば…」
+Leave now, and you'll catch the bus.
+(今出なさい、そうすればバスに間に合うよ)
+
+■ 命令文 + or …「〜しなさい、さもないと…」
+Leave now, or you'll miss the bus.
+(今出なさい、さもないとバスに乗り遅れるよ)
+
+■ 見分けるコツ
+後ろが「いいこと」なら and、「困ること」なら or。
+問題文は「赤ちゃんが起きる=困ること」なので or。
+
+■ もう2つ例文
+Study a little every day, and you'll get better.
+(毎日少しずつ勉強すれば、上達するよ)
+Take an umbrella, or you'll get wet.
+(傘を持っていきなさい、さもないと濡れるよ)
+
+■ 書きかえ
+Leave now, and you'll catch the bus.
+= If you leave now, you'll catch the bus."""),
+
+    dict(no=2, title="I'm boring. って言ってない?",
+         hook="I'm *boring*.", hook_say="この英語、どういう意味だと思いますか?", hook_sub="この英語、\nどういう意味?",
+         a=dict(key="boring", kana="ボーリング", wrong="退屈している", right="つまらない",
+                ask="ボーリングは「退屈している」?", ask_sub="boring は「退屈している」…?",
+                say="実は、ボーリングは「人を退屈させる、つまらない」という意味です。", sub="boring は\n「つまらない」",
+                en="The movie was *boring*.", ja="その映画は*つまらなかった*", ja_say="その映画はつまらなかった。"),
+         b=dict(key="bored", kana="ボアード", wrong=None, right="退屈している",
+                ask="じゃあ、「退屈している」と言いたいときは?", ask_sub="「退屈している」は?",
+                say="ボアードを使います。「自分が退屈している」という意味です。", sub="「退屈している」は\nbored",
+                en="I'm *bored*. Let's go out.", ja="*退屈だなあ*。出かけようよ", ja_say="退屈だなあ。出かけようよ。"),
+         q=dict(en="This game is so (    ).", choices="1  boring      2  bored", ja="このゲーム、すごくつまらない",
+                say="問題です。1のボーリングか、2のボアードか。答えは、コメントで教えてね。", answer=1, word="boring"),
+         point="boring は「(人を)退屈させる=つまらない」、bored は「(自分が)退屈している」。",
+         detail="""■ -ing と -ed のちがい
+boring …(物・人が)つまらない、退屈させる
+bored …(自分が)退屈している
+
+I'm boring. だと「わたしはつまらない人間です」という意味に。
+退屈しているときは I'm bored. と言います。
+
+■ 同じ仲間
+interesting(おもしろい)/ interested(興味がある)
+exciting(わくわくさせる)/ excited(わくわくしている)
+tiring(疲れさせる)/ tired(疲れている)
+
+■ もう2つ例文
+The class was interesting.(その授業はおもしろかった)
+I'm interested in art.(わたしは美術に興味がある)
+
+■ 覚え方
+-ing は「まわりに与える気持ち」、-ed は「自分が受ける気持ち」。"""),
+
+    dict(no=3, title="few と a few、まったく逆の意味?",
+         hook="I have *few* friends|here.",
+         a=dict(key="few", kana="few", wrong="少しいる", right="ほとんどいない",
+                say="実は、a のつかない few は「ほとんどない」なんです。", sub="a のない few は\n「ほとんどない」",
+                en="I have *few* friends|here.", ja="ここには友だちが*ほとんどいない*", ja_say="ここには、ともだちがほとんどいない。"),
+         b=dict(key="a few", kana="a few", wrong=None, right="少しある",
+                ask="じゃあ、a few は?", ask_sub="じゃあ a few は?",
+                say="a few なら「少しある」。ポジティブな意味になります。", sub="a few は\n「少しある」",
+                en="I have *a few* friends|here.", ja="ここには友だちが*少しいる*", ja_say="ここには、ともだちが少しいる。"),
+         q=dict(en="There are (    ) eggs left.|Let's make an omelet!", choices="1  few      2  a few", ja="卵が少し残ってる、オムレツを作ろう",
+                say="問題です。1の few か、2の a few か。答えは、コメントで教えてね。", answer=2, word="a few"),
+         point="few は「ほとんどない」(否定的)、a few は「少しある」(肯定的)。",
+         detail="""■ few と a few
+few …ほとんどない(ない方に注目)
+a few …少しある(ある方に注目)
+
+問題文は「オムレツを作ろう!」と前向きなので a few。
+
+■ 数えられないものには little / a little
+I have little time.(時間がほとんどない)
+I have a little time.(時間が少しある)
+
+■ もう2つ例文
+Few people came to the party.(パーティーにはほとんど人が来なかった)
+I need a few minutes.(数分ください)
+
+■ 覚え方
+a がつくと「ちょっとある」と、気持ちが明るくなる。"""),
+
+    dict(no=4, title="He play tennis. どこが間違い?",
+         hook="He *play* tennis|every Sunday.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="He play", kana="プレイ", wrong="play", right="plays",
+                ask="主語がヒーのとき、プレイのままでいいでしょうか?", ask_sub="主語が he のとき、play のまま…?",
+                say="ヒー、シー、イットのときは、動詞にエスをつけて、プレイズにします。", sub="he / she / it のときは\n動詞に s",
+                en="He *plays* tennis|every Sunday.", ja="彼は毎週日曜に*テニスをする*", ja_say="彼は毎週日曜にテニスをする。"),
+         b=dict(key="doesn't", kana="ダズント", wrong="doesn't plays", right="doesn't play",
+                ask="じゃあ、否定の文はどうでしょう?", ask_sub="じゃあ、否定の文は?",
+                say="ダズントのあとは、エスをつけません。ダズントがエスを引き受けるイメージです。", sub="doesn't のあとは\ns をつけない",
+                en="He *doesn't play* golf.", ja="彼はゴルフを*しない*", ja_say="彼はゴルフをしない。"),
+         q=dict(en="My sister (    ) coffee.", choices="1  doesn't drink   2  doesn't drinks", ja="姉はコーヒーを飲まない",
+                say="問題です。1ばんと2ばん、正しいのはどっち?答えは、コメントで教えてね。", answer=1, word="doesn't drink"),
+         point="主語が he / she / it(3人称・単数)で現在のときは動詞に s。doesn't のあとは s なしの原形。",
+         detail="""■ 三単現の s
+主語が「わたし・あなた以外の1人(1つ)」で、今のことを言うとき、動詞に s をつけます。
+He plays tennis.(彼はテニスをする)
+My mother works in a bank.(母は銀行で働いている)
+
+■ 否定・疑問は does に s がうつる
+He doesn't play golf.(彼はゴルフをしない)
+Does he play golf?(彼はゴルフをする?)
+→ does / doesn't のあとは、s のつかない形(原形)。
+
+■ s のつけ方
+watch → watches / study → studies / have → has
+
+■ よくある間違い
+× He don't like fish. → ○ He doesn't like fish."""),
+
+    dict(no=5, title="「Me too.」が使えないとき",
+         hook="A: I don't like natto.|B: *Me too.*", hook_say="この返事、実はちょっと変なんです。わかりますか?", hook_sub="この返事、\nちょっと変?",
+         a=dict(key="Me too", kana="ミートゥー", wrong="いつでも使える", right="肯定文への返事",
+                ask="ミートゥーは、いつでも使えるでしょうか?", ask_sub="Me too. はいつでも使える…?",
+                say="実は、ミートゥーは、「〜が好き」のような文への、へんじに使います。", sub="Me too. は\n肯定文への返事",
+                en="A: I like sushi.|B: *Me too.*", ja="お寿司が好き。― *わたしも*", ja_say="おすしが好き。わたしも。"),
+         b=dict(key="Me neither", kana="ミー・ナイザー", wrong=None, right="わたしも〜ない",
+                ask="じゃあ、「わたしも好きじゃない」は?", ask_sub="「わたしも〜ない」は?",
+                say="Me neither を使います。否定の文に返すときの「わたしも」です。", sub="否定文への返事は\nMe neither.",
+                en="A: I don't like natto.|B: *Me neither.*", ja="納豆が苦手。― *わたしも*", ja_say="なっとうがにがて。わたしも。"),
+         q=dict(en="A: I can't swim.|B: Me (    ).", choices="1  too      2  neither", ja="泳げないんだ ― わたしも",
+                say="問題です。1のトゥーか、2のニーザーか。答えは、コメントで教えてね。", answer=2, word="neither"),
+         point="肯定文には Me too.、否定文(don't / can't など)には Me neither.",
+         detail="""■ Me too. と Me neither.
+I like cats. ― Me too.(わたしも好き)
+I don't like cats. ― Me neither.(わたしも好きじゃない)
+
+■ neither の読み方
+イギリス英語では「ナイザー」、アメリカ英語では「ニーザー」と読まれることが多いです。どちらも正解。
+
+■ もう少していねいに
+I do too. / I don't either.
+I can't either.(わたしもできない)
+
+■ もう2つ例文
+A: I'm hungry. ― B: Me too.
+A: I've never been to Paris. ― B: Me neither."""),
+
+    dict(no=6, title="many と much、どう使い分ける?",
+         hook="How *much* apples|do you need?", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="many", kana="メニー", wrong="どちらでもOK", right="数えられる → many",
+                ask="メニーとマッチ、どちらも「たくさん」。どちらでもいいでしょうか?", ask_sub="many と much、どちらでもOK…?",
+                say="リンゴのように数えられるものには、メニーを使います。", sub="数えられるものには\nmany",
+                en="How *many* apples|do you need?", ja="リンゴは*いくつ*必要?", ja_say="リンゴはいくつ必要?"),
+         b=dict(key="much", kana="マッチ", wrong=None, right="数えられない → much",
+                ask="じゃあ、マッチはいつ使うのでしょう?", ask_sub="じゃあ much は?",
+                say="みずや、おかねのように、数えられないものには、マッチです。", sub="数えられないものには\nmuch",
+                en="How *much* water|do you drink?", ja="水を*どのくらい*飲む?", ja_say="みずを、どのくらい飲む?"),
+         q=dict(en="I don't have (    ) time.", choices="1  many      2  much", ja="あまり時間がない",
+                say="問題です。1のメニーか、2のマッチか。答えは、コメントで教えてね。", answer=2, word="much"),
+         point="数えられる名詞(apples)には many、数えられない名詞(water / time / money)には much。",
+         detail="""■ many と much
+many + 数えられる名詞(複数形)…many books / many people
+much + 数えられない名詞 …much water / much money / much time
+
+■ 数えられない名詞の例
+water, milk, money, time, information, advice, homework
+
+■ How many / How much
+How many books do you have?(本を何冊持っている?)
+How much is this?(これはいくら?)
+
+■ ふつうの文では a lot of が自然
+I have a lot of friends.(友だちがたくさんいる)
+much は否定文・疑問文でよく使います。"""),
+
+    dict(no=7, title="Can I と Can you、意味がまったく違う",
+         hook="*Can I* open|the window?",
+         a=dict(key="Can I", kana="キャンアイ", wrong="わたしはできる?", right="〜してもいい?",
+                ask="キャンアイは「わたしはできますか?」…?", ask_sub="Can I は「わたしはできる?」…?",
+                say="実は、キャンアイは「〜してもいいですか」と、許可をもらう言い方です。", sub="Can I 〜? は\n「〜してもいい?」",
+                en="*Can I* open|the window?", ja="窓を*開けてもいい?*", ja_say="まどを、あけてもいい?"),
+         b=dict(key="Can you", kana="キャンユー", wrong=None, right="〜してくれる?",
+                ask="じゃあ、キャンユーは?", ask_sub="じゃあ Can you は?",
+                say="キャンユーは「〜してくれる?」と、相手にお願いする言い方です。", sub="Can you 〜? は\n「〜してくれる?」",
+                en="*Can you* open|the window?", ja="窓を*開けてくれる?*", ja_say="まどを、あけてくれる?"),
+         q=dict(en="(    ) help me|with this box?", choices="1  Can I      2  Can you", ja="この箱、手伝ってくれる?",
+                say="問題です。1のキャンアイか、2のキャンユーか。答えは、コメントで教えてね。", answer=2, word="Can you"),
+         point="Can I 〜? は「〜してもいい?」(許可)、Can you 〜? は「〜してくれる?」(お願い)。",
+         detail="""■ Can I 〜? =「(わたしが)〜してもいい?」
+Can I sit here?(ここに座ってもいい?)
+Can I use your pen?(ペンを借りてもいい?)
+
+■ Can you 〜? =「(あなたが)〜してくれる?」
+Can you help me?(手伝ってくれる?)
+Can you say that again?(もう一度言ってくれる?)
+
+■ もっとていねいに
+Could you 〜?(〜していただけますか)
+May I 〜?(〜してもよろしいですか)
+
+■ 答え方
+Sure. / Of course.(いいよ)
+Sorry, I can't.(ごめん、できない)"""),
+
+    dict(no=8, title="go to home は間違い?",
+         hook="I go *to home*|at six.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="home", kana="ホーム", wrong="go to home", right="go home",
+                ask="ホームの前に、トゥーは必要でしょうか?", ask_sub="home の前に to はいる…?",
+                say="ホームには「家へ」という意味が入っているので、トゥーはいりません。", sub="go home\n(to はいらない)",
+                en="I go *home*|at six.", ja="わたしは6時に*家に帰る*", ja_say="わたしは6時に家に帰る。"),
+         b=dict(key="here", kana="ヒア", wrong="come to here", right="come here",
+                ask="ヒアとゼアも、おなじなかまです。", ask_sub="here と there も同じ仲間",
+                say="カム・ヒア、ゴー・ゼア。どちらも、トゥーをつけません。", sub="come here / go there\n(to はいらない)",
+                en="*Come here*,|please.", ja="*こっちに来て*", ja_say="こっちに来て。"),
+         q=dict(en="Let's go (    )|together.", choices="1  home      2  to home", ja="一緒に家に帰ろう",
+                say="問題です。1ばんと2ばん、正しいのはどっち?答えは、コメントで教えてね。", answer=1, word="home"),
+         point="home / here / there は「〜へ」の意味をふくむので、前に to をつけない。",
+         detail="""■ to がいらない語
+home(家へ)、here(ここへ)、there(そこへ)、abroad(海外へ)、downtown(街の中心へ)
+
+go home(家に帰る)
+come here(ここに来る)
+go there(そこに行く)
+go abroad(海外に行く)
+
+■ 「家で」のときは at home
+I stayed at home yesterday.(昨日は家にいた)
+
+■ 場所の名前には to
+go to school / go to the station / go to Tokyo
+
+■ よくある間違い
+× I arrived to home. → ○ I arrived home."""),
+
+    dict(no=9, title="a hour? an hour?",
+         hook="I waited *a hour*.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="an", kana="アン", wrong="a hour", right="an hour",
+                ask="アワーの前は、アでいいでしょうか?", ask_sub="hour の前は a でいい…?",
+                say="アワーは、エイチを読まずに、ぼいんの音で始まるので、アンをつけます。", sub="母音の音で始まる語には\nan",
+                en="I waited *an hour*.", ja="*1時間*待った", ja_say="1時間待った。"),
+         b=dict(key="a", kana="ア", wrong="an uniform", right="a uniform",
+                ask="じゃあ、ユニフォームはどうでしょう?", ask_sub="じゃあ uniform は?",
+                say="ユニフォームは、ユーという音で始まるので、アです。つづりではなく、音で決まります。", sub="つづりではなく\n音で決まる",
+                en="I wear *a uniform*|at work.", ja="仕事では*制服*を着る", ja_say="仕事では、せいふくを着る。"),
+         q=dict(en="She is (    ) honest|person.", choices="1  a      2  an", ja="彼女は正直な人だ",
+                say="問題です。1ばんと2ばん、正しいのはどっち?答えは、コメントで教えてね。", answer=2, word="an"),
+         point="a / an は、つづりではなく「最初の音」で決まる。母音の音なら an。",
+         detail="""■ a と an
+最初の音が母音(ア・イ・ウ・エ・オに近い音)なら an
+an apple / an egg / an hour / an honest person
+
+■ つづりは母音でも、音が「ユ」なら a
+a uniform / a university / a useful book
+
+■ h を読まない語は an
+hour(アワー)、honest(オネスト)
+
+■ 問題の答え
+honest は h を読まずに「オ」の音で始まるので an。
+She is an honest person.(彼女は正直な人だ)"""),
+]

@@ -5,6 +5,7 @@
 """
 import difflib
 import json
+import os
 import re
 import sys
 
@@ -28,7 +29,7 @@ def load(mp3):
 
 
 def main(path):
-    model = WhisperModel("small", device="cpu", compute_type="int8")
+    model = WhisperModel(os.environ.get("YOMI_MODEL", "large-v3-turbo"), device="cpu", compute_type="int8")
     items = [x for x in json.load(open(path)) if x["kind"] == "ja"]
     bad = 0
     for x in items:
