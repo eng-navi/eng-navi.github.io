@@ -282,7 +282,7 @@ def V1():
         card(b, T, t, [([("Be quiet, (    ) the", False)], "en"), ([("baby will wake up.", False)], "en"),
                        ([("1  and      2  or", False)], "q")], 880, d=0.2, angle=-1),
         tape(b, T, t, "静かにして、さもないと赤ちゃんが起きる", 540, 1200, angle=-2, d=0.8, size=46))))
-    NAR = {0: [('ja', 'この英語、わかりますか?'), ('m', "Leave now, and you'll catch the bus.")], 1: [('ja', 'アンドは「そして」?')], 2: [('ja', '実は、命令文のあとだと「そうすれば」なんです。')], 3: [('f', "Leave now, and you'll catch the bus."), ('ja', '今出なさい、そうすれば間に合うよ。')], 4: [('ja', 'じゃあ、オアのほうは、どうでしょう?')], 5: [('ja', '命令文のあとのオアは、「さもないと」という意味です。')], 6: [('m', "Leave now, or you'll miss the bus."), ('f', "Leave now, or you'll miss the bus."), ('ja', 'さもないと、乗り遅れるよ。')], 7: [('ja', '問題です。1のアンドか、2のオアか。答えはコメントで!')]}
+    NAR = {0: [('ja', 'この英語、わかりますか?'), ('m', "Leave now, and you'll catch the bus.")], 1: [('ja', 'アンドは「そして」?')], 2: [('ja', '実は、命令文のあとだと「そうすれば」なんです。')], 3: [('f', "Leave now, and you'll catch the bus."), ('ja', '今出なさい、そうすれば間に合うよ。')], 4: [('ja', 'じゃあ、オアのほうは、どうでしょう?')], 5: [('ja', '命令文のあとのオアは、「さもないと」という意味です。')], 6: [('m', "Leave now, or you'll miss the bus."), ('f', "Leave now, or you'll miss the bus."), ('ja', 'さもないと、乗り遅れるよ。')], 7: [('ja', '問題です。1のアンドか、2のオアか。答えは、コメントで教えてね。')]}
     S = [x + (NAR.get(i, []),) for i, x in enumerate(S)]
     return "blue", S
 
@@ -429,7 +429,7 @@ def render(no):
     mix = "[1:a][m]"
     for i, (t0, mp3) in enumerate(clips):
         cmd += ["-i", str(mp3)]
-        fc += f"[{3+i}:a]aresample=44100,adelay={int(t0*1000)}:all=1[v{i}];"; mix += f"[v{i}]"
+        fc += f"[{3+i}:a]loudnorm=I=-19:TP=-3:LRA=7,aresample=44100,adelay={int(t0*1000)}:all=1[v{i}];"; mix += f"[v{i}]"  # 声の大きさをそろえる
     fc += f"{mix}amix=inputs={2+len(clips)}:normalize=0,alimiter=limit=0.9[a]"
     cmd += ["-filter_complex", fc,
            "-map", "0:v", "-map", "[a]", "-t", f"{total}", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20",
