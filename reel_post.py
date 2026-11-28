@@ -48,7 +48,8 @@ def add(kind, no, at):
 
 def publish(s):
     use(s["kind"]); user = os.environ["IG_USER_ID"]
-    c = post.api("POST", f"{user}/media", media_type="REELS", video_url=s["video"], caption=s["caption"], share_to_feed="false")["id"]
+    c = post.api("POST", f"{user}/media", media_type="REELS", video_url=s["video"], caption=s["caption"], share_to_feed="false",
+                 **({"thumb_offset": str(s["thumb_ms"])} if s.get("thumb_ms") is not None else {}))["id"]  # カバー=問題の画面
     post.wait_until_ready(c)
     mid = post.api("POST", f"{user}/media_publish", creation_id=c)["id"]
     post.api("POST", f"{mid}/comments", message=s["comment"])

@@ -471,24 +471,30 @@ def render(no):
     return out
 
 
-def add(no, at):
-    """docs/reels に公開して reel_schedule.json(GitHub Actions が reel_post.py run eiken で投稿)へ。push は別"""
+COVER_AT = 1.6  # カバー=問題の画面(最初の場面で全部出そろった時点・秒)。必ず問題の画面をカバーにする(2026-11-28 ユーザー指定)
+
+
+def add_reel(kind, no, at, src, sc):
+    """docs/reels に公開して reel_schedule.json へ。thumb_ms でカバーを問題の画面にする"""
     import json, shutil
     import post
-    no = int(no)
-    sc = SCRIPTS[no]
-    src = OUT / f"eiken_{no:03d}.mp4"
-    dst = ROOT / "docs" / "reels" / f"eiken_easy_{no:03d}.mp4"
+    starts = json.loads(src.with_suffix(".starts.json").read_text())
+    thumb = int(min(COVER_AT, starts[1] - 0.4) * 1000)
+    dst = ROOT / "docs" / "reels" / f"{kind}_easy_{no:03d}.mp4"
     shutil.copy(src, dst)
     cap = sc["caption"] + "\n\n" + gr.track_for(no)["credit"]
-    key = f"eiken_easy_{no:03d}"
+    key = f"{kind}_easy_{no:03d}"
     sch = ROOT / "reel_schedule.json"
     items = [s for s in json.loads(sch.read_text()) if s["key"] != key]
-    items.append({"key": key, "kind": "eiken", "at": at, "video": f"https://eng-navi.github.io/reels/{dst.name}",
-                  "caption": post.keep_blank_lines(cap), "comment": post.keep_blank_lines(sc["comment"])})
+    items.append({"key": key, "kind": kind, "at": at, "video": f"https://eng-navi.github.io/reels/{dst.name}",
+                  "caption": post.keep_blank_lines(cap), "comment": post.keep_blank_lines(sc["comment"]), "thumb_ms": thumb})
     items.sort(key=lambda s: s["at"])
     sch.write_text(json.dumps(items, ensure_ascii=False, indent=1) + "\n")
-    print("予約:", key, at)
+    print("予約:", key, at, "カバー", thumb, "ms")
+
+
+def add(no, at):
+    add_reel("eiken", int(no), at, OUT / f"eiken_{int(no):03d}.mp4", SCRIPTS[int(no)])
 
 
 if __name__ == "__main__":

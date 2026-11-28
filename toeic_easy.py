@@ -265,7 +265,7 @@ def build(L):
         y = choices(bb, t, chs, y - 34, d=0.3, size=40)
         pause_tip(bb, t, y + 40, d=0.6)
     # 本文は読み上げない(16秒の待ち時間で離脱されるため。解きたい人は一時停止する)。設問だけ英語で読んで、次の「設問のキーワード」へつなぐ
-    sr.scene(S, problem, [("ja", "どっちが正解?解くなら、ここで止めてね。"), ("gap", "0.3"), ("m", Q["q"])], ("00", "問題"))
+    sr.scene(S, problem, [("ja", "どっちが正解?解くなら、ここで止めてね。")], ("00", "問題"))  # 英文の読み上げはしない(2026-11-28)
     for st in sc["steps"]:
         def content(bb, t, st=st):
             header(bb, t, st["l1"], st["l2"])
@@ -300,6 +300,15 @@ def render(no):
     return out
 
 
+def add(no, at):
+    """docs/reels に公開して reel_schedule.json へ(CI の reel_post.py run toeic が投稿)。カバーは問題の画面"""
+    import eiken_easy
+    eiken_easy.add_reel("toeic", int(no), at, OUT / f"toeic_{int(no):03d}.mp4", SCRIPTS[int(no)])
+
+
 if __name__ == "__main__":
-    for a in sys.argv[1:] or ["6"]:
-        render(int(a))
+    if sys.argv[1:2] == ["add"]:  # python3 toeic_easy.py add 6 "2026-11-28 20:00"
+        add(sys.argv[2], sys.argv[3])
+    else:
+        for a in sys.argv[1:] or ["6"]:
+            render(int(a))

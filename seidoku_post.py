@@ -115,7 +115,7 @@ def add(no, at):
     key = f"seidoku_{no:03d}"
     items = [s for s in mp.load(SCHEDULE, []) if s["key"] != key]
     items.append({"key": key, "at": at, "video": f"{SITE}/seidoku/{dst.name}", "caption": TEXTS[no]["caption"],
-                  "comment": TEXTS[no]["comment"], "thumb_ms": int((starts[3] + 2.0) * 1000)})
+                  "comment": TEXTS[no]["comment"], "thumb_ms": int((starts[1] + 1.2) * 1000)})  # カバー=問題の画面(「この英文、訳せる?」)
     items.sort(key=lambda s: s["at"])
     SCHEDULE.write_text(json.dumps(items, ensure_ascii=False, indent=1) + "\n")
     print("追加:", key, at, "→ docs/seidoku と seidoku_schedule.json を push してから投稿")
