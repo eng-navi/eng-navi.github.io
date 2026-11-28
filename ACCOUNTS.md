@@ -61,3 +61,4 @@
 - 形式:英文法リール(grammar_reel.py)をベースに、黒×白×黄色。日本語解説=男性(v3)、英文=アメリカ英語の若い男女(クール)。声は聞き比べで決める。
 - 内容:難しい1文を「長いS・SVの発見」などで分解 → 和訳 → 和訳クイズ。素材の本(SVの発見編など)は**構文パターンの参考だけ**。入試の英文・本の訳は使わず、同じ構文のオリジナル英文を書く。
 - プロフィール画像:seidoku_icon.py(3案)。
+- 作る:`seidoku_reel.py` の LESSONS に足す → `python3 seidoku_reel.py N` → `.venv-tts/bin/python yomi_check.py out/seidoku/seidoku_00N.voice.json`。No.1=テスト版(長いS+接続詞の like)。声は仮で Kozy/Liam/Jessica、聞き比べは out/seidoku/voice_compare.mp3。
