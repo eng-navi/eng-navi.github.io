@@ -56,6 +56,25 @@ def items():
     return out
 
 
+def deals():
+    """キャンペーン(recommend.js の SALES=セール、PERKS=無料体験)。ユーザーがくれた情報は正しいものとして使う。
+    YouTube の説明欄・動画の案内を書く前に必ずこれを見る。選んだおすすめにキャンペーンがなければ、公式サイトを見て SALES に足す(確認日つき)。"""
+    import re as _re, datetime as _dt
+    js = open(__file__.replace("yt_cta.py", "docs/recommend.js"), encoding="utf-8").read()
+    out = {}
+    sales = js[js.index("window.SALES"):js.index("window.PERKS")]
+    for m in _re.finditer(r'^  ([a-z_0-9]+): \{ text: "([^"]+)", until: (null|"[0-9-]+"), checked: "([0-9-]+)"(?:, fine: "([^"]+)")?', sales, _re.M):
+        k, text, until, checked, fine = m.groups()
+        if until != "null" and until.strip('"') < _dt.date.today().isoformat():
+            continue
+        mm, dd = checked[5:7].lstrip("0"), checked[8:].lstrip("0")
+        out[k] = f"{text}({mm}/{dd}時点{'・' + fine if fine else ''})"
+    perks = js[js.index("window.PERKS"):]
+    for m in _re.finditer(r'^  ([a-z_0-9]+): \["([^"]+)"', perks, _re.M):
+        out.setdefault(m.group(1), m.group(2))
+    return out
+
+
 def pick(pool, seed):
     import hashlib
     return pool[int(hashlib.md5(seed.encode()).hexdigest(), 16) % len(pool)]
@@ -77,12 +96,14 @@ def shochikubai(book="grammar", topic="この動画の内容", seed=None, area="
         tk = rot(TAKE.get(book, TAKE["grammar"]), 1)
         uk = rot(UME.get(area, UME["default"]), 2)
         m, t, u = it[mk], it[tk], it[uk]
+        dl = deals()
+        tag = lambda k: f"\n🎁 {dl[k]}" if k in dl else ""
         d[seed] = {"matsu": mk, "take": tk, "ume": uk}
         log.dump(d, open(lp, "w"), ensure_ascii=False, indent=1)
         return f"""🎯 {topic}を、目的別にもっと伸ばすなら(PR)
 
 🏆 {LEAD["matsu"]} → {m["name"]}
-{m["note"]}
+{m["note"]}{tag(mk)}
 → {frm}#{mk}
 
 📗 {LEAD["take"]} → 『{t["name"].strip("『』")}』
@@ -90,7 +111,7 @@ def shochikubai(book="grammar", topic="この動画の内容", seed=None, area="
 {t["amazon"]}
 
 📱 {LEAD["ume"]} → {u["name"]}
-{u["note"]}
+{u["note"]}{tag(uk)}
 → {frm}#{uk}"""
     b = BOOKS[book]
     return f"""🎯 {topic}を、目的別にもっと伸ばすなら(PR)
