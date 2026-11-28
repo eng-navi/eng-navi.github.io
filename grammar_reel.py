@@ -366,7 +366,7 @@ TRACKS = [
     dict(file="days_off.mp3", drop=85.3, credit="Music: Days Off / Matrika — Music from #Uppbeat (free for Creators!)"),
     dict(file="jasmine.mp3", drop=27.7, credit="Music: Jasmine / 92elm — Music from #Uppbeat (free for Creators!)"),
 ]
-JA_TEMPO = 1.3  # 日本語ナレーションを少し速く(v3 は速さ設定がないため)
+JA_TEMPO = 1.45  # 日本語ナレーションの速さ(2026-11-28 ユーザー「この速さで」→ 全アカウント共通。v3 は速さ設定がないため atempo)
 
 
 def track_for(no):
@@ -485,6 +485,7 @@ YOMI = {
     "言い訳": "いいわけ",
     "和訳": "わやく",
     "訳": "やく",
+    "空所": "くうしょ",  # 「からそ」と読まれた(2026-11-28)
 }
 MANIFEST = []  # (kind, 読ませた文, mp3) … yomi_check.py が使う
 

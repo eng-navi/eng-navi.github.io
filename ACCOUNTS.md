@@ -15,7 +15,8 @@
 - 写真は CC0(Openverse の StockSnap。ブラウザの UA+referer で取得)、キャプションにクレジット。
 - 音楽は Uppbeat(キャプションに「Music: 曲名 / 作者 — Music from #Uppbeat (free for Creators!)」)。曲は assets/bgm/。
 - ElevenLabs:クレジットが切れたら止めてユーザーに言う。勝手に別の声に替えない。声の大きさはそろえる(loudnorm/alimiter、歪ませない)。
-- 日本語ナレーションは eleven_v3、英文は eleven_multilingual_v2。**日本語は毎回 yomi_check.py で読みを確認**(CLAUDE.md「読みチェック」)。
+- 日本語ナレーションは eleven_v3、英文は eleven_multilingual_v2。**日本語の速さは全アカウント 1.45倍**(2026-11-28 ユーザー「この速さで」。grammar_reel.JA_TEMPO)。
+- 参考にした動画は `reference/`(git に入れない。公開リポジトリのため)。seidoku・新しい英検リールの動きの参考は `reference/seidoku_style/`(白い方眼・ぼかしからふわっと・切り替えで上へ消える・縦線の丸が下りる)。**日本語は毎回 yomi_check.py で読みを確認**(CLAUDE.md「読みチェック」)。
 - 中継・圧縮系のプラグイン(OmniRoute/Headroom など)は使わない(.env 漏れ・品質低下)。
 
 ## @toeic_read30「30秒TOEIC読解」(カルーセル・自動投稿・音楽なし)
@@ -29,6 +30,11 @@
 - 準1級の空所補充、2択。表紙は紺/青/クリーム/砂の6レイアウトを順番に、「Q. 2択クイズに挑戦 →」+ストップウォッチ。中のスライドはクリーム地に紺の文字(試験っぽく)。和訳は太字、❶❷のあとに空き。
 - 表紙の写真は毎回ちがうもの(かっこいい勉強の雰囲気。アジア人でなくてよい)。使用済みと 16x16 の特徴で重複チェック。
 - 表紙の単語がたまに正解と同じでも OK(毎回でなければ)。
+
+## 英検リールの新形式(テスト・2026-11-28〜)
+- 英検が伸びていないので、問題は eiken_problems.py のまま、作りは「やさしい英文法」(青コラージュ・Shizuka 1.45倍・Daniel/Alice)に。`python3 eiken_easy.py N`(作成+読みチェック)。
+- 流れ:問題(本文+1/2)→ 約2.5秒で「解くなら、ここで止めてね」+テープ「解きたい人は、ここで一時停止」→ 合図の語(However など)→ 根拠の文を黄色マーカー(ほかの文は薄く)→ 正解 → ひっかけ ×→ 保存の呼びかけ。台本は eiken_easy.py の SCRIPTS に1問ずつ書く。
+- 動きは reference/seidoku_style の参考動画(ぼかしからふわっと・場面の終わりにぼけて上へ消える)。
 
 ## TOEIC/英検のタイマー付きリール
 - `reel_quiz.py`(7秒ループ:最初のコマから問題、見出しと選択肢がスライドイン、やわらかい秒針の音、最後に「答えはコメントで」の帯)→ `reel_post.py plan toeic|eiken A B day`(1日3本)。

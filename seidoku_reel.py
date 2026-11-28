@@ -27,7 +27,6 @@ gr.THEMES["seidoku"] = dict(bg=(247, 247, 245), big=INK, sub=INK, accent=BLUE, t
 # 声(2026-11-28 聞き比べで決定):日本語=Otani(男性・eleven_v3)、英文=アメリカ英語の若い男女 Liam / Jessica(v2)
 gr.VOICE.update({"ja": "3JDquces8E8bkmvbh6Bc", "m": "TX3LPaxmHKxFdv7VOQHJ", "f": "cgSgspJ2msm6clMCkdW9"})
 gr.SPEED.update({"m": 0.92, "f": 0.92})
-gr.JA_TEMPO = 1.45  # 日本語ナレーションを速めに(2026-11-28 ユーザー希望。英文法リールは 1.3 のまま)
 
 LINE_X, PILL_Y = 96, 560
 
