@@ -12,7 +12,7 @@ def jp(s, w=900):
     f = font("NotoSansJP.ttf", s); f.set_variation_by_axes([w]); return f
 CFG = {
  "toeic": dict(src="out/toeic_reading/no{:03d}/02_question.png", sec=20, bg=(238, 232, 214), ink=(11, 11, 11), acc=(207, 62, 34), dark=(11, 11, 11),
-               lines=["TOEIC Part 7", "30秒で解けたら", "上級者"], tag="目安30秒 → 20秒で挑戦", bgm="lantern", credit="Lantern / all:ambient"),
+               lines=["TOEIC Part 7", "30秒で解けたら", "上級者"], tag="目安30秒 → 20秒で挑戦", bgm="lantern", credit="Lantern / all:ambient", lofi=True),
  "eiken": dict(src="out/eiken/no{:03d}/02_question.png", sec=30, bg=(247, 241, 224), ink=(31, 55, 92), acc=(214, 190, 150), dark=(20, 34, 62),
                lines=["英検準1級", "この空所、", "30秒で解ける?"], tag="目安60秒 → 30秒で挑戦", bgm="vapour", credit="Vapour / Simon Folwar"),
 }
@@ -23,6 +23,11 @@ def setup(kind, no):
         return dict(sec=7, tag=f"目安{sec}秒|長押しで止めて解いてね", lines=["TOEIC Part 7", f"{sec}秒で解けたら", "上級者"], ans="A か B を書いてね")
     from eiken_problems import PROBLEMS; Q = next(q for q in PROBLEMS if q["no"] == no); sec = Q["sec"]
     return dict(sec=7, tag=f"目安{sec}秒|長押しで止めて解いてね", lines=["英検準1級", "この空所、", f"{sec}秒で解ける?"], ans="1 か 2 を書いてね")
+
+# lo-fi(英文法と同じ3曲)。drop=曲が盛り上がる位置。選択肢がスライドインする HIT 秒に合わせる(TOEIC で試験中 2026-11-28〜)
+LOFI = [("golden_age", 26.8, "Golden Age / Walz"), ("days_off", 85.3, "Days Off / Matrika"), ("jasmine", 27.7, "Jasmine / 92elm")]
+HIT = 0.45
+
 
 def bgm_path(name):
     for d in ("docs/bgm", "assets/bgm"):
@@ -72,11 +77,14 @@ def build(kind, no):
     for im in frames(kind, no): im.save(p.stdin, "PNG"); total += 1
     p.stdin.close(); p.wait(); dur = total / 30
     tick = "aevalsrc='0.12*sin(2*PI*520*t)*exp(-35*mod(t,1))*gte(t,0.8)*lte(t,5.8)+0.18*sin(2*PI*660*t)*exp(-25*(t-0.5))*gte(t,0.5)*lte(t,0.9)':d=7:s=44100,lowpass=f=1500"  # 選択肢でやわらかい「ポン」、タイマー中は控えめな秒針
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(tmp), "-stream_loop", "-1", "-i", str(bgm_path(c["bgm"])),
+    bgm, ss, credit, vol = c["bgm"], 0.0, c["credit"], 0.35
+    if c.get("lofi"):
+        bgm, drop, credit = LOFI[no % len(LOFI)]; ss, vol = drop - HIT, 0.32
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(tmp), "-stream_loop", "-1", "-ss", f"{ss:.2f}", "-i", str(bgm_path(bgm)),
                     "-f", "lavfi", "-i", tick, "-filter_complex",
-                    f"[1:a]volume=0.35,afade=t=out:st={dur - 1.5}:d=1.5[m];[2:a]volume=0.5[t];"
+                    f"[1:a]volume={vol},afade=t=out:st={dur - 1.5}:d=1.5[m];[2:a]volume=0.5[t];"
                     f"[m][t]amix=inputs=2:normalize=0,alimiter=limit=0.9:level=disabled[a]",
                     "-map", "0:v", "-map", "[a]", "-t", str(dur), "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", str(out)], check=True)
-    tmp.unlink(); return out, c["credit"]
+    tmp.unlink(); return out, credit
 if __name__ == "__main__":
     print(build(sys.argv[1], int(sys.argv[2])))
