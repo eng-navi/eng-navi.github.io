@@ -27,6 +27,7 @@ gr.THEMES["seidoku"] = dict(bg=(247, 247, 245), big=INK, sub=INK, accent=BLUE, t
 # 声(2026-11-28 聞き比べで決定):日本語=Otani(男性・eleven_v3)、英文=アメリカ英語の若い男女 Liam / Jessica(v2)
 gr.VOICE.update({"ja": "3JDquces8E8bkmvbh6Bc", "m": "TX3LPaxmHKxFdv7VOQHJ", "f": "cgSgspJ2msm6clMCkdW9"})
 gr.SPEED.update({"m": 0.92, "f": 0.92})
+gr.JA_TEMPO = 1.45  # 日本語ナレーションを速めに(2026-11-28 ユーザー希望。英文法リールは 1.3 のまま)
 
 LINE_X, PILL_Y = 96, 560
 
@@ -45,7 +46,7 @@ gr.background = background
 
 
 # ---------- 部品 ----------
-def appear(base, lay, x, y, t, d=0.0, dur=0.35, rise=40):
+def appear(base, lay, x, y, t, d=0.0, dur=0.35, rise=40, dx=0):
     """ぼかしからふわっと出す(参考動画の切り替え)。x, y は左上"""
     if t < d: return
     k = gr.ease((t - d) / dur)
@@ -53,7 +54,7 @@ def appear(base, lay, x, y, t, d=0.0, dur=0.35, rise=40):
         lay = lay.filter(ImageFilter.GaussianBlur((1 - k) * 10))
         a = lay.split()[3].point(lambda v: int(v * k))
         lay.putalpha(a)
-    base.alpha_composite(lay, (int(x), int(y + (1 - k) * rise)))
+    base.alpha_composite(lay, (int(x + (1 - k) * dx), int(y + (1 - k) * rise)))
 
 
 def _segs(s):
@@ -62,35 +63,45 @@ def _segs(s):
 
 
 def headline(base, t, l1, l2, y=250, d=0.0):
-    """1行目:グレー、2行目:太字の黒。2行目の *語* は青の選択枠(角に小さな四角)"""
+    """1行目:グレー、2行目:太字の黒(0.25秒おくれて出る)。2行目の *語* は青の選択枠(角に小さな四角)"""
     f1, f2 = gr.jp(58, bold=False), gr.jp(70)
-    lay = Image.new("RGBA", (W, 230), (0, 0, 0, 0))
-    g = ImageDraw.Draw(lay)
     if l1:
-        g.text(((W - gr.text_w(f1, l1)) / 2, 0), l1, font=f1, fill=GRAY + (255,))
+        lay1 = Image.new("RGBA", (W, 90), (0, 0, 0, 0))
+        ImageDraw.Draw(lay1).text(((W - gr.text_w(f1, l1)) / 2, 0), l1, font=f1, fill=GRAY + (255,))
+        appear(base, lay1, 0, y, t, d, rise=20)
+    lay = Image.new("RGBA", (W, 130), (0, 0, 0, 0))
+    g = ImageDraw.Draw(lay)
     segs = _segs(l2)
     tw = sum(gr.text_w(f2, s) for s, _ in segs)
-    x, yy = (W - tw) / 2, 96 if l1 else 40
+    x, yy = (W - tw) / 2, 10
     for s, kw in segs:
         w = gr.text_w(f2, s)
         if kw:
-            g.rectangle([x - 12, yy + 4, x + w + 12, yy + 104], fill=(232, 239, 255, 255), outline=BLUE + (255,), width=3)
-            for cx, cy in [(x - 12, yy + 4), (x + w + 12, yy + 4), (x - 12, yy + 104), (x + w + 12, yy + 104)]:
-                g.rectangle([cx - 7, cy - 7, cx + 7, cy + 7], fill=(255, 255, 255, 255), outline=BLUE + (255,), width=3)
+            selbox(g, x - 12, yy + 4, x + w + 12, yy + 104, 7)
         g.text((x, yy), s, font=f2, fill=INK + (255,))
         x += w
-    appear(base, lay, 0, y, t, d)
+    appear(base, lay, 0, y + (86 if l1 else 30), t, d + (0.25 if l1 else 0), rise=20)
 
 
-def rail(base, t, no, label, d=0.0):
+def selbox(g, x0, y0, x1, y1, c=7):
+    """参考動画の「選択枠」:うすい青の地+青い枠+角の小さな白い四角"""
+    g.rectangle([x0, y0, x1, y1], fill=(232, 239, 255, 255), outline=BLUE + (255,), width=3)
+    for cx, cy in [(x0, y0), (x1, y0), (x0, y1), (x1, y1)]:
+        g.rectangle([cx - c, cy - c, cx + c, cy + c], fill=(255, 255, 255, 255), outline=BLUE + (255,), width=3)
+
+
+def rail(base, t, no, label, d=0.0, k_out=0.0):
     """左の縦線(上が青)と、丸の「読」+ステップ札「01 That」。文字はすべて中央そろえ(anchor="mm")で余白をとる"""
     g = ImageDraw.Draw(base)
     g.line([(LINE_X, 0), (LINE_X, H)], fill=(222, 222, 218), width=8)
-    g.line([(LINE_X, 0), (LINE_X, PILL_Y)], fill=BLUE, width=8)
+    py = PILL_Y + 420 * k_out  # 切り替えで丸が下りる → 次の画面でまた上から
+    g.line([(LINE_X, 0), (LINE_X, py)], fill=BLUE, width=8)
     r = 42
-    g.ellipse([LINE_X - r - 6, PILL_Y - r - 6, LINE_X + r + 6, PILL_Y + r + 6], fill=(255, 255, 255))
-    g.ellipse([LINE_X - r, PILL_Y - r, LINE_X + r, PILL_Y + r], fill=BLUE)
-    g.text((LINE_X, PILL_Y), "読", font=gr.jp(38), fill=(255, 255, 255), anchor="mm")
+    g.ellipse([LINE_X - r - 6, py - r - 6, LINE_X + r + 6, py + r + 6], fill=(255, 255, 255))
+    g.ellipse([LINE_X - r, py - r, LINE_X + r, py + r], fill=BLUE)
+    g.text((LINE_X, py), "読", font=gr.jp(38), fill=(255, 255, 255), anchor="mm")
+    if k_out > 0:
+        return
     fn, fl = gr.jp(28), gr.jp(36)
     h, pad = 76, 14
     nb = max(56, gr.text_w(fn, no) + 28)
@@ -101,7 +112,7 @@ def rail(base, t, no, label, d=0.0):
     q.rounded_rectangle([pad, 14, pad + nb, h - 14], 12, fill=(108, 148, 242, 255))
     q.text((pad + nb / 2, h / 2), no, font=fn, fill=(255, 255, 255, 255), anchor="mm")
     q.text((pad + nb + 20, h / 2), label, font=fl, fill=(255, 255, 255, 255), anchor="lm")
-    appear(base, lay, LINE_X + r + 22, PILL_Y - h / 2, t, d, rise=0)
+    appear(base, lay, LINE_X + r + 22, PILL_Y - h / 2, t, d, rise=0, dx=-30)
 
 
 def _card(w, h, title):
@@ -120,7 +131,7 @@ CARD_X, CARD_W = 150, 890
 LABEL = {"S": "S", "V": "V", "C": "C", "O": "O", "M": "M"}
 
 
-ORANGE = (234, 112, 92)  # カタマリの括弧の色:コーラル(2026-11-28 4案から。青となじみ、読みやすい)
+ORANGE = (22, 163, 148)  # カタマリの括弧の色:ミント(2026-11-28 4案からユーザーが選択)
 BRACKETS = "()[]"
 
 
@@ -242,11 +253,11 @@ LESSONS = [
          labels={"S": "S(長い主語)", "L": "接続詞"},
          steps=[
              ("01", "That", "That のうしろに SV。", "*長い主語* のはじまり", {"S"},
-              "まず、ザットのうしろに、主語と動詞が続いています。だからこのザットは、「ということ」と訳すザット。長い主語のはじまりです。"),
+              "まず、ザットのうしろに、*主語と動詞*が続いています。だからこのザットは、*「ということ」*と訳すザット。*長い主語*のはじまりです。"),
              ("02", "動詞", "2つ目の動詞", "*is の手前* までが S", {"S", "V", "C"},
-              "ふたつめの動詞、イズの手前までが、主語になります。ひとつの節に、動詞はひとつ。"),
+              "ふたつめの動詞、*イズの手前*までが、主語になります。ひとつの節に、*動詞はひとつ*。"),
              ("03", "like", "like のうしろにも SV。", "*接続詞* の like", {"S", "V", "C", "L", "M"},
-              "つぎに、ライク。うしろに主語と動詞が続くので、このライクは接続詞で、「のように」。まえのマッチは、「ほぼ」という意味です。"),
+              "つぎに、ライク。うしろに*主語と動詞*が続くので、このライクは*接続詞*で、「のように」。まえのマッチは、*「ほぼ」*という意味です。"),
          ],
          ja=["幼い子どもが質問ばかりするのは、", "まったく*健全なこと*だ。", "科学者が、まだ説明できない考えを", "試すのと*ほぼ同じように*。"],
          ja_say="おさない子どもが、しつもんばかりするのは、まったく、けんぜんなことだ。かがくしゃが、まだ説明できない考えを、ためすのと、ほぼ同じように。",
@@ -262,16 +273,10 @@ _tts = gr.tts
 
 
 def tts(kind, text):
-    """kind "gap" は無音(text=秒)。「訳せますか?」と英文の読み上げの間などに"""
-    if kind != "gap":
-        return _tts(kind, text)
-    sec = float(text)
-    wav = ROOT / "cache" / "grammar_tts" / f"gap_{int(sec * 1000)}.wav"
-    if not wav.exists():
-        wav.parent.mkdir(parents=True, exist_ok=True)
-        import subprocess
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=mono", "-t", str(sec), str(wav)], check=True)
-    return wav, sec
+    """kind "gap" は無音の間(text=秒)。音声は混ぜず、時間だけあける(grammar_reel.render が gap を飛ばす)"""
+    if kind == "gap":
+        return None, float(text)
+    return _tts(kind, text.replace("*", ""))
 
 
 gr.tts = tts
@@ -279,52 +284,99 @@ gr.tts = tts
 
 def dur(kind, text):
     """読み上げの長さ(キャッシュ。読みチェック用の記録には残さない)"""
-    _, d = _tts(kind, text)
+    if kind == "gap":
+        return float(text)
+    _, d = _tts(kind, text.replace("*", ""))
     gr.MANIFEST.pop()
     return d
 
 
+def scene_dur(parts, default):
+    """grammar_reel.render と同じ計算で場面の長さを出す(切り替えのアニメーションに使う)"""
+    if not parts:
+        return default
+    t = 0.08
+    for k, x in parts:
+        t += dur(k, x) + 0.08
+    return max(1.3, t + 0.12)
+
+
 # 字幕は画面用の表記に戻す(読み上げ用のカタカナ・ひらがな → 英字・漢字)
 DISP = {"ザット": "That", "ライク": "like", "イズ": "is", "マッチ": "much", "ふたつめ": "2つ目", "ひとつ": "1つ",
-        "やく": "訳", "つぎに": "次に", "まえの": "前の", "うしろ": "後ろ", "まず": "まず"}
+        "やく": "訳", "つぎに": "次に", "まえの": "前の", "うしろ": "後ろ"}
+SUB_F = None
 
 
-def chunks(text, n=19):
-    """字幕を1画面2行(1行 n 文字)までに区切る"""
+def _tokens(text):
+    """[(文字 or 英単語, 強調?)]。*〜* が強調"""
     import re
     for k, v in DISP.items():
         text = text.replace(k, v)
-    out = []
-    for sent in [x for x in re.split(r"(?<=[。?])", text) if x]:
-        parts, cur = [x for x in re.split(r"(?<=、)", sent) if x], ""
-        for p in parts:
-            if len(cur) + len(p) > n * 2 and cur:
-                out.append(cur); cur = p
-            else:
-                cur += p
-        out.append(cur)
+    out, em = [], False
+    for m in re.findall(r"\*|[A-Za-z0-9']+|.", text):
+        if m == "*":
+            em = not em
+        else:
+            out.append((m, em))
     return out
 
 
-def subtitle(base, t, text, total, start=0.08, y=1430):
-    """音を消して見る人のための字幕。文字数の割合で時間を割り当てる"""
-    cs = chunks(text)
-    n = sum(len(c) for c in cs)
-    acc = start
-    cur = cs[-1]
-    for c in cs:
-        acc += total * len(c) / n
-        if t < acc:
-            cur = c; break
-    f = gr.jp(42)
-    lines = wrap2(cur, f, 800)
-    w = max(gr.text_w(f, x) for x in lines) + 72
-    h = 40 + 62 * len(lines)
-    g = ImageDraw.Draw(base)
+def subtitle(base, t, text, total, start=0.08, y=1440):
+    """参考動画の字幕:文(。)ごとに、読点ごとのひとことが順にぼかしからふわっと出る。*強調* は青の選択枠"""
+    f = gr.jp(44)
+    toks = _tokens(text)
+    # ひとこと(読点・句点まで)と文に分ける
+    phrases, cur = [], []
+    for tk in toks:
+        cur.append(tk)
+        if tk[0] in "、。?":
+            phrases.append(cur); cur = []
+    if cur: phrases.append(cur)
+    n = sum(len(tk[0]) for p in phrases for tk in p)
+    times, acc = [], start
+    for p in phrases:
+        times.append(acc); acc += total * sum(len(tk[0]) for tk in p) / n
+    sents, cur = [], []
+    for i, p in enumerate(phrases):
+        cur.append(i)
+        if p[-1][0] in "。?":
+            sents.append(cur); cur = []
+    if cur: sents.append(cur)
+    now = max([i for i, s0 in enumerate(times) if s0 <= t] or [0])
+    sent = next(s for s in sents if now in s)
+    shown = [i for i in sent if i <= now]
+    # 文全体で2行に割って位置を決める(あとから出る語の位置も固定)
+    toks = [tk + (i,) for i in sent for tk in phrases[i]]
+    plain = "".join(tk[0] for tk in toks)
+    lines = wrap2(plain, f, 800)
+    cut, line_of, c = len(lines[0]), [], 0
+    for tk in toks:
+        line_of.append(0 if c < cut else 1); c += len(tk[0])
+    lw = [sum(f.getlength(tk[0]) for tk, l in zip(toks, line_of) if l == li) for li in range(len(lines))]
     cx = CARD_X + CARD_W / 2
-    g.rounded_rectangle([cx - w / 2, y - h / 2, cx + w / 2, y + h / 2], 22, fill=(255, 255, 255), outline=(225, 225, 225), width=2)
-    for i, ln in enumerate(lines):
-        g.text((cx, y - h / 2 + 20 + 31 + 62 * i), ln, font=f, fill=INK, anchor="mm")
+    pos, xs = [], [cx - w / 2 for w in lw]
+    for tk, li in zip(toks, line_of):
+        pos.append((xs[li], li)); xs[li] += f.getlength(tk[0])
+    lh, top = 76, y - 76 * len(lines) / 2 - 20
+    for pi in shown:
+        lay = Image.new("RGBA", (W, int(lh * len(lines) + 40)), (0, 0, 0, 0))
+        g = ImageDraw.Draw(lay)
+        idx = [j for j, tk in enumerate(toks) if tk[2] == pi]
+        # 強調の連なりごとに選択枠
+        j = 0
+        while j < len(idx):
+            if toks[idx[j]][1]:
+                k = j
+                while k + 1 < len(idx) and toks[idx[k + 1]][1] and pos[idx[k + 1]][1] == pos[idx[j]][1]: k += 1
+                x0 = pos[idx[j]][0]; x1 = pos[idx[k]][0] + f.getlength(toks[idx[k]][0]); ly = 20 + lh * pos[idx[j]][1]
+                selbox(g, x0 - 8, ly + 2, x1 + 8, ly + 66, 5)
+                j = k + 1
+            else:
+                j += 1
+        for jj in idx:
+            x, li = pos[jj]
+            g.text((x, 20 + lh * li), toks[jj][0], font=f, fill=INK + (255,))
+        appear(base, lay, 0, top, t, times[pi], dur=0.3, rise=14)
 
 
 def wrap2(text, f, maxw):
@@ -348,37 +400,58 @@ def wrap2(text, f, maxw):
     return best[1] if best else [text]
 
 
+OUTRO = 0.3  # 切り替え:前の画面がぼけながら上へ消え、丸が線にそって下りる
+
+
+def scene(S, content, parts, rail_args=None, default=2.6):
+    D = scene_dur(parts, default)
+
+    def f(bb, T, t):
+        ko = max(0.0, (t - (D - OUTRO)) / OUTRO)
+        if ko <= 0:
+            if rail_args: rail(bb, t, *rail_args)
+            content(bb, t)
+            return
+        k = gr.ease(ko)
+        if rail_args: rail(bb, t, *rail_args, k_out=k)
+        lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        content(lay, t)
+        lay = lay.filter(ImageFilter.GaussianBlur(10 * k))
+        lay.putalpha(lay.split()[3].point(lambda v: int(v * (1 - k))))
+        sh = int(70 * k)
+        bb.alpha_composite(lay.crop((0, sh, W, H)), (0, 0))
+    S.append((D, "", f, parts))
+
+
 def build(L):
     ALL = set().union(*(st[4] for st in L["steps"]))
     S = []
-    S.append((gr.HOOK, "", lambda bb, T, t: hook(bb, t, *L["hook"]), []))
-    # 英文の読み上げは、解説に入る前の1回だけ
-    S.append((2.6, "", lambda bb, T, t: (
-        rail(bb, t, "00", "英文"),
+    scene(S, lambda bb, t: hook(bb, t, *L["hook"]), [], default=gr.HOOK)
+    # 英文の読み上げは、解説に入る前の1回だけ。「訳せますか?」のあと少し間をあける
+    scene(S, lambda bb, t: (
         headline(bb, t, "この英文、", "*訳せる?*"),
-        sentence_card(bb, t, L["lines"], set(), L["labels"])),
-        [("ja", "この英文、やくせますか?"), ("gap", "0.6"), ("m", L["en"])]))
+        sentence_card(bb, t, L["lines"], set(), L["labels"], d=0.15)),
+        [("ja", "この英文、やくせますか?"), ("gap", "0.6"), ("m", L["en"])], ("00", "英文"))
     for no, name, l1, l2, show, say in L["steps"]:
-        S.append((2.8, "", lambda bb, T, t, no=no, name=name, l1=l1, l2=l2, show=show, say=say, sd=dur("ja", say): (
-            rail(bb, t, no, name),
+        scene(S, lambda bb, t, l1=l1, l2=l2, show=show, say=say, sd=dur("ja", say): (
             headline(bb, t, l1, l2),
             sentence_card(bb, t, L["lines"], show, L["labels"], d=0.0),
             subtitle(bb, t, say, sd)),
-            [("ja", say)]))
+            [("ja", say)], (no, name))
     n = f"{len(L['steps']) + 1:02d}"
-    S.append((3.0, "", lambda bb, T, t: (
-        rail(bb, t, n, "和訳"),
+    scene(S, lambda bb, t: (
         headline(bb, t, "つまり、", "*こういう意味*"),
-        sentence_card(bb, t, L["lines"], ALL, L["labels"], y=630, d=0.0, size=42),
-        text_card(bb, t, L["ja"], y=1170, size=42)),
-        [("ja", L["ja_say"])]))
+        sentence_card(bb, t, L["lines"], ALL, L["labels"], y=630, d=0.1, size=42),
+        text_card(bb, t, L["ja"], y=1170, size=42, d=0.35)),
+        [("ja", L["ja_say"])], (n, "和訳"))
     q = L["q"]
-    S.append((4.4, "", lambda bb, T, t: (
-        rail(bb, t, "Q", "クイズ"),
+    # 和訳のあと:つなぎの一言 → 少し間 → 応用の英文 → 問いかけ
+    scene(S, lambda bb, t: (
         headline(bb, t, "同じ形で、", "*正しい訳は?*"),
-        quiz_card(bb, t, q["en"], q["chs"]),
-        cta(bb, t)),
-        [("f", " ".join(q["en"])), ("ja", "ただしいやくは、1と2、どっち?答えと解説は、コメント欄にあるよ。")]))
+        quiz_card(bb, t, q["en"], q["chs"], d=0.2),
+        cta(bb, t, d=2.0)),
+        [("ja", "では、同じ形で、応用問題。この英文の、ただしいやくは?"), ("gap", "0.5"), ("f", " ".join(q["en"])),
+         ("gap", "0.3"), ("ja", "1と2、どっち?答えと解説は、コメント欄にあるよ。")], ("Q", "クイズ"))
     return "seidoku", S
 
 

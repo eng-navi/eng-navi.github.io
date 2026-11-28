@@ -546,7 +546,9 @@ def render(no, lesson_no=None, out=None):
         t = acc + 0.08
         for kind, text in parts:
             mp3, d = tts(kind, text)
-            clips.append((t, mp3, kind)); t += d + 0.08
+            if kind != "gap":  # gap = 無音の間(音声ファイルは混ぜない。雑音の原因になるため)
+                clips.append((t, mp3, kind))
+            t += d + 0.08
         dur = max(1.3, t - acc + 0.12) if parts else dur
         S2.append((dur, sub, fn)); acc += dur
     S = S2
