@@ -33,7 +33,7 @@
 
 ## 英検リールの新形式(2026-11-28〜 これに一本化)
 - **前の形(reel_quiz.py のタイマー付き)は英検では作らない**(伸びないため。11/28 に No.6〜21 の予約を外した)。TOEIC は前の形のまま。
-- No.31 を 11/28 に投稿(share_to_feed=false は前と同じ)。投稿は out/eiken_easy/eiken_NNN.post.json → reel_post.publish。予約(plan)の仕組みは次に量産するときに作る。
+- No.31 を 11/28 に投稿(share_to_feed=false は前と同じ)。作る:SCRIPTS に台本・応用問題・caption・comment を書く → `python3 eiken_easy.py N` → `python3 eiken_easy.py add N "YYYY-MM-DD HH:MM"` → push(reel_schedule.json に入り、CI の reel_post.py run eiken が投稿)。No.6・7 は 11/28 21:00/22:30。次は No.8 から。
 - 英検が伸びていないので、問題は eiken_problems.py のまま、作りは「やさしい英文法」(青コラージュ・Shizuka 1.45倍・Daniel/Alice)に。`python3 eiken_easy.py N`(作成+読みチェック)。
 - 流れ:問題(本文+1/2)→ 約2.5秒で「解くなら、ここで止めてね」+テープ「解きたい人は、ここで一時停止」→ 合図の語(However など)→ 根拠の文を黄色マーカー(ほかの文は薄く)→ 正解 → ひっかけ ×→ 保存の呼びかけ。台本は eiken_easy.py の SCRIPTS に1問ずつ書く。
 - 動きは reference/seidoku_style(ぼかしからふわっと・場面の終わりにぼけて上へ消える)+ **reference/grammar_style/Video-53263.mp4**(青コラージュの参考。字幕はひとことずつポンと出て強調は黄緑、右上に「01 〜」のテープ札、黄緑のギザギザ・集中線、素材が少しゆれる)。
