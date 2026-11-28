@@ -264,9 +264,8 @@ def build(L):
         y = question(bb, t, Q["q"], y - 20, d=0.2, size=40)
         y = choices(bb, t, chs, y - 34, d=0.3, size=40)
         pause_tip(bb, t, y + 40, d=0.6)
-    # 英検とちがい、TOEIC は「止めてね」のあとに本文と設問を英語で読み上げる(読みながら解ける。英検とどちらが伸びるか比べる)
-    body = " ".join(x for x, _ in P["body"][0])
-    sr.scene(S, problem, [("ja", "どっちが正解?解くなら、ここで止めてね。"), ("gap", "0.4"), ("m", body), ("gap", "0.3"), ("m", Q["q"])], ("00", "問題"))
+    # 本文は読み上げない(16秒の待ち時間で離脱されるため。解きたい人は一時停止する)。設問だけ英語で読んで、次の「設問のキーワード」へつなぐ
+    sr.scene(S, problem, [("ja", "どっちが正解?解くなら、ここで止めてね。"), ("gap", "0.3"), ("m", Q["q"])], ("00", "問題"))
     for st in sc["steps"]:
         def content(bb, t, st=st):
             header(bb, t, st["l1"], st["l2"])
