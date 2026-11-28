@@ -24,7 +24,7 @@ def main():
     for no in range(a, b + 1):
         out = gr.OUT / f"lesson_{no:03d}.mp4"
         gr.render(0, no, out)
-        r = subprocess.run([str(ROOT / ".venv-tts/bin/python"), str(ROOT / "yomi_check.py"), str(out.with_suffix(".voice.json"))],
+        r = subprocess.run([str(ROOT / ".venv-tts/bin/python"), str(ROOT / "yomi_check.py"), str(out.with_suffix(".voice.json")), "--quiet"],
                            capture_output=True, text=True).stdout
         dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(out)],
                                    capture_output=True, text=True).stdout)

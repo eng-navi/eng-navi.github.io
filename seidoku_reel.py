@@ -83,22 +83,25 @@ def headline(base, t, l1, l2, y=250, d=0.0):
 
 
 def rail(base, t, no, label, d=0.0):
-    """左の縦線(上が青)とステップ札「01 主語」"""
+    """左の縦線(上が青)と、丸の「読」+ステップ札「01 That」。文字はすべて中央そろえ(anchor="mm")で余白をとる"""
     g = ImageDraw.Draw(base)
-    g.line([(LINE_X, 0), (LINE_X, H)], fill=(222, 222, 218), width=10)
-    g.line([(LINE_X, 0), (LINE_X, PILL_Y)], fill=BLUE, width=10)
-    g.ellipse([LINE_X - 30, PILL_Y - 30, LINE_X + 30, PILL_Y + 30], fill=BLUE, outline=(255, 255, 255), width=5)
-    g.text((LINE_X - 13, PILL_Y - 24), "読", font=gr.jp(30), fill=(255, 255, 255))
+    g.line([(LINE_X, 0), (LINE_X, H)], fill=(222, 222, 218), width=8)
+    g.line([(LINE_X, 0), (LINE_X, PILL_Y)], fill=BLUE, width=8)
+    r = 42
+    g.ellipse([LINE_X - r - 6, PILL_Y - r - 6, LINE_X + r + 6, PILL_Y + r + 6], fill=(255, 255, 255))
+    g.ellipse([LINE_X - r, PILL_Y - r, LINE_X + r, PILL_Y + r], fill=BLUE)
+    g.text((LINE_X, PILL_Y), "読", font=gr.jp(38), fill=(255, 255, 255), anchor="mm")
     fn, fl = gr.jp(28), gr.jp(36)
-    w = 26 + gr.text_w(fn, no) + 40 + gr.text_w(fl, label) + 30
-    lay = Image.new("RGBA", (w, 64), (0, 0, 0, 0))
+    h, pad = 76, 14
+    nb = max(56, gr.text_w(fn, no) + 28)
+    w = pad + nb + 20 + gr.text_w(fl, label) + 34
+    lay = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     q = ImageDraw.Draw(lay)
-    q.rounded_rectangle([0, 0, w - 1, 63], 32, fill=BLUE + (255,))
-    nb = gr.text_w(fn, no) + 20
-    q.rounded_rectangle([14, 12, 14 + nb, 52], 10, fill=(120, 158, 245, 255))
-    q.text((24, 12), no, font=fn, fill=(255, 255, 255, 255))
-    q.text((14 + nb + 18, 6), label, font=fl, fill=(255, 255, 255, 255))
-    appear(base, lay, LINE_X + 46, PILL_Y - 32, t, d, rise=0)
+    q.rounded_rectangle([0, 0, w - 1, h - 1], h // 2, fill=BLUE + (255,))
+    q.rounded_rectangle([pad, 14, pad + nb, h - 14], 12, fill=(108, 148, 242, 255))
+    q.text((pad + nb / 2, h / 2), no, font=fn, fill=(255, 255, 255, 255), anchor="mm")
+    q.text((pad + nb + 20, h / 2), label, font=fl, fill=(255, 255, 255, 255), anchor="lm")
+    appear(base, lay, LINE_X + r + 22, PILL_Y - h / 2, t, d, rise=0)
 
 
 def _card(w, h, title):
@@ -117,7 +120,7 @@ CARD_X, CARD_W = 150, 890
 LABEL = {"S": "S", "V": "V", "C": "C", "O": "O", "M": "M"}
 
 
-ORANGE = (236, 120, 24)  # カタマリの括弧の色(青と相性のよい補色)
+ORANGE = (234, 112, 92)  # カタマリの括弧の色:コーラル(2026-11-28 4案から。青となじみ、読みやすい)
 BRACKETS = "()[]"
 
 
@@ -154,10 +157,10 @@ def sentence_card(base, t, lines, show, labels=None, y=650, d=0.1, title="英文
                 if tag not in done:
                     done.add(tag)
                     lab = labels.get(tag, tag)
-                    lw = gr.text_w(lf, lab) + 28
-                    lx = x + lead + (w - lead) / 2 - lw / 2
-                    g.rounded_rectangle([lx, yy + size * 1.45, lx + lw, yy + size * 1.45 + 40], 20, fill=BLUE + (255,))
-                    g.text((lx + 14, yy + size * 1.45 + 2), lab, font=lf, fill=(255, 255, 255, 255))
+                    lw, lh = gr.text_w(lf, lab) + 36, 44
+                    lx, ly = x + lead + (w - lead) / 2 - lw / 2, yy + size * 1.5
+                    g.rounded_rectangle([lx, ly, lx + lw, ly + lh], lh // 2, fill=BLUE + (255,))
+                    g.text((lx + lw / 2, ly + lh / 2), lab, font=lf, fill=(255, 255, 255, 255), anchor="mm")
             x += w
         yy += gap
     appear(base, lay, CARD_X - 20, y, t, d)
@@ -254,6 +257,97 @@ LESSONS = [
 ]
 
 
+# ---------- 間(無音)と字幕 ----------
+_tts = gr.tts
+
+
+def tts(kind, text):
+    """kind "gap" は無音(text=秒)。「訳せますか?」と英文の読み上げの間などに"""
+    if kind != "gap":
+        return _tts(kind, text)
+    sec = float(text)
+    wav = ROOT / "cache" / "grammar_tts" / f"gap_{int(sec * 1000)}.wav"
+    if not wav.exists():
+        wav.parent.mkdir(parents=True, exist_ok=True)
+        import subprocess
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=mono", "-t", str(sec), str(wav)], check=True)
+    return wav, sec
+
+
+gr.tts = tts
+
+
+def dur(kind, text):
+    """読み上げの長さ(キャッシュ。読みチェック用の記録には残さない)"""
+    _, d = _tts(kind, text)
+    gr.MANIFEST.pop()
+    return d
+
+
+# 字幕は画面用の表記に戻す(読み上げ用のカタカナ・ひらがな → 英字・漢字)
+DISP = {"ザット": "That", "ライク": "like", "イズ": "is", "マッチ": "much", "ふたつめ": "2つ目", "ひとつ": "1つ",
+        "やく": "訳", "つぎに": "次に", "まえの": "前の", "うしろ": "後ろ", "まず": "まず"}
+
+
+def chunks(text, n=19):
+    """字幕を1画面2行(1行 n 文字)までに区切る"""
+    import re
+    for k, v in DISP.items():
+        text = text.replace(k, v)
+    out = []
+    for sent in [x for x in re.split(r"(?<=[。?])", text) if x]:
+        parts, cur = [x for x in re.split(r"(?<=、)", sent) if x], ""
+        for p in parts:
+            if len(cur) + len(p) > n * 2 and cur:
+                out.append(cur); cur = p
+            else:
+                cur += p
+        out.append(cur)
+    return out
+
+
+def subtitle(base, t, text, total, start=0.08, y=1430):
+    """音を消して見る人のための字幕。文字数の割合で時間を割り当てる"""
+    cs = chunks(text)
+    n = sum(len(c) for c in cs)
+    acc = start
+    cur = cs[-1]
+    for c in cs:
+        acc += total * len(c) / n
+        if t < acc:
+            cur = c; break
+    f = gr.jp(42)
+    lines = wrap2(cur, f, 800)
+    w = max(gr.text_w(f, x) for x in lines) + 72
+    h = 40 + 62 * len(lines)
+    g = ImageDraw.Draw(base)
+    cx = CARD_X + CARD_W / 2
+    g.rounded_rectangle([cx - w / 2, y - h / 2, cx + w / 2, y + h / 2], 22, fill=(255, 255, 255), outline=(225, 225, 225), width=2)
+    for i, ln in enumerate(lines):
+        g.text((cx, y - h / 2 + 20 + 31 + 62 * i), ln, font=f, fill=INK, anchor="mm")
+
+
+def wrap2(text, f, maxw):
+    """1行に収まらなければ2行に。左右の幅がそろう位置で、読点・助詞のあとを優先して切る(英単語の途中では切らない)"""
+    import re
+    if gr.text_w(f, text) <= maxw:
+        return [text]
+    atoms = re.findall(r"[A-Za-z0-9']+|.", text)
+    best = None
+    for i in range(1, len(atoms)):
+        l, r = "".join(atoms[:i]), "".join(atoms[i:])
+        if r[0] in "。、」?)" or l.count("「") > l.count("」") or gr.text_w(f, l) > maxw or gr.text_w(f, r) > maxw:
+            continue
+        score = abs(gr.text_w(f, l) - gr.text_w(f, r))
+        if l[-1] in "、。":
+            score -= 400
+        elif l[-1] in "はがをにでとのもへ」":
+            score -= 90
+        if best is None or score < best[0]:
+            best = (score, [l, r])
+    return best[1] if best else [text]
+
+
 def build(L):
     ALL = set().union(*(st[4] for st in L["steps"]))
     S = []
@@ -263,12 +357,13 @@ def build(L):
         rail(bb, t, "00", "英文"),
         headline(bb, t, "この英文、", "*訳せる?*"),
         sentence_card(bb, t, L["lines"], set(), L["labels"])),
-        [("ja", "この英文、やくせますか?"), ("m", L["en"])]))
+        [("ja", "この英文、やくせますか?"), ("gap", "0.6"), ("m", L["en"])]))
     for no, name, l1, l2, show, say in L["steps"]:
-        S.append((2.8, "", lambda bb, T, t, no=no, name=name, l1=l1, l2=l2, show=show: (
+        S.append((2.8, "", lambda bb, T, t, no=no, name=name, l1=l1, l2=l2, show=show, say=say, sd=dur("ja", say): (
             rail(bb, t, no, name),
             headline(bb, t, l1, l2),
-            sentence_card(bb, t, L["lines"], show, L["labels"], d=0.0)),
+            sentence_card(bb, t, L["lines"], show, L["labels"], d=0.0),
+            subtitle(bb, t, say, sd)),
             [("ja", say)]))
     n = f"{len(L['steps']) + 1:02d}"
     S.append((3.0, "", lambda bb, T, t: (
