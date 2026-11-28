@@ -421,6 +421,8 @@ def sfx(path, times, dur):
 
 VOICE = {"ja": "WQz3clzUdMqvBf0jswZQ", "m": "onwK4e9ZLuTAKqWW03F9", "f": "Xb7hH8MSUJpSbSDYk0k2"}  # Shizuka / Daniel(UK) / Alice(UK)
 SPEED = {"ja": 1.12, "m": 0.92, "f": 0.92}
+# 日本語は eleven_v3(漢字の読みが正確。2026-11-28 比較で v2 2/10 → v3 8/10)。英語は v2(安定・速さ調整できる)
+MODEL = {"ja": "eleven_v3", "m": "eleven_multilingual_v2", "f": "eleven_multilingual_v2"}
 
 
 # 読み間違える語 → 読ませたい形(ひらがな)。yomi_check.py で間違いが見つかったらここに足す
@@ -444,12 +446,13 @@ def tts(kind, text):
     import tts as _t
     _t.load_env()
     cache = ROOT / "cache" / "grammar_tts"; cache.mkdir(parents=True, exist_ok=True)
-    mp3 = cache / (hashlib.sha1(f"{VOICE[kind]}|{SPEED[kind]}|{text}".encode()).hexdigest()[:14] + ".mp3")
+    mp3 = cache / (hashlib.sha1(f"{VOICE[kind]}|{SPEED[kind]}|{text}{'|v3' if kind == 'ja' else ''}".encode()).hexdigest()[:14] + ".mp3")
     if not mp3.exists():
         req = urllib.request.Request(
             f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE[kind]}?output_format=mp3_44100_128",
-            data=json.dumps({"text": text, "model_id": "eleven_multilingual_v2",
-                             "voice_settings": {"stability": 0.5, "similarity_boost": 0.75, "speed": SPEED[kind]}}).encode(),
+            data=json.dumps({"text": text, "model_id": MODEL[kind],
+                             "voice_settings": {"stability": 0.5, "similarity_boost": 0.75} if MODEL[kind] == "eleven_v3"
+                             else {"stability": 0.5, "similarity_boost": 0.75, "speed": SPEED[kind]}}).encode(),
             headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"], "Content-Type": "application/json"})
         try:
             mp3.write_bytes(urllib.request.urlopen(req).read())

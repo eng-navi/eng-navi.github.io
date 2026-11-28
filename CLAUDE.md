@@ -221,3 +221,4 @@ ElevenLabs の日本語は読み間違えることがある(例:「今出なさ�
 - 英単語をアルファベットのまま読ませた行(few / a few / Me neither など)は、聞き取りがカタカナになるので ✗ が出るが、読みが合っていれば OK。カタカナより英字の方が正しく読む語もある(few→「ふゆ」になるのでアルファベットで)。
 - 例文の和訳など漢字の名詞(窓・水・友だち・苦手・納豆・制服)はよく読み間違えるので、ナレーションではひらがなにする。かぎかっこ「〜」の中の「〜」も避ける。
 - 英文法リール:grammar_lessons.py → grammar_reel.py lesson N → yomi_check.py → grammar_post.py plan(@uk_easy_grammar、VOX_IG_*、1日3本 07:30/12:30/20:30)。
+- 2026-11-28〜 英文法の日本語ナレーションは ElevenLabs **eleven_v3**(漢字の読み間違いが大幅に減った)。英文は eleven_multilingual_v2 のまま。v3 でも読みチェックは毎回する。
