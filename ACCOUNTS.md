@@ -119,9 +119,9 @@
 - **キーワード:** 大きい語(英語学習・英文法・英会話・TOEIC・英検)+絞った語(その回のテーマ)を、検索意図に合う自然な文章で入れる。誇張しない。
 - **1日1本**を YouTube Studio で予約(毎日同じ時間に)。ファイルは `~/insta-quiz/out/yt_compile/`(〜.mp4 / 〜_thumb.jpg / 〜.txt)。
 - **タイトル:** 本命A(テーマの検索語を先頭に+対象試験+問題数+中身)と、ずらしB(英会話・学び直し・聞き流しなど隣の検索意図。中身と合うものだけ)の2案を .txt に入れる。Studio のテスト機能が使えるなら A/B を比べ、使えなければ動画ごとに A 型と B 型を交互にして再生数を比べる。
-- **A8 の直リンク(2026-11-28 検討中):** YouTube 掲載が可のプログラムだけ説明欄に直リンクにする予定。ユーザーが A8 の掲載条件(YouTube・動画・SNS 可か)と、YouTube チャンネルのメディア登録を確認 → OK のものを yt_cta に登録。それまではサイト(/osusume/)経由。Amazon は直リンクで可。
+- **A8 は YouTube の説明欄に直リンク**(2026-11-28〜。A8 のメディアに YouTube チャンネル登録済み・掲載可をユーザーが確認)。yt_cta が recommend.js の A8 コードから px.a8.net のリンクを作る。Amazon も直リンク。新しい A8 案件は、掲載条件で YouTube 可を確認してから recommend.js に足す。
 - **BGM:** Uppbeat の曲は YouTube の Content ID で申し立てが来る(11/28 Golden Age)。長い動画は BGM なし or YouTube オーディオライブラリの曲にする(ユーザーの返事待ち)。
-- **おすすめの選び分け:** 候補は docs/recommend.js の ITEMS(A8 のサービス+Amazon の本)。yt_cta.py の MATSU/TAKE/UME からテーマに合うものを動画ごとに順番に回し、選んだものは yt_cta_log.json に記録。リンクは /osusume/?from=yt_<動画名> で、どの組み合わせが押されたか GA4 で比べる。新しい案件は recommend.js(とaffiliates.md)に足せば候補に入る。
+- **おすすめの選び分け:** 候補は docs/recommend.js の ITEMS(A8 のサービス+Amazon の本)。yt_cta.py の MATSU/TAKE/UME からテーマに合うものを動画ごとに順番に回し、選んだものは yt_cta_log.json に記録。A8 の直リンクにしたので、どの動画で押されたかは A8 の管理画面(プログラム別)と yt_cta_log.json の組み合わせで見る。新しい案件は recommend.js(とaffiliates.md)に足せば候補に入る。
 - **おすすめ(松竹梅)と案内は yt_cta.py を必ず通す**(yt_theme / yt_compile は自動)。目的別に3つ:最短で結果=PROGRIT/自分のペースで本=テーマに合う1冊/スキマ時間=スピーク。固定コメントも .txt に入る。3つ→2つの比較は /osusume/?from=yt のクリックで。
 - **動画の途中(約1/3・2/3)と最後に「おすすめ教材は 説明欄に」の画面**(yt_cta.CTA_CARD)。新しいまとめ動画から入れる。
 - 今後:昔の長いシリーズ(英検1級の聞き流しなど)の形式と声を調べて続きを作る。詳細は CLAUDE.md「YouTube の長い動画」。

@@ -5,7 +5,8 @@
 決めごと:
 - おすすめは3つまで。「こうしたい人はこれ」と、目的別に並べる(松=最短で結果/竹=自分のペースで本/梅=スキマ時間のアプリ)。
   3つで多すぎないかは、yt の数字(/osusume/?from=yt のクリック)を見て2つと比べる。
-- 本は Amazon 直リンク、アプリ・サービスは /osusume/ 経由(A8 のリンクは YouTube に直接貼らない)。
+- 本は Amazon 直リンク。A8 のサービスも直リンク(2026-11-28〜:A8 のメディアに YouTube チャンネルを登録済み・掲載可を確認済み)。
+  A8 にないものだけ /osusume/ 経由。
 - 案内は「途中(約1/3・2/3)と最後」に画面で「おすすめ教材は説明欄に」。説明欄の最初の2行はサイト。固定コメントでも1回だけ自然に。
 - キーワード:大きい語(英語学習・英文法・英会話・TOEIC・英検)と絞った語(その回のテーマ)を、自然な文章で入れる。誇張しない。
 """
@@ -52,7 +53,9 @@ def items():
         else:
             u = _re.search(r'url: "(https://(?:link\.amazon|www\.amazon)[^"]+)"', body)
             url = u.group(1) if u else None
-        out[k] = dict(name=name.group(1), note=note.group(1) if note else "", amazon=url, a8="A8(" in body)
+        a8 = _re.search(r'A8\("([0-9A-Z+]+)"', body)
+        out[k] = dict(name=name.group(1), note=note.group(1) if note else "", amazon=url, a8="A8(" in body,
+                      a8url=f"https://px.a8.net/svt/ejp?a8mat={a8.group(1)}" if a8 else None)
     return out
 
 
@@ -104,7 +107,7 @@ def shochikubai(book="grammar", topic="この動画の内容", seed=None, area="
 
 🏆 {LEAD["matsu"]} → {m["name"]}
 {m["note"]}{tag(mk)}
-→ {frm}#{mk}
+→ {m["a8url"] or frm + "#" + mk}
 
 📗 {LEAD["take"]} → 『{t["name"].strip("『』")}』
 {t["note"]}
@@ -112,7 +115,7 @@ def shochikubai(book="grammar", topic="この動画の内容", seed=None, area="
 
 📱 {LEAD["ume"]} → {u["name"]}
 {u["note"]}{tag(uk)}
-→ {frm}#{uk}"""
+→ {u["a8url"] or frm + "#" + uk}"""
     b = BOOKS[book]
     return f"""🎯 {topic}を、目的別にもっと伸ばすなら(PR)
 
