@@ -3914,5 +3914,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 205,
+    "category": "前置詞・接続詞",
+    "question": "Take an umbrella ( ) it rains this afternoon.",
+    "options": [
+      "in case",
+      "in case of"
+    ],
+    "answer": 1,
+    "translation": "午後に雨が降るといけないので、傘を持っていきなさい。",
+    "explanation": "空所の後ろは it rains という主語+動詞の節です。\n節の前には接続詞の in case を置きます。in case of の後ろは名詞です(in case of rain)。\n\nしたがって、①in case が正解。",
+    "audio": "audio/q205.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
