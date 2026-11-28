@@ -84,7 +84,7 @@ def shochikubai(book="grammar", topic="この動画の内容", seed=None, area="
     """説明欄のおすすめ(PR)。目的別に3つ。seed(動画名)ごとに候補から選び分ける。リンクに from=yt_<seed> をつけて比べる"""
     if seed:
         it = items()
-        frm = f"https://eng-navi.github.io/osusume/?from=yt_{seed}"
+        frm = f"https://eng-navi.github.io/osusume/?from={seed if seed.startswith('yt_') else 'yt_' + seed}"
         log = __import__("json")
         lp = __file__.replace("yt_cta.py", "yt_cta_log.json")
         try: d = log.load(open(lp))
@@ -97,7 +97,7 @@ def shochikubai(book="grammar", topic="この動画の内容", seed=None, area="
         uk = rot(UME.get(area, UME["default"]), 2)
         m, t, u = it[mk], it[tk], it[uk]
         dl = deals()
-        tag = lambda k: f"\n🎁 {dl[k]}" if k in dl else ""
+        tag = lambda k: f"\n🎁 {dl[k]}" if k in dl and dl[k].split("(")[0] not in it[k]["note"] else ""  # 説明と同じなら出さない
         d[seed] = {"matsu": mk, "take": tk, "ume": uk}
         log.dump(d, open(lp, "w"), ensure_ascii=False, indent=1)
         return f"""🎯 {topic}を、目的別にもっと伸ばすなら(PR)
