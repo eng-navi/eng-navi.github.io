@@ -263,7 +263,7 @@ def V1():
         big(b, T, t, "and", 700, size=260),
         tape(b, T, t, "そうすれば", 540, 980, angle=-4, d=0.2, size=80),
         scribble(b, T, t, 540, 980, 330, 110, d=0.8))))
-    S.append((3.0, "今出なさい、\nそうすればバスに間に合うよ", lambda b, T, t: (
+    S.append((3.0, "今出なさい、\nそうすれば間に合うよ", lambda b, T, t: (
         card(b, T, t, [([("Leave now, ", False), ("and", True), (" you'll catch", False)], "en"), ([("the bus.", False)], "en"),
                        ([("今出なさい、", False), ("そうすれば", True), ("バスに間に合うよ", False)], "ja")], 900, d=0.0, angle=-2))))
     S.append((2.2, "じゃあ or は?", lambda b, T, t: (
@@ -274,7 +274,7 @@ def V1():
         big(b, T, t, "or", 700, size=320),
         tape(b, T, t, "さもないと", 540, 980, angle=-3, d=0.2, size=80),
         scribble(b, T, t, 540, 980, 330, 110, d=0.8))))
-    S.append((3.0, "今出なさい、\nさもないとバスに乗り遅れるよ", lambda b, T, t: (
+    S.append((3.0, "さもないと、乗り遅れるよ", lambda b, T, t: (
         card(b, T, t, [([("Leave now, ", False), ("or", True), (" you'll miss", False)], "en"), ([("the bus.", False)], "en"),
                        ([("今出なさい、", False), ("さもないと", True), ("乗り遅れるよ", False)], "ja")], 980, angle=2))))
     S.append((4.4, "( ) に入るのは?\n答えはコメントで 1 か 2", lambda b, T, t: (
@@ -282,6 +282,8 @@ def V1():
         card(b, T, t, [([("Be quiet, (    ) the", False)], "en"), ([("baby will wake up.", False)], "en"),
                        ([("1  and      2  or", False)], "q")], 880, d=0.2, angle=-1),
         tape(b, T, t, "静かにして、さもないと赤ちゃんが起きる", 540, 1200, angle=-2, d=0.8, size=46))))
+    NAR = {0: [('ja', 'この英語、わかりますか?'), ('m', "Leave now, and you'll catch the bus.")], 1: [('ja', 'アンドは「そして」?')], 2: [('ja', '実は、命令文のあとだと「そうすれば」なんです。')], 3: [('f', "Leave now, and you'll catch the bus."), ('ja', '今出なさい、そうすれば間に合うよ。')], 4: [('ja', 'じゃあ、オアは?')], 5: [('ja', '命令文のあとのオアは「さもないと」。')], 6: [('m', "Leave now, or you'll miss the bus."), ('f', "Leave now, or you'll miss the bus."), ('ja', 'さもないと、乗り遅れるよ。')], 7: [('ja', '問題です。1のアンドか、2のオアか。答えはコメントで!')]}
+    S = [x + (NAR.get(i, []),) for i, x in enumerate(S)]
     return "blue", S
 
 
@@ -354,11 +356,50 @@ def sfx(path, times, dur):
         w.writeframes(b"".join(struct.pack("<h", int(max(-1, min(1, v)) * 32767)) for v in buf))
 
 
+
+VOICE = {"ja": "WQz3clzUdMqvBf0jswZQ", "m": "onwK4e9ZLuTAKqWW03F9", "f": "EXAVITQu4vr4xnSDxMaL"}  # Shizuka / Daniel / Sarah
+SPEED = {"ja": 1.12, "m": 0.92, "f": 0.92}
+
+
+def tts(kind, text):
+    """ElevenLabs で読み上げ(キャッシュ)。失敗したら止める(声の差し替えはしない)"""
+    import hashlib, json, os, urllib.request, urllib.error
+    import tts as _t
+    _t.load_env()
+    cache = ROOT / "cache" / "grammar_tts"; cache.mkdir(parents=True, exist_ok=True)
+    mp3 = cache / (hashlib.sha1(f"{VOICE[kind]}|{SPEED[kind]}|{text}".encode()).hexdigest()[:14] + ".mp3")
+    if not mp3.exists():
+        req = urllib.request.Request(
+            f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE[kind]}?output_format=mp3_44100_128",
+            data=json.dumps({"text": text, "model_id": "eleven_multilingual_v2",
+                             "voice_settings": {"stability": 0.5, "similarity_boost": 0.75, "speed": SPEED[kind]}}).encode(),
+            headers={"xi-api-key": os.environ["ELEVENLABS_API_KEY"], "Content-Type": "application/json"})
+        try:
+            mp3.write_bytes(urllib.request.urlopen(req).read())
+        except urllib.error.HTTPError as e:
+            sys.exit(f"ElevenLabs エラー {e.code}: {e.read()[:200]} (クレジット切れの可能性。声の差し替えはしません)")
+    d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(mp3)],
+                             capture_output=True, text=True).stdout)
+    return mp3, d
+
+
 def render(no):
     theme, S = {1: V1, 2: V2, 3: V3}[no]()
     T = THEMES[theme]
     bg = background(theme).convert("RGBA")
     OUT.mkdir(parents=True, exist_ok=True)
+    clips = []  # (開始秒, mp3)
+    S2, acc = [], 0.0
+    for s in S:
+        dur, sub, fn = s[:3]
+        parts = s[3] if len(s) > 3 else []
+        t = acc + 0.25
+        for kind, text in parts:
+            mp3, d = tts(kind, text)
+            clips.append((t, mp3)); t += d + 0.2
+        dur = max(1.6, t - acc + 0.25) if parts else dur
+        S2.append((dur, sub, fn)); acc += dur
+    S = S2
     total = sum(s[0] for s in S)
     out = OUT / f"grammar_{no}.mp4"
     starts, acc = [], 0.0
@@ -367,8 +408,14 @@ def render(no):
     sfx(wav, [x + 0.05 for x in starts], total)
     bgm = ROOT / "assets" / "bgm" / ("cycles.mp3" if no != 2 else "sailing.mp3")
     cmd = ["ffmpeg", "-v", "error", "-y", "-f", "image2pipe", "-framerate", str(FPS), "-i", "-",
-           "-i", str(wav), "-stream_loop", "-1", "-i", str(bgm),
-           "-filter_complex", f"[2:a]volume=0.22,afade=t=out:st={total-1}:d=1[m];[1:a][m]amix=inputs=2:normalize=0,alimiter=limit=0.9[a]",
+           "-i", str(wav), "-stream_loop", "-1", "-i", str(bgm)]
+    fc = f"[2:a]volume={0.10 if clips else 0.22},afade=t=out:st={total-1}:d=1[m];"
+    mix = "[1:a][m]"
+    for i, (t0, mp3) in enumerate(clips):
+        cmd += ["-i", str(mp3)]
+        fc += f"[{3+i}:a]aresample=44100,adelay={int(t0*1000)}:all=1[v{i}];"; mix += f"[v{i}]"
+    fc += f"{mix}amix=inputs={2+len(clips)}:normalize=0,alimiter=limit=0.9[a]"
+    cmd += ["-filter_complex", fc,
            "-map", "0:v", "-map", "[a]", "-t", f"{total}", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20",
            "-c:a", "aac", "-b:a", "160k", str(out)]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
