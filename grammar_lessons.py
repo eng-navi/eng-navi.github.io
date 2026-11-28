@@ -269,4 +269,212 @@ hour(アワー)、honest(オネスト)
 ■ 問題の答え
 honest は h を読まずに「オ」の音で始まるので an。
 She is an honest person.(彼女は正直な人だ)"""),
+    dict(no=10, title="I'm agree. は間違い?",
+         hook="*I'm agree* with you.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="agree", kana="アグリー", wrong="I'm agree", right="I agree",
+                ask="アグリーの前に、アムは必要でしょうか?", ask_sub="agree の前に am はいる…?",
+                say="アグリーは「さんせいする」という動詞なので、アムはいりません。", sub="agree は動詞\n→ am はいらない",
+                en="*I agree* with you.", ja="*あなたに賛成です*", ja_say="あなたに、さんせいです。"),
+         b=dict(key="sure", kana="シュア", wrong="I sure", right="I'm sure",
+                ask="じゃあ、シュアはどうでしょう?", ask_sub="じゃあ sure は?",
+                say="シュアは「たしかな」という形容詞なので、アムが必要です。", sub="sure は形容詞\n→ am が必要",
+                en="*I'm sure* he'll come.", ja="*きっと*彼は来るよ", ja_say="きっと、彼は来るよ。"),
+         q=dict(en="I (    ) with your idea.", choices="1  agree      2  am agree", ja="あなたの考えに賛成です",
+                say="問題です。1ばんと2ばん、正しいのはどっち?答えは、コメントで教えてね。", answer=1, word="agree"),
+         point="agree は動詞なので be 動詞はいらない。sure・happy などの形容詞には be 動詞が必要。",
+         detail="""■ 動詞には be 動詞をつけない
+I agree.(賛成です)
+I like it.(それが好き)
+× I'm agree. / × I'm like it.
+
+■ 形容詞には be 動詞が必要
+I'm sure.(たしかです)
+I'm happy.(うれしい)
+× I sure. / × I happy.
+
+■ agree の使い方
+agree with 人(人に賛成する)
+I agree with you.
+agree to 提案(提案に同意する)
+They agreed to the plan.
+
+■ 反対は disagree
+I disagree.(反対です)"""),
+
+    dict(no=11, title="I very like it. は言えない?",
+         hook="I *very like* this song.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="very", kana="ベリー", wrong="I very like it", right="I like it very much",
+                ask="ベリーは、ライクの前に、おけるでしょうか?", ask_sub="very は like の前に置ける…?",
+                say="ベリーは動詞の前には置けません。文の最後に、ベリー・マッチをつけます。", sub="very は動詞の前に\n置けない",
+                en="I like this song|*very much*.", ja="この曲が*とても*好き", ja_say="この曲が、とても好き。"),
+         b=dict(key="really", kana="リアリー", wrong=None, right="動詞の前に置ける",
+                ask="じゃあ、リアリーならどうでしょう?", ask_sub="じゃあ really なら?",
+                say="リアリーは、動詞の前に置けます。会話ではこちらがよく使われます。", sub="really は\n動詞の前に置ける",
+                en="I *really like*|this song.", ja="この曲、*ほんとうに*好き", ja_say="この曲、ほんとうに好き。"),
+         q=dict(en="I (    ) love|this movie.", choices="1  very      2  really", ja="この映画、ほんとうに大好き",
+                say="問題です。1のベリーか、2のリアリーか。答えは、コメントで教えてね。", answer=2, word="really"),
+         point="very は動詞の前に置けない(× I very like)。really なら動詞の前に置ける。",
+         detail="""■ very の位置
+very は形容詞・副詞を強める語。
+very big / very fast(とても大きい/とても速い)
+動詞を強めるときは very much を文の最後に。
+I like it very much.
+
+■ really は動詞の前にOK
+I really like it.(ほんとうに好き)
+I really want to go.(ほんとうに行きたい)
+
+■ よくある間違い
+× I very want it. → ○ I really want it.
+
+■ ほかにも
+so much / a lot も使えます。
+I like it a lot.(すごく好き)"""),
+
+    dict(no=12, title="on Sunday と in April、なぜ違う?",
+         hook="See you *in Sunday*.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="on", kana="オン", wrong="in Sunday", right="on Sunday",
+                ask="サンデーの前は、インでいいでしょうか?", ask_sub="Sunday の前は in でいい…?",
+                say="ようびや、ひづけには、オンをつかいます。", sub="曜日・日付には\non",
+                en="See you *on Sunday*.", ja="*日曜日に*会おうね", ja_say="にちようびに、あおうね。"),
+         b=dict(key="in", kana="イン", wrong="on April", right="in April",
+                ask="じゃあ、エイプリル、4月はどうでしょう?", ask_sub="じゃあ April(4月)は?",
+                say="月や、としのように、ながい期間には、インをつかいます。", sub="月・年には\nin",
+                en="School starts *in April*.", ja="学校は*4月に*始まる", ja_say="学校は、しがつに始まる。"),
+         q=dict(en="My birthday is (    ) May.", choices="1  on      2  in", ja="わたしの誕生日は5月",
+                say="問題です。1のオンか、2のインか。答えは、コメントで教えてね。", answer=2, word="in"),
+         point="曜日・日付には on、月・年・季節には in、時刻には at。",
+         detail="""■ 時を表す at / on / in
+at …時刻(点) at 7:00 / at noon
+on …曜日・日付 on Sunday / on May 5
+in …月・年・季節(長い期間) in April / in 2026 / in summer
+
+■ イメージ
+at(点)→ on(1日)→ in(長い期間)と、だんだん広くなる。
+
+■ 特定の日の朝は on
+in the morning(朝に)
+on Sunday morning(日曜の朝に)
+
+■ next / last / every の前には何もつけない
+× on next Sunday → ○ next Sunday"""),
+
+    dict(no=13, title="I have 20 years old. は間違い?",
+         hook="I *have* 20 years old.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="am", kana="アム", wrong="I have 20", right="I'm 20 years old",
+                ask="ねんれいを言うとき、ハブでいいでしょうか?", ask_sub="年齢を言うとき、have でいい…?",
+                say="ねんれいは、ビー動詞でいいます。アイム・トゥエンティです。", sub="年齢は be 動詞で",
+                en="*I'm* 20 years old.", ja="わたしは*20さい*です", ja_say="わたしは、にじゅっさいです。"),
+         b=dict(key="have", kana="ハブ", wrong="I'm a cold", right="I have a cold",
+                ask="じゃあ、かぜをひいているときは?", ask_sub="じゃあ「かぜをひいている」は?",
+                say="かぜや熱は、ハブを使います。アイ・ハブ・ア・コールドです。", sub="かぜ・熱は have",
+                en="I *have* a cold.", ja="かぜを*ひいている*", ja_say="かぜを、ひいている。"),
+         q=dict(en="My father (    )|45 years old.", choices="1  is      2  has", ja="父は45さいです",
+                say="問題です。1のイズか、2のハズか。答えは、コメントで教えてね。", answer=1, word="is"),
+         point="年齢は be 動詞(I'm 20.)、かぜ・熱・頭痛は have(I have a cold.)。",
+         detail="""■ 年齢は be 動詞
+I'm 20 (years old).(20歳です)
+How old are you?(何歳?)
+× I have 20 years old.
+
+■ 体の具合は have
+I have a cold.(かぜをひいている)
+I have a fever.(熱がある)
+I have a headache.(頭が痛い)
+
+■ be 動詞で言う体の具合
+I'm sick.(具合が悪い)
+I'm tired.(疲れている)
+
+■ 年齢の「歳」は years old
+「20歳の学生」は a 20-year-old student(year に s がつかない)"""),
+
+    dict(no=14, title="play と do、スポーツでの使い分け",
+         hook="I *play* judo.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="play", kana="プレイ", wrong="どのスポーツも", right="ボールを使う競技",
+                ask="スポーツは、どれでもプレイでいいでしょうか?", ask_sub="スポーツは全部 play でいい…?",
+                say="プレイは、テニスやサッカーのように、ボールをつかうスポーツに使います。", sub="play は\nボールを使う競技",
+                en="I *play* soccer|on weekends.", ja="週末に*サッカーをする*", ja_say="週末に、サッカーをする。"),
+         b=dict(key="do", kana="ドゥー", wrong="play judo", right="do judo",
+                ask="じゃあ、じゅうどうはどうでしょう?", ask_sub="じゃあ柔道は?",
+                say="じゅうどうや、ヨガのように、ボールを使わないものには、ドゥーを使います。", sub="do は\nボールを使わない運動",
+                en="I *do* judo|after school.", ja="放課後に*柔道をする*", ja_say="ほうかごに、じゅうどうをする。"),
+         q=dict(en="My sister (    ) yoga|every morning.", choices="1  plays      2  does", ja="姉は毎朝ヨガをする",
+                say="問題です。1のプレイズか、2のダズか。答えは、コメントで教えてね。", answer=2, word="does"),
+         point="ボールを使う競技は play、武道やヨガなどは do、スキーなどは go 〜ing。",
+         detail="""■ play …ボールを使う競技
+play tennis / play soccer / play baseball
+
+■ do …ボールを使わない運動・武道
+do judo / do karate / do yoga / do exercise
+
+■ go 〜ing …移動する運動
+go skiing / go swimming / go running
+
+■ 楽器は play the 〜
+play the piano / play the guitar
+
+■ 問題の答え
+主語が My sister なので does(do に s がつく形)。
+My sister does yoga every morning."""),
+
+    dict(no=15, title="「間違える」は make? do?",
+         hook="I *did* a mistake.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="make", kana="メイク", wrong="do a mistake", right="make a mistake",
+                ask="ミステイク、間違いには、ドゥーでいいでしょうか?", ask_sub="mistake には do でいい…?",
+                say="ミステイクには、メイクを使います。メイク・ア・ミステイクで「間違える」です。", sub="make a mistake\n(間違える)",
+                en="I *made* a mistake.", ja="*間違えちゃった*", ja_say="まちがえちゃった。"),
+         b=dict(key="do", kana="ドゥー", wrong="make my homework", right="do my homework",
+                ask="じゃあ、しゅくだいはどうでしょう?", ask_sub="じゃあ宿題(homework)は?",
+                say="しゅくだいには、do をつかいます。do my homework です。", sub="do my homework\n(宿題をする)",
+                en="I *do* my homework|after dinner.", ja="夕食のあとに*宿題をする*", ja_say="ゆうしょくのあとに、しゅくだいをする。"),
+         q=dict(en="Don't worry. Everyone|(    ) mistakes.", choices="1  makes      2  does", ja="大丈夫、だれでも間違えるよ",
+                say="問題です。1のメイクスか、2のダズか。答えは、コメントで教えてね。", answer=1, word="makes"),
+         point="mistake・friends・a plan は make、homework・the dishes・my best は do。",
+         detail="""■ make …何かを作り出す
+make a mistake(間違える)
+make friends(友だちを作る)
+make a plan(計画を立てる)
+make a decision(決める)
+
+■ do …作業・仕事をする
+do my homework(宿題をする)
+do the dishes(皿洗いをする)
+do my best(ベストを尽くす)
+do the shopping(買い物をする)
+
+■ 覚え方
+新しく「生み出す」なら make、決まった作業を「こなす」なら do。
+
+■ 問題の答え
+Everyone は1人あつかいなので makes。"""),
+
+    dict(no=16, title="listen と hear、どう違う?",
+         hook="I like *listening music*.", hook_say="この英語、どこが変でしょう?", hook_sub="この英語、\nどこが変?",
+         a=dict(key="listen to", kana="リッスン", wrong="listen music", right="listen to music",
+                ask="リッスンのあとに、すぐミュージックでいいでしょうか?", ask_sub="listen のすぐあとに music…?",
+                say="リッスンのあとには、トゥーがひつようです。リッスン・トゥー・ミュージックです。", sub="listen to 〜\n(to が必要)",
+                en="I like *listening to*|music.", ja="音楽を*聞く*のが好き", ja_say="おんがくを、きくのが好き。"),
+         b=dict(key="hear", kana="ヒア", wrong=None, right="自然に聞こえる",
+                ask="じゃあ、ヒアとのちがいは?", ask_sub="じゃあ hear とのちがいは?",
+                say="リッスンは、自分から聞くこと。ヒアは、自然に聞こえることです。", sub="listen は自分から\nhear は自然に聞こえる",
+                en="Sorry, I can't *hear*|you.", ja="ごめん、*聞こえない*", ja_say="ごめん、きこえない。"),
+         q=dict(en="I like (    ) to the radio|in the car.", choices="1  listening      2  hearing", ja="車でラジオを聞くのが好き",
+                say="問題です。1のリスニングか、2のヒアリングか。答えは、コメントで教えてね。", answer=1, word="listening"),
+         point="listen to は「(自分から)耳を傾ける」、hear は「(自然に)聞こえる」。",
+         detail="""■ listen to …自分から聞く
+listen to music(音楽を聞く)
+Listen to me.(わたしの話を聞いて)
+listen のあとには to が必要。
+
+■ hear …自然に聞こえる
+I heard a strange sound.(変な音が聞こえた)
+Can you hear me?(聞こえる?)
+
+■ 見る も同じ関係
+look at(自分から見る)/ see(自然に見える)
+watch(動くものをじっと見る)
+
+■ よくある間違い
+× I'm listening music. → ○ I'm listening to music."""),
 ]
