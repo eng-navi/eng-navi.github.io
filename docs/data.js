@@ -3895,5 +3895,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 204,
+    "text": "Running a marathon after only three months of training is no small feat.",
+    "target": "no small feat",
+    "glossary": [
+      "no small feat：たいしたこと、偉業",
+      "feat：(すぐれた)業績、離れ業",
+      "marathon：フルマラソン"
+    ],
+    "translation": "たった3か月の練習でフルマラソンを走るのは、なかなかできることではない。",
+    "explanation": "「feat」は「偉業」。no small(決して小さくない)と打ち消して、「なかなかの偉業だ」とほめる表現になります。\nnot small より強い否定で、感心している気持ちが伝わります。",
+    "audio": "audio/q204.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
