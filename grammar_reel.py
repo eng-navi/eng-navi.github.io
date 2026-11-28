@@ -282,7 +282,7 @@ def V1():
         card(b, T, t, [([("Be quiet, (    ) the", False)], "en"), ([("baby will wake up.", False)], "en"),
                        ([("1  and      2  or", False)], "q")], 880, d=0.2, angle=-1),
         tape(b, T, t, "静かにして、さもないと赤ちゃんが起きる", 540, 1200, angle=-2, d=0.8, size=46))))
-    NAR = {0: [('ja', 'この英語、わかりますか?'), ('m', "Leave now, and you'll catch the bus.")], 1: [('ja', 'アンドは「そして」?')], 2: [('ja', '実は、命令文のあとだと「そうすれば」なんです。')], 3: [('f', "Leave now, and you'll catch the bus."), ('ja', '今出なさい、そうすれば間に合うよ。')], 4: [('ja', 'じゃあ、オアは?')], 5: [('ja', '命令文のあとのオアは「さもないと」。')], 6: [('m', "Leave now, or you'll miss the bus."), ('f', "Leave now, or you'll miss the bus."), ('ja', 'さもないと、乗り遅れるよ。')], 7: [('ja', '問題です。1のアンドか、2のオアか。答えはコメントで!')]}
+    NAR = {0: [('ja', 'この英語、わかりますか?'), ('m', "Leave now, and you'll catch the bus.")], 1: [('ja', 'アンドは「そして」?')], 2: [('ja', '実は、命令文のあとだと「そうすれば」なんです。')], 3: [('f', "Leave now, and you'll catch the bus."), ('ja', '今出なさい、そうすれば間に合うよ。')], 4: [('ja', 'じゃあ、オアのほうは、どうでしょう?')], 5: [('ja', '命令文のあとのオアは、「さもないと」という意味です。')], 6: [('m', "Leave now, or you'll miss the bus."), ('f', "Leave now, or you'll miss the bus."), ('ja', 'さもないと、乗り遅れるよ。')], 7: [('ja', '問題です。1のアンドか、2のオアか。答えはコメントで!')]}
     S = [x + (NAR.get(i, []),) for i, x in enumerate(S)]
     return "blue", S
 
@@ -361,8 +361,23 @@ VOICE = {"ja": "WQz3clzUdMqvBf0jswZQ", "m": "onwK4e9ZLuTAKqWW03F9", "f": "Xb7hH8
 SPEED = {"ja": 1.12, "m": 0.92, "f": 0.92}
 
 
+# 読み間違える語 → 読ませたい形(ひらがな)。yomi_check.py で間違いが見つかったらここに足す
+YOMI = {
+    "今出なさい": "いまでなさい",
+}
+MANIFEST = []  # (kind, 読ませた文, mp3) … yomi_check.py が使う
+
+
+def speech(kind, text):
+    if kind == "ja":
+        for k, v in YOMI.items():
+            text = text.replace(k, v)
+    return text
+
+
 def tts(kind, text):
     """ElevenLabs で読み上げ(キャッシュ)。失敗したら止める(声の差し替えはしない)"""
+    text = speech(kind, text)
     import hashlib, json, os, urllib.request, urllib.error
     import tts as _t
     _t.load_env()
@@ -380,6 +395,7 @@ def tts(kind, text):
             sys.exit(f"ElevenLabs エラー {e.code}: {e.read()[:200]} (クレジット切れの可能性。声の差し替えはしません)")
     d = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(mp3)],
                              capture_output=True, text=True).stdout)
+    MANIFEST.append({"kind": kind, "text": text, "mp3": str(mp3)})
     return mp3, d
 
 
@@ -433,6 +449,9 @@ def render(no):
         frame.convert("RGB").save(p.stdin, "JPEG", quality=92)
     p.stdin.close(); p.wait()
     wav.unlink()
+    import json
+    (OUT / f"grammar_{no}.voice.json").write_text(json.dumps(MANIFEST, ensure_ascii=False, indent=1))
+    MANIFEST.clear()
     print(out, f"{total:.1f}s")
 
 
