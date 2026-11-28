@@ -1,6 +1,8 @@
 # insta-quiz
 
-**新しい会話では、まず ACCOUNTS.md(アカウント別の作り方とユーザーが決めたこと)を読む。決めごとが変わったらその場で ACCOUNTS.md を更新する。**
+**ACCOUNTS.md(アカウント別の作り方とユーザーが決めたこと)を下で自動で読み込む。決めごとが変わったらその場で ACCOUNTS.md を更新する。**
+
+@ACCOUNTS.md
 
 Instagram (@eng_navi) 向けの英語クイズ動画を作るプロジェクト。
 
