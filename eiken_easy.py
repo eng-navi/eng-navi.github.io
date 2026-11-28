@@ -45,10 +45,10 @@ def dur(kind, text):
 
 
 # 字幕は画面用の表記に(読み上げ用のカタカナ → 英字)
-DISP = {"ハウエバー": "However", "ノット・オール": "not all", "ばつ": "×"}
+DISP = {"ハウエバー": "However", "ノット・オール": "not all", "ばつ": "×", "イン・アディション": "In addition", "ラザー・ザン": "Rather than"}
 
 
-def psub(base, t, items, y=1440):
+def psub(base, t, items, y=1510):
     """参考動画(reference/grammar_style)の字幕:ひとことずつ、ポンと出る。*強調* は黄緑。items=[(開始秒, 台本, 長さ)]"""
     phrases = []
     for st, text, d in items:
@@ -162,6 +162,7 @@ NUM = "❶❷❸❹"
 
 
 def passage(base, t, sents, y=430, d=0.0, hl=None, dim=None, size=40):
+    sents = [(re.sub(r"\(\s*①\s*\)", "(\u00a0①\u00a0)", x), n) for x, n in sents]
     """本文カード。hl={文番号: ハイライトする語句}、dim=薄くする文番号の集合"""
     hl, dim = hl or {}, dim or set()
     f, fn = gr.serif(size, 600), gr.jp(size - 4)
@@ -315,14 +316,100 @@ Many shoppers trust online reviews when choosing products. However, not all revi
 📝 単語
 trust 信頼する / honest 正直な / positive 良い、肯定的な / negative 悪い、否定的な / rival ライバル / in reality 実際には""",
     ),
+    6: dict(
+        signal=("In addition", "さらに"),
+        signal_say="ポイントは、*イン・アディション*。さらに、と*メリットを足す*合図です。",
+        steps=[
+            dict(tag="メリット", hl={2: "join a class from home"}, hl_ja={2: "自宅から授業に参加でき"}, dim={1, 3},
+                 say="2文目。自宅から参加できて、*あとで復習*もできる。どれも*メリット*の話です。"),
+            dict(tag="根拠", hl={3: "teachers do not need classrooms"}, hl_ja={3: "教室を必要としない"}, dim={1, 2},
+                 say="3文目。先生は*教室がいらない*。つまり、家賃などの*費用が減る*、ということ。"),
+        ],
+        answer_say="だから*正解は1*。安い料金で提供できる。本文に書いていないことを*推測する*問題です。",
+        trap_say="2の、先生を減らせる、は*教室と関係ない*ので、ばつ。",
+        app=dict(sents=[("Working from home saves employees the time they used to spend commuting.", 1),
+                        ("What is more, since they do not need office clothes, they can ( ① ).", 2)],
+                 chs=[("spend less money on clothing", "服にかけるお金を減らせる"), ("work longer hours every day", "毎日もっと長く働ける")], ans=1),
+        caption="""In addition のあと、何が入る?🤔
+本文に書いていないことを読む「推測型」の空所補充。英検準1級・2級の長文で差がつくポイントを解説します。
+解きたい人は一時停止してね⏸ 応用問題の答えはコメント欄に👇
+
+#英検準1級 #英検 #英語長文 #空所補充 #英語学習""",
+        comment="""✅ 応用問題の正解は 1
+
+Working from home saves employees the time they used to spend commuting. What is more, since they do not need office clothes, they can spend less money on clothing.
+在宅勤務なら、社員は通勤に使っていた時間を節約できる。さらに、仕事用の服がいらないので、服にかけるお金を減らせる。
+
+━━ 解説 ━━
+What is more(さらに)は In addition と同じ「メリットを足す」合図。
+「仕事用の服がいらない」→ 服代が減る、と推測して 1。
+2「もっと長く働ける」は、服がいらないこととは関係ないので×。
+
+推測型は「書いてあること → その結果どうなる?」を考えよう。
+
+━━ 動画の問題の全文 ━━
+Online language lessons are becoming popular among busy adults. Students can join a class from home, and lessons are often recorded so they can be reviewed later. In addition, because teachers do not need classrooms, schools can offer lessons at lower prices.
+忙しい大人の間で、オンラインの語学レッスンが人気になっている。生徒は自宅から授業に参加でき、レッスンは録画されることが多いので、あとで復習できる。さらに、先生は教室を必要としないため、学校は安い料金でレッスンを提供できる。
+
+📝 単語
+record 録画する / review 復習する / in addition さらに / offer 提供する / hire 雇う / what is more さらに / commute 通勤する""",
+    ),
+    7: dict(
+        signal=("Rather than", "〜ではなく"),
+        signal_say="ポイントは、*ラザー・ザン*。閉館する*のではなく*、と逆の内容が来る合図です。",
+        steps=[
+            dict(tag="マイナスの話", hl={1: "lending fewer books"}, hl_ja={1: "本の貸し出しが減っている"}, dim={2, 3},
+                 say="まず1文目。図書館の、本の*貸し出しが減っている*。マイナスの話です。"),
+            dict(tag="具体例", hl={3: "quiet study rooms"}, hl_ja={3: "静かな自習室"}, dim={1, 2},
+                 say="3文目に、自習室、無料のネット、講座と、*新しいサービス*がならんでいる。空所はその*まとめ*です。"),
+        ],
+        answer_say="だから*正解は1*。地域の役に立つ、*新しい方法*を見つけた。",
+        trap_say="2は、1文目から想像した*ワナ*。本を買うのをやめたとは、書いていないので、ばつ。",
+        app=dict(sents=[("Fewer people visit the old shopping street these days.", 1),
+                        ("Instead of giving up, the shop owners have ( ① ).", 2),
+                        ("They hold weekend markets, music events, and cooking classes for kids.", 3)],
+                 chs=[("started new events to bring people back", "人を呼び戻す新しい催しを始めた"), ("decided to close their shops", "店を閉めることにした")], ans=1),
+        caption="""Rather than のあと、何が入る?🤔
+空所のあとに具体例が並んだら「まとめ」を選ぶ。英検2級・準1級の長文読解でそのまま使える解き方です。
+先に解きたい人は一時停止してね⏸ 応用問題の答えはコメント欄に👇
+
+#英検2級 #英検対策 #長文読解 #英語勉強 #英検準1級""",
+        comment="""✅ 応用問題の正解は 1
+
+Fewer people visit the old shopping street these days. Instead of giving up, the shop owners have started new events to bring people back. They hold weekend markets, music events, and cooking classes for kids.
+最近、古い商店街を訪れる人が減っている。あきらめるのではなく、店主たちは人を呼び戻す新しい催しを始めた。週末の市場や音楽イベント、子ども向けの料理教室を開いている。
+
+━━ 解説 ━━
+Instead of A(Aではなく)は Rather than と同じ「逆の内容が来る」合図。
+あきらめる ↔ 新しいことを始める。さらに ❸ の「市場・音楽イベント・料理教室」をまとめると 1。
+2「店を閉める」は giving up と同じ向きなので×。
+
+空所のあとに具体例が並んでいたら、空所はそのまとめ(サマリー型)。
+
+━━ 動画の問題の全文 ━━
+Many public libraries are lending fewer books than they did ten years ago. Rather than closing, however, some libraries have found new ways to serve their communities. They now offer quiet study rooms, free internet access, and classes on topics such as job hunting and cooking.
+多くの公立図書館では、10年前に比べて本の貸し出しが減っている。しかし、閉館するのではなく、地域の役に立つ新しい方法を見つけた図書館もある。今では静かな自習室や無料のネット接続、就職活動や料理などの講座を提供しているのだ。
+
+📝 単語
+lend 貸す / rather than A Aではなく / serve 役に立つ / community 地域社会 / access 利用 / instead of A Aではなく / give up あきらめる""",
+    ),
+
 }
+
+
+def app_body(bb, t, ap):
+    """応用問題:本文 → 選択肢 → その下に「答えはコメント欄に」と「保存」(本文の長さに合わせて位置を決める)"""
+    yb = passage(bb, t, ap["sents"], y=440, d=0.15) + 30
+    choices(bb, t, ap["chs"], yb, d=0.35)
+    gr.comment_cta(bb, T, t, d=0.7, y=yb + 182 + 90)
+    gr.tape(bb, T, t, "保存して、あとで復習", 540, yb + 182 + 230, angle=-2, d=1.0, size=44)
 
 
 def build(L):
     import eiken_problems as ep
     Q = next(q for q in ep.PROBLEMS if q["no"] == L["no"])
     sc = SCRIPTS[L["no"]]
-    sents = [(re.sub(r"\(\s*①\s*\)", "( ① )", s), n) for s, n in Q["body"][0]]
+    sents = [(re.sub(r"\(\s*①\s*\)", "(\u00a0①\u00a0)", s), n) for s, n in Q["body"][0]]
     chs, ans = Q["choices"], Q["answer"]
     S = []
     # 0〜約2.5秒:問題 → 「止めてね」→ すぐ解説へ
@@ -368,10 +455,7 @@ def build(L):
     scene(S, lambda bb, t: (
         step_tag(bb, t, f"{n0 + 2:02d}", "応用問題"),
         label(bb, t, "同じ発想で、解ける?", 330, size=60, color=GREEN),
-        choices(bb, t, ap["chs"], passage(bb, t, ap["sents"], y=440, d=0.15) + 30, d=0.35),
-        gr.comment_cta(bb, T, t, d=0.7, y=1150),
-        gr.tape(bb, T, t, "保存して、あとで復習", 540, 1290, angle=-2, d=1.0, size=44),
-        zigzag(bb, t, 80, 1010, d=0.4), zigzag(bb, t, 830, 1010, d=0.5)),
+        app_body(bb, t, ap)),
         [("ja", "最後に*応用問題*。同じ発想で、*解けるかな?*")])  # リーディングなので英文は読まない。ここでサクッと終える
     return "blue", S
 
@@ -387,6 +471,29 @@ def render(no):
     return out
 
 
+def add(no, at):
+    """docs/reels に公開して reel_schedule.json(GitHub Actions が reel_post.py run eiken で投稿)へ。push は別"""
+    import json, shutil
+    import post
+    no = int(no)
+    sc = SCRIPTS[no]
+    src = OUT / f"eiken_{no:03d}.mp4"
+    dst = ROOT / "docs" / "reels" / f"eiken_easy_{no:03d}.mp4"
+    shutil.copy(src, dst)
+    cap = sc["caption"] + "\n\n" + gr.track_for(no)["credit"]
+    key = f"eiken_easy_{no:03d}"
+    sch = ROOT / "reel_schedule.json"
+    items = [s for s in json.loads(sch.read_text()) if s["key"] != key]
+    items.append({"key": key, "kind": "eiken", "at": at, "video": f"https://eng-navi.github.io/reels/{dst.name}",
+                  "caption": post.keep_blank_lines(cap), "comment": post.keep_blank_lines(sc["comment"])})
+    items.sort(key=lambda s: s["at"])
+    sch.write_text(json.dumps(items, ensure_ascii=False, indent=1) + "\n")
+    print("予約:", key, at)
+
+
 if __name__ == "__main__":
-    for a in sys.argv[1:] or ["31"]:
-        render(int(a))
+    if sys.argv[1:2] == ["add"]:  # python3 eiken_easy.py add 6 "2026-11-28 21:00"
+        add(sys.argv[2], sys.argv[3])
+    else:
+        for a in sys.argv[1:] or ["31"]:
+            render(int(a))
