@@ -137,8 +137,8 @@ def choices(base, t, chs, y, d=0.0, mark=None, size=36):
         L = "AB"[i]
         on = (mark or {}).get(L)
         yy = 20 + i * (h + 16)
-        g.rounded_rectangle([20, yy, sr.CARD_W + 20, yy + h], 16, fill=(LIGHT if on == "o" else (255, 255, 255)) + (255,),
-                            outline=(BLUE if on == "o" else (226, 226, 226)) + (255,), width=3 if on == "o" else 2)
+        g.rounded_rectangle([20, yy, sr.CARD_W + 20, yy + h], 16, fill=(LIGHT if on == "o" else sr.CH_BG) + (255,),
+                            outline=(BLUE if on == "o" else sr.CH_LINE) + (255,), width=3 if on == "o" else 2)
         g.text((48, yy + h / 2), f"({L})", font=fl, fill=BLUE + (255,), anchor="lm")
         col = (170, 170, 170) if on == "x" else INK
         tx = 48 + fl.getlength("(A)") + 22
@@ -167,7 +167,7 @@ def ja_card(base, t, ja, y, d=0.0, hl=None, dim=None, size=30):
                 line += ch
         rows.append((n, line))
     hgt = 92 + lh * len(rows) + 8 * len(parts) + 10
-    lay, g = sr._card(sr.CARD_W, hgt, "和訳")
+    lay, g = sr._card(sr.CARD_W, hgt, "和訳", fill=sr.JA_BG, line=sr.JA_LINE)
     yy, prev = 90, None
     for n, line in rows:
         if prev is not None and n != prev: yy += 8

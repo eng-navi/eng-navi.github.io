@@ -114,13 +114,18 @@ def rail(base, t, no, label, d=0.0, k_out=0.0):
     appear(base, lay, LINE_X + r + 22, PILL_Y - h / 2, t, d, rise=0, dx=-30)
 
 
-def _card(w, h, title):
+JA_BG = (240, 244, 251)   # 和訳のカード:うすい青グレー(英文の白いカードと見分ける・2026-11-28)
+CH_BG = (245, 245, 247)   # 選択肢:うすいグレー
+JA_LINE, CH_LINE = (222, 230, 245), (232, 232, 236)
+
+
+def _card(w, h, title, fill=(255, 255, 255), line=(232, 232, 232)):
     lay = Image.new("RGBA", (w + 40, h + 40), (0, 0, 0, 0))
     sh = Image.new("RGBA", lay.size, (0, 0, 0, 0))
     ImageDraw.Draw(sh).rounded_rectangle([20, 26, w + 20, h + 26], 22, fill=(0, 0, 0, 34))
     lay.alpha_composite(sh.filter(ImageFilter.GaussianBlur(12)))
     g = ImageDraw.Draw(lay)
-    g.rounded_rectangle([20, 20, w + 20, h + 20], 22, fill=(255, 255, 255, 255), outline=(232, 232, 232, 255), width=2)
+    g.rounded_rectangle([20, 20, w + 20, h + 20], 22, fill=fill + (255,), outline=line + (255,), width=2)
     if title:
         g.text((56, 42), title, font=gr.jp(30), fill=(150, 150, 150, 255))
     return lay, g
@@ -179,7 +184,7 @@ def sentence_card(base, t, lines, show, labels=None, y=650, d=0.1, title="英文
 def text_card(base, t, rows, y=650, d=0.1, title="和訳", size=46):
     """日本語のカード。*語* は青字"""
     f = gr.jp(size)
-    lay, g = _card(CARD_W, 100 + int(size * 1.7) * len(rows), title)
+    lay, g = _card(CARD_W, 100 + int(size * 1.7) * len(rows), title, fill=JA_BG, line=JA_LINE)
     yy = 104
     for r in rows:
         x = 64
