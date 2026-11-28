@@ -99,6 +99,12 @@ Whether the new library will open on time depends on how quickly the workers can
 }
 
 
+import grammar_reel as _gr
+import seidoku_lessons as _sl  # No.4〜 のキャプション・コメント(音楽のクレジットはここで足す)
+for _k, _v in _sl.TEXTS.items():
+    TEXTS[_k] = dict(_v, caption=_v["caption"] + "\n\n" + _gr.track_for(_k)["credit"])
+
+
 def use():
     post.load_env()
     os.environ["IG_USER_ID"] = os.environ["GEO_IG_USER_ID"]

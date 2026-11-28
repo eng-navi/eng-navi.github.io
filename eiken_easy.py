@@ -396,6 +396,10 @@ lend 貸す / rather than A Aではなく / serve 役に立つ / community 地�
 
 }
 
+import eiken_scripts as _es  # 台本の続き(1週間ずつ eiken_scripts.py に足す)
+SCRIPTS.update(_es.MORE)
+DISP.update(_es.DISP)
+
 
 def app_body(bb, t, ap):
     """応用問題:本文 → 選択肢 → その下に「答えはコメント欄に」と「保存」(本文の長さに合わせて位置を決める)"""

@@ -91,7 +91,7 @@ def passage(base, t, P, y, d=0.0, hl=None, dim=None, size=36):
         if prev is not None and n != prev: yy += 8
         col = (195, 195, 195) if n in dim else INK
         if first:
-            g.text((62, yy + 4), NUM[n - 1], font=fn, fill=(BLUE if n not in dim else col) + (255,))
+            g.text((62, yy + 4), NUM[n - 1] if n else "", font=fn, fill=(BLUE if n not in dim else col) + (255,))
         x = 110
         if rng:
             x0, x1 = x + f.getlength(line[:rng[0]]), x + f.getlength(line[:rng[1]])
@@ -166,7 +166,8 @@ def ja_card(base, t, ja, y, d=0.0, hl=None, dim=None, size=30):
             else:
                 line += ch
         rows.append((n, line))
-    lay, g = sr._card(sr.CARD_W, 92 + lh * len(rows) + 8 * len(parts) + 10, "和訳")
+    hgt = 92 + lh * len(rows) + 8 * len(parts) + 10
+    lay, g = sr._card(sr.CARD_W, hgt, "和訳")
     yy, prev = 90, None
     for n, line in rows:
         if prev is not None and n != prev: yy += 8
@@ -183,6 +184,7 @@ def ja_card(base, t, ja, y, d=0.0, hl=None, dim=None, size=30):
             g.text((x, yy), line, font=f, fill=col + (255,))
         yy += lh; prev = n
     sr.appear(base, lay, sr.CARD_X - 20, y, t, d)
+    return y + hgt
 
 
 def pause_tip(base, t, y, d=0.6):
@@ -346,6 +348,10 @@ location 場所、店舗 / allow A to do Aが〜できるようにする / host 
 
 }
 
+import toeic_scripts as _ts  # 台本の続き(1週間ずつ toeic_scripts.py に足す)
+SCRIPTS.update(_ts.MORE)
+sr.DISP.update(_ts.DISP)
+
 
 def build(L):
     import toeic_problems as tp
@@ -355,22 +361,40 @@ def build(L):
     ansL = Q["answer"].strip("()")
     S = []
     # 0〜約2.5秒:問題 → 「止めてね」→ すぐ解説へ
+    scratch = Image.new("RGBA", (W, gr.H))
+
+    def fit(draw, bottom, sizes=range(40, 27, -1)):
+        """本文が長いときは文字を小さくして、bottom までに収める(場面ごとに1回だけ計算)"""
+        for z in sizes:
+            if draw(scratch, 10.0, z) <= bottom:
+                return z
+        return sizes[-1]
+
+    def prob_body(bb, t, z):
+        y = passage(bb, t, P, TOP, d=0.1, size=z)
+        y = question(bb, t, Q["q"], y - 20, d=0.2, size=z + 2)
+        return choices(bb, t, chs, y - 34, d=0.3, size=z + 2)
+    pz = fit(prob_body, 1400)  # 一時停止のピルが 1480 までに収まるように
+
     def problem(bb, t):
         header(bb, t, "TOEIC Part 7、", "*解ける?*")
-        y = passage(bb, t, P, TOP, d=0.1, size=38)
-        y = question(bb, t, Q["q"], y - 20, d=0.2, size=40)
-        y = choices(bb, t, chs, y - 34, d=0.3, size=40)
+        y = prob_body(bb, t, pz)
         pause_tip(bb, t, y + 40, d=0.6)
     # 本文は読み上げない(16秒の待ち時間で離脱されるため。解きたい人は一時停止する)。設問だけ英語で読んで、次の「設問のキーワード」へつなぐ
     sr.scene(S, problem, [("ja", "どっちが正解?解くなら、ここで止めてね。")], ("00", "問題"))  # 英文の読み上げはしない(2026-11-28)
+    def pj_body(bb, t, z, st):
+        y = passage(bb, t, P, TOP - 10, hl=st["hl"], dim=st["dim"], size=z)
+        return ja_card(bb, t, Q["ja"], y - 28, d=0.25, hl=st.get("hl_ja"), dim=st["dim"], size=max(26, z - 9))
     for st in sc["steps"]:
+        if st["kind"] == "p":
+            st = dict(st, z=fit(lambda bb, t, z, st=st: pj_body(bb, t, z, st), 1480, range(38, 27, -1)))  # 字幕(1570)と重ならない
+
         def content(bb, t, st=st):
             header(bb, t, st["l1"], st["l2"])
             if st["kind"] == "q":
                 question(bb, t, Q["q"], TOP + 80, key=sc["key"][0], size=56)
             elif st["kind"] == "p":
-                y = passage(bb, t, P, TOP - 10, hl=st["hl"], dim=st["dim"], size=38)
-                ja_card(bb, t, Q["ja"], y - 28, d=0.25, hl=st.get("hl_ja"), dim=st["dim"], size=29)
+                pj_body(bb, t, st["z"], st)
             else:
                 choices(bb, t, chs, TOP + 80, mark={ansL: "o", ("A" if ansL == "B" else "B"): "x"}, size=44)
             sr.subtitle(bb, t, st["say"], sr.dur("ja", st["say"]), y=1570)

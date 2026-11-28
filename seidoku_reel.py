@@ -311,6 +311,9 @@ LESSONS = [
 ]
 
 
+import seidoku_lessons as _sl  # 台本の続き(1週間ずつ seidoku_lessons.py に足す)
+LESSONS += _sl.LESSONS
+
 # ---------- 間(無音)と字幕 ----------
 _tts = gr.tts
 
@@ -348,6 +351,7 @@ def scene_dur(parts, default):
 DISP = {"ディペンド・オン": "depend on", "ディペンズ": "depends", "ハウ・クイックリー": "how quickly", "ウェザー": "Whether",
         "ジ・オールド・タウン": "the old town", "ゼイ・ハド・レッド": "they had read", "ワット": "What", "ワズ": "was", "ザット": "That", "ライク": "like", "イズ": "is", "マッチ": "much", "ふたつめ": "2つ目", "ひとつ": "1つ",
         "やく": "訳", "つぎに": "次に", "まえの": "前の", "うしろ": "後ろ"}
+DISP.update(_sl.DISP)
 SUB_F = None
 
 
