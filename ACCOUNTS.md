@@ -1,0 +1,52 @@
+# アカウント別の作り方と、ユーザーが決めたこと(引き継ぎ用)
+
+新しい会話では、まずこのファイルと CLAUDE.md を読む。「〇〇の補充をして」「〇〇を作って」と言われたら、ここの手順どおりに作る。
+**決めごとが変わったら、その場でこのファイルを書き換えてコミットする**(ユーザーの希望)。
+
+## 共通ルール
+- 返事は日本語。短く。トークン節約(まとめて作る/画像プレビューは新しい形式のときだけ/長い処理は裏で動かして要点だけ見る)。
+- 変更のたびに commit + push。戻すときは revert(履歴は書き換えない)。
+- トークンはチャットに貼らない(ユーザーがコピー → 私が .env に書く → ユーザーが `gh secret set`)。
+- 英文・例文はすべてオリジナル(本は題材選びと形式の参考だけ。本の文は使わない)。本のスクショは公開しない。
+- 写真は CC0(Openverse の StockSnap。ブラウザの UA+referer で取得)、キャプションにクレジット。
+- 音楽は Uppbeat(キャプションに「Music: 曲名 / 作者 — Music from #Uppbeat (free for Creators!)」)。曲は assets/bgm/。
+- ElevenLabs:クレジットが切れたら止めてユーザーに言う。勝手に別の声に替えない。声の大きさはそろえる(loudnorm/alimiter、歪ませない)。
+- 日本語ナレーションは eleven_v3、英文は eleven_multilingual_v2。**日本語は毎回 yomi_check.py で読みを確認**(CLAUDE.md「読みチェック」)。
+- 中継・圧縮系のプラグイン(OmniRoute/Headroom など)は使わない(.env 漏れ・品質低下)。
+
+## @toeic_read30「30秒TOEIC読解」(カルーセル・自動投稿・音楽なし)
+- トークン IVY_IG_*。作る:`toeic_problems.py` に No を足す → `python3 toeic_set.py N` → `python3 toeic_post.py plan A B YYYY-MM-DD`(1日3本 07:30/12:30/20:30)。
+- デザインは固定(ユーザー「これで統一」):クリーム/黒の市松、左上に大きく TOEIC、中は本文を上に固定+下に解説、3枚目に和訳(太字)、問題の画面は英語だけ、本文は45語以内。
+- Part 7 中心。Part 6 も混ぜる予定。見出しは正直に(根拠のない数字は書かない)。
+- 復習ページ:build_reading.py(docs/reading/)。plan で自動更新。
+
+## @eiken_reading_club「英検リーディング部」(カルーセル)
+- トークン SEA_IG_*。`eiken_problems.py` → `eiken_set.py N` → `eiken_post.py plan A B day`(07:00/12:00/21:00)。
+- 準1級の空所補充、2択。表紙は紺/青/クリーム/砂の6レイアウトを順番に、「Q. 2択クイズに挑戦 →」+ストップウォッチ。中のスライドはクリーム地に紺の文字(試験っぽく)。和訳は太字、❶❷のあとに空き。
+- 表紙の写真は毎回ちがうもの(かっこいい勉強の雰囲気。アジア人でなくてよい)。使用済みと 16x16 の特徴で重複チェック。
+- 表紙の単語がたまに正解と同じでも OK(毎回でなければ)。
+
+## TOEIC/英検のタイマー付きリール
+- `reel_quiz.py`(7秒ループ:最初のコマから問題、見出しと選択肢がスライドイン、やわらかい秒針の音、最後に「答えはコメントで」の帯)→ `reel_post.py plan toeic|eiken A B day`(1日3本)。
+- share_to_feed=false。コメントは「✅ 正解+一言」→「━━ 詳しい解説 ━━」。
+- 投稿済みのカルーセルの問題を順に使う。
+
+## @uk_easy_grammar「やさしい英文法」(リール・初心者向け)
+- トークン VOX_IG_*(旧お金とテック)。プロフィール画像は案2(文法+緑の丸)。
+- 作る:`grammar_lessons.py` にレッスンを足す(ペア型:a=思い込み✗→正しい意味⭕、b=対になる語、最後に2択クイズ)→ `python3 grammar_reel.py lesson N …` → `.venv-tts/bin/python yomi_check.py out/grammar/lesson_0NN.voice.json` → `python3 grammar_post.py plan A B "YYYY-MM-DD HH:MM"`。
+- 形式(ユーザーが一番気に入った青コラージュ):冒頭1.3秒はタイトルを大きく(声なし)→ 曲の盛り上がりに合わせて本編。日本語解説=Shizuka(eleven_v3、1.18倍)、英文=イギリス英語の男女(Daniel/Alice、v2・0.92倍)。テンポは詰める(何度も見返す前提)。BGM は lo-fi を小さめ(golden_age/days_off/jasmine を順番に。盛り上がり位置は grammar_reel.py の TRACKS)。
+- 台本は読み間違えにくく:英単語はカタカナ(few/a few/Me neither/do はアルファベットの方が正確)、漢字の名詞はひらがな、「〜」入りのかぎかっこは避ける。
+- キャプション:タイトル+「1か2か、コメントで」+タグ+音楽クレジット。コメント:正解+一言+「━━ 詳しい解説 ━━」(長め。滞在時間のため)。
+- 投稿:2026-11-28〜12-01 は1日4本(07:30/12:00/17:30/21:00)、12/2 から1日3本(07:30/12:30/20:30)に SLOTS を戻す。No.1〜16 は旧テンポ(v2)で予約済み。No.17 から新テンポ。
+- 今後:中級アカウント(男性の日本語解説+イギリス英語の男女)を作る予定。
+
+## Threads
+- eng_navi:threads_queue.json(type "talk" = 質問+自分で返信、リンクなし。tree 投稿 = 勉強法の本の内容をもとにした howto/myth/check)。quizify:quizify_threads_queue.json(kind "talk")。
+- 勉強法の記事はサイトの /study/ にも(study_posts.py → build_study.py)。
+
+## YouTube ショート(Buffer)
+- タイトル:自然な30〜45文字で、検索キーワード2つ。説明:自然な2〜3文、キーワード3〜4個、ハッシュタグは3つまで。詰め込まない。
+- 古い説明文の書き換え:`yt_desc.py next 180`(再生数の多い順、アマゾンのリンクを自然に。A8 のリンクは YouTube に直接貼らない)。
+
+## サイト(eng-navi.github.io)
+- メニュー:4コマは外した。TOEIC読解(/reading/)と英語の勉強法(/study/)を追加。google-site-verification は消さない。
