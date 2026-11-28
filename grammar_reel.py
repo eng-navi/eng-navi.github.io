@@ -366,7 +366,7 @@ TRACKS = [
     dict(file="days_off.mp3", drop=85.3, credit="Music: Days Off / Matrika — Music from #Uppbeat (free for Creators!)"),
     dict(file="jasmine.mp3", drop=27.7, credit="Music: Jasmine / 92elm — Music from #Uppbeat (free for Creators!)"),
 ]
-JA_TEMPO = 1.18  # 日本語ナレーションを少し速く(v3 は速さ設定がないため)
+JA_TEMPO = 1.3  # 日本語ナレーションを少し速く(v3 は速さ設定がないため)
 
 
 def track_for(no):
@@ -383,6 +383,31 @@ def hook_title(bb, T, t, title):
     for i, (line, y) in enumerate(zip(parts[:2], ys)):
         big(bb, T, t, line.strip(), y, size=120, d=0.08 * i)
     scribble(bb, T, t, 540, ys[-1] + 20, 470, 110, d=0.5, dur=0.5)
+
+
+
+def comment_cta(bb, T, t, d=0.6, y=1340):
+    """「答えと解説はコメント欄に →」右側のコメントボタンを指す(リールのコメントは画面右・高さ約70%)"""
+    if t < d: return
+    k = back((t - d) / 0.35)
+    f = jp(46)
+    s = "答えと解説はコメント欄に"
+    w = text_w(f, s) + 150
+    lay = Image.new("RGBA", (w, 110), (0, 0, 0, 0))
+    g = ImageDraw.Draw(lay)
+    g.rounded_rectangle([0, 0, w - 1, 109], 55, fill=T["accent"] + (255,))
+    # 吹き出しアイコン
+    g.ellipse([30, 28, 84, 76], outline=(20, 20, 20, 255), width=6)
+    g.polygon([(38, 70), (34, 90), (54, 74)], fill=(20, 20, 20, 255))
+    g.text((104, 22), s, font=f, fill=(20, 20, 20, 255))
+    x0 = 900 - w / 2 * (0.6 + 0.4 * k)
+    paste_rot(bb, lay, 900 - w / 2, y, 0, scale=0.6 + 0.4 * k)
+    # 右へ動く矢印
+    bob = 14 * math.sin((t - d) * 7)
+    ax = 905 + bob
+    gg = ImageDraw.Draw(bb)
+    gg.line([(ax, y), (ax + 60, y)], fill=T["accent"], width=12)
+    gg.polygon([(ax + 85, y), (ax + 52, y - 26), (ax + 52, y + 26)], fill=T["accent"])
 
 
 def lesson(L):
@@ -421,11 +446,12 @@ def lesson(L):
     S.append((2.2, b2.get("ask_sub", f"じゃあ {b2['key']} は?"), ask(b2, 4), [("ja", b2.get("ask", f"じゃあ、{b2['kana']}のほうは、どうでしょう?"))]))
     S.append((2.8, b2["sub"], right(b2, -3), [("ja", b2["say"])]))
     S.append((3.0, plain(b2["ja"]), ex(b2, 2), [("m", plain(b2["en"])), ("f", plain(b2["en"])), ("ja", b2["ja_say"])]))
-    S.append((4.4, "( ) に入るのは?\n答えはコメントで 1 か 2", lambda bb, T, t: (
+    S.append((4.4, "", lambda bb, T, t: (
+        comment_cta(bb, T, t, d=0.9),
         big(bb, T, t, "Q.", 520, size=200, color=A),
         card(bb, T, t, rows(q["en"], "en") + [([(q["choices"], False)], "q")], 880, d=0.2, angle=-1),
         tape(bb, T, t, q["ja"], 540, 1200, angle=-2, d=0.8, size=min(46, _tape_size(q["ja"], 46)))),
-        [("ja", q.get("say_short", "どっちが正しい?答えは、コメントで教えてね。"))]))
+        [("ja", q.get("say_short", "どっちが正しい?答えと解説は、コメント欄にあるよ。"))]))
     return "blue", S
 
 
