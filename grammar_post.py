@@ -19,7 +19,7 @@ import post
 ROOT = Path(__file__).parent
 SITE = os.environ.get("SITE_URL", "https://eng-navi.github.io")
 SCHEDULE, LOG = ROOT / "grammar_schedule.json", ROOT / "grammar_posted.json"
-SLOTS = ["07:30", "12:30", "20:30"]
+SLOTS = ["07:30", "12:00", "17:30", "21:00"]  # 11/29〜12/1 は1日4本。12/2から3本(07:30/12:30/20:30)に戻す
 TAGS = "#英文法 #中学英語 #英語やり直し #大人の英語学習 #英検 #TOEIC #イギリス英語"
 MUSIC = "Music: Cycles / DADA — Music from #Uppbeat (free for Creators!)"
 
