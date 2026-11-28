@@ -117,11 +117,20 @@ CARD_X, CARD_W = 150, 890
 LABEL = {"S": "S", "V": "V", "C": "C", "O": "O", "M": "M"}
 
 
-def sentence_card(base, t, lines, show, labels=None, y=650, d=0.1, title="英文"):
-    """英文は黒字。show の tag は青字+下線、下に青い札(tag ごとに最初の1回)"""
+ORANGE = (236, 120, 24)  # カタマリの括弧の色(青と相性のよい補色)
+BRACKETS = "()[]"
+
+
+def sentence_card(base, t, lines, show, labels=None, y=650, d=0.1, title="英文", size=52):
+    """英文は黒字。show の tag は青字+下線、下に青い札(tag ごとに最初の1回)。
+    括弧 ( ) [ ] はその tag が show に入ったときだけオレンジで出す(最初の画面は問題文と同じく括弧なし)。
+    tag "M" は括弧だけ(青字・札なし)。"""
     labels = {**LABEL, **(labels or {})}
-    size = 52
-    while max(gr.text_w(gr.serif(size, 600), "".join(s for s, _ in segs)) for segs in lines) > CARD_W - 90: size -= 2
+
+    def vis(s, tag):
+        return s if tag in show else "".join(c for c in s if c not in BRACKETS)
+
+    while max(gr.text_w(gr.serif(size, 600), "".join(vis(s, tg) for s, tg in segs)) for segs in lines) > CARD_W - 90: size -= 2
     f, lf = gr.serif(size, 600), gr.jp(26)
     gap = int(size * 2.45)
     lay, g = _card(CARD_W, 100 + gap * len(lines), title)
@@ -129,11 +138,18 @@ def sentence_card(base, t, lines, show, labels=None, y=650, d=0.1, title="英文
     for segs in lines:
         x = 64
         for s, tag in segs:
+            s = vis(s, tag)
             w = gr.text_w(f, s)
-            on = tag in show
-            g.text((x, yy), s, font=f, fill=(BLUE if on else INK) + (255,))
+            on = tag in show and tag != "M"
+            cx = x
+            for ch in s:
+                br = ch in BRACKETS
+                g.text((cx, yy), ch, font=f, fill=(ORANGE if br else BLUE if on else INK) + (255,),
+                       stroke_width=1 if br else 0, stroke_fill=(ORANGE + (255,)) if br else None)
+                cx += f.getlength(ch)
+            w = cx - x
             if on:
-                lead = gr.text_w(f, s[:len(s) - len(s.lstrip())])
+                lead = f.getlength(s[:len(s) - len(s.lstrip())])
                 g.line([(x + lead, yy + size * 1.32), (x + w, yy + size * 1.32)], fill=BLUE + (255,), width=4)
                 if tag not in done:
                     done.add(tag)
@@ -226,7 +242,7 @@ LESSONS = [
               "まず、ザットのうしろに、主語と動詞が続いています。だからこのザットは、「ということ」と訳すザット。長い主語のはじまりです。"),
              ("02", "動詞", "2つ目の動詞", "*is の手前* までが S", {"S", "V", "C"},
               "ふたつめの動詞、イズの手前までが、主語になります。ひとつの節に、動詞はひとつ。"),
-             ("03", "like", "like のうしろにも SV。", "*接続詞* の like", {"S", "V", "C", "L"},
+             ("03", "like", "like のうしろにも SV。", "*接続詞* の like", {"S", "V", "C", "L", "M"},
               "つぎに、ライク。うしろに主語と動詞が続くので、このライクは接続詞で、「のように」。まえのマッチは、「ほぼ」という意味です。"),
          ],
          ja=["幼い子どもが質問ばかりするのは、", "まったく*健全なこと*だ。", "科学者が、まだ説明できない考えを", "試すのと*ほぼ同じように*。"],
@@ -239,6 +255,7 @@ LESSONS = [
 
 
 def build(L):
+    ALL = set().union(*(st[4] for st in L["steps"]))
     S = []
     S.append((gr.HOOK, "", lambda bb, T, t: hook(bb, t, *L["hook"]), []))
     # 英文の読み上げは、解説に入る前の1回だけ
@@ -257,7 +274,8 @@ def build(L):
     S.append((3.0, "", lambda bb, T, t: (
         rail(bb, t, n, "和訳"),
         headline(bb, t, "つまり、", "*こういう意味*"),
-        text_card(bb, t, L["ja"])),
+        sentence_card(bb, t, L["lines"], ALL, L["labels"], y=630, d=0.0, size=42),
+        text_card(bb, t, L["ja"], y=1170, size=42)),
         [("ja", L["ja_say"])]))
     q = L["q"]
     S.append((4.4, "", lambda bb, T, t: (
@@ -265,7 +283,7 @@ def build(L):
         headline(bb, t, "同じ形で、", "*正しい訳は?*"),
         quiz_card(bb, t, q["en"], q["chs"]),
         cta(bb, t)),
-        [("f", " ".join(q["en"])), ("ja", "ただしい訳は、1と2、どっち?答えと解説は、コメント欄にあるよ。")]))
+        [("f", " ".join(q["en"])), ("ja", "ただしいやくは、1と2、どっち?答えと解説は、コメント欄にあるよ。")]))
     return "seidoku", S
 
 
