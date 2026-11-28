@@ -36,7 +36,7 @@ def lesson(no):
 
 
 def music(no):
-    if no <= 16:  # No.1〜16 は旧BGM(Cycles)
+    if no <= 4:  # No.1〜4 は旧BGM(Cycles)。5 から新しい形
         return MUSIC
     import grammar_reel as gr
     return gr.track_for(no)["credit"]
@@ -76,7 +76,7 @@ def add(no, at):
     cap, com = texts(lesson(no))
     key = f"grammar_{no:03d}"
     items = [s for s in mp.load(SCHEDULE, []) if s["key"] != key]
-    items.append({"key": key, "at": at, "video": f"{SITE}/grammar/{dst.name}", "caption": cap, "comment": com, "thumb_ms": int((starts[3 if no > 16 else 2] + 1.5) * 1000)})
+    items.append({"key": key, "at": at, "video": f"{SITE}/grammar/{dst.name}", "caption": cap, "comment": com, "thumb_ms": int((starts[3 if no > 4 else 2] + 1.5) * 1000)})
     items.sort(key=lambda s: s["at"])
     SCHEDULE.write_text(json.dumps(items, ensure_ascii=False, indent=1) + "\n")
     return [str(dst), str(SCHEDULE)]
