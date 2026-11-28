@@ -4,6 +4,7 @@
 **決めごとが変わったら、その場でこのファイルを書き換えてコミットする**(ユーザーの希望)。
 
 ## 共通ルール
+- **トークン節約:** 作業のまとまりごとに新しい会話。大きいファイル(toeic_problems.py / eiken_problems.py など)は全部読まず、`tail -40` で書き方を見て末尾に足す。時間のかかる処理は裏で1回だけ動かし、完了の通知を待つ(何度も確認しない)。出力は grep/tail で要点だけ。
 - 返事は日本語。短く。トークン節約(まとめて作る/画像プレビューは新しい形式のときだけ/長い処理は裏で動かして要点だけ見る)。
 - 変更のたびに commit + push。戻すときは revert(履歴は書き換えない)。
 - トークンはチャットに貼らない(ユーザーがコピー → 私が .env に書く → ユーザーが `gh secret set`)。
@@ -34,7 +35,9 @@
 
 ## @uk_easy_grammar「やさしい英文法」(リール・初心者向け)
 - トークン VOX_IG_*(旧お金とテック)。プロフィール画像は案2(文法+緑の丸)。
-- 作る:`grammar_lessons.py` にレッスンを足す(ペア型:a=思い込み✗→正しい意味⭕、b=対になる語、最後に2択クイズ)→ `python3 grammar_reel.py lesson N …` → `.venv-tts/bin/python yomi_check.py out/grammar/lesson_0NN.voice.json` → `python3 grammar_post.py plan A B "YYYY-MM-DD HH:MM"`。
+- **1コマンド:`python3 make_grammar.py 17 24 --plan "YYYY-MM-DD HH:MM"`**(作成→読みチェック→✗なしなら予約。出力は要点だけ)
+- レッスンは `lessons_grammar/` に1〜2週間ずつ新しいファイルで足す(既存ファイルは読まない。書き方は week01.py の最後の1件だけ見る)
+- (旧手順)`grammar_lessons.py` にレッスンを足す(ペア型:a=思い込み✗→正しい意味⭕、b=対になる語、最後に2択クイズ)→ `python3 grammar_reel.py lesson N …` → `.venv-tts/bin/python yomi_check.py out/grammar/lesson_0NN.voice.json` → `python3 grammar_post.py plan A B "YYYY-MM-DD HH:MM"`。
 - 形式(ユーザーが一番気に入った青コラージュ):冒頭1.3秒はタイトルを大きく(声なし)→ 曲の盛り上がりに合わせて本編。日本語解説=Shizuka(eleven_v3、1.3倍。ユーザーが「ゆっくり」と感じたため速くした)、英文=イギリス英語の男女(Daniel/Alice、v2・0.92倍)。テンポは詰める(何度も見返す前提)。BGM は lo-fi を小さめ(golden_age/days_off/jasmine を順番に。盛り上がり位置は grammar_reel.py の TRACKS)。
 - 台本は読み間違えにくく:英単語はカタカナ(few/a few/Me neither/do はアルファベットの方が正確)、漢字の名詞はひらがな、「〜」入りのかぎかっこは避ける。
 - 最後のクイズ画面:緑のボタン「💬 答えと解説はコメント欄に →」(右のコメントボタンを指す矢印が動く)+読み上げ「どっちが正しい?答えと解説は、コメント欄にあるよ。」
