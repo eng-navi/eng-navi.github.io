@@ -99,10 +99,13 @@ Whether the new library will open on time depends on how quickly the workers can
 }
 
 
-import grammar_reel as _gr
 import seidoku_lessons as _sl  # No.4〜 のキャプション・コメント(音楽のクレジットはここで足す)
+# grammar_reel.TRACKS と同じ順番(CI には PIL がないので grammar_reel は読み込まない)
+_CREDITS = ["Music: Golden Age / Walz — Music from #Uppbeat (free for Creators!)",
+            "Music: Days Off / Matrika — Music from #Uppbeat (free for Creators!)",
+            "Music: Jasmine / 92elm — Music from #Uppbeat (free for Creators!)"]
 for _k, _v in _sl.TEXTS.items():
-    TEXTS[_k] = dict(_v, caption=_v["caption"] + "\n\n" + _gr.track_for(_k)["credit"])
+    TEXTS[_k] = dict(_v, caption=_v["caption"] + "\n\n" + _CREDITS[_k % 3])
 
 
 def use():
