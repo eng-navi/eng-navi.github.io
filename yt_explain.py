@@ -207,18 +207,24 @@ def pause_tip(base, t, total, d=0.2, x=1090, y=420):
 
 
 def cta(base, t, deal=None):
-    """案内(PR):目的別のおすすめは説明欄に。キャンペーンがあれば一言"""
-    lay, g = card(1200, 470 if deal else 380)
-    g.rounded_rectangle([60, 50, 150, 96], 12, fill=(150, 150, 150, 255))
-    g.text((105, 73), "PR", font=gr.jp(28), fill=(255, 255, 255, 255), anchor="mm")
-    g.text((620, 160), "目的別のおすすめ教材は 説明欄に", font=gr.jp(56), fill=INK + (255,), anchor="mm")
-    for i, (ic, s) in enumerate([("🏆", "最短で結果を出したい"), ("📗", "自分のペースで解きたい"), ("📱", "スキマ時間に続けたい")]):
-        xx = 120 + i * 370
-        g.rounded_rectangle([xx, 230, xx + 340, 320], 45, fill=LIGHT + (255,), outline=BLUE + (255,), width=3)
-        g.text((xx + 170, 275), s, font=gr.jp(30), fill=BLUE + (255,), anchor="mm")
+    """案内(PR):目的別のおすすめは説明欄に。キャンペーンがあれば一言。ピルは文字の左右にたっぷり余白(窮屈に見せない)"""
+    CW = 1500
+    lay, g = card(CW, 500 if deal else 410)
+    g.rounded_rectangle([70, 56, 160, 100], 12, fill=(150, 150, 150, 255))
+    g.text((115, 78), "PR", font=gr.jp(28), fill=(255, 255, 255, 255), anchor="mm")
+    g.text((CW / 2 + 20, 175), "目的別のおすすめ教材は 説明欄に", font=gr.jp(60), fill=INK + (255,), anchor="mm")
+    fp = gr.jp(32, bold=False)
+    labels = ["最短で結果を出したい", "自分のペースで解きたい", "スキマ時間に続けたい"]
+    pw = [int(fp.getlength(s)) + 120 for s in labels]
+    gap = 44
+    xx = CW / 2 + 20 - (sum(pw) + gap * 2) / 2
+    for s, w in zip(labels, pw):
+        g.rounded_rectangle([xx, 262, xx + w, 346], 42, fill=(244, 247, 255, 255), outline=(150, 178, 240, 255), width=2)
+        g.text((xx + w / 2, 304), s, font=fp, fill=BLUE + (255,), anchor="mm")
+        xx += w + gap
     if deal:
-        g.text((620, 400), deal, font=gr.jp(36), fill=(222, 76, 64, 255), anchor="mm")
-    appear(base, lay, (W - 1240) / 2, 260, t, 0.1)
+        g.text((CW / 2 + 20, 430), deal, font=gr.jp(38), fill=(222, 76, 64, 255), anchor="mm")
+    appear(base, lay, (W - CW - 40) / 2, 250, t, 0.1)
     # 説明欄を指す矢印(下へ)
     bob = 10 * math.sin(t * 6)
     gg = ImageDraw.Draw(base)
