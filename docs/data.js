@@ -3876,5 +3876,24 @@ window.QUIZZES = [
       "uk_f",
       "uk_m"
     ]
+  },
+  {
+    "no": 203,
+    "category": "使役",
+    "question": "I had my bike ( ) at the shop near the station.",
+    "options": [
+      "repaired",
+      "repairing"
+    ],
+    "answer": 1,
+    "translation": "駅の近くの店で自転車を修理してもらった。",
+    "explanation": "have O done で「Oを〜してもらう/〜される」。\n自転車は「修理される」側なので、過去分詞を使います。\n\nしたがって、①repaired が正解。",
+    "audio": "audio/q203.mp3",
+    "voices": [
+      "us_f",
+      "us_m",
+      "uk_f",
+      "uk_m"
+    ]
   }
 ];
