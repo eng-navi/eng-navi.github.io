@@ -264,6 +264,50 @@ LESSONS = [
                 chs=[["彼が何も言わなかったのは賢明だった。", "よい選手が好機を待つのとほぼ同じように"],
                      ["彼が何も言わなかったのは、よい選手が", "好機を待つのを好むほど賢明だった"]],
                 answer=1)),
+    dict(no=2, theme="What の長いS+that節のC+関係詞の省略",
+         hook=("この What、", "訳せる?"),
+         en="What surprised the visitors most was that the old town they had read about looked completely modern.",
+         lines=[[("(What surprised the visitors most)", "S")],
+                [("was", "V"), (" [that the old town", "C")],
+                [("they had read about", "R")],
+                [("looked completely modern].", "C")]],
+         labels={"S": "S(〜すること)", "C": "C(〜ということ)", "R": "関係詞の省略"},
+         steps=[
+             ("01", "What", "文頭の What は", "*〜すること* のカタマリ", {"S"},
+              "まず、ワット。ここでは「すること」をあらわすワットです。ふたつめの動詞、*ワズの手前*までが、長い主語になります。"),
+             ("02", "that", "was のあとの that は", "*〜ということ* が C", {"S", "V", "C"},
+              "ワズのあとのザットは、*「ということ」*。ここから文の最後までが、補語のカタマリです。"),
+             ("03", "省略", "名詞のすぐあとに SV", "*関係詞の省略*", {"S", "V", "C", "R"},
+              "ジ・オールド・タウンのすぐあとに、ゼイ・ハド・レッド。名詞のあとに、主語と動詞が続くのは*関係詞の省略*。本で読んでいた古い町、となります。"),
+         ],
+         ja=["訪問者をいちばん驚かせたのは、", "本で読んでいた*古い町*が、", "すっかり*現代的に見えた*ことだった。"],
+         ja_say="ほうもんしゃを、いちばんおどろかせたのは、本で読んでいた古い町が、すっかり現代的に見えたことだった。",
+         q=dict(en=["What worried the coach was that", "the players he had trained", "seemed tired."],
+                chs=[["コーチが心配したのは、自分が鍛えた", "選手たちが疲れて見えたことだった"],
+                     ["何がコーチを心配させたかというと、", "選手が彼を鍛えて疲れたことだった"]],
+                answer=1)),
+    dict(no=3, theme="Whether の長いS+depend on+how節",
+         hook=("文頭の Whether、", "訳せる?"),
+         en="Whether the new library will open on time depends on how quickly the workers can finish the roof.",
+         lines=[[("(Whether the new library will", "S")],
+                [("open on time)", "S"), (" depends on", "V")],
+                [("[how quickly the workers can", "O")],
+                [("finish the roof].", "O")]],
+         labels={"S": "S(〜かどうか)", "V": "V(〜次第だ)", "O": "O(どれだけ〜か)"},
+         steps=[
+             ("01", "Whether", "文頭の Whether は", "*〜かどうか*", {"S"},
+              "いちばん最初のウェザーは、*「かどうか」*。ふたつめの動詞、ディペンズの手前までが、長い主語です。"),
+             ("02", "depend on", "depend on + 人以外", "*〜次第だ*", {"S", "V"},
+              "ディペンド・オンは、うしろに人以外が来ると、*「次第だ」*という意味になります。"),
+             ("03", "how", "how のカタマリは", "*どれだけ〜か*", {"S", "V", "O"},
+              "ハウ・クイックリーから最後までが、*「どれだけ早く、できるか」*。ディペンド・オンの目的語です。"),
+         ],
+         ja=["新しい図書館が予定どおり", "開館する*かどうか*は、", "作業員がどれだけ早く屋根を", "仕上げられるか*次第だ*。"],
+         ja_say="新しい図書館が、予定どおり開館するかどうかは、作業員が、どれだけはやく屋根をしあげられるか、しだいだ。",
+         q=dict(en=["Whether the team wins depends", "on how well the new players", "work together."],
+                chs=[["チームが勝つかどうかは、新しい選手が", "どれだけうまく協力できるか次第だ"],
+                     ["チームが勝とうと負けようと、新しい", "選手がうまく協力することに頼る"]],
+                answer=1)),
 ]
 
 
@@ -301,7 +345,8 @@ def scene_dur(parts, default):
 
 
 # 字幕は画面用の表記に戻す(読み上げ用のカタカナ・ひらがな → 英字・漢字)
-DISP = {"ザット": "That", "ライク": "like", "イズ": "is", "マッチ": "much", "ふたつめ": "2つ目", "ひとつ": "1つ",
+DISP = {"ディペンド・オン": "depend on", "ディペンズ": "depends", "ハウ・クイックリー": "how quickly", "ウェザー": "Whether",
+        "ジ・オールド・タウン": "the old town", "ゼイ・ハド・レッド": "they had read", "ワット": "What", "ワズ": "was", "ザット": "That", "ライク": "like", "イズ": "is", "マッチ": "much", "ふたつめ": "2つ目", "ひとつ": "1つ",
         "やく": "訳", "つぎに": "次に", "まえの": "前の", "うしろ": "後ろ"}
 SUB_F = None
 

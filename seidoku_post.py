@@ -46,6 +46,56 @@ That he said nothing was wise, much like a good player waits for the right momen
 📝 動画の英文
 That young children ask endless questions is entirely healthy, much like scientists test ideas they cannot yet explain.
 幼い子どもが質問ばかりするのは、まったく健全なことだ。科学者が、まだ説明できない考えを試すのとほぼ同じように。"""),
+    2: dict(
+        caption="""この What、「何」と訳してない?🤔
+文頭の What は「〜すること」で長い主語に。was のあとの that 節、名詞のすぐあとの SV(関係詞の省略)まで、英文解釈の基本を1文で。
+正しい訳は 1 か 2 か、コメントで教えてね👇
+
+#英文解釈 #関係代名詞 #大学受験 #英検準1級 #英語の勉強
+
+Music: Jasmine / 92elm — Music from #Uppbeat (free for Creators!)""",
+        comment="""✅ 正解は 1
+What worried the coach was that the players he had trained seemed tired.
+コーチが心配したのは、自分が鍛えた選手たちが疲れて見えたことだった。
+
+━━ 詳しい解説 ━━
+① 文頭の What は「〜すること」。2つ目の動詞 was の手前までが長い S。
+What worried the coach =「コーチを心配させたこと」→「コーチが心配したのは」。
+
+② was のあとの that は「〜ということ」。文の最後までが C。
+
+③ the players he had trained:名詞 the players のすぐあとに he had trained(SV)→ 関係詞の省略。「彼が鍛えた選手たち」。
+
+✗ 2 は he を trained の目的語のように読んだワナ。名詞+SV は「SがVする名詞」。
+
+📝 動画の英文
+What surprised the visitors most was that the old town they had read about looked completely modern.
+訪問者をいちばん驚かせたのは、本で読んでいた古い町が、すっかり現代的に見えたことだった。"""),
+    3: dict(
+        caption="""文頭の Whether、「天気」じゃないよ☁️
+Whether が主語のカタマリを作ると「〜かどうか」。depend on(〜次第だ)と how 節まで、長文読解でよく出る形を1文で練習しよう。
+正しい訳は 1 か 2 か、コメントで👇
+
+#英文読解 #英語長文 #大学受験英語 #英検2級 #英文法
+
+Music: Golden Age / Walz — Music from #Uppbeat (free for Creators!)""",
+        comment="""✅ 正解は 1
+Whether the team wins depends on how well the new players work together.
+チームが勝つかどうかは、新しい選手がどれだけうまく協力できるか次第だ。
+
+━━ 詳しい解説 ━━
+① 文頭の Whether のカタマリが S なら「〜かどうか」。2つ目の動詞 depends の手前までが S。
+
+② depend on のうしろが人以外なら「〜次第だ」(人なら「〜に頼る」)。
+
+③ how well 〜 together が depend on の目的語。「どれだけうまく〜か」。
+
+✗ 2 は Whether を「〜であろうとなかろうと」(副詞のカタマリ)と読んだワナ。
+Whether のカタマリのすぐあとに動詞 depends が来ているので、カタマリは主語 →「〜かどうか」。
+
+📝 動画の英文
+Whether the new library will open on time depends on how quickly the workers can finish the roof.
+新しい図書館が予定どおり開館するかどうかは、作業員がどれだけ早く屋根を仕上げられるか次第だ。"""),
 }
 
 
@@ -87,6 +137,9 @@ def publish(s):
 
 
 def run():
+    if os.environ.get("CI"):
+        post.git("config", "user.name", "github-actions[bot]")
+        post.git("config", "user.email", "41898299+github-actions[bot]@users.noreply.github.com")
     done = mp.load(LOG, {})
     now = datetime.now(post.JST)
     due = [s for s in mp.load(SCHEDULE, []) if s["key"] not in done
