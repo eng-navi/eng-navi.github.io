@@ -357,7 +357,7 @@ def sfx(path, times, dur):
 
 
 
-VOICE = {"ja": "WQz3clzUdMqvBf0jswZQ", "m": "onwK4e9ZLuTAKqWW03F9", "f": "EXAVITQu4vr4xnSDxMaL"}  # Shizuka / Daniel / Sarah
+VOICE = {"ja": "WQz3clzUdMqvBf0jswZQ", "m": "onwK4e9ZLuTAKqWW03F9", "f": "Xb7hH8MSUJpSbSDYk0k2"}  # Shizuka / Daniel(UK) / Alice(UK)
 SPEED = {"ja": 1.12, "m": 0.92, "f": 0.92}
 
 
