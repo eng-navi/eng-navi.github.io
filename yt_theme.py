@@ -283,6 +283,7 @@ def build(theme_id):
             f"{recs(books, svcs)}\n\n▼ チャプター\n{chap}\n\n▼ 問題ごとのくわしい解説(サイト)\n{links}\n\n{music}\n\n{tags}")
     tagline = ",".join(x.lstrip("#") for x in tags.split()) + ",英語学習,聞き流し,イギリス英語"
     (OUT / f"theme_{tid}.txt").write_text(f"タイトル:\n{title}\n\n説明欄({len(desc)}字):\n{desc}\n\nタグ(詳細設定の「タグ」にそのまま貼る):\n{tagline}\n")
+    import yt_cta; yt_cta.rewrite(str(OUT / f"theme_{tid}.txt"))  # おすすめは松竹梅+固定コメント(必ず通す)
     print(f"✓ theme_{tid}.mp4({yc.stamp(total)}・{len(nos)}問・説明欄 {len(desc)}字)")
 
 if __name__ == "__main__":

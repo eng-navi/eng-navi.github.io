@@ -307,6 +307,7 @@ def video(kind, a, b):
             + RECS.get(kind, RECS["eng_navi"]) +
             "\n\n▼ チャプター\n" + "\n".join(f"{stamp(ct)} {n}" + (f"〜{min(n + 9, files[-1][0])}" if kind == "eng_navi" else "") for ct, n in chapters) + "\n\n#英語学習 #聞き流し #英検 #TOEIC")
     (OUT / f"{kind}_{a}-{b}.txt").write_text(f"タイトル:\n{title}\n\n説明欄:\n{desc}\n")
+    import yt_cta; yt_cta.rewrite(str(OUT / f"{kind}_{a}-{b}.txt"))  # おすすめは松竹梅+固定コメント(必ず通す)
     missing = [n for n in range(a, b + 1) if not cfg["files"](n).exists()]
     print(f"✓ {dst}({stamp(t)}・{len(files)}本)" + (f" 見つからない番号: {missing[:20]}" if missing else ""))
 
