@@ -281,6 +281,27 @@ SCRIPTS = {
         ],
         answer_say="だから*正解は1*。*ノット・オール*は、すべてがそうとは限らない、という*部分否定*です。",
         trap_say="2は、ハウエバーの前と*同じ向き*なので、ばつ。",
+        # 応用問題:答えは However にしない。「前と逆の向き」を読む同じ発想で、合図の言葉を変える
+        app=dict(sents=[("Many people think staying late at the office shows hard work.", 1), ("In reality, ( ① ).", 2)],
+                 chs=[("it often lowers the quality of work", "仕事の質を下げることが多い"), ("it is the fastest way to get promoted", "いちばん早く昇進できる方法だ")], ans=1),
+        comment="""✅ 応用問題の正解は 1
+
+Many people think staying late at the office shows hard work. In reality, it often lowers the quality of work.
+多くの人は、遅くまで会社に残ることが勤勉さの表れだと思っている。実際には、それは仕事の質を下げることが多い。
+
+━━ 解説 ━━
+In reality(実際には)は、前の「みんなが思っていること」をひっくり返す合図。
+❶ の「残業=がんばっている」というプラスの考えに対して、空所はマイナスの内容 → 1。
+2 は ❶ と同じ向きなので×。
+
+However / In reality / Actually / Yet など「前と逆の向き」の合図を見つけたら、空所は前と反対の内容を選ぼう。
+
+━━ 動画の問題の全文 ━━
+Many shoppers trust online reviews when choosing products. However, not all reviews are honest. Some companies pay people to write positive comments, and others post negative reviews of their rivals.
+多くの買い物客は、商品を選ぶときにネットのレビューを信頼している。しかし、すべてのレビューが正直なわけではない。お金を払って良いコメントを書かせる会社もあれば、ライバルの悪いレビューを投稿する会社もある。
+
+📝 単語
+trust 信頼する / honest 正直な / positive 良い、肯定的な / negative 悪い、否定的な / rival ライバル / in reality 実際には""",
     ),
 }
 
@@ -330,12 +351,17 @@ def build(L):
         gr.cross(bb, T, t, 540, 790 if ans == 1 else 690, s=60, d=0.4),
         zigzag(bb, t, 90, 560, d=0.5)),
         [("ja", sc["trap_say"])])
+    # 最後に応用問題(同じ発想・ちがう合図の言葉)。答え・全文・解説はコメント欄 → 最後まで見る+コメントが増える
+    ap = sc["app"]
     scene(S, lambda bb, t: (
-        label(bb, t, "全文の訳・単語はコメント欄に", 560, size=48),
-        gr.big(bb, T, t, "保存して復習", 820 + float_y(t), size=120, d=0.2, color=GREEN),
-        gr.tape(bb, T, t, "次は自力で解いてみよう", 540, 1060, angle=-2, d=0.5, size=56),
-        zigzag(bb, t, 120, 700, d=0.6), zigzag(bb, t, 820, 940, d=0.7)),
-        [("ja", "*保存して*、あとで自分で解いてみてね。")])
+        step_tag(bb, t, f"{n0 + 2:02d}", "応用問題"),
+        label(bb, t, "同じ発想で、解ける?", 330, size=60, color=GREEN),
+        choices(bb, t, ap["chs"], passage(bb, t, ap["sents"], y=440, d=0.15) + 30, d=0.35),
+        gr.comment_cta(bb, T, t, d=1.2, y=1150),
+        gr.tape(bb, T, t, "保存して、あとで復習", 540, 1290, angle=-2, d=1.6, size=44),
+        zigzag(bb, t, 80, 1010, d=0.4), zigzag(bb, t, 830, 1010, d=0.5)),
+        [("ja", "最後に*応用問題*。同じ発想で、解けるかな?"), ("f", " ".join(x for x, _ in ap["sents"])),
+         ("ja", "1と2、どっち?*答えと解説*は、コメント欄にあるよ。")])
     return "blue", S
 
 
