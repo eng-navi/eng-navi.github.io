@@ -46,7 +46,9 @@ def header(base, t, l1, l2, y=96):
 
 
 sr.DISP.update({"プロブレム": "problem", "バット": "but", "アーリアー・ザン・エクスペクテッド": "earlier than expected",
-                "ビーが": "(B) が", "エーの": "(A) の"})
+                "ビーが": "(B) が", "エーの": "(A) の", "エーが": "(A) が", "ビーの": "(B) の",
+                "プリファード・バット・ノット・リクワイアード": "preferred but not required", "リクワイアメント": "requirement",
+                "マスト": "must", "ホワイ": "Why", "アラウ": "allow", "レント": "rent"})
 
 
 def _wrap(text, f, maxw):
@@ -153,6 +155,7 @@ def ja_card(base, t, ja, y, d=0.0, hl=None, dim=None, size=30):
     f = gr.jp(size, bold=False)
     body = ja.split("\n", 1)[-1] if "❶" not in ja.split("\n", 1)[0] else ja
     parts = [(NUM.index(m) + 1, x.strip()) for m, x in re.findall(r"([❶❷❸❹])([^❶❷❸❹]+)", body)]
+    parts = [(n, x.split("。")[0] + "。" if "。" in x else x) for n, x in parts]  # 番号のない後ろの段落(応募方法など)は出さない
     maxw, lh = sr.CARD_W - 130, int(size * 1.6)
     rows = []
     for n, x in parts:
@@ -247,6 +250,100 @@ I ordered a desk lamp from Brightway Home, and it arrived two days earlier than 
 📝 単語
 than expected 予想より / instructions 説明書 / assembly 組み立て / unfortunately 残念ながら / unreliable 当てにならない / connection 接続""",
     ),
+    7: dict(
+        key=("requirement", "必須条件"),
+        steps=[
+            dict(no="01", tag="設問", l1="設問のキーワードは", l2="*requirement*(必須条件)", kind="q",
+                 say="設問のキーワードは、*リクワイアメント*。仕事の*必須条件*を聞いています。"),
+            dict(no="02", tag="根拠", l1="must の文に", l2="*必須条件* がある", kind="p",
+                 hl={2: "must have at least two years of experience"}, hl_ja={2: "接客の経験が2年以上必要"}, dim={1, 3},
+                 say="2文目の*マスト*。接客の経験が、*2年以上必要*。マストは、必須条件のサインです。"),
+            dict(no="03", tag="正解", l1="言いかえに注目", l2="*(A)* が正解", kind="o",
+                 say="これを、*接客の経験*と言いかえた、エーが正解。"),
+            dict(no="04", tag="ワナ", l1="(B) は", l2="*必須ではない*", kind="p",
+                 hl={3: "preferred but not required"}, hl_ja={3: "必須ではありません"}, dim={1, 2},
+                 say="ビーの、第二言語はワナ。*プリファード・バット・ノット・リクワイアード*は、あれば望ましいが、*必須ではない*、です。"),
+        ],
+        app=dict(P={"kind": "NOTICE", "head": ["Volunteer Guides Wanted — City Museum"],
+                    "body": [[("Volunteers must be available on at least two weekends a month.", 1),
+                              ("Experience in teaching is a plus but not necessary.", 2)]]},
+                 q="What is required of volunteers?",
+                 chs=[("Teaching experience", ""), ("Weekend availability", "")], ans="B"),
+        caption="""求人広告の「必須条件」、どこを見る?🤔
+must は必須、preferred は「あれば尚可」。TOEIC Part 7 の求人広告で必ず出るワナを1問で解説します。
+解きたい人は一時停止してね⏸ 応用問題の答えはコメント欄に👇
+
+#TOEIC #TOEIC対策 #Part7 #TOEICリーディング #ビジネス英語""",
+        comment="""✅ 応用問題の正解は (B)
+
+Volunteer Guides Wanted — City Museum
+Volunteers must be available on at least two weekends a month. Experience in teaching is a plus but not necessary.
+ボランティアガイド募集 — 市立博物館
+ボランティアは、月に少なくとも2回の週末に参加できる必要があります。教えた経験があれば歓迎ですが、必須ではありません。
+
+What is required of volunteers?(ボランティアに求められていることは何ですか)
+(A) Teaching experience(教えた経験)
+(B) Weekend availability(週末に参加できること)
+
+━━ 解説 ━━
+❶ must be available on 〜 weekends → 週末に参加できることが必須 → (B)。
+(A) は ❷ で a plus but not necessary(あれば歓迎だが必須ではない)なので×。
+
+must / required / necessary =「必須」、preferred / a plus / desirable =「あれば尚可」。設問が requirement / required なら must の文を探そう。
+
+━━ 動画の問題の全文 ━━
+Front Desk Coordinator — Lakeside Hotel
+Lakeside Hotel is looking for a front desk coordinator to join our team in May. Applicants must have at least two years of experience in customer service. Knowledge of a second language is preferred but not required.
+レイクサイド・ホテルでは、5月から一緒に働くフロント・コーディネーターを募集しています。応募者は、接客の経験が2年以上必要です。第二言語の知識があれば望ましいですが、必須ではありません。
+
+📝 単語
+applicant 応募者 / at least 少なくとも / preferred 望ましい / required 必須の / requirement 必要条件 / available 都合がつく / a plus 歓迎される点""",
+    ),
+    8: dict(
+        key=("moving", "移転の理由"),
+        steps=[
+            dict(no="01", tag="設問", l1="設問は Why", l2="*移転の理由*", kind="q",
+                 say="設問は、ホワイ。カフェが*移転する理由*を聞いています。"),
+            dict(no="02", tag="根拠", l1="allow A to do は", l2="*理由* のサイン", kind="p",
+                 hl={2: "allow the café to host cooking classes"}, hl_ja={2: "夜に料理教室を開けるようになる"}, dim={1, 3},
+                 say="2文目の*アラウ*。新しい店では、*夜に料理教室*を開けるようになる。これが移転の理由です。"),
+            dict(no="03", tag="正解", l1="言いかえに注目", l2="*(A)* が正解", kind="o",
+                 say="これを、*夜に教室を開くため*と言いかえた、エーが正解。"),
+            dict(no="04", tag="ワナ", l1="(B) の家賃は", l2="*本文にない*", kind="p", hl={}, dim=set(),
+                 say="ビーの、家賃を下げるため、はワナ。*レント*は、本文のどこにもありません。*書いていないもの*は選ばない。"),
+        ],
+        app=dict(P={"kind": "E-MAIL", "head": ["To: All Staff   From: Facilities Team"],
+                    "body": [[("The third-floor meeting room will be closed next week.", 1),
+                              ("New screens are being installed so that teams can hold video meetings more easily.", 2)]]},
+                 q="Why will the meeting room be closed?",
+                 chs=[("To install new equipment", ""), ("To save electricity", "")], ans="A"),
+        caption="""Why 問題の「理由」、どこにある?🤔
+because だけじゃない。allow A to do も理由のサイン。書いていない「ありそうな理由」を選ばないのが TOEIC Part 7 の鉄則です。
+解きたい人は一時停止してね⏸ 応用問題の答えはコメント欄に👇
+
+#TOEIC #TOEIC勉強 #Part7 #英語学習 #TOEIC800点""",
+        comment="""✅ 応用問題の正解は (A)
+
+The third-floor meeting room will be closed next week. New screens are being installed so that teams can hold video meetings more easily.
+3階の会議室は来週閉鎖されます。チームがもっと簡単にビデオ会議を開けるよう、新しいスクリーンを取り付けるためです。
+
+Why will the meeting room be closed?(会議室はなぜ閉鎖されますか)
+(A) To install new equipment(新しい機器を取り付けるため)
+(B) To save electricity(電気を節約するため)
+
+━━ 解説 ━━
+❷ New screens are being installed(新しいスクリーンを取り付ける)→ new equipment と言いかえた (A)。
+so that 〜(〜できるように)も理由・目的のサイン。
+(B) の電気の節約は、本文に書かれていないので×。
+
+━━ 動画の問題の全文 ━━
+Greenleaf Café, which opened on Main Street ten years ago, will move to a larger location on River Road next month. Owner Maria Chen said the new space will allow the café to host cooking classes in the evenings. The current location will close on June 1, and the new café will open on June 15.
+10年前にメイン通りで開店したグリーンリーフ・カフェが、来月リバー通りのより広い場所へ移転する。オーナーのマリア・チェン氏によると、新しい店舗では夜に料理教室を開けるようになるという。現在の店舗は6月1日に閉店し、新しいカフェは6月15日にオープンする。
+
+📝 単語
+location 場所、店舗 / allow A to do Aが〜できるようにする / host 開く、主催する / current 現在の / install 取り付ける / equipment 機器 / so that 〜できるように""",
+    ),
+
 }
 
 

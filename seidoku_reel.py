@@ -354,7 +354,7 @@ SUB_F = None
 def _tokens(text):
     """[(文字 or 英単語, 強調?)]。*〜* が強調"""
     import re
-    for k, v in DISP.items():
+    for k, v in sorted(DISP.items(), key=lambda kv: -len(kv[0])):  # 長い語句から先に置きかえる
         text = text.replace(k, v)
     out, em = [], False
     for m in re.findall(r"\*|[A-Za-z0-9']+|.", text):
