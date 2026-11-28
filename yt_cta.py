@@ -26,8 +26,72 @@ BOOKS = {
 }
 
 
-def shochikubai(book="grammar", topic="この動画の内容"):
-    """説明欄のおすすめ(PR)。目的別に3つ"""
+# ---------- おすすめの候補(docs/recommend.js の ITEMS から読む。A8=サービス、Amazon=本)----------
+# 松=人と一緒に最短で/梅=スキマ時間・アプリやオンライン/竹=テーマに合う本。動画ごとに選び分けて、毎回同じにならないように。
+MATSU = {"default": ["progrit", "liberty"], "toeic": ["liberty", "progrit"]}
+UME = {"default": ["speak", "torabit", "nativecamp", "sankei"], "toeic": ["studysapuri", "speak", "torabit"],
+       "listening": ["audible", "torabit", "studysapuri"], "speaking": ["speak", "nativecamp", "torabit", "sankei"]}
+TAKE = {"grammar": ["shortcuts", "scramble", "eureka"], "toeic": ["kikufure", "setphrase"], "listening": ["kikufure"],
+        "idiom": ["idiomatic", "setphrase"], "vocab": ["oversight", "pinnacle"], "speaking": ["hanon", "hanon_phrase"],
+        "reading": ["reading", "horikoshi", "brushup", "crack10", "classic_basic", "realize"]}
+LEAD = {"matsu": "期限までに最短で結果を出したい人", "take": "自分のペースで、問題をしっかり解きたい人", "ume": "スキマ時間に、続けやすい形で練習したい人"}
+
+
+def items():
+    import re as _re
+    js = open(__file__.replace("yt_cta.py", "docs/recommend.js"), encoding="utf-8").read()
+    out = {}
+    for m in _re.finditer(r"^  ([a-z_0-9]+): \{(.*?)\},?\s*$", js, _re.M):
+        k, body = m.group(1), m.group(2)
+        name = _re.search(r'name: "([^"]+)"', body); note = _re.search(r'note: "([^"]+)"', body)
+        if not name or k in out: continue
+        url = None
+        am = _re.search(r'AMAZON\("([A-Z0-9]+)", "([0-9a-f]+)"\)', body)
+        if am:
+            url = f"https://www.amazon.co.jp/dp/{am.group(1)}?tag=mokumoku70e-22&linkCode=ll2&linkId={am.group(2)}&language=ja_JP&ref_=as_li_ss_tl"
+        else:
+            u = _re.search(r'url: "(https://(?:link\.amazon|www\.amazon)[^"]+)"', body)
+            url = u.group(1) if u else None
+        out[k] = dict(name=name.group(1), note=note.group(1) if note else "", amazon=url, a8="A8(" in body)
+    return out
+
+
+def pick(pool, seed):
+    import hashlib
+    return pool[int(hashlib.md5(seed.encode()).hexdigest(), 16) % len(pool)]
+
+
+def shochikubai(book="grammar", topic="この動画の内容", seed=None, area="default"):
+    """説明欄のおすすめ(PR)。目的別に3つ。seed(動画名)ごとに候補から選び分ける。リンクに from=yt_<seed> をつけて比べる"""
+    if seed:
+        it = items()
+        frm = f"https://eng-navi.github.io/osusume/?from=yt_{seed}"
+        log = __import__("json")
+        lp = __file__.replace("yt_cta.py", "yt_cta_log.json")
+        try: d = log.load(open(lp))
+        except Exception: d = {}
+        # 一度決めた動画はそのまま。新しい動画は、これまでの本数で順番に回す(毎回同じにならないように)
+        n = list(d).index(seed) if seed in d else len(d)
+        rot = lambda pool, off=0: pool[(n + off) % len(pool)]
+        mk = rot(MATSU.get(area, MATSU["default"]))
+        tk = rot(TAKE.get(book, TAKE["grammar"]), 1)
+        uk = rot(UME.get(area, UME["default"]), 2)
+        m, t, u = it[mk], it[tk], it[uk]
+        d[seed] = {"matsu": mk, "take": tk, "ume": uk}
+        log.dump(d, open(lp, "w"), ensure_ascii=False, indent=1)
+        return f"""🎯 {topic}を、目的別にもっと伸ばすなら(PR)
+
+🏆 {LEAD["matsu"]} → {m["name"]}
+{m["note"]}
+→ {frm}#{mk}
+
+📗 {LEAD["take"]} → 『{t["name"].strip("『』")}』
+{t["note"]}
+{t["amazon"]}
+
+📱 {LEAD["ume"]} → {u["name"]}
+{u["note"]}
+→ {frm}#{uk}"""
     b = BOOKS[book]
     return f"""🎯 {topic}を、目的別にもっと伸ばすなら(PR)
 
@@ -61,7 +125,11 @@ def rewrite(path, book=None, topic=None):
                     "speaking" if "eng_navi" in name or "idiom" in name else "grammar")
     title = s.split("\n")[1]
     topic = topic or re.sub(r"[|｜【].*", "", re.sub(r"^【[^】]*】", "", title)).strip() or "英文法"
-    block = shochikubai(book, topic)
+    seed = name.replace(".txt", "")
+    area = "listening" if "listening" in name else "toeic" if ("toeic" in name or "TOEIC" in title) else "speaking" if "eng_navi" in name else "default"
+    tb = ("idiom" if "idiom" in name else "toeic" if "toeic" in name else "listening" if "listening" in name else
+          "speaking" if "eng_navi" in name else "grammar")
+    block = shochikubai(tb, topic, seed=seed, area=area)
     s = re.sub(r"\n\n固定コメント\(.*\Z", "\n", s, flags=re.S)  # 作り直すときは固定コメントも入れかえ
     s2 = re.sub(r"(🎁|🎯) [^\n]*\(PR\)\n.*?(?=\n\n▼|\n\nMusic|\Z)", block, s, count=1, flags=re.S)
     if "🎯" not in s and "🎁" not in s:  # おすすめがまだない古い説明欄 → チャプターの前に入れる
