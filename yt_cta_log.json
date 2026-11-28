@@ -43,5 +43,10 @@
   "matsu": "liberty",
   "take": "setphrase",
   "ume": "speak"
+ },
+ "yt_explain_tense1": {
+  "matsu": "liberty",
+  "take": "scramble",
+  "ume": "sankei"
  }
 }
