@@ -263,9 +263,21 @@ def label(base, t, s, y, d=0.0, size=54, color=None):
 
 
 def pause_tip(base, t, d=0.9, y=1280):
-    """「解きたい人は、ここで止めてね」(長押し・タップで止められる)"""
+    """「解きたい人は、ここで一時停止」+一時停止アイコン(丸に2本線。ゆっくり脈打つ)"""
     if t < d: return
-    gr.tape(base, T, t, "解きたい人は、ここで一時停止", 540, y, angle=-2, d=d, size=48)
+    s = "解きたい人は、ここで一時停止"
+    tw = gr.jp(48).getlength(s) + 90
+    cx = 540 + 60  # アイコンのぶん右へ
+    gr.tape(base, T, t, s, cx, y, angle=-2, d=d, size=48)
+    import math
+    k = gr.back((t - d) / 0.3) * (1 + 0.06 * math.sin((t - d) * 6))
+    r = 50
+    lay = Image.new("RGBA", (2 * r + 8, 2 * r + 8), (0, 0, 0, 0))
+    g = ImageDraw.Draw(lay)
+    g.ellipse([4, 4, 2 * r + 4, 2 * r + 4], fill=GREEN + (255,), outline=(20, 20, 20, 255), width=5)
+    for x0 in (r - 22, r + 8):
+        g.rounded_rectangle([x0 + 4, r - 22 + 4, x0 + 18, r + 22 + 4], 4, fill=(20, 20, 20, 255))
+    gr.paste_rot(base, lay, cx - tw / 2 - 40, y + 2, 0, scale=max(0.01, k))
 
 
 # ---------- 台本 ----------
@@ -357,11 +369,10 @@ def build(L):
         step_tag(bb, t, f"{n0 + 2:02d}", "応用問題"),
         label(bb, t, "同じ発想で、解ける?", 330, size=60, color=GREEN),
         choices(bb, t, ap["chs"], passage(bb, t, ap["sents"], y=440, d=0.15) + 30, d=0.35),
-        gr.comment_cta(bb, T, t, d=1.2, y=1150),
-        gr.tape(bb, T, t, "保存して、あとで復習", 540, 1290, angle=-2, d=1.6, size=44),
+        gr.comment_cta(bb, T, t, d=0.7, y=1150),
+        gr.tape(bb, T, t, "保存して、あとで復習", 540, 1290, angle=-2, d=1.0, size=44),
         zigzag(bb, t, 80, 1010, d=0.4), zigzag(bb, t, 830, 1010, d=0.5)),
-        [("ja", "最後に*応用問題*。同じ発想で、解けるかな?"), ("f", " ".join(x for x, _ in ap["sents"])),
-         ("ja", "1と2、どっち?*答えと解説*は、コメント欄にあるよ。")])
+        [("ja", "最後に*応用問題*。同じ発想で、*解けるかな?*")])  # リーディングなので英文は読まない。ここでサクッと終える
     return "blue", S
 
 
