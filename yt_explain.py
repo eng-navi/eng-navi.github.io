@@ -124,6 +124,7 @@ def q_card(base, t, Q, state, x=90, y=250, d=0.1, hl=None):
 
 
 def right_card(base, t, title, rows, x=1030, y=200, d=0.2, w=840):
+    rows = [r if isinstance(r, tuple) else (r, 37, True) for r in rows]
     """右:和訳・解説。rows=[(文, 大きさ, 太字?)]。*語* は青"""
     lay, g = card(w, 10, title)  # 高さはあとで
     ys, tot = [], 100
@@ -231,6 +232,25 @@ def cta(base, t, deal=None):
     gg.polygon([(W / 2 - 40, 840 + bob), (W / 2 + 40, 840 + bob), (W / 2, 900 + bob)], fill=BLUE)
 
 
+def summary_card(base, t, rows, y=130):
+    """まとめ:時を表す言葉 → 時制 → 例"""
+    CW = 1500
+    RH = 132 if len(rows) <= 4 else 118
+    lay, g = card(CW, 130 + RH * len(rows), "まとめ:時を表す言葉で、時制が決まる")
+    yy = 110
+    for i, (words, tense, ex) in enumerate(rows):
+        g.rounded_rectangle([60, yy, CW - 20, yy + RH - 14], 20, fill=(248, 250, 255, 255) if i % 2 == 0 else (255, 255, 255, 255))
+        cy = yy + (RH - 14) / 2
+        fw = gr.serif(44, 700)
+        while fw.getlength(words) > 600: fw = gr.serif(fw.size - 2, 700)
+        g.text((100, cy), words, font=fw, fill=BLUE + (255,), anchor="lm")
+        g.text((740, cy), "→", font=gr.jp(44), fill=GRAY + (255,), anchor="mm")
+        g.text((800, cy), tense, font=gr.jp(46), fill=INK + (255,), anchor="lm")
+        g.text((1110, cy), ex, font=gr.serif(36, 500), fill=(120, 120, 120, 255), anchor="lm")
+        yy += RH
+    appear(base, lay, (W - CW - 40) / 2, y, t, 0.1)
+
+
 # ---------- 1問の台本(英文法クイズの問題を使い、解説は書き下ろす) ----------
 TEST = dict(
     no=101, voice="m",
@@ -293,6 +313,84 @@ def build_test():
     return S
 
 
+def build(key):
+    """本番:yt_explain_data.VIDEOS[key] から作る。返り値:(場面, チャプター)"""
+    import yt_explain_data as yd
+    import yt_cta
+    DISP.update(yd.DISP)
+    V = yd.VIDEOS[key]
+    QS = {x["no"]: x for x in json.loads((ROOT / "quizzes.json").read_text())}
+    deal = yt_cta.deals().get("speak", "").split("(")[0]
+    deal_line = f"スピークは、{deal}(11/22時点)" if deal else None
+    S, chapters = [], []
+
+    def scene(content, parts, default=2.0, outro=0.3, chap=None):
+        ds = [float(x) if k == "gap" else sr.dur(k, x) for k, x in parts]
+        D = max(1.3, 0.08 + sum(x + 0.08 for x in ds) + 0.12) if parts else default
+        subs, acc = [], 0.08
+        for (k, x), dd in zip(parts, ds):
+            if k == "ja": subs.append((acc, x, dd))
+            acc += dd + 0.08
+        if chap: chapters.append((sum(s0[0] for s0 in S), chap))
+
+        def f(bb, t):
+            def draw(b):
+                content(b, t, D)
+                for st, x, dd in subs:
+                    if st <= t < st + dd + 0.5: subtitle(b, t, x, dd, start=st)
+            ko = max(0.0, (t - (D - outro)) / outro)
+            if ko <= 0: draw(bb); return
+            k = gr.ease(ko); lay = Image.new("RGBA", (W, H), (0, 0, 0, 0)); draw(lay)
+            lay = lay.filter(ImageFilter.GaussianBlur(10 * k)); lay.putalpha(lay.split()[3].point(lambda v: int(v * (1 - k))))
+            bb.alpha_composite(lay.crop((0, int(60 * k), W, H)), (0, 0))
+        S.append((D, f, parts))
+
+    l1, l2, say = V["intro"]
+    scene(lambda b, t, D: (header(b, t, l1, l2, y=280, s1=64, s2=110),
+                           step_pill(b, t, "英", "英文法・英検2級・TOEIC", x=(W - 560) / 2, y=600)), [("ja", say)], chap="はじめに")
+    for i, q in enumerate(V["qs"], 1):
+        Q = QS[q["no"]]
+        voice = "m" if i % 2 == 1 else "f"  # 英文は男女を1問ごとに交互
+        ans = Q["options"][Q["answer"] - 1]
+        full = Q["question"].replace("( )", ans)
+        rows = [(r, 37, True) for r in q["rows"]]
+        scene(lambda b, t, D, Q=Q, i=i: (step_pill(b, t, f"Q{i}", "問題"), q_card(b, t, Q, "q"), pause_tip(b, t, D, d=1.6)),
+              [("ja", f"第{i}問。かっこに入るのは、どっち?"), ("gap", "3.2")], chap=f"第{i}問 {q.get('chap', q['hl'])}")
+        scene(lambda b, t, D, Q=Q, i=i, ans=ans, q=q: (step_pill(b, t, f"Q{i}", "正解"), q_card(b, t, Q, "a"),
+              right_card(b, t, "和訳", [(f"正解は *{'①②'[Q['answer'] - 1]} {ans}*", 46, True), (Q["translation"], 36, False)])),
+              [("ja", f"正解は、{Q['answer']}番。"), (voice, full), ("ja", q["ja_say"])])
+        scene(lambda b, t, D, Q=Q, i=i, q=q, rows=rows: (step_pill(b, t, f"Q{i}", "解説"), q_card(b, t, Q, "a", hl=q["hl"]),
+              right_card(b, t, "なぜ?", rows)), [("ja", q["say"])])
+        if i == V.get("mid_after"):
+            scene(lambda b, t, D: cta(b, t, None), [("ja", V["mid_say"])])
+    scene(lambda b, t, D: summary_card(b, t, V["summary"]), [("ja", V["summary_say"])], chap="まとめ")
+    scene(lambda b, t, D: cta(b, t, deal_line), [("ja", V["end_say"] + ("いまスピークは、*お得なキャンペーン中*です。" if deal_line else ""))],
+          chap="おすすめ教材(PR)")
+    return S, chapters, V
+
+
+def write_txt(key, V, chapters, total):
+    """タイトル2案・説明欄(サイト→内容→松竹梅+キャンペーン→チャプター→各問のサイト)・タグ・固定コメント・サムネ"""
+    import yt_cta, yt_thumb
+    stamp = lambda s: f"{int(s // 60)}:{int(s % 60):02d}"
+    chap = "\n".join(f"{stamp(t)} {c}" for t, c in chapters)
+    links = "\n".join(f"第{i}問 → https://eng-navi.github.io/q/{q['no']}/" for i, q in enumerate(V["qs"], 1))
+    desc = (f"📚 全問の答え・くわしい解説と音声は、無料のサイトで復習できます👇\nhttps://eng-navi.github.io/?utm_source=youtube\n\n"
+            f"{V['topic']}を、英検2級・TOEIC Part5 によく出る時制の問題{len(V['qs'])}問で解説します。"
+            "ago・last・just・ever・since・for などの「時を表す言葉」に注目すると、英文法の時制の問題は迷わず解けます。"
+            "英会話で時制を使い分けたい人、大人の英語の学び直しにも。\n"
+            "1問ずつ「問題 → 考える時間 → 正解(英語の読み上げ)→ 解説」の順に進みます。\n\n"
+            f"{yt_cta.shochikubai(V['book'], V['topic'], seed='yt_explain_' + key)}\n\n▼ チャプター\n{chap}\n\n"
+            f"▼ 問題ごとのくわしい解説(サイト)\n{links}\n\n{gr.TRACKS[0]['credit']}\nPhoto: StockSnap (CC0)\n\n"
+            "#英文法 #時制 #現在完了")
+    tags = "英文法,時制,現在完了,過去形,現在完了と過去形の違い,英検2級,TOEIC,TOEIC Part5,英語学習,英会話,学び直し,since for 違い,have gone have been 違い,過去完了"
+    txt = OUT / f"{key}.txt"
+    txt.write_text(f"タイトル:\n{V['title']}\n\nタイトル案B(ずらし):\n{V['title_b']}\n\n説明欄:\n{desc}\n\n"
+                   f"タグ(詳細設定の「タグ」にそのまま貼る):\n{tags}\n\n固定コメント(投稿後にコメントして「固定」):\n{yt_cta.pinned(V['topic'])}\n")
+    yt_thumb.make(*V["thumb"], yt_thumb.PEOPLE[0], OUT / f"{key}_thumb.jpg")
+    print(txt, f"{stamp(total)}")
+
+
 def render(S, out):
     OUT.mkdir(parents=True, exist_ok=True)
     clips, acc = [], 0.0
@@ -329,6 +427,14 @@ def render(S, out):
 
 
 if __name__ == "__main__":
+    if sys.argv[1:2] == ["build"]:  # python3 yt_explain.py build tense1
+        key = sys.argv[2]
+        S, chapters, V = build(key)
+        out = render(S, OUT / f"{key}.mp4")
+        write_txt(key, V, chapters, sum(x[0] for x in S))
+        r = subprocess.run([str(ROOT / ".venv-tts/bin/python"), str(ROOT / "yomi_check.py"), str(out.with_suffix(".voice.json")), "--quiet"],
+                           capture_output=True, text=True).stdout.strip()
+        print(r)
     if sys.argv[1:2] == ["test"]:
         out = render(build_test(), OUT / "test.mp4")
         r = subprocess.run([str(ROOT / ".venv-tts/bin/python"), str(ROOT / "yomi_check.py"), str(out.with_suffix(".voice.json")), "--quiet"],
