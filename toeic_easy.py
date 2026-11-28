@@ -22,6 +22,29 @@ W = gr.W
 BLUE, INK, GRAY = sr.BLUE, sr.INK, sr.GRAY
 LIGHT = (232, 239, 255)
 NUM = "❶❷❸❹"
+sr.PILL_Y = 300  # TOEIC は英文が多いので、見出しと札を上に寄せて真ん中の枠を広く(2026-11-28)
+TOP = 370        # カードの開始位置
+
+
+def header(base, t, l1, l2, y=96):
+    """小さめの見出し(1行目グレー → 2行目太字。*語* は青の選択枠)"""
+    f1, f2 = gr.jp(42, bold=False), gr.jp(54)
+    lay1 = Image.new("RGBA", (W, 64), (0, 0, 0, 0))
+    ImageDraw.Draw(lay1).text((W / 2 + 30, 32), l1, font=f1, fill=GRAY + (255,), anchor="mm")
+    sr.appear(base, lay1, 0, y, t, 0.0, rise=16)
+    lay = Image.new("RGBA", (W, 100), (0, 0, 0, 0))
+    g = ImageDraw.Draw(lay)
+    segs = sr._segs(l2)
+    x = (W + 60 - sum(f2.getlength(a) for a, _ in segs)) / 2
+    for a, kw in segs:
+        w = f2.getlength(a)
+        if kw:
+            sr.selbox(g, x - 10, 12, x + w + 10, 90, 6)
+        g.text((x, 10), a, font=f2, fill=INK + (255,))
+        x += w
+    sr.appear(base, lay, 0, y + 62, t, 0.2, rise=16)
+
+
 sr.DISP.update({"プロブレム": "problem", "バット": "but", "アーリアー・ザン・エクスペクテッド": "earlier than expected",
                 "ビーが": "(B) が", "エーの": "(A) の"})
 
@@ -105,7 +128,7 @@ def question(base, t, q, y, d=0.0, key=None, size=38):
 def choices(base, t, chs, y, d=0.0, mark=None, size=36):
     """(A)(B) の選択肢。mark={"A": "o"/"x"}"""
     f, fl = gr.serif(size, 600), gr.serif(size, 700)
-    h = 84
+    h = int(size * 2.3)
     lay = Image.new("RGBA", (sr.CARD_W + 40, 2 * h + 60), (0, 0, 0, 0))
     g = ImageDraw.Draw(lay)
     for i, (en, _) in enumerate(chs):
@@ -114,14 +137,12 @@ def choices(base, t, chs, y, d=0.0, mark=None, size=36):
         yy = 20 + i * (h + 16)
         g.rounded_rectangle([20, yy, sr.CARD_W + 20, yy + h], 16, fill=(LIGHT if on == "o" else (255, 255, 255)) + (255,),
                             outline=(BLUE if on == "o" else (226, 226, 226)) + (255,), width=3 if on == "o" else 2)
-        g.text((48, yy + 18), f"({L})", font=fl, fill=BLUE + (255,))
+        g.text((48, yy + h / 2), f"({L})", font=fl, fill=BLUE + (255,), anchor="lm")
         col = (170, 170, 170) if on == "x" else INK
-        g.text((130, yy + 18), en, font=f, fill=col + (255,))
+        tx = 48 + fl.getlength("(A)") + 22
+        g.text((tx, yy + h / 2), en, font=f, fill=col + (255,), anchor="lm")
         if on == "x":
-            g.line([(124, yy + h / 2 + 2), (136 + f.getlength(en), yy + h / 2 + 2)], fill=(222, 76, 64, 255), width=5)
-        if on == "o":
-            g.rounded_rectangle([sr.CARD_W - 110, yy + 20, sr.CARD_W, yy + h - 20], 22, fill=BLUE + (255,))
-            g.text((sr.CARD_W - 55, yy + h / 2), "正解", font=gr.jp(26), fill=(255, 255, 255, 255), anchor="mm")
+            g.line([(tx - 6, yy + h / 2 + 2), (tx + 6 + f.getlength(en), yy + h / 2 + 2)], fill=(222, 76, 64, 255), width=5)
     sr.appear(base, lay, sr.CARD_X - 20, y, t, d)
     return y + 2 * h + 60
 
@@ -238,31 +259,33 @@ def build(L):
     S = []
     # 0〜約2.5秒:問題 → 「止めてね」→ すぐ解説へ
     def problem(bb, t):
-        sr.headline(bb, t, "TOEIC Part 7、", "*解ける?*")
-        y = passage(bb, t, P, 640, d=0.1, size=34)
-        y = question(bb, t, Q["q"], y - 16, d=0.2, size=34)
-        y = choices(bb, t, chs, y - 34, d=0.3, size=34)
+        header(bb, t, "TOEIC Part 7、", "*解ける?*")
+        y = passage(bb, t, P, TOP, d=0.1, size=38)
+        y = question(bb, t, Q["q"], y - 20, d=0.2, size=40)
+        y = choices(bb, t, chs, y - 34, d=0.3, size=40)
         pause_tip(bb, t, y + 40, d=0.6)
-    sr.scene(S, problem, [("ja", "どっちが正解?解くなら、ここで止めてね。")], ("00", "問題"))
+    # 英検とちがい、TOEIC は「止めてね」のあとに本文と設問を英語で読み上げる(読みながら解ける。英検とどちらが伸びるか比べる)
+    body = " ".join(x for x, _ in P["body"][0])
+    sr.scene(S, problem, [("ja", "どっちが正解?解くなら、ここで止めてね。"), ("gap", "0.4"), ("m", body), ("gap", "0.3"), ("m", Q["q"])], ("00", "問題"))
     for st in sc["steps"]:
         def content(bb, t, st=st):
-            sr.headline(bb, t, st["l1"], st["l2"])
+            header(bb, t, st["l1"], st["l2"])
             if st["kind"] == "q":
-                question(bb, t, Q["q"], 650, key=sc["key"][0], size=44)
+                question(bb, t, Q["q"], TOP + 80, key=sc["key"][0], size=56)
             elif st["kind"] == "p":
-                y = passage(bb, t, P, 600, hl=st["hl"], dim=st["dim"], size=30)
-                ja_card(bb, t, Q["ja"], y - 20, d=0.25, hl=st.get("hl_ja"), dim=st["dim"], size=26)
+                y = passage(bb, t, P, TOP - 10, hl=st["hl"], dim=st["dim"], size=38)
+                ja_card(bb, t, Q["ja"], y - 28, d=0.25, hl=st.get("hl_ja"), dim=st["dim"], size=29)
             else:
-                choices(bb, t, chs, 650, mark={ansL: "o", ("A" if ansL == "B" else "B"): "x"})
+                choices(bb, t, chs, TOP + 80, mark={ansL: "o", ("A" if ansL == "B" else "B"): "x"}, size=44)
             sr.subtitle(bb, t, st["say"], sr.dur("ja", st["say"]), y=1570)
         sr.scene(S, content, [("ja", st["say"])], (st["no"], st["tag"]))
     ap = sc["app"]
     def app(bb, t):
-        sr.headline(bb, t, "同じ発想で、", "*解ける?*")
-        y = passage(bb, t, ap["P"], 640, d=0.1, size=34)
-        y = question(bb, t, ap["q"], y - 16, d=0.2, size=34)
-        choices(bb, t, ap["chs"], y - 34, d=0.3, size=34)
-        sr.cta(bb, t, d=0.8, y=1480)
+        header(bb, t, "同じ発想で、", "*解ける?*")
+        y = passage(bb, t, ap["P"], TOP, d=0.1, size=40)
+        y = question(bb, t, ap["q"], y - 20, d=0.2, size=42)
+        y = choices(bb, t, ap["chs"], y - 34, d=0.3, size=42)
+        sr.cta(bb, t, d=0.8, y=y + 60)
     sr.scene(S, app, [("ja", "最後に*応用問題*。同じ発想で、*解けるかな?*")], ("Q", "応用問題"))
     return "seidoku", S
 
