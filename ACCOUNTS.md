@@ -58,7 +58,8 @@
 
 ## @seidoku.lab「差がつく英文読解🇺🇸|難関大・英検準1級・TOEIC対策」(準備中・2026-11-28〜)
 - トークン GEO_IG_*(旧 地理クイズを着せ替え。地理の未投稿予約はなし)。CI の geo_post.py の枠を差し替える予定。
-- 形式:英文法リール(grammar_reel.py)をベースに、黒×白×黄色。日本語解説=男性(v3)、英文=アメリカ英語の若い男女(クール)。声は聞き比べで決める。
+- 形式(2026-11-28 決定):参考動画の雰囲気=白い方眼の背景、上にグレー+太字黒の見出し(キーワードは青の選択枠)、左に青の縦線と「01 主語」の札、白いカード。英文は黒字、ポイントは青字+下線+S/V札。(黒×白×黄色はやめた)
+- 声(聞き比べで決定):日本語=Otani(eleven_v3)、英文=Liam(男)/Jessica(女)、v2・0.92倍。英文の読み上げは解説に入る前の1回だけ(長いので2回読まない)。
 - 内容:難しい1文を「長いS・SVの発見」などで分解 → 和訳 → 和訳クイズ。素材の本(SVの発見編など)は**構文パターンの参考だけ**。入試の英文・本の訳は使わず、同じ構文のオリジナル英文を書く。
 - プロフィール画像:seidoku_icon.py(3案)。
-- 作る:`seidoku_reel.py` の LESSONS に足す → `python3 seidoku_reel.py N` → `.venv-tts/bin/python yomi_check.py out/seidoku/seidoku_00N.voice.json`。No.1=テスト版(長いS+接続詞の like)。声は仮で Kozy/Liam/Jessica、聞き比べは out/seidoku/voice_compare.mp3。
+- 作る:`seidoku_reel.py` の LESSONS に足す → `python3 seidoku_reel.py N` → `.venv-tts/bin/python yomi_check.py out/seidoku/seidoku_00N.voice.json`。No.1=テスト版(長いS+接続詞の like)。
